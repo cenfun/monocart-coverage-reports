@@ -1,0 +1,20 @@
+{
+    "name": "monocart-coverage-vendor",
+    "version": "1.0.0",
+    "private": true,
+    "main": "dist/monocart-coverage-vendor.js",
+    "files": [
+        "dist"
+    ],
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "@bcoe/v8-coverage": "^0.2.3",
+        "@jridgewell/sourcemap-codec": "^1.4.15",
+        "axios": "^1.6.2",
+        "convert-source-map": "^2.0.0",
+        "istanbul-lib-coverage": "^3.2.2",
+        "istanbul-lib-report": "^3.0.1"
+    },
+    "platform": "node"
+}

@@ -1,0 +1,6 @@
+/.temp
+/node_modules
+/packages/**/dist
+/package-lock.json
+/lib/packages
+/coverage-reports

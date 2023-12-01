@@ -1,0 +1,51 @@
+{
+    "name": "monocart-coverage-reports",
+    "version": "1.0.0",
+    "description": "Monocart coverage reports",
+    "main": "lib/index.js",
+    "exports": {
+        ".": {
+            "types": "./lib/index.d.ts",
+            "import": "./lib/index.mjs",
+            "require": "./lib/index.js",
+            "default": "./lib/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "types": "./lib/index.d.ts",
+    "scripts": {
+        "test": "node ./tests/test.js",
+        "build": "sf lint && sf b -p",
+        "dev": "sf d v8",
+        "patch": "npm run build && sf publish patch -r"
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "files": [
+        "lib"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cenfun/monocart-coverage-reports.git"
+    },
+    "dependencies": {
+        "console-grid": "^2.0.1",
+        "eight-colors": "^1.0.3",
+        "istanbul-reports": "^3.1.6",
+        "lz-utils": "^2.0.1",
+        "monocart-code-viewer": "^1.0.7",
+        "monocart-formatter": "^1.0.6",
+        "turbogrid": "^3.0.9"
+    },
+    "devDependencies": {
+        "eslint": "^8.54.0",
+        "eslint-config-plus": "^1.0.6",
+        "eslint-plugin-html": "^7.1.0",
+        "eslint-plugin-vue": "^9.18.1",
+        "playwright": "^1.40.1",
+        "stylelint": "^15.11.0",
+        "stylelint-config-plus": "^1.0.4"
+    }
+}
