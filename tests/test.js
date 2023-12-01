@@ -1,120 +1,55 @@
-const { chromium } = require('playwright');
 const path = require('path');
+const http = require('http');
+const EC = require('eight-colors');
+const KSR = require('koa-static-resolver');
+const Koa = require('koa');
 
-const CoverageReport = require('../');
+const testV8 = require('./test-v8.js');
+const testIstanbul = require('./test-istanbul.js');
 
-const coverageOptions = {
-    // logging: 'debug'
-};
+const serverPort = 8130;
+const serverUrl = `http://localhost:${serverPort}`;
 
-const test1 = async () => {
+const serve = () => {
+    const mockDir = path.resolve(__dirname, './mock');
 
-    console.log('start test1 ...');
-    const browser = await chromium.launch({
-        //  headless: false
-    });
-    const page = await browser.newPage();
+    console.log('serve dir', mockDir);
 
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
+    const app = new Koa();
+    app.use(KSR({
+        dirs: [mockDir],
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+        gzip: false,
+        // max-age=<seconds>
+        maxAge: 1
+    }));
 
-    const url = path.resolve(__dirname, '../packages/v8/public/index.html');
+    const server = http.createServer(app.callback());
 
-    console.log(`goto ${url}`);
+    return new Promise((resolve) => {
 
-    await page.goto(url);
+        server.listen(serverPort, function() {
+            EC.logCyan(`${new Date().toLocaleString()} server listening on ${serverUrl}`);
+            resolve(server);
+        });
 
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-    });
-
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
-
-    const coverageList = [... jsCoverage, ... cssCoverage];
-
-    const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageList);
-    console.log('coverage1 added', report.type);
-
-    await browser.close();
-};
-
-
-const test2 = async () => {
-
-    console.log('start test2 ...');
-    const browser = await chromium.launch({
-        // headless: false
-    });
-    const page = await browser.newPage();
-
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
-
-    const url = path.resolve(__dirname, '../packages/v8/public/index.html');
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
     });
 
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
 
-    const coverageList = [... jsCoverage, ... cssCoverage];
-
-    const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageList);
-    console.log('coverage2 added', report.type);
-
-    await browser.close();
-};
-
-
-const generate = async () => {
-
-    console.log('generate coverage reports ...');
-
-    const coverageReport = new CoverageReport(coverageOptions);
-    const results = await coverageReport.generate();
-
-    console.log('coverage generated', results.summary);
 };
 
 const test = async () => {
 
-    // clean cache first if debug
-    if (coverageOptions.logging === 'debug') {
-        const coverageReport = new CoverageReport(coverageOptions);
-        await coverageReport.clean();
-    }
+    console.log('start server ...');
+    const server = await serve();
 
-    await Promise.all([
-        test1(),
-        test2()
-    ]);
+    await testV8(serverUrl);
+    await testIstanbul(serverUrl);
 
-    await generate();
+    console.log('close server ...');
+    server.close();
 };
 
 
