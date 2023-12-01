@@ -4,8 +4,9 @@ const CoverageReport = require('../');
 
 const coverageOptions = {
     name: 'My Istanbul Coverage Report',
-    outputFile: 'coverage-reports/istanbul/index.html'
-    // logging: 'debug'
+    outputFile: 'docs/istanbul/index.html',
+    assetsPath: './js',
+    logging: 'debug'
 };
 
 const test1 = async (serverUrl) => {
@@ -15,15 +16,6 @@ const test1 = async (serverUrl) => {
         //  headless: false
     });
     const page = await browser.newPage();
-
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
 
     const url = `${serverUrl}/istanbul/`;
 
@@ -35,15 +27,20 @@ const test1 = async (serverUrl) => {
         setTimeout(resolve, 500);
     });
 
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
+    await page.evaluate(() => {
+        const { foo } = window['coverage-istanbul'];
+        foo();
+    });
 
-    const coverageList = [... jsCoverage, ... cssCoverage];
+    await page.evaluate(() => {
+        const { bar } = window['coverage-istanbul'];
+        bar();
+    });
+
+    const coverageData = await page.evaluate(() => window.__coverage__);
 
     const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageList);
+    const report = await coverageReport.add(coverageData);
     console.log('coverage1 added', report.type);
 
     await browser.close();
@@ -58,15 +55,6 @@ const test2 = async (serverUrl) => {
     });
     const page = await browser.newPage();
 
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
-
     const url = `${serverUrl}/istanbul/`;
 
     console.log(`goto ${url}`);
@@ -77,15 +65,15 @@ const test2 = async (serverUrl) => {
         setTimeout(resolve, 500);
     });
 
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
+    await page.evaluate(() => {
+        const { start } = window['coverage-istanbul'];
+        start();
+    });
 
-    const coverageList = [... jsCoverage, ... cssCoverage];
+    const coverageData = await page.evaluate(() => window.__coverage__);
 
     const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageList);
+    const report = await coverageReport.add(coverageData);
     console.log('coverage2 added', report.type);
 
     await browser.close();

@@ -3,4 +3,3 @@
 /packages/**/dist
 /package-lock.json
 /lib/packages
-/coverage-reports

@@ -4,8 +4,9 @@ const CoverageReport = require('../');
 
 const coverageOptions = {
     name: 'My V8 Coverage Report',
-    outputFile: 'coverage-reports/v8/index.html'
-    // logging: 'debug'
+    outputFile: 'docs/v8/index.html',
+    assetsPath: '../assets',
+    logging: 'debug'
 };
 
 const test1 = async (serverUrl) => {

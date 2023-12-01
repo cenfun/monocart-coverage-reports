@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:,">
+    <title>coverage page</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="with-map/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <h3 class="red inline-used and-used">
+      Mock Coverage
+    </h3>
+
+    <script src="with-map/fps-detector.js"></script>
+
+    <script src="demo.js"></script>
+    <script src="js/demo.js"></script>
+    
+    <script src="browser.js"></script>
+    <script src="ie-polyfill.js"></script>
+    <script src="redirection.js"></script>
+
+    <script src="with-map/coverage-data.js"></script>
+    <script src="with-map/monocart-v8.js"></script>
+    
+    <script>
+       console.log('body');
+       const FPSDetector = window['fps-detector'].FPSDetector;
+
+       const div = document.createElement('div');
+       document.body.appendChild(div);
+       new FPSDetector(div);
+
+    </script>
+
+
+</body>
+
+</html>

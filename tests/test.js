@@ -11,7 +11,7 @@ const serverPort = 8130;
 const serverUrl = `http://localhost:${serverPort}`;
 
 const serve = () => {
-    const mockDir = path.resolve(__dirname, './mock');
+    const mockDir = path.resolve(__dirname, '../mock');
 
     console.log('serve dir', mockDir);
 

@@ -1,13 +1,14 @@
+// Do NOT put in tests folder
 const path = require('path');
 module.exports = {
     mode: 'development',
 
     devtool: 'source-map',
 
-    entry: path.resolve('tests/mock/src/index.js'),
+    entry: path.resolve('mock/src/index.js'),
 
     output: {
-        path: path.resolve('tests/mock/istanbul/'),
+        path: path.resolve('mock/istanbul/'),
         filename: 'coverage-istanbul.js',
         umdNamedDefine: true,
         library: 'coverage-istanbul',
@@ -20,7 +21,9 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
                 options: {
-                    plugins: ['babel-plugin-istanbul']
+                    plugins: [
+                        ['istanbul', {}]
+                    ]
                 }
             }
         }]
