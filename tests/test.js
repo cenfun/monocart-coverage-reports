@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const EC = require('eight-colors');
@@ -5,6 +6,8 @@ const KSR = require('koa-static-resolver');
 const Koa = require('koa');
 
 const testV8 = require('./test-v8.js');
+const testV8Minify = require('./test-v8-minify.js');
+
 const testIstanbul = require('./test-istanbul.js');
 
 const serverPort = 8130;
@@ -37,7 +40,6 @@ const serve = () => {
 
     });
 
-
 };
 
 const test = async () => {
@@ -45,8 +47,21 @@ const test = async () => {
     console.log('start server ...');
     const server = await serve();
 
-    await testV8(serverUrl);
-    await testIstanbul(serverUrl);
+    // remove assets dir if out of output dir
+    const assetsDir = path.resolve('docs/assets');
+    if (fs.existsSync(assetsDir)) {
+        fs.rmSync(assetsDir, {
+            recursive: true,
+            force: true
+        });
+    }
+
+
+    await Promise.all([
+        testV8(serverUrl),
+        testV8Minify(serverUrl),
+        testIstanbul(serverUrl)
+    ]);
 
     console.log('close server ...');
     server.close();

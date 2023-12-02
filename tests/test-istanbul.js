@@ -3,15 +3,14 @@ const { chromium } = require('playwright');
 const CoverageReport = require('../');
 
 const coverageOptions = {
-    name: 'My Istanbul Coverage Report',
-    outputFile: 'docs/istanbul/index.html',
-    assetsPath: './js',
-    logging: 'debug'
+    // logging: 'debug',
+    // watermarks: [60, 90],
+    outputFile: 'docs/istanbul/index.html'
 };
 
 const test1 = async (serverUrl) => {
 
-    console.log('start test1 ...');
+    console.log('start istanbul test1 ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -41,7 +40,7 @@ const test1 = async (serverUrl) => {
 
     const coverageReport = new CoverageReport(coverageOptions);
     const report = await coverageReport.add(coverageData);
-    console.log('coverage1 added', report.type);
+    console.log('istanbul coverage1 added', report.type);
 
     await browser.close();
 };
@@ -49,7 +48,7 @@ const test1 = async (serverUrl) => {
 
 const test2 = async (serverUrl) => {
 
-    console.log('start test2 ...');
+    console.log('start istanbul test2 ...');
     const browser = await chromium.launch({
         // headless: false
     });
@@ -74,7 +73,7 @@ const test2 = async (serverUrl) => {
 
     const coverageReport = new CoverageReport(coverageOptions);
     const report = await coverageReport.add(coverageData);
-    console.log('coverage2 added', report.type);
+    console.log('istanbul coverage2 added', report.type);
 
     await browser.close();
 };
@@ -82,12 +81,12 @@ const test2 = async (serverUrl) => {
 
 const generate = async () => {
 
-    console.log('generate coverage reports ...');
+    console.log('generate istanbul coverage reports ...');
 
     const coverageReport = new CoverageReport(coverageOptions);
     const results = await coverageReport.generate();
 
-    console.log('coverage generated', results.summary);
+    console.log('istanbul coverage generated', results.summary);
 };
 
 

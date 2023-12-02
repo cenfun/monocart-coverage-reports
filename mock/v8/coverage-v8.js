@@ -1,2 +1,111 @@
-!function(o,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define("coverage-v8",[],e):"object"==typeof exports?exports["coverage-v8"]=e():o["coverage-v8"]=e()}(self,(()=>(()=>{"use strict";var o,e,t={d:(o,e)=>{for(var n in e)t.o(e,n)&&!t.o(o,n)&&Object.defineProperty(o,n,{enumerable:!0,get:e[n]})},o:(o,e)=>Object.prototype.hasOwnProperty.call(o,e),r:o=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(o,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(o,"__esModule",{value:!0})}},n={};function i(o){console.log("this is foo"),o&&console.log("covered foo argument")}function l(o){console.log("this is bar"),o&&console.log("covered bar argument")}function s(){console.log("this is start"),i(!0)}function r(){console.log("this id privateFunction")}return t.r(n),t.d(n,{bar:()=>l,foo:()=>i,privateFunction:()=>r,start:()=>s}),e=window._my_stop_key,console.log("this is init"),s(),e?console.log("stop in init"):[o=>{console.log("this is inline"),o&&console.log("covered inline argument")}].forEach((o=>{o()})),o=window._my_something,console.log("this is onload"),o?console.log("stop with something"):console.log("on loaded"),n})()));
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("coverage-v8", [], factory);
+	else if(typeof exports === 'object')
+		exports["coverage-v8"] = factory();
+	else
+		root["coverage-v8"] = factory();
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!***************************!*\
+  !*** ./mock/src/index.js ***!
+  \***************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   bar: () => (/* binding */ bar),
+/* harmony export */   foo: () => (/* binding */ foo),
+/* harmony export */   start: () => (/* binding */ start)
+/* harmony export */ });
+function foo(argument) {
+  console.log('this is foo');
+  if (argument) {
+    console.log('covered foo argument');
+  }
+}
+function bar(argument) {
+  console.log('this is bar');
+  if (argument) {
+    console.log('covered bar argument');
+  }
+}
+function start() {
+  console.log('this is start');
+  foo(true);
+}
+function privateFunction() {
+  console.log('this is privateFunction');
+}
+function init(stop) {
+  console.log('this is init');
+  start();
+  if (stop) {
+    console.log('stop in init');
+    return;
+  }
+  const inline = a => {
+    console.log('this is inline');
+    if (a) {
+      console.log('covered inline argument');
+    }
+  };
+  const list = [inline];
+  list.forEach(i => {
+    i();
+  });
+  const f = false;
+  if (f) {
+    privateFunction();
+  }
+}
+const onload = something => {
+  console.log('this is onload');
+  if (something) {
+    console.log('stop with something');
+    return;
+  }
+  console.log('on loaded');
+};
+init(window._my_stop_key);
+onload(window._my_something);
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
 //# sourceMappingURL=coverage-v8.js.map

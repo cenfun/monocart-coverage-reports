@@ -20,8 +20,8 @@ export function start() {
     foo(true);
 }
 
-export function privateFunction() {
-    console.log('this id privateFunction');
+function privateFunction() {
+    console.log('this is privateFunction');
 }
 
 function init(stop) {
@@ -45,6 +45,11 @@ function init(stop) {
     list.forEach((i) => {
         i();
     });
+
+    const f = false;
+    if (f) {
+        privateFunction();
+    }
 
 }
 

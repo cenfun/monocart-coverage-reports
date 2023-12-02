@@ -1,6 +1,7 @@
 const path = require('path');
 module.exports = {
-    mode: 'production',
+    // mode: 'production',
+    mode: 'development',
 
     devtool: 'source-map',
 

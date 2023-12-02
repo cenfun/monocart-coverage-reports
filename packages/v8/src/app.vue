@@ -38,7 +38,7 @@ const state = shallowReactive({
 
     keywords: '',
 
-    watermarks: [50, 80],
+    watermarksBytes: [50, 80],
     watermarkLow: true,
     watermarkMedium: true,
     watermarkHigh: true,
@@ -281,7 +281,7 @@ const calculateGroups = (list, parent) => {
     });
     parent.pct = Util.PNF(parent.covered, parent.total, 2);
     parent.percentChart = Util.generatePercentChart(parent.pct);
-    parent.status = Util.getStatus(parent.pct, state.watermarks);
+    parent.status = Util.getStatus(parent.pct, state.watermarksBytes);
     parent.pctClassMap = `mcr-${parent.status}`;
 };
 
@@ -616,6 +616,16 @@ const setFavicon = () => {
     }
 };
 
+const getWatermarksBytes = (watermarks) => {
+    if (watermarks) {
+        if (Array.isArray(watermarks)) {
+            return watermarks;
+        }
+        return watermarks.bytes;
+    }
+    return [50, 80];
+};
+
 const init = async () => {
     initStore();
 
@@ -625,8 +635,10 @@ const init = async () => {
 
     // for export all data JSON able
     state.reportData = reportData;
-    state.title = reportData.title;
-    state.watermarks = reportData.watermarks;
+    state.title = reportData.name || reportData.title;
+    state.watermarksBytes = getWatermarksBytes(reportData.watermarks);
+
+    console.log(state.watermarksBytes);
 
     initTooltip();
 
@@ -770,7 +782,7 @@ window.addEventListener('message', (e) => {
           gap="5px"
         >
           <div class="mcr-watermarks-value">
-            {{ state.watermarks[0] }}
+            {{ state.watermarksBytes[0] }}
           </div>
           <VuiSwitch
             v-model="state.watermarkMedium"
@@ -787,7 +799,7 @@ window.addEventListener('message', (e) => {
           gap="5px"
         >
           <div class="mcr-watermarks-value">
-            {{ state.watermarks[1] }}
+            {{ state.watermarksBytes[1] }}
           </div>
           <VuiSwitch
             v-model="state.watermarkHigh"
