@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Monocart Coverage Reports</title>
+    <link rel="icon" href="data:,">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="assets/github-markdown.css" />
+</head>
+
+<body>
+<div class="markdown-body">
+<h1>Monocart Coverage Reports</h1>
+<p><a target="_blank" href="https://www.npmjs.com/package/monocart-coverage-reports"><img src="https://img.shields.io/npm/v/monocart-coverage-reports" alt=""></a>
+<a target="_blank" href="https://www.npmjs.com/package/monocart-coverage-reports"><img src="https://badgen.net/npm/dw/monocart-coverage-reports" alt=""></a>
+<img src="https://img.shields.io/github/license/cenfun/monocart-coverage-reports" alt=""></p>
+<blockquote>
+<p>Code coverage tool to generate <a target="_blank" href="https://v8.dev/blog/javascript-code-coverage">V8</a> or <a target="_blank" href="https://istanbul.js.org/">Istanbul</a> coverage reports.</p>
+</blockquote>
+<ul>
+<li><a target="_blank" href="https://v8.dev/blog/javascript-code-coverage">V8 coverage report</a> - Native support for JavaScript code coverage to V8. (Chromium only)<ul>
+<li><a target="_blank" href="https://pptr.dev/api/puppeteer.coverage">Puppeteer Coverage Class</a></li>
+<li><a target="_blank" href="https://playwright.dev/docs/api/class-coverage">Playwright Coverage Class</a></li>
+<li><a target="_blank" href="https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage">DevTools Protocol for Coverage</a></li>
+</ul>
+</li>
+<li><a target="_blank" href="https://istanbul.js.org/">Istanbul coverage report</a> - Instrumenting source codes and generating coverage reports<ul>
+<li><a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a></li>
+<li><a target="_blank" href="https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib">istanbul-reports</a></li>
+</ul>
+</li>
+</ul>
+<h2>Preview Reports</h2>
+<ul>
+<li><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/v8">V8</a></li>
+<li><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/v8-minify">V8 Minify</a></li>
+<li><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/v8-to-istanbul">V8 to Istanbul</a></li>
+<li><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/instanbul">Istanbul</a></li>
+</ul>
+<h2>Usage</h2>
+<pre><code class="language-js">const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
+const options = {
+    outputFile: &quot;coverage-reports/2023-11-24/index.html&quot;,
+    name: &quot;My Coverage Report 2023-11-24&quot;
+}
+const coverageReport = new CoverageReport(options);
+await coverageReport.add(coverageData1);
+await coverageReport.add(coverageData2);
+const results = await coverageReport.generate();
+</code></pre>
+<h2>Options</h2>
+<ul>
+<li><a target="_blank" href="lib/options.js">lib/options.js</a></li>
+</ul>
+<h2>Compare Istanbul, V8 and V8 to Istanbul</h2>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">Istanbul</th>
+<th align="left">V8</th>
+<th align="left">V8 to Istanbul</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Input data format</td>
+<td align="left">Istanbul (Object)</td>
+<td align="left">V8 (Array)</td>
+<td align="left">V8 (Array)</td>
+</tr>
+<tr>
+<td align="left">Output</td>
+<td align="left"><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/instanbul">Istanbul HTML report</a></td>
+<td align="left"><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/v8">V8 HTML report</a></td>
+<td align="left"><a target="_blank" href="https://cenfun.github.io/monocart-coverage-reports/v8-to-istanbul">Istanbul HTML report</a></td>
+</tr>
+<tr>
+<td align="left">Indicators</td>
+<td align="left">Covered Lines, Branches, Statements and Functions, Execution Counts</td>
+<td align="left">Covered Bytes, Lines❔, Execution Counts</td>
+<td align="left">Covered Lines, Branches❔, Statements and Functions, Execution Counts</td>
+</tr>
+<tr>
+<td align="left">Source code without <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">instrumentation</a></td>
+<td align="left">❌</td>
+<td align="left">✅</td>
+<td align="left">✅</td>
+</tr>
+<tr>
+<td align="left">CSS coverage</td>
+<td align="left">❌</td>
+<td align="left">✅</td>
+<td align="left">✅</td>
+</tr>
+<tr>
+<td align="left">Minified code</td>
+<td align="left">N/A</td>
+<td align="left">✅</td>
+<td align="left">❌</td>
+</tr>
+<tr>
+<td align="left">Code formatting</td>
+<td align="left">N/A</td>
+<td align="left">✅</td>
+<td align="left">❌</td>
+</tr>
+</tbody></table>
+<p>❔ - Partial or conditional support</p>
+<h2>Links</h2>
+<ul>
+<li><a target="_blank" href="https://istanbul.js.org/">https://istanbul.js.org/</a></li>
+<li><a target="_blank" href="https://v8.dev/blog/javascript-code-coverage">https://v8.dev/blog/javascript-code-coverage</a></li>
+<li><a target="_blank" href="https://docs.cypress.io/guides/tooling/code-coverage">https://docs.cypress.io/guides/tooling/code-coverage</a></li>
+</ul>
+
+</div>
+</body>
+
+</html>
