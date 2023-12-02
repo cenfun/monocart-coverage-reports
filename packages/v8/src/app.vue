@@ -528,6 +528,13 @@ const initGrid = () => {
         },
         rowNotFound: 'No Results'
     };
+
+    // no frozen in mini size
+    if (state.windowWidth < 800) {
+        options.frozenColumn = -1;
+    }
+
+
     grid.setFormatter({
         bytes: (v, rowItem, columnItem) => {
             if (typeof v === 'number') {
@@ -721,6 +728,17 @@ window.addEventListener('message', (e) => {
       </VuiFlex>
 
       <div class="vui-flex-auto" />
+
+      <div class="mcr-about">
+        <a
+          href="https://github.com/cenfun/monocart-coverage-reports"
+          target="_blank"
+          title="Monocart Coverage Reports"
+        ><IconLabel
+          class="mcr-icon-monocart"
+          icon="monocart"
+        /></a>
+      </div>
     </VuiFlex>
 
     <VuiFlex
@@ -921,6 +939,12 @@ icon
         a {
             color: #fff;
             text-decoration: none;
+        }
+    }
+
+    .mcr-about {
+        a {
+            display: block;
         }
     }
 }
