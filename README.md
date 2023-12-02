@@ -6,14 +6,6 @@
 
 > Code coverage tool to generate [V8](https://v8.dev/blog/javascript-code-coverage) or [Istanbul](https://istanbul.js.org/) coverage reports.
 
-- [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
-    - [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
-    - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
-    - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
-- [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
-    - [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)
-    - [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
-
 ## Preview Reports
 - [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
 - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
@@ -51,6 +43,13 @@ const results = await coverageReport.generate();
 ❔ - Partial or conditional support
 
 ## Links
-- https://istanbul.js.org/
-- https://v8.dev/blog/javascript-code-coverage
-- https://docs.cypress.io/guides/tooling/code-coverage
+
+- [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
+    - [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
+    - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
+    - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
+- [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
+    - [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)
+    - [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+    - [Code Coverage Introduction](https://docs.cypress.io/guides/tooling/code-coverage)
+
