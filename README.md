@@ -18,7 +18,7 @@
 - [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
 - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
 - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-to-istanbul)
-- [Istanbul](https://cenfun.github.io/monocart-coverage-reports/instanbul)
+- [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul)
 
 
 ## Usage
@@ -41,7 +41,7 @@ const results = await coverageReport.generate();
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
 | Input data format | Istanbul (Object) | V8 (Array) | V8 (Array) |
-| Output | [Istanbul HTML report](https://cenfun.github.io/monocart-coverage-reports/instanbul) | [V8 HTML report](https://cenfun.github.io/monocart-coverage-reports/v8)  | [Istanbul HTML report](https://cenfun.github.io/monocart-coverage-reports/v8-to-istanbul) |
+| Output | [Istanbul HTML report](https://cenfun.github.io/monocart-coverage-reports/istanbul) | [V8 HTML report](https://cenfun.github.io/monocart-coverage-reports/v8)  | [Istanbul HTML report](https://cenfun.github.io/monocart-coverage-reports/v8-to-istanbul) |
 | Indicators | Covered Lines, Branches, Statements and Functions, Execution Counts | Covered Bytes, Lines❔, Execution Counts | Covered Lines, Branches❔, Statements and Functions, Execution Counts |
 | Source code without [instrumentation](https://github.com/istanbuljs/babel-plugin-istanbul) | ❌ | ✅ | ✅ |
 | CSS coverage | ❌ | ✅ | ✅ |
