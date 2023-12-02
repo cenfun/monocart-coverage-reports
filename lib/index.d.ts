@@ -1,8 +1,3 @@
-
-/**
- * monocart coverage reports
- */
-
 export type IstanbulReportConfig = {
     name: string,
     options: any
@@ -42,3 +37,11 @@ export type CoverageReportOptions = {
 
     logging?: string
 };
+
+export class CoverageReport {
+    constructor(options?: CoverageReportOptions);
+    add: (coverageData: any[] | any) => Promise<any>;
+    generate: () => Promise<any>;
+}
+
+export function createCoverageReport(options?: CoverageReportOptions): CoverageReport;
