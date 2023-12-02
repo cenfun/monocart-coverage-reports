@@ -4,7 +4,7 @@ const CoverageReport = require('../');
 
 const coverageOptions = {
     // logging: 'debug',
-    watermarks: [60, 90],
+    // watermarks: [60, 90],
     name: 'My V8 Coverage Report',
     assetsPath: '../assets',
     outputFile: 'docs/v8/index.html'
@@ -12,7 +12,18 @@ const coverageOptions = {
 
 const toIstanbulOptions = {
     // logging: 'debug',
+
     toIstanbul: true,
+    // toIstanbul: 'html',
+
+    // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
+    // toIstanbul: ['html', {
+    //     name: 'json',
+    //     options: {
+    //         file: 'my-json-file.json'
+    //     }
+    // }],
+
     outputFile: 'docs/v8-to-istanbul/index.html'
 };
 
