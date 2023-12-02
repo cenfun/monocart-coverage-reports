@@ -20,6 +20,7 @@
         "test": "node ./tests/test.js",
         "build": "sf lint && sf b -p",
         "dev": "sf d v8",
+        "build-docs": "node ./scripts/build-docs.js",
         "patch": "npm run build && sf publish patch -r"
     },
     "workspaces": [
@@ -49,8 +50,10 @@
         "eslint-config-plus": "^1.0.6",
         "eslint-plugin-html": "^7.1.0",
         "eslint-plugin-vue": "^9.19.2",
+        "github-markdown-css": "^5.4.0",
         "koa": "^2.14.2",
         "koa-static-resolver": "^1.0.4",
+        "marked": "^11.0.0",
         "playwright": "^1.40.1",
         "stylelint": "^15.11.0",
         "stylelint-config-plus": "^1.0.4",
