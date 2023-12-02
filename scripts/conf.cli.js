@@ -17,6 +17,13 @@ const beforeV8 = (item, Util) => {
     }
 
     const jsPath = path.resolve(item.buildPath, dataFile);
+    const distDir = path.dirname(jsPath);
+    if (!fs.existsSync(distDir)) {
+        fs.mkdirSync(distDir, {
+            recursive: true
+        });
+    }
+
     fs.copyFileSync(jsDataPath, jsPath);
     EC.logGreen(`coverage data file copied: ${dataFile}`);
 

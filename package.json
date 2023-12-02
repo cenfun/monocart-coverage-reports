@@ -18,7 +18,7 @@
         "build-istanbul": "npx webpack --config mock/webpack.config-istanbul.js",
         "build-v8": "npx webpack --config mock/webpack.config-v8.js",
         "test": "node ./tests/test.js",
-        "build": "sf lint && sf b -p",
+        "build": "sf lint && sf b -p && npm run build-docs",
         "dev": "sf d v8",
         "build-docs": "node ./scripts/build-docs.js",
         "patch": "npm run build && sf publish patch -r"

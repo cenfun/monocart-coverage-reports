@@ -7,6 +7,8 @@ const Util = require('../lib/utils/util.js');
 
 const buildDocs = () => {
 
+    console.log('build docs ...');
+
     // copy css
     const cssDir = path.resolve(__dirname, '../docs/assets');
     if (!fs.existsSync(cssDir)) {
