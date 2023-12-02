@@ -25,6 +25,8 @@ await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 const results = await coverageReport.generate();
 ```
+- [example for v8](tests/test-v8.js)
+- [example for istanbul](tests/test-istanbul.js)
 
 ## Options
 - [lib/options.js](lib/options.js)
