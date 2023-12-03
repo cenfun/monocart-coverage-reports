@@ -45,7 +45,7 @@ const results = await coverageReport.generate();
 <ul>
 <li><a target="_blank" href="lib/options.js">lib/options.js</a></li>
 </ul>
-<h2>Compare Istanbul, V8 and V8 to Istanbul</h2>
+<h2>Compare Reports</h2>
 <table>
 <thead>
 <tr>
@@ -56,7 +56,7 @@ const results = await coverageReport.generate();
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Input data format</td>
+<td align="left">Input</td>
 <td align="left">Istanbul (Object)</td>
 <td align="left">V8 (Array)</td>
 <td align="left">V8 (Array)</td>
@@ -72,12 +72,6 @@ const results = await coverageReport.generate();
 <td align="left">Covered Lines, Branches, Statements and Functions, Execution Counts</td>
 <td align="left">Covered Bytes, Lines❔, Execution Counts</td>
 <td align="left">Covered Lines, Branches❔, Statements and Functions, Execution Counts</td>
-</tr>
-<tr>
-<td align="left">Source code without <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">instrumentation</a></td>
-<td align="left">❌</td>
-<td align="left">✅</td>
-<td align="left">✅</td>
 </tr>
 <tr>
 <td align="left">CSS coverage</td>
@@ -99,20 +93,36 @@ const results = await coverageReport.generate();
 </tr>
 </tbody></table>
 <p>❔ - Partial or conditional support</p>
-<h2>Links</h2>
+<h2>Compare Workflows</h2>
 <ul>
-<li><a target="_blank" href="https://v8.dev/blog/javascript-code-coverage">V8 coverage report</a> - Native support for JavaScript code coverage to V8. (Chromium only)<ul>
+<li><p>Istanbul Workflows</p>
+<ul>
+<li>1, Only for source code: instrumenting code with <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a>，see <a target="_blank" href="mock/webpack.config-istanbul.js">webpack.config-istanbul.js</a>, or using <a target="_blank" href="https://github.com/istanbuljs/nyc">nyc</a>.</li>
+<li>2, Collecting coverage data from browser <code>window.__coverage__</code>, see <a target="_blank" href="tests/test-istanbul.js">example</a>.</li>
+<li>3, Generating coverage report.</li>
+</ul>
+</li>
+<li><p>V8 Workflows</p>
+<ul>
+<li>1, For any runtime code: nothing to do. For source code: building code with <code>development</code> mode and sourcemap support, see <a target="_blank" href="mock/webpack.config-v8.js">webpack.config-v8.js</a>.</li>
+<li>2, Collecting coverage data with <a target="_blank" href="#chromium-coverage-api">Chromium Coverage API</a>, see <a target="_blank" href="tests/test-v8.js">example</a>.</li>
+<li>3, Generating coverage report.</li>
+</ul>
+</li>
+</ul>
+<h2>Chromium Coverage API</h2>
+<ul>
+<li><a target="_blank" href="https://v8.dev/blog/javascript-code-coverage">V8 coverage report</a> - Native support for JavaScript code coverage to V8. (Chromium only)</li>
 <li><a target="_blank" href="https://pptr.dev/api/puppeteer.coverage">Puppeteer Coverage Class</a></li>
 <li><a target="_blank" href="https://playwright.dev/docs/api/class-coverage">Playwright Coverage Class</a></li>
 <li><a target="_blank" href="https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage">DevTools Protocol for Coverage</a></li>
 </ul>
-</li>
-<li><a target="_blank" href="https://istanbul.js.org/">Istanbul coverage report</a> - Instrumenting source codes and generating coverage reports<ul>
+<h2>Istanbul Coverage</h2>
+<ul>
+<li><a target="_blank" href="https://istanbul.js.org/">Istanbul coverage report</a> - Instrumenting source codes and generating coverage reports</li>
 <li><a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a></li>
 <li><a target="_blank" href="https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib">istanbul-reports</a></li>
 <li><a target="_blank" href="https://docs.cypress.io/guides/tooling/code-coverage">Code Coverage Introduction</a></li>
-</ul>
-</li>
 </ul>
 
 </div>
