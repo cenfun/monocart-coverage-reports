@@ -8,9 +8,9 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "monocart-code-viewer": "^1.0.7",
-        "monocart-formatter": "^1.0.6",
-        "turbogrid": "^3.0.9"
+        "monocart-code-viewer": "^1.0.8",
+        "monocart-formatter": "^1.0.7",
+        "turbogrid": "^3.0.10"
     },
     "devDependencies": {
         "async-tick": "^1.0.0",
