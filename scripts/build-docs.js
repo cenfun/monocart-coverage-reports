@@ -44,10 +44,12 @@ const buildDocs = () => {
 
     const html = marked.parse(md, markedOptions);
 
-    const content = Util.replace(markdownTemplate, {
+    let content = Util.replace(markdownTemplate, {
         placeholder_title: 'Monocart Coverage Reports',
         placeholder_content: html
     });
+
+    content = content.split('href="https://cenfun.github.io/monocart-coverage-reports/').join('href="./');
 
     fs.writeFileSync(path.resolve(__dirname, '../docs/index.html'), content);
 
