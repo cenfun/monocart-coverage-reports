@@ -65,8 +65,19 @@ export type CoverageReportOptions = {
 
 export class CoverageReport {
     constructor(options?: CoverageReportOptions);
+
+    // add coverage data: (Array) V8 format, (Object) Istanbul format
     add: (coverageData: any[] | any) => Promise<any>;
+
+    // generate report
     generate: () => Promise<any>;
+
+    // check if cache dir exists
+    getCacheDir: () => Promise<string | undefined>;
+
+    // clean cache
+    cleanCache: () => Promise<void>;
+
 }
 
 export default CoverageReport;
