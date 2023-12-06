@@ -74,10 +74,10 @@ export class CoverageReport {
     generate: () => Promise<any>;
 
     // check if cache exists
-    hasCache: () => Promise<boolean>;
+    hasCache: () => boolean;
 
     // clean cache
-    cleanCache: () => Promise<void>;
+    cleanCache: () => boolean;
 
 }
 
