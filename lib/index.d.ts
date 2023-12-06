@@ -50,6 +50,9 @@ export type CoverageReportOptions = {
 
     // [Istanbul only] defaultSummarizer, sourceFinder
 
+    // (Boolean) Quickly add lcovonly report. Defaults to false.
+    lcov?: boolean,
+
     // (Function) source path handler.
     sourcePath?: (filePath: string) => string,
 
