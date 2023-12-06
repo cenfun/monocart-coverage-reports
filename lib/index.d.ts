@@ -38,8 +38,6 @@ export type CoverageReportOptions = {
 
     outputDir?: string,
 
-    cacheDirName?: string,
-
     // v8 report or istanbul supported reports
     reports?: string | ReportDescription[],
 
