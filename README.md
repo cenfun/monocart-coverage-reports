@@ -17,8 +17,8 @@
 ```js
 const CoverageReport = require('monocart-coverage-reports');
 const options = {
-    outputFile: "coverage-reports/2023-11-24/index.html",
-    name: "My Coverage Report 2023-11-24"
+    outputDir: './coverage-reports',
+    reports: "v8"
 }
 const coverageReport = new CoverageReport(options);
 await coverageReport.add(coverageData1);

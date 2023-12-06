@@ -1,10 +1,6 @@
-export type IstanbulReportConfig = {
-    name: string,
-    options: any
-}
 
 // https://playwright.dev/docs/api/class-coverage
-export type CoverageEntry = {
+export type V8CoverageEntry = {
     url: string,
     // css
     text?: string,
@@ -48,16 +44,13 @@ export type CoverageReportOptions = {
     reports?: string | ReportDescription[],
 
     // (Function) A filter function to execute for each element in the V8 list. (V8 only)
-    entryFilter?: (entry: CoverageEntry) => boolean,
+    entryFilter?: (entry: V8CoverageEntry) => boolean,
 
-    // (Function) A filter function to execute for each element in the sources which unpacked from the source map. (Sourcemap only)
+    // (Function) A filter function to execute for each element in the sources which unpacked from the source map. (V8 only)
     sourceFilter?: (sourcePath: string) => boolean,
 
-    // (Function) source path handler. (Istanbul only)
+    // (Function) source path handler.
     sourcePath?: (filePath: string) => string,
-
-    // (Function) source finder for Istanbul HTML report. (Istanbul only)
-    sourceFinder?: (filePath: string) => string,
 
     // (Array) watermarks for low/medium/high. Defaults to [50, 80]
     // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
