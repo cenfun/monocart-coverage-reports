@@ -13,9 +13,58 @@ export type V8CoverageEntry = {
 
 export type ReportDescription =
     ['v8'] |
-    // html, html-spa, json, lcov and so on
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/istanbul-reports/index.d.ts
-    [string] | [string, any];
+    ['clover'] | ['clover', {
+        file?: string
+    }] |
+    ['cobertura'] | ['cobertura', {
+        file?: string,
+        timestamp?: string,
+        projectRoot?: string
+    }] |
+    ['html'] | ['html', {
+        subdir?: string,
+        verbose?: boolean,
+        linkMapper?: any,
+        skipEmpty?: boolean
+    }] |
+    ['html-spa'] | ['html-spa', {
+        subdir?: string,
+        verbose?: boolean,
+        linkMapper?: any,
+        skipEmpty?: boolean,
+        metricsToShow?: Array<"lines" | "branches" | "functions" | "statements">
+    }] |
+    ['json'] | ['json', {
+        file?: string
+    }] |
+    ['json-summary'] | ['json-summary', {
+        file?: string
+    }] |
+    ['lcov'] | ['lcov', {
+        file?: string,
+        projectRoot?: string
+    }] |
+    ['lcovonly'] | ['lcovonly', {
+        file?: string,
+        projectRoot?: string
+    }] |
+    ['none'] |
+    ['teamcity'] | ['teamcity', {
+        file?: string,
+        blockName?: string
+    }] |
+    ['text'] | ['text', {
+        file?: string,
+        maxCols?: number,
+        skipEmpty?: boolean,
+        skipFull?: boolean
+    }] |
+    ['text-lcov'] | ['text-lcov', {
+        projectRoot?: string
+    }] |
+    ['text-summary'] | ['text-summary', {
+        file?: string
+    }];
 
 export type CoverageReportOptions = {
 
