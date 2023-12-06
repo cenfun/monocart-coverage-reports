@@ -9,8 +9,8 @@
 ## Preview Reports
 - [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
 - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
-- [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-to-istanbul)
-- [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul)
+- [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
+- [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/html)
 - [Integration with Monocart Reporter](https://cenfun.github.io/monocart-reporter/) - Playwright test report
 
 ## Usage

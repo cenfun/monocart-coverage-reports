@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
@@ -100,6 +101,7 @@ const generate = async () => {
     console.log('generate v8-minify coverage reports ...');
 
     const report = await new CoverageReport(coverageOptions).generate();
+    console.log('htmlPath', EC.magenta(report.htmlPath));
 
     console.log('v8-minify coverage generated', report.summary);
 };

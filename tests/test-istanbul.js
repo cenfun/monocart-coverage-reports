@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-// const EC = require('eight-colors');
+const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
@@ -7,10 +7,13 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
+        // v8 will be ignore for istanbul data
         'v8',
-        ['html-spa', {}],
+        ['html-spa', {
+            subdir: 'html-spa'
+        }],
         ['html', {
-            subdir: 'html-sub-dir'
+            subdir: 'html'
         }],
         'lcovonly'
     ],
@@ -93,6 +96,8 @@ const generate = async () => {
     console.log('generate istanbul coverage reports ...');
 
     const report = await new CoverageReport(coverageOptions).generate();
+
+    console.log('htmlPath', EC.magenta(report.htmlPath));
 
     console.log('istanbul coverage generated', report.summary);
 };

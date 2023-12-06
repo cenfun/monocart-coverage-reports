@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
@@ -23,7 +24,7 @@ const multipleReportsOptions = {
     // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
     reports: [
         ['v8', {
-            name: 'My V8 To Istanbul Coverage Report',
+            name: 'My V8 sub dir Coverage Report',
             // v8 sub dir
             outputFile: 'v8/index.html',
             assetsPath: '../../assets'
@@ -149,13 +150,13 @@ const generate = async () => {
 
     console.log('generate v8 coverage reports ...');
 
-    const coverageReport = new CoverageReport(coverageOptions);
-    const results = await coverageReport.generate();
+    const report1 = await new CoverageReport(coverageOptions).generate();
+    console.log('htmlPath', EC.magenta(report1.htmlPath));
+    console.log('v8 coverage generated', report1.summary);
 
     // to istanbul
-    await new CoverageReport(multipleReportsOptions).generate();
-
-    console.log('v8 coverage generated', results.summary);
+    const report2 = await new CoverageReport(multipleReportsOptions).generate();
+    console.log('htmlPath', EC.magenta(report2.htmlPath));
 };
 
 
