@@ -7,6 +7,8 @@ const coverageOptions = {
     // watermarks: [60, 90],
     name: 'My V8 Coverage Report',
     assetsPath: '../assets',
+    lcov: true,
+
     outputFile: 'docs/v8/index.html'
 };
 
@@ -15,6 +17,8 @@ const toIstanbulOptions = {
 
     toIstanbul: true,
     // toIstanbul: 'html',
+
+    lcov: true,
 
     // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
     // toIstanbul: ['html', {

@@ -1,11 +1,27 @@
 const { chromium } = require('playwright');
+const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
+    lcov: true,
     outputFile: 'docs/istanbul/index.html'
+};
+
+const subDirOptions = {
+    // logging: 'debug',
+    // watermarks: [60, 90],
+    toIstanbul: [{
+        name: 'html',
+        options: {
+            subdir: 'my-sub-dir'
+        }
+    }],
+    lcov: true,
+
+    outputFile: 'docs/istanbul-sub/index.html'
 };
 
 const test1 = async (serverUrl) => {
@@ -40,6 +56,9 @@ const test1 = async (serverUrl) => {
 
     const coverageReport = new CoverageReport(coverageOptions);
     const report = await coverageReport.add(coverageData);
+
+    await new CoverageReport(subDirOptions).add(coverageData);
+
     console.log('istanbul coverage1 added', report.type);
 
     await browser.close();
@@ -73,6 +92,9 @@ const test2 = async (serverUrl) => {
 
     const coverageReport = new CoverageReport(coverageOptions);
     const report = await coverageReport.add(coverageData);
+
+    await new CoverageReport(subDirOptions).add(coverageData);
+
     console.log('istanbul coverage2 added', report.type);
 
     await browser.close();
@@ -83,10 +105,12 @@ const generate = async () => {
 
     console.log('generate istanbul coverage reports ...');
 
-    const coverageReport = new CoverageReport(coverageOptions);
-    const results = await coverageReport.generate();
+    const report = await new CoverageReport(coverageOptions).generate();
 
-    console.log('istanbul coverage generated', results.summary);
+    const reportSub = await new CoverageReport(subDirOptions).generate();
+    console.log('sub html path', EC.magenta(reportSub.htmlPath));
+
+    console.log('istanbul coverage generated', report.summary);
 };
 
 
