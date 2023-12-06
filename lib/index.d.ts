@@ -11,41 +11,44 @@ export type V8CoverageEntry = {
     functions?: any[]
 }
 
-export type V8ReportOptions = {
-    // report name. Defaults to "Coverage Report".
-    name?: string,
-
-    // output dir and filename. Defaults to "index.html"
-    outputFile?: string,
-
-    // Whether inline all scripts to the single HTML file. Defaults to false.
-    inline?: boolean,
-
-    // assets path if not inline. Defaults to "./assets"
-    assetsPath?: string
-}
-
 export type ReportDescription =
-    ['v8'] | ['v8', V8ReportOptions] |
+    ['v8'] |
     // html, html-spa, json, lcov and so on
     // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/istanbul-reports/index.d.ts
     [string] | [string, any];
 
 export type CoverageReportOptions = {
 
-    // logging levels: off, error, info, debug
+    // (String) logging levels: off, error, info, debug
     logging?: string,
 
+    // (String) output dir
     outputDir?: string,
 
+    // (String) v8 or html for istanbul by default
+    // (Array) multiple reports with options
     // v8 report or istanbul supported reports
     reports?: string | ReportDescription[],
 
-    // (Function) A filter function to execute for each element in the V8 list. (V8 only)
+    // (String) Report name. Defaults to "Coverage Report".
+    name?: string,
+
+    // [V8 only](String) Output [sub dir/]filename. Defaults to "index.html"
+    outputFile?: string,
+
+    // [V8 only](Boolean) Whether inline all scripts to the single HTML file. Defaults to false.
+    inline?: boolean,
+
+    // [V8 only](String) Assets path if not inline. Defaults to "./assets"
+    assetsPath?: string
+
+    // [V8 only](Function) A filter function to execute for each element in the V8 list.
     entryFilter?: (entry: V8CoverageEntry) => boolean,
 
-    // (Function) A filter function to execute for each element in the sources which unpacked from the source map. (V8 only)
+    // [V8 only](Function) A filter function to execute for each element in the sources which unpacked from the source map.
     sourceFilter?: (sourcePath: string) => boolean,
+
+    // [Istanbul only] defaultSummarizer, sourceFinder
 
     // (Function) source path handler.
     sourcePath?: (filePath: string) => string,
