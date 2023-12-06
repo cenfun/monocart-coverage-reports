@@ -72,11 +72,14 @@ module.exports = {
             // only clean if build all
             const totalComponents = fs.readdirSync(path.resolve(__dirname, '../packages'));
             if (results.jobList.length === totalComponents.length && fs.existsSync(toPath)) {
-                EC.logRed('removing packages libs ...');
-                fs.rmSync(toPath, {
-                    recursive: true,
-                    force: true
+                fs.readdirSync(toPath).forEach((f) => {
+                    const jsPath = path.resolve(toPath, f);
+                    fs.rmSync(jsPath, {
+                        force: true
+                    });
+                    EC.logRed(`removed ${jsPath}`);
                 });
+
             }
 
             if (!fs.existsSync(toPath)) {
@@ -121,6 +124,7 @@ module.exports = {
                 const filename = path.basename(distPath);
                 const toJs = path.resolve(toPath, filename);
                 fs.cpSync(distPath, toJs);
+                EC.logGreen(`copied ${toJs}`);
 
                 rows.push({
                     index,
