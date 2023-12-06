@@ -22,15 +22,15 @@
 <ul>
 <li><a target="_blank" href="./v8">V8</a></li>
 <li><a target="_blank" href="./v8-minify">V8 Minify</a></li>
-<li><a target="_blank" href="./v8-to-istanbul">V8 to Istanbul</a></li>
-<li><a target="_blank" href="./istanbul">Istanbul</a></li>
+<li><a target="_blank" href="./v8-and-istanbul/istanbul">V8 to Istanbul</a></li>
+<li><a target="_blank" href="./istanbul/html">Istanbul</a></li>
 <li><a target="_blank" href="https://cenfun.github.io/monocart-reporter/">Integration with Monocart Reporter</a> - Playwright test report</li>
 </ul>
 <h2>Usage</h2>
 <pre><code class="language-js">const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
 const options = {
-    outputFile: &quot;coverage-reports/2023-11-24/index.html&quot;,
-    name: &quot;My Coverage Report 2023-11-24&quot;
+    outputDir: &#39;./coverage-reports&#39;,
+    reports: &quot;v8&quot;
 }
 const coverageReport = new CoverageReport(options);
 await coverageReport.add(coverageData1);
@@ -41,9 +41,9 @@ const report = await coverageReport.generate();
 <li><a target="_blank" href="tests/test-v8.js">example for v8</a></li>
 <li><a target="_blank" href="tests/test-istanbul.js">example for istanbul</a></li>
 </ul>
-<h2>Options</h2>
+<h2>Default Options</h2>
 <ul>
-<li><a target="_blank" href="lib/options.js">lib/options.js</a></li>
+<li><a target="_blank" href="lib/default/options.js">lib/default/options.js</a></li>
 </ul>
 <h2>Compare Reports</h2>
 <table>
