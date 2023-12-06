@@ -1,27 +1,20 @@
 const { chromium } = require('playwright');
-const EC = require('eight-colors');
+// const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    lcov: true,
-    outputFile: 'docs/istanbul/index.html'
-};
-
-const subDirOptions = {
-    // logging: 'debug',
-    // watermarks: [60, 90],
-    toIstanbul: [{
-        name: 'html',
-        options: {
-            subdir: 'my-sub-dir'
-        }
-    }],
-    lcov: true,
-
-    outputFile: 'docs/istanbul-sub/index.html'
+    reports: [
+        'v8',
+        ['html-spa', {}],
+        ['html', {
+            subdir: 'html-sub-dir'
+        }],
+        'lcovonly'
+    ],
+    outputDir: './docs/istanbul'
 };
 
 const test1 = async (serverUrl) => {
@@ -54,12 +47,9 @@ const test1 = async (serverUrl) => {
 
     const coverageData = await page.evaluate(() => window.__coverage__);
 
-    const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageData);
+    const results = await new CoverageReport(coverageOptions).add(coverageData);
 
-    await new CoverageReport(subDirOptions).add(coverageData);
-
-    console.log('istanbul coverage1 added', report.type);
+    console.log('istanbul coverage1 added', results.type);
 
     await browser.close();
 };
@@ -90,12 +80,9 @@ const test2 = async (serverUrl) => {
 
     const coverageData = await page.evaluate(() => window.__coverage__);
 
-    const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageData);
+    const results = await new CoverageReport(coverageOptions).add(coverageData);
 
-    await new CoverageReport(subDirOptions).add(coverageData);
-
-    console.log('istanbul coverage2 added', report.type);
+    console.log('istanbul coverage2 added', results.type);
 
     await browser.close();
 };
@@ -107,9 +94,6 @@ const generate = async () => {
 
     const report = await new CoverageReport(coverageOptions).generate();
 
-    const reportSub = await new CoverageReport(subDirOptions).generate();
-    console.log('sub html path', EC.magenta(reportSub.htmlPath));
-
     console.log('istanbul coverage generated', report.summary);
 };
 
@@ -117,8 +101,7 @@ const generate = async () => {
 module.exports = async (serverUrl) => {
     // clean cache first if debug
     if (coverageOptions.logging === 'debug') {
-        const coverageReport = new CoverageReport(coverageOptions);
-        await coverageReport.clean();
+        await new CoverageReport(coverageOptions).clean();
     }
 
     await Promise.all([

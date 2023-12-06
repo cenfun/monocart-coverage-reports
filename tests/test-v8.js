@@ -2,33 +2,41 @@ const { chromium } = require('playwright');
 
 const CoverageReport = require('../');
 
+// v8 and lcov
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    name: 'My V8 Coverage Report',
-    assetsPath: '../assets',
-    lcov: true,
-
-    outputFile: 'docs/v8/index.html'
+    reports: [
+        ['v8', {
+            name: 'My V8 Coverage Report',
+            assetsPath: '../assets'
+        }],
+        'lcovonly'
+    ],
+    outputDir: './docs/v8'
 };
 
-const toIstanbulOptions = {
+// v8 and istanbul reports
+const multipleReportsOptions = {
     // logging: 'debug',
 
-    toIstanbul: true,
-    // toIstanbul: 'html',
-
-    lcov: true,
-
     // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
-    // toIstanbul: ['html', {
-    //     name: 'json',
-    //     options: {
-    //         file: 'my-json-file.json'
-    //     }
-    // }],
-
-    outputFile: 'docs/v8-to-istanbul/index.html'
+    reports: [
+        ['v8', {
+            name: 'My V8 To Istanbul Coverage Report',
+            // v8 sub dir
+            outputFile: 'v8/index.html',
+            assetsPath: '../../assets'
+        }],
+        ['html', {
+            subdir: 'istanbul'
+        }],
+        ['json', {
+            file: 'my-json-file.json'
+        }],
+        'lcovonly'
+    ],
+    outputDir: './docs/v8-and-istanbul'
 };
 
 const test1 = async (serverUrl) => {
@@ -75,11 +83,11 @@ const test1 = async (serverUrl) => {
 
     const coverageList = [... jsCoverage, ... cssCoverage];
 
-    const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageList);
+    // v8
+    const report = await new CoverageReport(coverageOptions).add(coverageList);
 
     // to istanbul
-    await new CoverageReport(toIstanbulOptions).add(coverageList);
+    await new CoverageReport(multipleReportsOptions).add(coverageList);
 
     console.log('v8 coverage1 added', report.type);
 
@@ -126,11 +134,10 @@ const test2 = async (serverUrl) => {
 
     const coverageList = [... jsCoverage, ... cssCoverage];
 
-    const coverageReport = new CoverageReport(coverageOptions);
-    const report = await coverageReport.add(coverageList);
+    const report = await new CoverageReport(coverageOptions).add(coverageList);
 
     // to istanbul
-    await new CoverageReport(toIstanbulOptions).add(coverageList);
+    await new CoverageReport(multipleReportsOptions).add(coverageList);
 
     console.log('v8 coverage2 added', report.type);
 
@@ -146,7 +153,7 @@ const generate = async () => {
     const results = await coverageReport.generate();
 
     // to istanbul
-    await new CoverageReport(toIstanbulOptions).generate();
+    await new CoverageReport(multipleReportsOptions).generate();
 
     console.log('v8 coverage generated', results.summary);
 };

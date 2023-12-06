@@ -28,8 +28,8 @@ const report = await coverageReport.generate();
 - [example for v8](tests/test-v8.js)
 - [example for istanbul](tests/test-istanbul.js)
 
-## Options
-- [lib/options.js](lib/options.js)
+## Default Options
+- [lib/default/options.js](lib/default/options.js)
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |

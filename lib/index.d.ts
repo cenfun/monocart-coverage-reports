@@ -15,24 +15,37 @@ export type CoverageEntry = {
     functions?: any[]
 }
 
-export type CoverageReportOptions = {
-
-    // report name (V8 only)
+export type V8ReportOptions = {
+    // report name. Defaults to "Coverage Report".
     name?: string,
 
-    // output dir and filename (filename V8 only)
-    outputFile?: string | (() => string),
+    // output dir and filename. Defaults to "index.html"
+    outputFile?: string,
+
+    // Whether inline all scripts to the single HTML file. Defaults to false.
+    inline?: boolean,
+
+    // assets path if not inline. Defaults to "./assets"
+    assetsPath?: string
+}
+
+export type ReportDescription =
+    ['v8'] | ['v8', V8ReportOptions] |
+    // html, html-spa, json, lcov and so on
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/istanbul-reports/index.d.ts
+    [string] | [string, any];
+
+export type CoverageReportOptions = {
 
     // logging levels: off, error, info, debug
     logging?: string,
 
-    // (Boolean) Whether to convert to Istanbul report from V8 list. Defaults to `html-spa` report. (V8 only)
-    // (String) Istanbul report name
-    // (Array) multiple reports. ["report-name", { name: "report-name", options: {} }, ...]
-    toIstanbul?: boolean | string | string[] | IstanbulReportConfig[],
+    outputDir?: string,
 
-    // (Boolean) Whether to create `lcov.info`.  (for Sonar coverage)
-    lcov?: boolean,
+    cacheDirName?: string,
+
+    // v8 report or istanbul supported reports
+    reports?: string | ReportDescription[],
 
     // (Function) A filter function to execute for each element in the V8 list. (V8 only)
     entryFilter?: (entry: CoverageEntry) => boolean,
@@ -54,13 +67,7 @@ export type CoverageReportOptions = {
         branches?: [number, number],
         lines?: [number, number],
         bytes?: [number, number]
-    },
-
-    // (Boolean) Whether inline all scripts to the single HTML file. (V8 only)
-    inline?: boolean,
-
-    // assets path if not inline. (V8 only)
-    assetsPath?: string
+    }
 };
 
 export class CoverageReport {
@@ -72,8 +79,8 @@ export class CoverageReport {
     // generate report
     generate: () => Promise<any>;
 
-    // check if cache dir exists
-    getCacheDir: () => Promise<string | undefined>;
+    // check if cache exists
+    hasCache: () => Promise<boolean>;
 
     // clean cache
     cleanCache: () => Promise<void>;
