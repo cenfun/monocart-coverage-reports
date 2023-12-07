@@ -36,15 +36,83 @@ const coverageReport = new CoverageReport(options);
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 const report = await coverageReport.generate();
+console.log(report.summary);
 </code></pre>
 <ul>
-<li><a target="_blank" href="tests/test-v8.js">example for v8</a></li>
-<li><a target="_blank" href="tests/test-istanbul.js">example for istanbul</a></li>
+<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js">example v8</a></li>
+<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js">example istanbul</a></li>
 </ul>
 <h2>Default Options</h2>
 <ul>
-<li><a target="_blank" href="lib/default/options.js">lib/default/options.js</a></li>
+<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js">lib/default/options.js</a></li>
 </ul>
+<h2>Multiple Reports</h2>
+<ul>
+<li>v8 report<ul>
+<li>v8</li>
+</ul>
+</li>
+<li><a target="_blank" href="https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib">istanbul reports</a><ul>
+<li>clover</li>
+<li>cobertura</li>
+<li>html</li>
+<li>html-spa</li>
+<li>json</li>
+<li>json-summary</li>
+<li>lcov</li>
+<li>lcovonly</li>
+<li>none</li>
+<li>teamcity</li>
+<li>text</li>
+<li>text-lcov</li>
+<li>text-summary</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-js">const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
+const options = {
+    outputDir: &#39;./coverage-reports&#39;,
+    reports: [
+        [&#39;v8&#39;],
+        [&#39;html&#39;, {
+            subdir: &#39;istanbul&#39;
+        }],
+        [&#39;json&#39;, {
+            file: &#39;my-json-file.json&#39;
+        }],
+        &#39;lcovonly&#39;
+    ]
+}
+const coverageReport = new CoverageReport(options);
+</code></pre>
+<h1>Multiprocessing Support</h1>
+<p>The data will be added to <code>[outputDir]/.cache</code>, and the cache will be removed after reports generated.</p>
+<ul>
+<li>sub process 1</li>
+</ul>
+<pre><code class="language-js">const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
+const options = require(&#39;path-to/same-options.js&#39;);
+const coverageReport = new CoverageReport(options);
+await coverageReport.add(coverageData1);
+</code></pre>
+<ul>
+<li>sub process 2</li>
+</ul>
+<pre><code class="language-js">const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
+const options = require(&#39;path-to/same-options.js&#39;);
+const coverageReport = new CoverageReport(options);
+await coverageReport.add(coverageData2);
+</code></pre>
+<ul>
+<li>main process</li>
+</ul>
+<pre><code class="language-js">// after all sub processes finished
+const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
+const options = require(&#39;path-to/same-options.js&#39;);
+const coverageReport = new CoverageReport(options);
+const report = await coverageReport.generate();
+console.log(report.summary);
+</code></pre>
 <h2>Compare Reports</h2>
 <table>
 <thead>
@@ -97,15 +165,15 @@ const report = await coverageReport.generate();
 <ul>
 <li><p>Istanbul Workflows</p>
 <ul>
-<li>1, Only for source code: instrumenting code with <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a>，see <a target="_blank" href="mock/webpack.config-istanbul.js">webpack.config-istanbul.js</a>, or using <a target="_blank" href="https://github.com/istanbuljs/nyc">nyc</a>.</li>
-<li>2, Collecting coverage data from browser <code>window.__coverage__</code>, see <a target="_blank" href="tests/test-istanbul.js">example</a>.</li>
+<li>1, Only for source code: instrumenting code with <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a>，see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-istanbul.js">webpack.config-istanbul.js</a>, or using <a target="_blank" href="https://github.com/istanbuljs/nyc">nyc</a>.</li>
+<li>2, Collecting coverage data from browser <code>window.__coverage__</code>, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js">example</a>.</li>
 <li>3, Generating coverage report.</li>
 </ul>
 </li>
 <li><p>V8 Workflows</p>
 <ul>
-<li>1, For any runtime code: nothing to do. For source code: building code with <code>development</code> mode and sourcemap support, see <a target="_blank" href="mock/webpack.config-v8.js">webpack.config-v8.js</a>.</li>
-<li>2, Collecting coverage data with <a target="_blank" href="#chromium-coverage-api">Chromium Coverage API</a>, see <a target="_blank" href="tests/test-v8.js">example</a>.</li>
+<li>1, For any runtime code: nothing to do. For source code: building code with <code>development</code> mode and sourcemap support, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-v8.js">webpack.config-v8.js</a>.</li>
+<li>2, Collecting coverage data with <a target="_blank" href="#chromium-coverage-api">Chromium Coverage API</a>, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js">example</a>.</li>
 <li>3, Generating coverage report.</li>
 </ul>
 </li>

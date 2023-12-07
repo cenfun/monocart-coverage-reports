@@ -24,12 +24,77 @@ const coverageReport = new CoverageReport(options);
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 const report = await coverageReport.generate();
+console.log(report.summary);
 ```
-- [example for v8](tests/test-v8.js)
-- [example for istanbul](tests/test-istanbul.js)
+- [example v8](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js)
+- [example istanbul](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js)
 
 ## Default Options
-- [lib/default/options.js](lib/default/options.js)
+- [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
+
+## Multiple Reports
+- v8 report
+    - v8
+- [istanbul reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+    - clover
+    - cobertura
+    - html
+    - html-spa
+    - json
+    - json-summary
+    - lcov
+    - lcovonly
+    - none
+    - teamcity
+    - text
+    - text-lcov
+    - text-summary
+
+```js
+const CoverageReport = require('monocart-coverage-reports');
+const options = {
+    outputDir: './coverage-reports',
+    reports: [
+        ['v8'],
+        ['html', {
+            subdir: 'istanbul'
+        }],
+        ['json', {
+            file: 'my-json-file.json'
+        }],
+        'lcovonly'
+    ]
+}
+const coverageReport = new CoverageReport(options);
+```
+
+# Multiprocessing Support
+The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
+- sub process 1
+```js
+const CoverageReport = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+const coverageReport = new CoverageReport(options);
+await coverageReport.add(coverageData1);
+```
+
+- sub process 2
+```js
+const CoverageReport = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+const coverageReport = new CoverageReport(options);
+await coverageReport.add(coverageData2);
+```
+
+- main process
+```js
+// after all sub processes finished
+const CoverageReport = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+const coverageReport = new CoverageReport(options);
+const report = await coverageReport.generate();
+console.log(report.summary);
+```
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
@@ -45,13 +110,13 @@ const report = await coverageReport.generate();
 
 ## Compare Workflows
 - Istanbul Workflows
-    - 1, Only for source code: instrumenting code with [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)，see [webpack.config-istanbul.js](mock/webpack.config-istanbul.js), or using [nyc](https://github.com/istanbuljs/nyc).
-    - 2, Collecting coverage data from browser `window.__coverage__`, see [example](tests/test-istanbul.js).
+    - 1, Only for source code: instrumenting code with [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)，see [webpack.config-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-istanbul.js), or using [nyc](https://github.com/istanbuljs/nyc).
+    - 2, Collecting coverage data from browser `window.__coverage__`, see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js).
     - 3, Generating coverage report.
 
 - V8 Workflows
-    - 1, For any runtime code: nothing to do. For source code: building code with `development` mode and sourcemap support, see [webpack.config-v8.js](mock/webpack.config-v8.js).
-    - 2, Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](tests/test-v8.js).
+    - 1, For any runtime code: nothing to do. For source code: building code with `development` mode and sourcemap support, see [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-v8.js).
+    - 2, Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js).
     - 3, Generating coverage report.
 
 ## Chromium Coverage API
