@@ -11,6 +11,14 @@ export type V8CoverageEntry = {
     functions?: any[]
 }
 
+export type Watermarks = [number, number] | {
+    statements?: [number, number],
+    functions?: [number, number],
+    branches?: [number, number],
+    lines?: [number, number],
+    bytes?: [number, number]
+}
+
 export type ReportDescription =
     ['v8'] |
     ['clover'] | ['clover', {
@@ -110,14 +118,17 @@ export type CoverageReportOptions = {
 
     // (Array) watermarks for low/medium/high. Defaults to [50, 80]
     // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
-    watermarks?: [number, number] | {
-        statements?: [number, number],
-        functions?: [number, number],
-        branches?: [number, number],
-        lines?: [number, number],
-        bytes?: [number, number]
-    }
-};
+    watermarks?: Watermarks
+}
+
+export type CoverageResults = {
+    type: "v8" | "istanbul",
+    reportPath: string,
+    name: string,
+    watermarks: Watermarks,
+    summary: any,
+    files: any
+}
 
 export class CoverageReport {
     constructor(options?: CoverageReportOptions);
@@ -126,7 +137,7 @@ export class CoverageReport {
     add: (coverageData: any[] | any) => Promise<any>;
 
     // generate report
-    generate: () => Promise<any>;
+    generate: () => Promise<CoverageResults>;
 
     // check if cache exists
     hasCache: () => boolean;
