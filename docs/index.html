@@ -35,8 +35,8 @@ const options = {
 const coverageReport = new CoverageReport(options);
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
-const report = await coverageReport.generate();
-console.log(report.summary);
+const coverageResults = await coverageReport.generate();
+console.log(coverageResults.summary);
 </code></pre>
 <ul>
 <li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js">example v8</a></li>
@@ -110,8 +110,8 @@ await coverageReport.add(coverageData2);
 const CoverageReport = require(&#39;monocart-coverage-reports&#39;);
 const options = require(&#39;path-to/same-options.js&#39;);
 const coverageReport = new CoverageReport(options);
-const report = await coverageReport.generate();
-console.log(report.summary);
+const coverageResults = await coverageReport.generate();
+console.log(coverageResults.summary);
 </code></pre>
 <h2>Compare Reports</h2>
 <table>

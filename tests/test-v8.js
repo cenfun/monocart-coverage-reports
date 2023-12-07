@@ -155,13 +155,13 @@ const generate = async () => {
 
     console.log('generate v8 coverage reports ...');
 
-    const report1 = await new CoverageReport(coverageOptions).generate();
-    console.log('reportPath', EC.magenta(report1.reportPath));
-    console.log('v8 coverage generated', Object.keys(report1), report1.summary);
+    const coverageResults1 = await new CoverageReport(coverageOptions).generate();
+    console.log('reportPath', EC.magenta(coverageResults1.reportPath));
+    console.log('v8 coverage generated', Object.keys(coverageResults1), coverageResults1.summary);
 
     // to istanbul
-    const report2 = await new CoverageReport(multipleReportsOptions).generate();
-    console.log('reportPath', EC.magenta(report2.reportPath));
+    const coverageResults2 = await new CoverageReport(multipleReportsOptions).generate();
+    console.log('reportPath', EC.magenta(coverageResults2.reportPath));
 };
 
 

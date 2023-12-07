@@ -93,11 +93,11 @@ const generate = async () => {
 
     console.log('generate istanbul coverage reports ...');
 
-    const report = await new CoverageReport(coverageOptions).generate();
+    const coverageResults = await new CoverageReport(coverageOptions).generate();
 
-    console.log('reportPath', EC.magenta(report.reportPath));
+    console.log('reportPath', EC.magenta(coverageResults.reportPath));
 
-    console.log('istanbul coverage generated', Object.keys(report), report.summary);
+    console.log('istanbul coverage generated', Object.keys(coverageResults), coverageResults.summary);
 };
 
 
