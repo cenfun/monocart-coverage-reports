@@ -42,7 +42,43 @@ const serve = () => {
 
 };
 
+const testFunctions = () => {
+
+
+    const { dedupeRanges } = require('../lib/converter/dedupe.js');
+
+    const ranges = [{
+        start: 0, end: 10
+    }, {
+        start: 100, end: 200
+    }, {
+        start: 0, end: 15
+    }, {
+        start: 20, end: 30
+    }, {
+        start: 18, end: 25
+    }, {
+        start: 50, end: 60
+    }, {
+        start: 55, end: 58
+    }, {
+        start: 58, end: 66
+    }, {
+        start: 50, end: 80
+    }, {
+        start: 30, end: 50
+    }];
+    const newRanges = dedupeRanges(ranges);
+    console.log(newRanges);
+
+    console.assert(JSON.stringify(newRanges) === '[{"start":0,"end":15},{"start":18,"end":80},{"start":100,"end":200}]');
+    console.log(EC.green('passed'), 'test dedupeRanges');
+
+};
+
 const test = async () => {
+
+    testFunctions();
 
     console.log('start server ...');
     const server = await serve();
