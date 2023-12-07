@@ -85,7 +85,7 @@ export type CoverageReportOptions = {
     // [V8 only](String) Output [sub dir/]filename. Defaults to "index.html"
     outputFile?: string,
 
-    // [V8 only](Boolean) Whether inline all scripts to the single HTML file. Defaults to false.
+    // [V8 only](Boolean) Inline all scripts to the single HTML file. Defaults to false.
     inline?: boolean,
 
     // [V8 only](String) Assets path if not inline. Defaults to "./assets"
@@ -99,7 +99,7 @@ export type CoverageReportOptions = {
 
     // [Istanbul only] defaultSummarizer, sourceFinder
 
-    // (Boolean) Quickly add lcovonly report. Defaults to false.
+    // (Boolean) Generate lcov.info file, same as lcovonly report. Defaults to false.
     lcov?: boolean,
 
     // (Function) source path handler.

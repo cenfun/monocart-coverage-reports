@@ -79,7 +79,6 @@ module.exports = {
                     });
                     EC.logRed(`removed ${jsPath}`);
                 });
-
             }
 
             if (!fs.existsSync(toPath)) {

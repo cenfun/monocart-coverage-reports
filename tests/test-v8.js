@@ -7,13 +7,12 @@ const CoverageReport = require('../');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    reports: [
-        ['v8', {
-            name: 'My V8 Coverage Report',
-            assetsPath: '../assets'
-        }],
-        'lcovonly'
-    ],
+    reports: 'v8',
+
+    name: 'My V8 Coverage Report',
+    assetsPath: '../assets',
+    lcov: true,
+
     outputDir: './docs/v8'
 };
 
@@ -23,12 +22,7 @@ const multipleReportsOptions = {
 
     // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
     reports: [
-        ['v8', {
-            name: 'My V8 sub dir Coverage Report',
-            // v8 sub dir
-            outputFile: 'v8/index.html',
-            assetsPath: '../../assets'
-        }],
+        ['v8'],
         ['html', {
             subdir: 'istanbul'
         }],
@@ -37,6 +31,12 @@ const multipleReportsOptions = {
         }],
         'lcovonly'
     ],
+
+    name: 'My V8 sub dir Coverage Report',
+    // v8 sub dir
+    outputFile: 'v8/index.html',
+    assetsPath: '../../assets',
+
     outputDir: './docs/v8-and-istanbul'
 };
 

@@ -7,16 +7,14 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
-        // v8 will be ignore for istanbul data
+        // v8 will be ignored if input data istanbul
         'v8',
+        ['html'],
         ['html-spa', {
             subdir: 'html-spa'
-        }],
-        ['html', {
-            subdir: 'html'
-        }],
-        'lcovonly'
+        }]
     ],
+    lcov: true,
     outputDir: './docs/istanbul'
 };
 
