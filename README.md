@@ -132,3 +132,5 @@ console.log(report.summary);
 - [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
 - [Code Coverage Introduction](https://docs.cypress.io/guides/tooling/code-coverage)
 
+## Thanks
+- Special thanks to [@edumserrano](https://github.com/edumserrano)
