@@ -37,6 +37,11 @@ const multipleReportsOptions = {
     outputFile: 'v8/index.html',
     assetsPath: '../../assets',
 
+    // reportPath: 'lcov.info',
+    reportPath: () => {
+        return 'my-json-file.json';
+    },
+
     outputDir: './docs/v8-and-istanbul'
 };
 
@@ -151,12 +156,12 @@ const generate = async () => {
     console.log('generate v8 coverage reports ...');
 
     const report1 = await new CoverageReport(coverageOptions).generate();
-    console.log('htmlPath', EC.magenta(report1.htmlPath));
-    console.log('v8 coverage generated', report1.summary);
+    console.log('reportPath', EC.magenta(report1.reportPath));
+    console.log('v8 coverage generated', Object.keys(report1), report1.summary);
 
     // to istanbul
     const report2 = await new CoverageReport(multipleReportsOptions).generate();
-    console.log('htmlPath', EC.magenta(report2.htmlPath));
+    console.log('reportPath', EC.magenta(report2.reportPath));
 };
 
 

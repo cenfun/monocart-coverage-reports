@@ -95,9 +95,9 @@ const generate = async () => {
 
     const report = await new CoverageReport(coverageOptions).generate();
 
-    console.log('htmlPath', EC.magenta(report.htmlPath));
+    console.log('reportPath', EC.magenta(report.reportPath));
 
-    console.log('istanbul coverage generated', report.summary);
+    console.log('istanbul coverage generated', Object.keys(report), report.summary);
 };
 
 

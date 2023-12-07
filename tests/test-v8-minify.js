@@ -101,7 +101,7 @@ const generate = async () => {
     console.log('generate v8-minify coverage reports ...');
 
     const report = await new CoverageReport(coverageOptions).generate();
-    console.log('htmlPath', EC.magenta(report.htmlPath));
+    console.log('reportPath', EC.magenta(report.reportPath));
 
     console.log('v8-minify coverage generated', report.summary);
 };

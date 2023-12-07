@@ -102,8 +102,11 @@ export type CoverageReportOptions = {
     // (Boolean) Generate lcov.info file, same as lcovonly report. Defaults to false.
     lcov?: boolean,
 
-    // (Function) source path handler.
+    // (Function) Source path handler.
     sourcePath?: (filePath: string) => string,
+
+    // (String|Function) Specify the report path, especially when there are multiple reports. Defaults to outputDir/index.html.
+    reportPath?: string | (() => string),
 
     // (Array) watermarks for low/medium/high. Defaults to [50, 80]
     // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
