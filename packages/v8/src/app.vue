@@ -611,7 +611,7 @@ const initStore = () => {
             state[item] = mapping[v];
             return;
         }
-        console.log(item, v);
+        // console.log(item, v);
         state[item] = v;
     });
 };
@@ -645,7 +645,7 @@ const init = async () => {
     state.title = reportData.name || reportData.title;
     state.watermarksBytes = getWatermarksBytes(reportData.watermarks);
 
-    console.log(state.watermarksBytes);
+    // console.log(state.watermarksBytes);
 
     initTooltip();
 
