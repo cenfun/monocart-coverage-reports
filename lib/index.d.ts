@@ -20,7 +20,11 @@ export type Watermarks = [number, number] | {
 }
 
 export type ReportDescription =
-    ['v8'] |
+    ['v8'] | ["v8", {
+        outputFile?: string,
+        inline?: boolean,
+        assetsPath?: string
+    }] |
     ['clover'] | ['clover', {
         file?: string
     }] |
@@ -92,10 +96,8 @@ export type CoverageReportOptions = {
 
     // [V8 only](String) Output [sub dir/]filename. Defaults to "index.html"
     outputFile?: string,
-
     // [V8 only](Boolean) Inline all scripts to the single HTML file. Defaults to false.
     inline?: boolean,
-
     // [V8 only](String) Assets path if not inline. Defaults to "./assets"
     assetsPath?: string
 
