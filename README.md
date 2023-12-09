@@ -115,7 +115,7 @@ console.log(coverageResults.summary);
     - 3, Generating coverage report.
 
 - V8 Workflows
-    - 1, For any runtime code: nothing to do. For source code: building code with `development` mode and sourcemap support, see [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-v8.js).
+    - 1, For any runtime code: nothing to do. For source code: building code with `development` [mode](https://webpack.js.org/configuration/mode/) and [sourcemap](https://webpack.js.org/configuration/devtool/) support, see [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-v8.js).
     - 2, Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js).
     - 3, Generating coverage report.
 
