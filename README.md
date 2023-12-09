@@ -101,7 +101,7 @@ console.log(coverageResults.summary);
 | :--------------| :------ | :------ | :----------------------  |
 | Input | Istanbul (Object) | V8 (Array) | V8 (Array) |
 | Output | [Istanbul HTML report](https://cenfun.github.io/monocart-coverage-reports/istanbul) | [V8 HTML report](https://cenfun.github.io/monocart-coverage-reports/v8)  | [Istanbul HTML report](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul) |
-| Indicators | Covered Lines, Branches, Statements and Functions, Execution Counts | Covered Bytes, Lines❔, Execution Counts | Covered Lines, Branches❔, Statements and Functions, Execution Counts |
+| Indicators | Covered Lines, Branches, Statements and Functions, Execution Counts | Covered Bytes, Lines❔, Execution Counts | Covered Lines, Branches❔, Statements and Functions❔, Execution Counts |
 | CSS coverage | ❌ | ✅ | ✅ |
 | Minified code | N/A | ✅ | ❌ |
 | Code formatting | N/A | ✅ | ❌ |
