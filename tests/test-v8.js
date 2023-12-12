@@ -50,8 +50,27 @@ const multipleReportsOptions = {
         const summary = coverageResults.summary;
         console.log(summary);
         CG({
-            columns: ['name', 'value'],
-            rows: Object.keys(summary).map((k) => [k, summary[k]])
+            columns: [{
+                id: 'name'
+            }, {
+                id: 'value',
+                formatter: (v, row, column) => {
+                    if (row.name === 'pct') {
+                        // in red color if coverage less than 90%
+                        if (v < 90) {
+                            v = EC.red(v);
+                        }
+                        return v;
+                    }
+                    return v;
+                }
+            }],
+            rows: Object.keys(summary).map((k) => {
+                return {
+                    name: k,
+                    value: summary[k]
+                };
+            })
         });
     },
 
