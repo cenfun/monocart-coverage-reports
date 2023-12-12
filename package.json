@@ -55,7 +55,7 @@
         "github-markdown-css": "^5.5.0",
         "koa": "^2.14.2",
         "koa-static-resolver": "^1.0.4",
-        "marked": "^11.0.1",
+        "marked": "^11.1.0",
         "playwright": "^1.40.1",
         "stylelint": "^16.0.2",
         "stylelint-config-plus": "^1.0.4",

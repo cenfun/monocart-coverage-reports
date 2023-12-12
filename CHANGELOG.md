@@ -1,4 +1,7 @@
 
+* 1.1.0
+    - added onEnd hook
+
 * 1.0.9
     - added v8-json report
 

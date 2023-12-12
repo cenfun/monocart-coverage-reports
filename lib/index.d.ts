@@ -81,6 +81,15 @@ export type ReportDescription =
         file?: string
     }];
 
+export type CoverageResults = {
+    type: "v8" | "istanbul",
+    reportPath: string,
+    name: string,
+    watermarks: Watermarks,
+    summary: any,
+    files: any
+}
+
 export type CoverageReportOptions = {
 
     // (String) logging levels: off, error, info, debug
@@ -123,16 +132,10 @@ export type CoverageReportOptions = {
 
     // (Array) watermarks for low/medium/high. Defaults to [50, 80]
     // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
-    watermarks?: Watermarks
-}
+    watermarks?: Watermarks,
 
-export type CoverageResults = {
-    type: "v8" | "istanbul",
-    reportPath: string,
-    name: string,
-    watermarks: Watermarks,
-    summary: any,
-    files: any
+    // (Function) onEnd hook
+    onEnd?: (reportData: CoverageResults) => Promise<void>
 }
 
 export class CoverageReport {

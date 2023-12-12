@@ -1,5 +1,6 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
+const CG = require('console-grid');
 
 const CoverageReport = require('../');
 
@@ -43,6 +44,15 @@ const multipleReportsOptions = {
     // reportPath: 'lcov.info',
     reportPath: () => {
         return 'my-json-file.json';
+    },
+
+    onEnd: (coverageResults) => {
+        const summary = coverageResults.summary;
+        console.log(summary);
+        CG({
+            columns: ['name', 'value'],
+            rows: Object.keys(summary).map((k) => [k, summary[k]])
+        });
     },
 
     outputDir: './docs/v8-and-istanbul'
