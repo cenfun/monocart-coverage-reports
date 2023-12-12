@@ -35,6 +35,7 @@ console.log(coverageResults.summary);
 ## Multiple Reports
 - v8 report
     - v8
+    - v8-json
 - [istanbul reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
     - clover
     - cobertura

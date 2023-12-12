@@ -23,6 +23,9 @@ const multipleReportsOptions = {
     // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
     reports: [
         ['v8'],
+        ['v8-json', {
+            // outputFile: 'json/v8-report.json'
+        }],
         ['html', {
             subdir: 'istanbul'
         }],

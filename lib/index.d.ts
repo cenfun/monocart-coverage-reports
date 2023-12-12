@@ -25,6 +25,9 @@ export type ReportDescription =
         inline?: boolean,
         assetsPath?: string
     }] |
+    ['v8-json'] | ["v8-json", {
+        outputFile?: string
+    }] |
     ['clover'] | ['clover', {
         file?: string
     }] |
