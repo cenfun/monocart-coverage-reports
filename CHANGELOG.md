@@ -1,3 +1,7 @@
+
+* 1.0.9
+    - added v8-json report
+
 * 1.0.8
     - fixed module path for pnpm
 
