@@ -1,3 +1,6 @@
+* 1.0.8
+    - fixed module path for pnpm
+
 * 1.0.7
     - fixed report path
     - added types for v8 options
