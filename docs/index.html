@@ -186,6 +186,24 @@ console.log(coverageResults.summary);
 <li><a target="_blank" href="https://playwright.dev/docs/api/class-coverage">Playwright Coverage Class</a></li>
 <li><a target="_blank" href="https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage">DevTools Protocol for Coverage</a></li>
 </ul>
+<h2>Using <code>entryFilter</code> and <code>sourceFilter</code> to filter the results for V8 report</h2>
+<p>When you add coverage data with <a href="#chromium-coverage-api">Chromium Coverage API</a>, it actually contains the data of all entry files, for example:</p>
+<pre><code>1, dist/main.js
+2, dist/vendor.js
+3, dist/something-else.js
+</code></pre>
+<p>We can use <code>entryFilter</code> to filter the entry files. For example, we should remove <code>vendor.js</code> and <code>something-else.js</code> if they are not in our coverage scope. </p>
+<pre><code>1, dist/main.js
+</code></pre>
+<p>When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if <code>logging</code> is not <code>debug</code>.</p>
+<pre><code>1, src/index.js
+2, src/components/app.js
+3, node_modules/dependency/dist/dependency.js
+</code></pre>
+<p>We can use <code>sourceFilter</code> to filter the source files. For example, when should remove <code>dependency.js</code> if it is not in our coverage scope.</p>
+<pre><code>1, src/index.js
+2, src/components/app.js
+</code></pre>
 <h2>Istanbul Coverage</h2>
 <ul>
 <li><a target="_blank" href="https://istanbul.js.org/">Istanbul coverage report</a> - Instrumenting source codes and generating coverage reports</li>

@@ -127,11 +127,35 @@ console.log(coverageResults.summary);
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
 
 
+## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
+When you add coverage data with [Chromium Coverage API](#chromium-coverage-api), it actually contains the data of all entry files, for example:
+```
+1, dist/main.js
+2, dist/vendor.js
+3, dist/something-else.js
+```
+We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
+```
+1, dist/main.js
+```
+When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
+```
+1, src/index.js
+2, src/components/app.js
+3, node_modules/dependency/dist/dependency.js
+```
+We can use `sourceFilter` to filter the source files. For example, when should remove `dependency.js` if it is not in our coverage scope.
+```
+1, src/index.js
+2, src/components/app.js
+```
+
 ## Istanbul Coverage
 - [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
 - [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)
 - [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
 - [Code Coverage Introduction](https://docs.cypress.io/guides/tooling/code-coverage)
+
 
 ## Thanks
 - Special thanks to [@edumserrano](https://github.com/edumserrano)
