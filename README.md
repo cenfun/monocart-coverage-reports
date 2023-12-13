@@ -144,11 +144,19 @@ When inline or linked sourcemap exists to the entry file, the source files will 
 2, src/components/app.js
 3, node_modules/dependency/dist/dependency.js
 ```
-We can use `sourceFilter` to filter the source files. For example, when should remove `dependency.js` if it is not in our coverage scope.
+We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
 ```
 1, src/index.js
 2, src/components/app.js
 ```
+Example:
+```js
+const coverageOptions = {
+    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
+};
+```
+
 
 ## Istanbul Coverage
 - [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports

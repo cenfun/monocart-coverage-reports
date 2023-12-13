@@ -200,9 +200,15 @@ console.log(coverageResults.summary);
 2, src/components/app.js
 3, node_modules/dependency/dist/dependency.js
 </code></pre>
-<p>We can use <code>sourceFilter</code> to filter the source files. For example, when should remove <code>dependency.js</code> if it is not in our coverage scope.</p>
+<p>We can use <code>sourceFilter</code> to filter the source files. For example, we should remove <code>dependency.js</code> if it is not in our coverage scope.</p>
 <pre><code>1, src/index.js
 2, src/components/app.js
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-js">const coverageOptions = {
+    entryFilter: (entry) =&gt; entry.url.indexOf(&quot;main.js&quot;) !== -1,
+    sourceFilter: (sourcePath) =&gt; sourcePath.search(/src\//) !== -1
+};
 </code></pre>
 <h2>Istanbul Coverage</h2>
 <ul>
