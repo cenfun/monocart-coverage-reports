@@ -69,7 +69,7 @@ const options = {
 const coverageReport = new CoverageReport(options);
 ```
 
-# Multiprocessing Support
+## Multiprocessing Support
 The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
 - sub process 1
 ```js
