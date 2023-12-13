@@ -14,6 +14,8 @@ const coverageOptions = {
     assetsPath: '../assets',
     lcov: true,
 
+    sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1,
+
     outputDir: './docs/v8'
 };
 
