@@ -467,6 +467,8 @@ const getGridRows = () => {
 
 const getIndicatorColumns = () => {
     return indicators.map((item) => {
+        item.headerClassMap = 'mcr-column-separator';
+
         const id = item.id;
         item.subs = [{
             id: `${id}_chart`,
@@ -498,7 +500,8 @@ const getIndicatorColumns = () => {
             name: 'Total',
             align: 'right',
             width: item.indicator_width,
-            headerClassMap: 'mcr-indicator-head',
+            headerClassMap: 'mcr-column-separator mcr-indicator-head',
+            classMap: 'mcr-column-separator',
             formatter: 'indicator'
         }];
 
@@ -521,7 +524,9 @@ const getGridData = () => {
         id: 'type',
         name: 'Type',
         align: 'center',
-        width: 50
+        width: 60,
+        classMap: 'mcr-column-separator',
+        headerClassMap: 'mcr-column-separator'
     }, ... indicatorColumns, {
         id: 'url',
         name: 'URL',
@@ -1104,13 +1109,6 @@ icon
     cursor: pointer;
 }
 
-.tg-group {
-    .mcr-column-name {
-        text-decoration: none;
-        cursor: default;
-    }
-}
-
 .mcr-indicator-head {
     font-size: 12px;
 }
@@ -1192,4 +1190,20 @@ icon
     background-color: #4d9221;
 }
 
+.tg-turbogrid {
+    .tg-group {
+        .mcr-column-name {
+            text-decoration: none;
+            cursor: default;
+        }
+    }
+
+    .tg-pane.tg-frozen-line-v {
+        border-right: thin solid #eee;
+    }
+
+    .mcr-column-separator {
+        border-right: thin solid #ccc;
+    }
+}
 </style>
