@@ -4,3 +4,4 @@
 /package-lock.json
 /lib/packages
 /docs/*/.cache
+/mock/*/dist
