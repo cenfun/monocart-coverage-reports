@@ -69,7 +69,7 @@ const testFunctions = () => {
         start: 30, end: 50
     }];
     const newRanges = dedupeRanges(ranges);
-    console.log(newRanges);
+    console.log('dedupeRanges', newRanges);
 
     console.assert(JSON.stringify(newRanges) === '[{"start":0,"end":15},{"start":18,"end":80},{"start":100,"end":200}]');
     console.log(EC.green('passed'), 'test dedupeRanges');
