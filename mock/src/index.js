@@ -20,8 +20,31 @@ export function start() {
     foo(true);
 }
 
+const out_fun = () => {
+    const out_sub_fun = () => {
+
+    };
+
+    return out_sub_fun;
+};
+
 function privateFunction() {
     console.log('this is privateFunction');
+
+    function sub_function() {
+        console.log('this is sub function');
+        out_fun();
+    }
+
+    sub_function();
+
+    const af = () => {
+        return [1, 2, 3];
+    };
+
+    af().forEach(function(it) {
+        console.log(it);
+    });
 }
 
 function init(stop) {
@@ -60,8 +83,11 @@ const onload = (something) => {
         return;
     }
     console.log('on loaded');
+
+    const number = something ? 1 : 2;
+    return number;
+
 };
 
-init(window._my_stop_key);
-
-onload(window._my_something);
+// one line but two statements
+init(window._my_stop_key); onload(window._my_something);

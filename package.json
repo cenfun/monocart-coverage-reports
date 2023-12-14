@@ -14,7 +14,7 @@
     },
     "types": "./lib/index.d.ts",
     "scripts": {
-        "build-test": "npm run build-istanbul && npm run build-v8",
+        "build-mock": "npm run build-istanbul && npm run build-v8",
         "build-istanbul": "npx webpack --config mock/webpack.config-istanbul.js",
         "build-v8": "npx webpack --config mock/webpack.config-v8.js",
         "test": "node ./tests/test.js && npm run build-docs",
