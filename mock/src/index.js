@@ -1,3 +1,5 @@
+import './demo.js';
+
 export function foo(argument) {
     console.log('this is foo');
 

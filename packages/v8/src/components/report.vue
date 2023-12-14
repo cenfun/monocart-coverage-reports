@@ -214,20 +214,17 @@ const renderReport = async () => {
         indicator: 'line',
         indicatorName: 'Lines',
         total: codeLines,
-        totalTooltip: '',
         covered,
-        coveredTooltip: '',
         coveredClass: covered > 0 ? 'mcr-covered' : '',
         uncovered,
-        uncoveredTooltip: '',
         uncoveredClass: uncovered > 0 ? 'mcr-uncovered' : '',
         pct,
-        status: Util.getStatus(pct, state.watermarksBytes),
+        status: Util.getStatus(pct, state.watermarks.lines),
         percentChart,
         list
     };
 
-    data.list = [summary, lineInfo];
+    data.list = [lineInfo];
 
     // console.log('showReport executionCounts', executionCounts);
 
@@ -259,14 +256,6 @@ const showReport = () => {
     data.url = item.url;
     data.sourcePath = item.sourcePath;
     data.distFile = item.distFile;
-
-    const summary = item.summary;
-    summary.indicatorName = 'Bytes';
-    summary.totalTooltip = `Total ${Util.BSF(summary.total)}`;
-    summary.coveredTooltip = `Covered ${Util.BSF(summary.covered)}`;
-    summary.coveredClass = summary.covered > 0 ? 'mcr-covered' : '';
-    summary.uncoveredTooltip = `Uncovered ${Util.BSF(summary.uncovered)}`;
-    summary.uncoveredClass = summary.uncovered > 0 ? 'mcr-uncovered' : '';
 
     renderReportAsync();
 };
@@ -309,18 +298,16 @@ onMounted(() => {
         class="mcr-report-item"
       >
         <div>
-          <b>{{ item.indicatorName }}</b> <span :tooltip="item.totalTooltip">{{ Util.NF(item.total) }}</span>
+          <b>{{ item.indicatorName }}</b> <span>{{ Util.NF(item.total) }}</span>
         </div>
 
         <div>
           Covered: <span
-            :tooltip="item.coveredTooltip"
             :class="item.coveredClass"
           >{{ Util.NF(item.covered) }}</span>
         </div>
         <div>
           Uncovered: <span
-            :tooltip="item.uncoveredTooltip"
             :class="item.uncoveredClass"
           >{{ Util.NF(item.uncovered) }}</span>
         </div>

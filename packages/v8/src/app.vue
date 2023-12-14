@@ -27,6 +27,15 @@ const {
     VuiLoading
 } = components;
 
+
+const indicators = [{
+    id: 'bytes',
+    name: 'Bytes'
+}, {
+    id: 'functions',
+    name: 'Functions'
+}];
+
 // =================================================================================
 // do not use reactive for grid data
 const state = shallowReactive({
@@ -38,7 +47,11 @@ const state = shallowReactive({
 
     keywords: '',
 
-    watermarksBytes: [50, 80],
+    watermarks: {
+        bytes: [50, 80],
+        functions: [50, 80],
+        lines: [50, 80]
+    },
     watermarkLow: true,
     watermarkMedium: true,
     watermarkHigh: true,
@@ -261,28 +274,54 @@ const mergeSingleSubGroups = (item) => {
 
 };
 
+const initGroupIndicators = (group) => {
+    indicators.forEach((it) => {
+        const id = it.id;
+        group[`${id}_total`] = 0;
+        group[`${id}_covered`] = 0;
+    });
+};
+
 // calculate groups
-const calculateGroups = (list, parent) => {
+const calculateGroups = (list, group) => {
     if (!list) {
         return;
     }
-    if (typeof parent.total !== 'number') {
-        parent.total = 0;
-        parent.covered = 0;
-        parent.uncovered = 0;
+
+    if (typeof group.bytes_total !== 'number') {
+        initGroupIndicators(group);
     }
+
     list.forEach((item) => {
-        if (typeof item.total !== 'number') {
+        // sub group
+        if (typeof item.bytes_total !== 'number') {
             calculateGroups(item.subs, item);
         }
-        parent.total += item.total;
-        parent.covered += item.covered;
-        parent.uncovered += item.uncovered;
+
+        indicators.forEach((it) => {
+            const id = it.id;
+            group[`${id}_total`] += item[`${id}_total`];
+            group[`${id}_covered`] += item[`${id}_covered`];
+        });
+
     });
-    parent.pct = Util.PNF(parent.covered, parent.total, 2);
-    parent.percentChart = Util.generatePercentChart(parent.pct);
-    parent.status = Util.getStatus(parent.pct, state.watermarksBytes);
-    parent.pctClassMap = `mcr-${parent.status}`;
+
+    // calculate group
+    indicators.forEach((it) => {
+        const id = it.id;
+        const total = group[`${id}_total`];
+        const covered = group[`${id}_covered`];
+        group[`${id}_uncovered`] = total - covered;
+        const pct = Util.PNF(covered, total, 2);
+        group[`${id}_pct`] = pct;
+        group[`${id}_chart`] = pct;
+
+        const status = Util.getStatus(pct, state.watermarks[id]);
+        group[`${id}_status`] = status;
+        group[`${id}_pctClassMap`] = `mcr-${status}`;
+
+    });
+
 };
 
 const getGroupRows = (summaryRows) => {
@@ -325,9 +364,9 @@ const getGroupRows = (summaryRows) => {
         groups = [group];
     }
 
-    const summary = {};
-    calculateGroups(groups, summary);
-    // console.log(summary);
+    const groupSummary = {};
+    calculateGroups(groups, groupSummary);
+    // console.log(groupSummary);
 
     return groups;
 };
@@ -342,6 +381,27 @@ const getFlatRows = (summaryRows) => {
     return flatRows;
 };
 
+const addSummaryToRow = (summary, row) => {
+    indicators.forEach((indicator) => {
+        const id = indicator.id;
+        const indicatorData = summary[id];
+        // css will no functions
+        if (!indicatorData) {
+            return;
+        }
+        Object.keys(indicatorData).forEach((k) => {
+            row[`${id}_${k}`] = indicatorData[k];
+        });
+
+        // status background
+        row[`${id}_pctClassMap`] = `mcr-${indicatorData.status}`;
+
+        // chart
+        row[`${id}_chart`] = indicatorData.pct;
+
+    });
+};
+
 const getGridRows = () => {
     const key = ['grid', state.group].join('-');
     // console.log(key);
@@ -353,34 +413,37 @@ const getGridRows = () => {
 
     const { summary, files } = state.reportData;
 
-    const summaryRows = files.map((it) => {
-        return {
-            id: it.id,
-            sourcePath: it.sourcePath,
-            pctClassMap: `mcr-${it.summary.status}`,
-            ... it.summary
+    const fileRows = files.map((it) => {
+
+        const row = {
+            ... it
         };
+
+        addSummaryToRow(it.summary, row);
+
+        return row;
     });
 
     // sort before summary
-    summaryRows.sort((a, b) => {
+    fileRows.sort((a, b) => {
         return b.uncovered - a.uncovered;
     });
 
-    let rows = [{
+    const summaryRow = {
         name: 'Summary',
         type: '',
         url: '',
         isSummary: true,
         classMap: 'mcr-row-summary',
-        pctClassMap: `mcr-${summary.status}`,
-        sortFixed: 'top',
-        ... summary
-    }];
+        sortFixed: 'top'
+    };
+    addSummaryToRow(summary, summaryRow);
+
+    let rows = [summaryRow];
     if (state.group) {
-        rows = rows.concat(getGroupRows(summaryRows));
+        rows = rows.concat(getGroupRows(fileRows));
     } else {
-        rows = rows.concat(getFlatRows(summaryRows));
+        rows = rows.concat(getFlatRows(fileRows));
     }
 
     state.gridDataCache[key] = rows;
@@ -388,10 +451,47 @@ const getGridRows = () => {
     return rows;
 };
 
+const getIndicatorColumns = () => {
+    return indicators.map((item) => {
+        const id = item.id;
+        item.subs = [{
+            id: `${id}_chart`,
+            name: '📊',
+            width: 110,
+            formatter: 'chart'
+        }, {
+            id: `${id}_pct`,
+            name: 'Coverage',
+            align: 'right',
+            formatter: 'percent'
+        }, {
+            id: `${id}_covered`,
+            name: 'Covered',
+            align: 'right',
+            width: 88,
+            formatter: 'indicator'
+        }, {
+            id: `${id}_uncovered`,
+            name: 'Uncovered',
+            align: 'right',
+            width: 88,
+            formatter: 'indicator'
+        }, {
+            id: `${id}_total`,
+            name: 'Total',
+            align: 'right',
+            width: 88,
+            formatter: 'indicator'
+        }];
+
+        return item;
+    });
+
+};
 
 const getGridData = () => {
 
-    const rows = getGridRows();
+    const indicatorColumns = getIndicatorColumns();
 
     const columns = [{
         id: 'name',
@@ -400,44 +500,19 @@ const getGridData = () => {
         maxWidth: 1230,
         classMap: 'mcr-column-name'
     }, {
-        id: 'pct',
-        name: 'Coverage',
-        align: 'right',
-        formatter: 'percent'
-    }, {
-        id: 'percentChart',
-        name: '',
-        width: 110
-    }, {
         id: 'type',
         name: 'Type',
         align: 'center',
         width: 60
-    }, {
-        id: 'total',
-        name: 'Total Bytes',
-        align: 'right',
-        width: 88,
-        formatter: 'bytes'
-    }, {
-        id: 'covered',
-        name: 'Covered',
-        align: 'right',
-        width: 88,
-        formatter: 'bytes'
-    }, {
-        id: 'uncovered',
-        name: 'Uncovered',
-        align: 'right',
-        width: 88,
-        formatter: 'bytes'
-    }, {
+    }, ... indicatorColumns, {
         id: 'url',
         name: 'URL',
         width: 350,
         maxWidth: 2000,
         formatter: 'url'
     }];
+
+    const rows = getGridRows();
 
     return {
         columns,
@@ -463,7 +538,8 @@ const watermarkFilter = (status) => {
 
 const searchHandler = (rowItem) => {
 
-    const watermarkGate = watermarkFilter(rowItem.status);
+    // only for bytes
+    const watermarkGate = watermarkFilter(rowItem.bytes_status);
     if (!watermarkGate) {
         return;
     }
@@ -485,20 +561,16 @@ const searchHandler = (rowItem) => {
 };
 
 const initData = () => {
-    const { summary, files } = state.reportData;
+    const { files } = state.reportData;
 
     const fileMap = {};
     files.forEach((item) => {
-        // init percentChart
-        item.summary.percentChart = Util.generatePercentChart(item.summary.pct);
         if (fileMap[item.id]) {
             console.error(`duplicate id: ${item.id} '${fileMap[item.id].url}' => '${item.url}'`);
         }
         fileMap[item.id] = item;
     });
     state.fileMap = fileMap;
-
-    summary.percentChart = Util.generatePercentChart(summary.pct);
 
 };
 
@@ -536,31 +608,34 @@ const initGrid = () => {
 
 
     grid.setFormatter({
-        bytes: (v, rowItem, columnItem) => {
+        indicator: (v, rowItem, columnItem) => {
             if (typeof v === 'number') {
 
                 const str = Util.NF(v);
-                const bytes = Util.BSF(v);
 
-                if (columnItem.id === 'total') {
-                    return `<span tooltip="Total ${bytes}">${str}</span>`;
+                if (columnItem.id === 'bytes_total') {
+                    return `<span tooltip="Total ${Util.BSF(v)}">${str}</span>`;
                 }
-
-                if (columnItem.id === 'covered') {
+                if (columnItem.id === 'bytes_covered') {
                     if (v > 0) {
-                        return `<span tooltip="Covered ${bytes}" class="mcr-covered">${str}</span>`;
+                        return `<span tooltip="Covered ${Util.BSF(v)}" class="mcr-covered">${str}</span>`;
                     }
                 }
-
-                if (columnItem.id === 'uncovered') {
+                if (columnItem.id === 'bytes_uncovered') {
                     if (v > 0) {
-                        return `<span tooltip="Uncovered ${bytes}" class="mcr-uncovered">${str}</span>`;
+                        return `<span tooltip="Uncovered ${Util.BSF(v)}" class="mcr-uncovered">${str}</span>`;
                     }
                 }
 
                 return str;
             }
             return v;
+        },
+        chart: (v) => {
+            if (typeof v === 'number') {
+                return Util.generatePercentChart(v);
+            }
+            return '';
         },
         percent: (v) => {
             if (typeof v === 'number') {
@@ -623,16 +698,6 @@ const setFavicon = () => {
     }
 };
 
-const getWatermarksBytes = (watermarks) => {
-    if (watermarks) {
-        if (Array.isArray(watermarks)) {
-            return watermarks;
-        }
-        return watermarks.bytes;
-    }
-    return [50, 80];
-};
-
 const init = async () => {
     initStore();
 
@@ -643,9 +708,7 @@ const init = async () => {
     // for export all data JSON able
     state.reportData = reportData;
     state.title = reportData.name || reportData.title;
-    state.watermarksBytes = getWatermarksBytes(reportData.watermarks);
-
-    // console.log(state.watermarksBytes);
+    Object.assign(state.watermarks, reportData.watermarks);
 
     initTooltip();
 
@@ -800,7 +863,7 @@ window.addEventListener('message', (e) => {
           gap="5px"
         >
           <div class="mcr-watermarks-value">
-            {{ state.watermarksBytes[0] }}
+            {{ state.watermarks.bytes[0] }}
           </div>
           <VuiSwitch
             v-model="state.watermarkMedium"
@@ -817,7 +880,7 @@ window.addEventListener('message', (e) => {
           gap="5px"
         >
           <div class="mcr-watermarks-value">
-            {{ state.watermarksBytes[1] }}
+            {{ state.watermarks.bytes[1] }}
           </div>
           <VuiSwitch
             v-model="state.watermarkHigh"
