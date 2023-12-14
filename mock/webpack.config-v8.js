@@ -8,7 +8,7 @@ module.exports = {
     entry: path.resolve('mock/src/index.js'),
 
     output: {
-        path: path.resolve('mock/v8/'),
+        path: path.resolve('mock/v8/dist'),
         filename: 'coverage-v8.js',
         umdNamedDefine: true,
         library: 'coverage-v8',

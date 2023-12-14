@@ -8,7 +8,7 @@ module.exports = {
     entry: path.resolve('mock/src/index.js'),
 
     output: {
-        path: path.resolve('mock/istanbul/'),
+        path: path.resolve('mock/istanbul/dist'),
         filename: 'coverage-istanbul.js',
         umdNamedDefine: true,
         library: 'coverage-istanbul',
