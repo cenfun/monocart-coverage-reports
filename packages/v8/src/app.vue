@@ -23,6 +23,7 @@ const {
     VuiFlex,
     VuiInput,
     VuiSwitch,
+    VuiSelect,
     VuiTooltip,
     VuiLoading
 } = components;
@@ -30,10 +31,16 @@ const {
 
 const indicators = [{
     id: 'bytes',
-    name: 'Bytes'
+    name: 'Bytes',
+    indicator_width: 88
 }, {
     id: 'functions',
-    name: 'Functions'
+    name: 'Functions',
+    indicator_width: 75
+}, {
+    id: 'lines',
+    name: 'Lines',
+    indicator_width: 75
 }];
 
 // =================================================================================
@@ -55,6 +62,13 @@ const state = shallowReactive({
     watermarkLow: true,
     watermarkMedium: true,
     watermarkHigh: true,
+    watermarkType: 'bytes',
+    watermarkOptions: indicators.map((it) => {
+        return {
+            label: it.name,
+            value: it.id
+        };
+    }),
 
     windowWidth: window.innerWidth,
 
@@ -461,26 +475,30 @@ const getIndicatorColumns = () => {
             formatter: 'chart'
         }, {
             id: `${id}_pct`,
-            name: 'Coverage',
+            name: '%',
             align: 'right',
+            width: 60,
             formatter: 'percent'
         }, {
             id: `${id}_covered`,
             name: 'Covered',
             align: 'right',
-            width: 88,
+            width: item.indicator_width,
+            headerClassMap: 'mcr-indicator-head',
             formatter: 'indicator'
         }, {
             id: `${id}_uncovered`,
             name: 'Uncovered',
             align: 'right',
-            width: 88,
+            width: item.indicator_width,
+            headerClassMap: 'mcr-indicator-head',
             formatter: 'indicator'
         }, {
             id: `${id}_total`,
             name: 'Total',
             align: 'right',
-            width: 88,
+            width: item.indicator_width,
+            headerClassMap: 'mcr-indicator-head',
             formatter: 'indicator'
         }];
 
@@ -495,7 +513,7 @@ const getGridData = () => {
 
     const columns = [{
         id: 'name',
-        name: 'File',
+        name: 'Name',
         width: 350,
         maxWidth: 1230,
         classMap: 'mcr-column-name'
@@ -503,7 +521,7 @@ const getGridData = () => {
         id: 'type',
         name: 'Type',
         align: 'center',
-        width: 60
+        width: 50
     }, ... indicatorColumns, {
         id: 'url',
         name: 'URL',
@@ -539,7 +557,8 @@ const watermarkFilter = (status) => {
 const searchHandler = (rowItem) => {
 
     // only for bytes
-    const watermarkGate = watermarkFilter(rowItem.bytes_status);
+    const status = rowItem[`${state.watermarkType}_status`];
+    const watermarkGate = watermarkFilter(status);
     if (!watermarkGate) {
         return;
     }
@@ -742,7 +761,8 @@ watch([
     () => state.keywords,
     () => state.watermarkLow,
     () => state.watermarkMedium,
-    () => state.watermarkHigh
+    () => state.watermarkHigh,
+    () => state.watermarkType
 ], () => {
     updateGridAsync();
 });
@@ -862,7 +882,10 @@ window.addEventListener('message', (e) => {
           class="mcr-medium"
           gap="5px"
         >
-          <div class="mcr-watermarks-value">
+          <div
+            class="mcr-watermarks-value"
+            tooltip="Watermark between low and medium"
+          >
             {{ state.watermarks.bytes[0] }}
           </div>
           <VuiSwitch
@@ -879,7 +902,10 @@ window.addEventListener('message', (e) => {
           class="mcr-high"
           gap="5px"
         >
-          <div class="mcr-watermarks-value">
+          <div
+            class="mcr-watermarks-value"
+            tooltip="Watermark between medium and high"
+          >
             {{ state.watermarks.bytes[1] }}
           </div>
           <VuiSwitch
@@ -892,6 +918,11 @@ window.addEventListener('message', (e) => {
           </VuiSwitch>
         </VuiFlex>
       </VuiFlex>
+
+      <VuiSelect
+        v-model="state.watermarkType"
+        :options="state.watermarkOptions"
+      />
     </VuiFlex>
 
     <div class="mcr-coverage-grid vui-flex-auto" />
@@ -1069,6 +1100,10 @@ icon
     }
 }
 
+.mcr-indicator-head {
+    font-size: 12px;
+}
+
 .mcr-row-summary {
     font-weight: bold;
     background-color: #f5f5f5;
@@ -1121,6 +1156,7 @@ icon
         border-radius: 5px;
         background-color: #fff;
         transform: translateX(-50%);
+        cursor: default;
     }
 }
 
