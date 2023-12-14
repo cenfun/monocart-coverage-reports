@@ -196,7 +196,14 @@ const hideFlyover = () => {
 
 const showFlyover = (rowItem) => {
     state.flyoverData = rowItem.id;
-    state.flyoverTitle = rowItem.sourcePath;
+
+    let ft = rowItem.sourcePath;
+    const df = rowItem.distFile;
+    if (df) {
+        ft = `${df}: ${ft}`;
+    }
+
+    state.flyoverTitle = ft;
     state.flyoverVisible = true;
     hash.set('page', rowItem.id);
 };

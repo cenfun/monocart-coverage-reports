@@ -164,35 +164,35 @@ const renderReport = async () => {
     state.loading = true;
 
     const item = data.item;
-    const summary = item.summary;
 
     const report = await getReport(item);
     if (!report) {
         console.log(`failed to format source: ${item.sourcePath}`);
-        data.list = [summary];
         return;
     }
 
     const {
-        uncoveredLines, executionCounts, totalLines, commentedLines, blankLines, codeLines
+        //  uncoveredLines, codeLines,
+        executionCounts, totalLines, commentedLines, blankLines
     } = report.coverage;
-    let uncovered = 0;
-    Object.values(uncoveredLines).forEach((v) => {
-        if (v === 'uncovered') {
-            uncovered += 1;
-            return;
-        }
-        if (v === 'partial') {
-            uncovered += 0.5;
-        }
-    });
 
-    uncovered = Math.floor(uncovered);
+    // let uncovered = 0;
+    // Object.values(uncoveredLines).forEach((v) => {
+    //     if (v === 'uncovered') {
+    //         uncovered += 1;
+    //         return;
+    //     }
+    //     if (v === 'partial') {
+    //         uncovered += 0.5;
+    //     }
+    // });
 
-    const covered = codeLines - uncovered;
+    // uncovered = Math.floor(uncovered);
 
-    const pct = Util.PF(codeLines - uncovered, codeLines, 1, '');
-    const percentChart = Util.generatePercentChart(pct);
+    // const covered = codeLines - uncovered;
+
+    // const pct = Util.PF(codeLines - uncovered, codeLines, 1, '');
+    // const percentChart = Util.generatePercentChart(pct);
 
     const list = [];
     if (commentedLines) {
@@ -210,21 +210,19 @@ const renderReport = async () => {
         });
     }
 
-    const lineInfo = {
-        indicator: 'line',
-        indicatorName: 'Lines',
-        total: codeLines,
-        covered,
-        coveredClass: covered > 0 ? 'mcr-covered' : '',
-        uncovered,
-        uncoveredClass: uncovered > 0 ? 'mcr-uncovered' : '',
-        pct,
-        status: Util.getStatus(pct, state.watermarks.lines),
-        percentChart,
-        list
-    };
-
-    data.list = [lineInfo];
+    // const lineInfo = {
+    //     indicator: 'line',
+    //     indicatorName: 'Lines',
+    //     total: codeLines,
+    //     covered,
+    //     coveredClass: covered > 0 ? 'mcr-covered' : '',
+    //     uncovered,
+    //     uncoveredClass: uncovered > 0 ? 'mcr-uncovered' : '',
+    //     pct,
+    //     status: Util.getStatus(pct, state.watermarks.lines),
+    //     percentChart,
+    //     list
+    // };
 
     // console.log('showReport executionCounts', executionCounts);
 
@@ -253,9 +251,6 @@ const showReport = () => {
     const item = state.fileMap[id];
 
     data.item = item;
-    data.url = item.url;
-    data.sourcePath = item.sourcePath;
-    data.distFile = item.distFile;
 
     renderReportAsync();
 };
@@ -285,51 +280,16 @@ onMounted(() => {
     class="mcr-report"
   >
     <VuiFlex
-      direction="column"
+      direction="row"
       padding="5px"
       class="mcr-report-head"
     >
-      <VuiFlex
-        v-for="(item, i) in data.list"
-        :key="i"
-        gap="10px"
-        padding="5px"
-        wrap
-        class="mcr-report-item"
+      <VuiSwitch
+        v-model="state.formatted"
+        :label-clickable="true"
       >
-        <div>
-          <b>{{ item.indicatorName }}</b> <span>{{ Util.NF(item.total) }}</span>
-        </div>
-
-        <div>
-          Covered: <span
-            :class="item.coveredClass"
-          >{{ Util.NF(item.covered) }}</span>
-        </div>
-        <div>
-          Uncovered: <span
-            :class="item.uncoveredClass"
-          >{{ Util.NF(item.uncovered) }}</span>
-        </div>
-        <div
-          style="width: 100px;"
-          v-html="item.percentChart"
-        />
-        <div
-          style="padding: 0 5px;"
-          :class="'mcr-'+item.status"
-        >
-          {{ Util.PF(item.pct, 100) }}
-        </div>
-        <div
-          v-for="(it, j) in item.list"
-          :key="j"
-        >
-          {{ it.name }}:
-          <span :tooltip="it.tooltip">{{ Util.NF(it.value) }}</span>
-        </div>
-      </VuiFlex>
-
+        <b>Pretty Print</b>
+      </VuiSwitch>
       <VuiFlex
         v-if="data.topExecutions"
         gap="10px"
@@ -352,24 +312,6 @@ onMounted(() => {
             x{{ item.count }}
           </div>
         </VuiFlex>
-      </VuiFlex>
-
-      <VuiFlex
-        gap="10px"
-        padding="5px"
-        wrap
-        class="mcr-report-item"
-      >
-        <VuiSwitch
-          v-model="state.formatted"
-          :label-clickable="true"
-        >
-          <b>Pretty Print</b>
-        </VuiSwitch>
-
-        <span v-if="data.distFile">
-          <b>From Dist File</b> {{ data.distFile }}
-        </span>
       </VuiFlex>
     </VuiFlex>
     <div
