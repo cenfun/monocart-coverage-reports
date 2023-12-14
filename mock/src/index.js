@@ -1,4 +1,4 @@
-import './demo.js';
+import './app.js';
 
 export function foo(argument) {
     console.log('this is foo');

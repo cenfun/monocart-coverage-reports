@@ -541,7 +541,7 @@ const getGridData = () => {
 
 const watermarkFilter = (status) => {
     if (!status) {
-        return true;
+        return false;
     }
     const map = {
         low: state.watermarkLow,
@@ -687,6 +687,12 @@ const updateGrid = () => {
     }
 };
 
+const scrollToColumn = (v) => {
+    if (state.grid) {
+        state.grid.scrollToColumn(`${v}_chart`);
+    }
+};
+
 // =================================================================================
 
 const initStore = () => {
@@ -765,6 +771,11 @@ watch([
     () => state.watermarkType
 ], () => {
     updateGridAsync();
+});
+
+const scrollToColumnAsync = debounce(scrollToColumn, 200);
+watch(() => state.watermarkType, (v) => {
+    scrollToColumnAsync(v);
 });
 
 window.addEventListener('popstate', microtask(() => {
