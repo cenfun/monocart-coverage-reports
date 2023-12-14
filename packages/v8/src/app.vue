@@ -1155,8 +1155,8 @@ icon
         font-family: Arial, sans-serif;
         border-radius: 5px;
         background-color: #fff;
-        transform: translateX(-50%);
         cursor: default;
+        transform: translateX(-50%);
     }
 }
 
