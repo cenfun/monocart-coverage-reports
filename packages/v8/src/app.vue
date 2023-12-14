@@ -324,13 +324,20 @@ const calculateGroups = (list, group) => {
     indicators.forEach((it) => {
         const id = it.id;
         const total = group[`${id}_total`];
+
         const covered = group[`${id}_covered`];
         group[`${id}_uncovered`] = total - covered;
-        const pct = Util.PNF(covered, total, 2);
+
+        let pct = '';
+        let status = 'unknown';
+
+        if (total) {
+            pct = Util.PNF(covered, total, 2);
+            status = Util.getStatus(pct, state.watermarks[id]);
+        }
+
         group[`${id}_pct`] = pct;
         group[`${id}_chart`] = pct;
-
-        const status = Util.getStatus(pct, state.watermarks[id]);
         group[`${id}_status`] = status;
         group[`${id}_pctClassMap`] = `mcr-${status}`;
 
@@ -614,6 +621,7 @@ const initGrid = () => {
         // sortField: 'uncovered',
         // sortAsc: false,
         // sortOnInit: true,
+        frozenRow: 0,
         frozenColumn: 0,
         rowFilter: searchHandler,
         rowNumberVisible: true,
@@ -898,10 +906,7 @@ window.addEventListener('message', (e) => {
           class="mcr-medium"
           gap="5px"
         >
-          <div
-            class="mcr-watermarks-value"
-            tooltip="Watermark between low and medium"
-          >
+          <div class="mcr-watermarks-value">
             {{ state.watermarks.bytes[0] }}
           </div>
           <VuiSwitch
@@ -918,10 +923,7 @@ window.addEventListener('message', (e) => {
           class="mcr-high"
           gap="5px"
         >
-          <div
-            class="mcr-watermarks-value"
-            tooltip="Watermark between medium and high"
-          >
+          <div class="mcr-watermarks-value">
             {{ state.watermarks.bytes[1] }}
           </div>
           <VuiSwitch
