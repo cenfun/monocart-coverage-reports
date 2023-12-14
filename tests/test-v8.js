@@ -67,10 +67,17 @@ const multipleReportsOptions = {
                     return v;
                 }
             }],
-            rows: Object.keys(summary).map((k) => {
+            rows: Object.keys(summary).map((id) => {
+                const indicator = summary[id];
                 return {
-                    name: k,
-                    value: summary[k]
+                    name: id,
+                    value: '',
+                    subs: Object.keys(indicator).map((k) => {
+                        return {
+                            name: k,
+                            value: indicator[k]
+                        };
+                    })
                 };
             })
         });
