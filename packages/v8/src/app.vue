@@ -302,7 +302,7 @@ const initGroupIndicators = (group) => {
         group[`${id}_covered`] = 0;
         if (id === 'lines') {
             group[`${id}_blank`] = 0;
-            group[`${id}_commented`] = 0;
+            group[`${id}_comment`] = 0;
         }
     });
 };
@@ -330,7 +330,7 @@ const calculateGroups = (list, group) => {
 
             if (id === 'lines') {
                 group[`${id}_blank`] += item[`${id}_blank`];
-                group[`${id}_commented`] += item[`${id}_commented`];
+                group[`${id}_comment`] += item[`${id}_comment`];
             }
         });
 
@@ -537,8 +537,8 @@ const getIndicatorColumns = () => {
                 headerClassMap: 'mcr-indicator-head',
                 formatter: 'indicator'
             }, {
-                id: `${id}_commented`,
-                name: 'Commented',
+                id: `${id}_comment`,
+                name: 'Comment',
                 align: 'right',
                 width: item.indicator_width,
                 headerClassMap: 'mcr-column-separator mcr-indicator-head',

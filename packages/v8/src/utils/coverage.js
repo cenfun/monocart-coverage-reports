@@ -7,16 +7,16 @@ class CoverageParser {
         this.uncoveredPieces = {};
         this.executionCounts = {};
 
-        // parse commented and blank lines, include vue html for now
+        // parse comment and blank lines, include vue html for now
         const parseLines = true;
         const mapping = new Mapping(formattedContent, formattedMapping, parseLines);
         this.mapping = mapping;
 
         const formattedLines = mapping.formattedLines;
-        const commentedLines = mapping.commentedLines;
+        const commentLines = mapping.commentLines;
         const blankLines = mapping.blankLines;
 
-        commentedLines.forEach((lineIndex) => {
+        commentLines.forEach((lineIndex) => {
             this.uncoveredLines[lineIndex] = 'comment';
         });
 
@@ -46,9 +46,9 @@ class CoverageParser {
 
         this.coverage = {
             totalLines: formattedLines.length,
-            commentedLines: commentedLines.length,
+            commentLines: commentLines.length,
             blankLines: blankLines.length,
-            codeLines: formattedLines.length - commentedLines.length - blankLines.length,
+            codeLines: formattedLines.length - commentLines.length - blankLines.length,
             uncoveredLines: this.uncoveredLines,
             uncoveredPieces: this.uncoveredPieces,
             executionCounts: this.executionCounts,

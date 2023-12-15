@@ -171,10 +171,7 @@ const renderReport = async () => {
         return;
     }
 
-    const {
-        //  uncoveredLines, codeLines,
-        executionCounts, totalLines, commentedLines, blankLines
-    } = report.coverage;
+    const { executionCounts } = report.coverage;
 
     // let uncovered = 0;
     // Object.values(uncoveredLines).forEach((v) => {
@@ -193,22 +190,6 @@ const renderReport = async () => {
 
     // const pct = Util.PF(codeLines - uncovered, codeLines, 1, '');
     // const percentChart = Util.generatePercentChart(pct);
-
-    const list = [];
-    if (commentedLines) {
-        list.push({
-            name: 'Comments',
-            value: commentedLines,
-            tooltip: Util.PSF(commentedLines, totalLines)
-        });
-    }
-    if (blankLines) {
-        list.push({
-            name: 'Blanks',
-            value: blankLines,
-            tooltip: Util.PSF(blankLines, totalLines)
-        });
-    }
 
     // const lineInfo = {
     //     indicator: 'line',
