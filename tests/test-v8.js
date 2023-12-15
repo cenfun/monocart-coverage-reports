@@ -210,7 +210,7 @@ module.exports = async (serverUrl) => {
     // clean cache first if debug
     if (coverageOptions.logging === 'debug') {
         const coverageReport = new CoverageReport(coverageOptions);
-        await coverageReport.clean();
+        await coverageReport.cleanCache();
     }
 
     await Promise.all([
