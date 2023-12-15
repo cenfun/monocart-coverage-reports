@@ -40,7 +40,7 @@ const indicators = [{
 }, {
     id: 'lines',
     name: 'Lines',
-    indicator_width: 75
+    indicator_width: 81
 }];
 
 // =================================================================================
@@ -300,6 +300,10 @@ const initGroupIndicators = (group) => {
         const id = it.id;
         group[`${id}_total`] = 0;
         group[`${id}_covered`] = 0;
+        if (id === 'lines') {
+            group[`${id}_blank`] = 0;
+            group[`${id}_commented`] = 0;
+        }
     });
 };
 
@@ -323,6 +327,11 @@ const calculateGroups = (list, group) => {
             const id = it.id;
             group[`${id}_total`] += item[`${id}_total`];
             group[`${id}_covered`] += item[`${id}_covered`];
+
+            if (id === 'lines') {
+                group[`${id}_blank`] += item[`${id}_blank`];
+                group[`${id}_commented`] += item[`${id}_commented`];
+            }
         });
 
     });
@@ -484,7 +493,7 @@ const getIndicatorColumns = () => {
         item.headerClassMap = 'mcr-column-separator';
 
         const id = item.id;
-        item.subs = [{
+        let subs = [{
             id: `${id}_chart`,
             name: '<div class="mcr-pct-chart-header" />',
             width: 110,
@@ -519,6 +528,26 @@ const getIndicatorColumns = () => {
             formatter: 'indicator'
         }];
 
+        if (id === 'lines') {
+            subs = subs.concat([{
+                id: `${id}_blank`,
+                name: 'Blank',
+                align: 'right',
+                width: item.indicator_width,
+                headerClassMap: 'mcr-indicator-head',
+                formatter: 'indicator'
+            }, {
+                id: `${id}_commented`,
+                name: 'Commented',
+                align: 'right',
+                width: item.indicator_width,
+                headerClassMap: 'mcr-column-separator mcr-indicator-head',
+                classMap: 'mcr-column-separator',
+                formatter: 'indicator'
+            }]);
+        }
+
+        item.subs = subs;
         return item;
     });
 
