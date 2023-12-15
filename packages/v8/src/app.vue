@@ -486,7 +486,7 @@ const getIndicatorColumns = () => {
         const id = item.id;
         item.subs = [{
             id: `${id}_chart`,
-            name: '📊',
+            name: '<div class="mcr-pct-chart-header" />',
             width: 110,
             formatter: 'chart'
         }, {
@@ -575,7 +575,10 @@ const watermarkFilter = (status) => {
 
 const searchHandler = (rowItem) => {
 
-    // only for bytes
+    if (rowItem.tg_frozen) {
+        return true;
+    }
+
     const status = rowItem[`${state.watermarkType}_status`];
     const watermarkGate = watermarkFilter(status);
     if (!watermarkGate) {
@@ -630,6 +633,7 @@ const initGrid = () => {
         // sortOnInit: true,
         frozenRow: 0,
         frozenColumn: 0,
+        frozenRowHoverable: true,
         rowFilter: searchHandler,
         rowNumberVisible: true,
         rowNumberFilter: (rowItem) => {
@@ -1122,16 +1126,6 @@ icon
     font-size: 12px;
 }
 
-.mcr-row-summary {
-    font-weight: bold;
-    background-color: #f5f5f5;
-
-    .mcr-column-name {
-        text-decoration: none;
-        cursor: default;
-    }
-}
-
 .mcr-low {
     background: #fce1e5;
 }
@@ -1199,6 +1193,14 @@ icon
     background-color: #4d9221;
 }
 
+.mcr-pct-chart-header {
+    height: 16px;
+    background-image: url("./images/chart.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 16px 16px;
+}
+
 .tg-turbogrid {
     .tg-group {
         .mcr-column-name {
@@ -1213,6 +1215,16 @@ icon
 
     .mcr-column-separator {
         border-right: thin solid #ccc;
+    }
+
+    .mcr-row-summary {
+        font-weight: bold;
+        background-color: #eef6ff;
+
+        .mcr-column-name {
+            text-decoration: none;
+            cursor: default;
+        }
     }
 }
 </style>
