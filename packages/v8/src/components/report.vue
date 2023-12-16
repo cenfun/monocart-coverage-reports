@@ -342,14 +342,6 @@ onMounted(() => {
     }
 }
 
-.mcr-covered {
-    color: green;
-}
-
-.mcr-uncovered {
-    color: red;
-}
-
 .mcr-top-item {
     cursor: pointer;
 

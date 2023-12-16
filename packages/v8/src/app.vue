@@ -683,20 +683,20 @@ const initGrid = () => {
         indicator: (v, rowItem, columnItem) => {
             if (typeof v === 'number') {
 
-                const str = Util.NF(v);
+                const id = columnItem.id;
+                let str = Util.NF(v);
 
-                if (columnItem.id === 'bytes_total') {
-                    return `<span tooltip="Total ${Util.BSF(v)}">${str}</span>`;
-                }
-                if (columnItem.id === 'bytes_covered') {
-                    if (v > 0) {
-                        return `<span tooltip="Covered ${Util.BSF(v)}" class="mcr-covered">${str}</span>`;
+                if (v > 0) {
+                    if (id.endsWith('_covered')) {
+                        str = `<span class="mcr-covered">${str}</span>`;
+                    } else if (id.endsWith('_uncovered')) {
+                        str = `<span class="mcr-uncovered">${str}</span>`;
                     }
                 }
-                if (columnItem.id === 'bytes_uncovered') {
-                    if (v > 0) {
-                        return `<span tooltip="Uncovered ${Util.BSF(v)}" class="mcr-uncovered">${str}</span>`;
-                    }
+
+                // add tooltip for bytes
+                if (id.startsWith('bytes_')) {
+                    return `<span tooltip="${columnItem.name} ${Util.BSF(v)}">${str}</span>`;
                 }
 
                 return str;
@@ -1228,6 +1228,14 @@ icon
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 16px 16px;
+}
+
+.mcr-covered {
+    color: green;
+}
+
+.mcr-uncovered {
+    color: red;
 }
 
 .tg-turbogrid {
