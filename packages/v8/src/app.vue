@@ -32,15 +32,21 @@ const {
 const indicators = [{
     id: 'bytes',
     name: 'Bytes',
-    indicator_width: 88
+    indicator_width: 88,
+    collapsed_width: 80,
+    expanded_width: 60
 }, {
     id: 'functions',
     name: 'Functions',
-    indicator_width: 75
+    indicator_width: 75,
+    collapsed_width: 100,
+    expanded_width: 60
 }, {
     id: 'lines',
     name: 'Lines',
-    indicator_width: 81
+    indicator_width: 81,
+    collapsed_width: 80,
+    expanded_width: 60
 }];
 
 // =================================================================================
@@ -228,6 +234,46 @@ const displayFlyoverWithHash = () => {
 
 };
 
+const onHeaderClick = (grid, columnItem) => {
+    const { id } = columnItem;
+    const isIndicator = indicators.find((it) => it.id === id);
+    if (!isIndicator) {
+        return;
+    }
+
+    const collapsed = !columnItem.collapsed;
+    columnItem.collapsed = collapsed;
+
+    const ids = columnItem.subs.map((it) => it.id).filter((it) => !it.endsWith('_pct'));
+
+    const pctItem = columnItem.subs.find((it) => it.id.endsWith('_pct'));
+    if (pctItem) {
+        pctItem.width = collapsed ? isIndicator.collapsed_width : isIndicator.expanded_width;
+    }
+
+    if (collapsed) {
+        grid.hideColumn(ids);
+    } else {
+        grid.showColumn(ids);
+    }
+};
+
+const onRowClick = (grid, rowItem, columnItem) => {
+    if (rowItem.isSummary || rowItem.subs) {
+        return;
+    }
+
+    grid.setRowSelected(rowItem);
+
+    if (state.flyoverVisible) {
+        showFlyover(rowItem);
+        return;
+    }
+    if (columnItem.id === 'name') {
+        showFlyover(rowItem);
+    }
+};
+
 // =================================================================================
 
 const bindGridEvents = (grid) => {
@@ -245,25 +291,18 @@ const bindGridEvents = (grid) => {
     grid.bind('onClick', (e, d) => {
 
         const {
-            cellNode, rowItem, columnItem
+            cellNode, rowItem, columnItem, headerNode
         } = d;
 
-        if (!cellNode) {
+        // for column header
+        if (headerNode) {
+            onHeaderClick(grid, columnItem);
             return;
         }
 
-        if (rowItem.isSummary || rowItem.subs) {
-            return;
-        }
-
-        grid.setRowSelected(rowItem);
-
-        if (state.flyoverVisible) {
-            showFlyover(rowItem);
-            return;
-        }
-        if (columnItem.id === 'name') {
-            showFlyover(rowItem);
+        // for row
+        if (cellNode) {
+            onRowClick(grid, rowItem, columnItem);
         }
 
     });
@@ -296,8 +335,7 @@ const mergeSingleSubGroups = (item) => {
 };
 
 const initGroupIndicators = (group) => {
-    indicators.forEach((it) => {
-        const id = it.id;
+    indicators.map((it) => it.id).forEach((id) => {
         group[`${id}_total`] = 0;
         group[`${id}_covered`] = 0;
         if (id === 'lines') {
@@ -323,8 +361,7 @@ const calculateGroups = (list, group) => {
             calculateGroups(item.subs, item);
         }
 
-        indicators.forEach((it) => {
-            const id = it.id;
+        indicators.map((it) => it.id).forEach((id) => {
             group[`${id}_total`] += item[`${id}_total`];
             group[`${id}_covered`] += item[`${id}_covered`];
 
@@ -337,8 +374,7 @@ const calculateGroups = (list, group) => {
     });
 
     // calculate group
-    indicators.forEach((it) => {
-        const id = it.id;
+    indicators.map((it) => it.id).forEach((id) => {
         const total = group[`${id}_total`];
 
         const covered = group[`${id}_covered`];
@@ -419,8 +455,7 @@ const getFlatRows = (summaryRows) => {
 };
 
 const addSummaryToRow = (summary, row) => {
-    indicators.forEach((indicator) => {
-        const id = indicator.id;
+    indicators.map((it) => it.id).forEach((id) => {
         const indicatorData = summary[id];
         // css will no functions
         if (!indicatorData) {
@@ -489,7 +524,11 @@ const getGridRows = () => {
 };
 
 const getIndicatorColumns = () => {
-    return indicators.map((item) => {
+    return indicators.map((it) => {
+        const item = {
+            ... it
+        };
+
         item.headerClassMap = 'mcr-column-separator';
 
         const id = item.id;
@@ -502,7 +541,7 @@ const getIndicatorColumns = () => {
             id: `${id}_pct`,
             name: '%',
             align: 'right',
-            width: 60,
+            width: it.expanded_width,
             formatter: 'percent'
         }, {
             id: `${id}_covered`,
@@ -680,6 +719,15 @@ const initGrid = () => {
 
 
     grid.setFormatter({
+        header: function(value, rowItem, columnItem, cellNode) {
+            const { id } = columnItem;
+            const isIndicator = indicators.find((it) => it.id === id);
+            if (isIndicator) {
+                const cls = columnItem.collapsed ? 'collapsed' : 'expanded';
+                return `<div class="mcr-indicator-name mcr-indicator-${cls}">${value}</div>`;
+            }
+            return value;
+        },
         indicator: (v, rowItem, columnItem) => {
             if (typeof v === 'number') {
 
@@ -1220,6 +1268,22 @@ icon
     width: var(--mcr-percent);
     height: 100%;
     background-color: #4d9221;
+}
+
+.mcr-indicator-name {
+    padding-left: 20px;
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    background-size: 10px 10px;
+    cursor: pointer;
+}
+
+.mcr-indicator-expanded {
+    background-image: url("./images/expanded.svg");
+}
+
+.mcr-indicator-collapsed {
+    background-image: url("./images/collapsed.svg");
 }
 
 .mcr-pct-chart-header {
