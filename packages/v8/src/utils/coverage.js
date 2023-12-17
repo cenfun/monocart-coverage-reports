@@ -1,4 +1,6 @@
 import { Mapping } from 'monocart-formatter';
+import Util from './util.js';
+
 class CoverageParser {
 
     constructor(item, formattedContent, formattedMapping) {
@@ -8,21 +10,42 @@ class CoverageParser {
         this.executionCounts = {};
 
         // parse comment and blank lines, include vue html for now
-        const parseLines = true;
-        const mapping = new Mapping(formattedContent, formattedMapping, parseLines);
+        const mapping = new Mapping(formattedContent, formattedMapping);
         this.mapping = mapping;
 
         const formattedLines = mapping.formattedLines;
-        const blankLines = formattedLines.filter((it) => it.blank);
 
-        const commentLines = [];
-        commentLines.forEach((lineIndex) => {
+        // blank lines
+        formattedLines.filter((it) => it.blank).forEach((lineInfo) => {
+            const lineIndex = lineInfo.line;
+            this.uncoveredLines[lineIndex] = 'blank';
+        });
+
+        // comments: original comment ranges { block, start, end }
+        const comments = item.comments;
+        comments.forEach((range) => {
+            const {
+                block, start, end
+            } = range;
+            const sLoc = mapping.getFormattedLocation(start);
+            const eLoc = mapping.getFormattedLocation(end);
+
+            const lines = Util.getRangeLines(sLoc, eLoc, block);
+
+            lines.forEach((i) => {
+                const line = formattedLines[i];
+                if (line) {
+                    line.comment = true;
+                }
+            });
+
+        });
+
+        formattedLines.filter((it) => it.comment).forEach((lineInfo) => {
+            const lineIndex = lineInfo.line;
             this.uncoveredLines[lineIndex] = 'comment';
         });
 
-        blankLines.forEach((lineIndex) => {
-            this.uncoveredLines[lineIndex] = 'blank';
-        });
 
         if (item.type === 'css') {
             this.parseCss(item.ranges, item.source.length);
@@ -45,14 +68,12 @@ class CoverageParser {
         this.uncoveredLines = uncoveredLines;
 
         this.coverage = {
-            totalLines: formattedLines.length,
-            commentLines: commentLines.length,
-            blankLines: blankLines.length,
-            codeLines: formattedLines.length - commentLines.length - blankLines.length,
+            sourcePath: item.sourcePath,
+
+            // required for code viewer
             uncoveredLines: this.uncoveredLines,
             uncoveredPieces: this.uncoveredPieces,
-            executionCounts: this.executionCounts,
-            sourcePath: item.sourcePath
+            executionCounts: this.executionCounts
         };
 
     }

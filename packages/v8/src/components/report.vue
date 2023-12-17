@@ -172,39 +172,6 @@ const renderReport = async () => {
     }
 
     const { executionCounts } = report.coverage;
-
-    // let uncovered = 0;
-    // Object.values(uncoveredLines).forEach((v) => {
-    //     if (v === 'uncovered') {
-    //         uncovered += 1;
-    //         return;
-    //     }
-    //     if (v === 'partial') {
-    //         uncovered += 0.5;
-    //     }
-    // });
-
-    // uncovered = Math.floor(uncovered);
-
-    // const covered = codeLines - uncovered;
-
-    // const pct = Util.PF(codeLines - uncovered, codeLines, 1, '');
-    // const percentChart = Util.generatePercentChart(pct);
-
-    // const lineInfo = {
-    //     indicator: 'line',
-    //     indicatorName: 'Lines',
-    //     total: codeLines,
-    //     covered,
-    //     coveredClass: covered > 0 ? 'mcr-covered' : '',
-    //     uncovered,
-    //     uncoveredClass: uncovered > 0 ? 'mcr-uncovered' : '',
-    //     pct,
-    //     status: Util.getStatus(pct, state.watermarks.lines),
-    //     percentChart,
-    //     list
-    // };
-
     // console.log('showReport executionCounts', executionCounts);
 
     data.executionCounts = executionCounts;
