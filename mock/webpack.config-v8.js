@@ -21,6 +21,9 @@ module.exports = {
             use: {
                 loader: 'babel-loader'
             }
+        }, {
+            test: /\.tsx?$/,
+            use: 'ts-loader'
         }]
     }
 };

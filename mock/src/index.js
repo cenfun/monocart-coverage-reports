@@ -1,4 +1,6 @@
 import './branch.js';
+import './typescript.ts';
+
 import '../minify/comments.js';
 import '../minify/demo.js';
 
