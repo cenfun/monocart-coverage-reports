@@ -1,5 +1,6 @@
-import './app.js';
 import './branch.js';
+import '../minify/comments.js';
+import '../minify/demo.js';
 
 export function foo(argument) {
     console.log('this is foo');
