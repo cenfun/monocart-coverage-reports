@@ -3,10 +3,15 @@ function callback() {
 
 }
 
+/*
+    block comment
+*/
+
 function other() {
 
 }
 
+/* inline block */
 function method(v) {
     // console.log("method", v);
     if (v === 2) {

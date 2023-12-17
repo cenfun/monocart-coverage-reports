@@ -1,4 +1,5 @@
 import './app.js';
+import './branch.js';
 
 export function foo(argument) {
     console.log('this is foo');
