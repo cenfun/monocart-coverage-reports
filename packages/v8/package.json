@@ -9,7 +9,7 @@
     "license": "MIT",
     "dependencies": {
         "monocart-code-viewer": "^1.0.9",
-        "monocart-formatter": "^1.0.8",
+        "monocart-formatter": "^2.0.0",
         "turbogrid": "^3.0.12"
     },
     "devDependencies": {

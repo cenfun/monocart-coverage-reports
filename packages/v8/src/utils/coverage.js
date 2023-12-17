@@ -13,9 +13,9 @@ class CoverageParser {
         this.mapping = mapping;
 
         const formattedLines = mapping.formattedLines;
-        const commentLines = mapping.commentLines;
-        const blankLines = mapping.blankLines;
+        const blankLines = formattedLines.filter((it) => it.blank);
 
+        const commentLines = [];
         commentLines.forEach((lineIndex) => {
             this.uncoveredLines[lineIndex] = 'comment';
         });
