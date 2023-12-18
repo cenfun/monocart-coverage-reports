@@ -56,7 +56,11 @@ class CoverageParser {
 
         formattedLines.filter((it) => it.comment).forEach((lineInfo) => {
             const lineIndex = lineInfo.line;
-            this.uncoveredLines[lineIndex] = 'comment';
+            // already is blank
+            const blank = this.uncoveredLines[lineIndex];
+            if (blank !== 'blank') {
+                this.uncoveredLines[lineIndex] = 'comment';
+            }
         });
 
         if (item.type === 'js') {
