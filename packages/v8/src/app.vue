@@ -53,6 +53,7 @@ const indicators = [{
 // do not use reactive for grid data
 const state = shallowReactive({
     title: 'Coverage Report',
+    indicators,
     summary: {},
 
     group: true,

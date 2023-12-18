@@ -165,6 +165,25 @@ const renderReport = async () => {
 
     const item = data.item;
 
+    const summary = item.summary;
+    // summary list
+    data.summaryList = state.indicators.filter((it) => {
+        // no functions for css
+        if (item.type !== 'js' && it.id === 'functions') {
+            return false;
+        }
+        return true;
+    }).map((it) => {
+        const { id, name } = it;
+        return {
+            id,
+            name,
+            ... summary[id]
+        };
+    });
+
+    // console.log(data.summaryList);
+
     const report = await getReport(item);
     if (!report) {
         console.log(`failed to format source: ${item.sourcePath}`);
@@ -231,37 +250,78 @@ onMounted(() => {
       direction="row"
       padding="5px"
       class="mcr-report-head"
+      wrap
+      gap="10px"
     >
+      <VuiFlex
+        v-for="(item) in data.summaryList"
+        :key="item.id"
+        direction="row"
+        gap="5px"
+      >
+        <b>{{ item.name }}</b>
+        <div
+          v-if="(typeof item.pct === 'number')"
+          :class="'mcr-report-percent mcr-'+item.status"
+        >
+          {{ Util.PF(item.pct, 100) }}
+        </div>
+        <VuiFlex
+          gap="5px"
+          class="mcr-report-values"
+        >
+          <div class="mcr-covered">
+            {{ Util.NF(item.covered) }}
+          </div>
+          <div class="mcr-uncovered">
+            {{ Util.NF(item.uncovered) }}
+          </div>
+          <div>{{ Util.NF(item.total) }}</div>
+        </VuiFlex>
+        <VuiFlex
+          v-if="item.id==='lines'"
+          gap="5px"
+        >
+          <div>Blank</div>
+          <div>{{ item.blank }}</div>
+          <div>Comment</div>
+          <div>{{ item.comment }}</div>
+        </VuiFlex>
+      </VuiFlex>
       <VuiSwitch
         v-model="state.formatted"
         :label-clickable="true"
+        label-position="right"
       >
-        <b>Pretty Print</b>
+        Format
       </VuiSwitch>
+    </VuiFlex>
+
+    <VuiFlex
+      v-if="data.topExecutions"
+      padding="5px"
+      class="mcr-report-head"
+      wrap
+      gap="10px"
+    >
+      <div><b>Top Executions</b></div>
       <VuiFlex
-        v-if="data.topExecutions"
-        gap="10px"
-        padding="5px"
+        v-for="(item, i) in data.topExecutions"
+        :key="i"
+        class="mcr-top-item"
         wrap
-        class="mcr-report-item"
+        gap="5px"
+        @click="scrollToLine(item.line)"
       >
-        <div><b>Top Executions</b></div>
-        <VuiFlex
-          v-for="(item, i) in data.topExecutions"
-          :key="i"
-          gap="5px"
-          class="mcr-top-item"
-          @click="scrollToLine(item.line)"
-        >
-          <div class="mcr-top-line">
-            L{{ item.line }}
-          </div>
-          <div class="mcr-top-count">
-            x{{ item.count }}
-          </div>
-        </VuiFlex>
+        <div class="mcr-top-line">
+          L{{ item.line }}
+        </div>
+        <div class="mcr-top-count">
+          x{{ item.count }}
+        </div>
       </VuiFlex>
     </VuiFlex>
+
     <div
       ref="el"
       class="mcr-report-code vui-flex-auto"
@@ -289,10 +349,20 @@ onMounted(() => {
     }
 }
 
-@media (hover: none) {
-    .mcr-report-item {
-        flex-wrap: nowrap;
-        overflow-x: auto;
+.mcr-report-percent {
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+.mcr-report-values {
+    padding: 0 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+
+    .mcr-covered,
+    .mcr-uncovered {
+        padding-right: 5px;
+        border-right: 1px solid #ccc;
     }
 }
 
