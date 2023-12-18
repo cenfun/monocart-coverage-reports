@@ -281,10 +281,10 @@ onMounted(() => {
           gap="5px"
           class="mcr-report-values"
         >
-          <div class="mcr-covered">
+          <div :class="item.covered?'mcr-covered':''">
             {{ Util.NF(item.covered) }}
           </div>
-          <div class="mcr-uncovered">
+          <div :class="item.uncovered?'mcr-uncovered':''">
             {{ Util.NF(item.uncovered) }}
           </div>
           <div>{{ Util.NF(item.total) }}</div>
@@ -370,8 +370,7 @@ onMounted(() => {
     border: 1px solid #ccc;
     border-radius: 3px;
 
-    .mcr-covered,
-    .mcr-uncovered {
+    div:not(:last-child) {
         padding-right: 5px;
         border-right: 1px solid #ccc;
     }
