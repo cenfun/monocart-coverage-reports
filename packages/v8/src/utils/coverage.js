@@ -32,8 +32,11 @@ class CoverageParser {
 
             const lines = Util.getRangeLines(sLoc, eLoc, block);
 
-            lines.forEach((i) => {
-                const line = formattedLines[i];
+            lines.forEach((it) => {
+                if (!it.entire) {
+                    return;
+                }
+                const line = formattedLines[it.line];
                 if (line) {
                     line.comment = true;
                 }
