@@ -207,6 +207,16 @@ const renderReport = async () => {
     });
 
 
+    if (!state.formatted) {
+        // compare summary between node and browser calculation
+        const originalSummary = item.summary.lines;
+        Object.keys(originalSummary).forEach((k) => {
+            if (originalSummary[k] !== lines[k]) {
+                console.error(k, originalSummary[k], lines[k]);
+            }
+        });
+    }
+
     // for code viewer debug
     // console.log(report);
 
