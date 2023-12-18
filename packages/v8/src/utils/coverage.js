@@ -25,12 +25,6 @@ class CoverageParser {
             comment: 0
         };
 
-        // blank lines
-        formattedLines.filter((it) => it.blank).forEach((lineInfo) => {
-            const lineIndex = lineInfo.line;
-            this.uncoveredLines[lineIndex] = 'blank';
-        });
-
         // comments: original comment ranges { block, start, end }
         const comments = item.comments;
         comments.forEach((range) => {
@@ -47,20 +41,28 @@ class CoverageParser {
                     return;
                 }
                 const line = formattedLines[it.line];
-                if (line) {
+                // blank in block comment count as blank
+                if (line && !line.blank) {
                     line.comment = true;
                 }
             });
 
         });
 
-        formattedLines.filter((it) => it.comment).forEach((lineInfo) => {
-            const lineIndex = lineInfo.line;
-            // already is blank
-            const blank = this.uncoveredLines[lineIndex];
-            if (blank !== 'blank') {
-                this.uncoveredLines[lineIndex] = 'comment';
+        // blank and comment lines
+        let blankCount = 0;
+        let commentCount = 0;
+        formattedLines.forEach((it) => {
+            if (it.blank) {
+                this.uncoveredLines[it.line] = 'blank';
+                blankCount += 1;
+                return;
             }
+            if (it.comment) {
+                this.uncoveredLines[it.line] = 'comment';
+                commentCount += 1;
+            }
+
         });
 
         if (item.type === 'js') {
@@ -71,20 +73,15 @@ class CoverageParser {
 
         // calculate covered and uncovered after parse
 
+        this.linesSummary.blank = blankCount;
+        this.linesSummary.comment = commentCount;
+
+        const allCount = formattedLines.length;
+        const total = allCount - blankCount - commentCount;
+        this.linesSummary.total = total;
 
         const values = Object.values(this.uncoveredLines);
         // console.log(values);
-
-        const blank = values.filter((v) => v === 'blank').length;
-        this.linesSummary.blank = blank;
-
-        const comment = values.filter((v) => v === 'comment').length;
-        this.linesSummary.comment = comment;
-
-        const allCount = formattedLines.length;
-        const total = allCount - blank - comment;
-        this.linesSummary.total = total;
-
         const covered = allCount - values.length;
 
         this.linesSummary.covered = covered;
@@ -189,67 +186,19 @@ class CoverageParser {
     setUncoveredLine(line, value) {
         const prev = this.uncoveredLines[line];
         if (prev) {
-            return prev;
+            // maybe already blank or comment
+            return;
         }
         this.uncoveredLines[line] = value;
     }
 
     setUncoveredPieces(line, value) {
-
-        // console.log('setUncoveredPieces', line, value);
         const prevList = this.uncoveredPieces[line];
         if (prevList) {
             prevList.push(value);
             return;
         }
         this.uncoveredPieces[line] = [value];
-    }
-
-    setSingleLine(sLoc, eLoc) {
-        // console.log(sLoc, eLoc);
-
-        // nothing between
-        if (sLoc.column >= eLoc.column) {
-            return;
-        }
-
-        // console.log(sLoc, codeOffset, eLoc);
-
-        if (sLoc.column === sLoc.indent && eLoc.column === eLoc.length) {
-            // console.log('single', sLoc.line);
-            this.setUncoveredLine(sLoc.line, 'uncovered');
-            return;
-        }
-
-        // should be multiple partials in a line, like minified js
-        this.setUncoveredLine(sLoc.line, 'partial');
-
-        // set pieces for partial, only js
-        this.setUncoveredPieces(sLoc.line, {
-            start: sLoc.column,
-            end: eLoc.column
-        });
-
-    }
-
-    setMultipleLines(sLoc, eLoc) {
-
-        const firstELoc = {
-            ... sLoc,
-            column: sLoc.length
-        };
-        this.setSingleLine(sLoc, firstELoc);
-
-        for (let i = sLoc.line + 1; i < eLoc.line; i++) {
-            this.setUncoveredLine(i, 'uncovered');
-        }
-
-        const lastSLoc = {
-            ... eLoc,
-            column: eLoc.indent
-        };
-        this.setSingleLine(lastSLoc, eLoc);
-
     }
 
     // ====================================================================================================
@@ -263,15 +212,24 @@ class CoverageParser {
         const sLoc = mapping.getFormattedLocation(start, skipIndent);
         const eLoc = mapping.getFormattedLocation(end, skipIndent);
 
-        // const lines = Util.getRangeLines(sLoc, eLoc);
+        // location line is 0 based
+
+        const lines = Util.getRangeLines(sLoc, eLoc);
         // console.log(lines);
 
-        if (eLoc.line === sLoc.line) {
-            this.setSingleLine(sLoc, eLoc);
-            return;
-        }
+        lines.forEach((it) => {
+            // whole line
+            if (it.entire) {
+                this.setUncoveredLine(it.line, 'uncovered');
+                return;
+            }
 
-        this.setMultipleLines(sLoc, eLoc);
+            this.setUncoveredLine(it.line, 'partial');
+            // set pieces for partial, only js
+            this.setUncoveredPieces(it.line, it.range);
+
+        });
+
     }
 
     // ====================================================================================================

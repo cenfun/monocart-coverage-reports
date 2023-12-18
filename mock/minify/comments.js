@@ -17,6 +17,7 @@ console.log('some//thing/*'); /*
 
 /**
     * BlockComment
+    
  *
        
         */ console.log('some/*/thing');
@@ -31,6 +32,7 @@ console.log('some//thing'); // end of line
 
 console.log('some*//thing'); /*
  cross line
+
  */
 
     console.log('some*//thing'); /* inline */ console.log('some*//thing');
@@ -38,6 +40,7 @@ console.log('some*//thing'); /*
 /*
  multiple line
 //
+
  */
 
     /**/ console.log('some*//thing'); /*
