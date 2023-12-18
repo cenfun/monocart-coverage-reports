@@ -41,13 +41,14 @@ const scrollToLine = (line) => {
 };
 
 
-const updateTopExecutions = () => {
+const updateTopExecutions = (executionCounts) => {
 
-    const executionCounts = data.executionCounts;
     if (!executionCounts) {
         data.topExecutions = null;
         return;
     }
+
+    data.executionCounts = executionCounts;
 
     const list = [];
     Object.keys(executionCounts).forEach((line) => {
@@ -143,7 +144,7 @@ const getReport = async (item) => {
 
     const { content, mapping } = res;
 
-    const coverage = getCoverage(item, content, mapping);
+    const coverage = getCoverage(item, state, content, mapping);
 
     // console.log(cacheKey);
     console.log(coverage);
@@ -175,11 +176,16 @@ const renderReport = async () => {
         return true;
     }).map((it) => {
         const { id, name } = it;
-        return {
+        const info = {
             id,
             name,
             ... summary[id]
         };
+        if (id === 'lines') {
+            // could be updated after formatted
+            return shallowReactive(info);
+        }
+        return info;
     });
 
     // console.log(data.summaryList);
@@ -190,11 +196,16 @@ const renderReport = async () => {
         return;
     }
 
-    const { executionCounts } = report.coverage;
+    const { executionCounts, linesSummary } = report.coverage;
     // console.log('showReport executionCounts', executionCounts);
+    updateTopExecutions(executionCounts);
 
-    data.executionCounts = executionCounts;
-    updateTopExecutions();
+    // update lines summary after formatted
+    const lines = data.summaryList.find((it) => it.id === 'lines');
+    Object.keys(linesSummary).forEach((k) => {
+        lines[k] = linesSummary[k];
+    });
+
 
     // for code viewer debug
     // console.log(report);
