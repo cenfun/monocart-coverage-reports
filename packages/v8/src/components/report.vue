@@ -170,7 +170,7 @@ const renderReport = async () => {
     // summary list
     data.summaryList = state.indicators.filter((it) => {
         // no functions for css
-        if (item.type !== 'js' && it.id === 'functions') {
+        if (!item.js && it.id === 'functions') {
             return false;
         }
         return true;
