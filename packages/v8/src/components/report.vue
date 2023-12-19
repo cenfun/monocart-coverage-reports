@@ -126,7 +126,7 @@ const formatSource = (item) => {
 
 const getReport = async (item) => {
 
-    const cacheKey = ['report', 'formatted', state.formatted].join('_');
+    const cacheKey = ['coverage', 'formatted', state.formatted].join('_');
 
     if (item[cacheKey]) {
         return new Promise((resolve) => {
@@ -146,17 +146,17 @@ const getReport = async (item) => {
 
     const coverage = getCoverage(item, state, content, mapping);
 
-    // console.log(cacheKey);
-    console.log(coverage);
-    // console.log([item.source]);
-    // console.log([content]);
-
     const report = {
         coverage,
         content
     };
 
     item[cacheKey] = report;
+
+    // console.log(cacheKey);
+    console.log(item);
+    // console.log([item.source]);
+    // console.log([content]);
 
     return report;
 };
