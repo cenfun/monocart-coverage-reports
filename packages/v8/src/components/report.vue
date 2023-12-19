@@ -212,7 +212,7 @@ const renderReport = async () => {
         const originalSummary = item.summary.lines;
         Object.keys(originalSummary).forEach((k) => {
             if (originalSummary[k] !== lines[k]) {
-                console.log(k, originalSummary[k], 'unmatched', lines[k]);
+                console.log(k, originalSummary[k], '!=', lines[k]);
             }
         });
     }
