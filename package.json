@@ -15,9 +15,10 @@
     "types": "./lib/index.d.ts",
     "scripts": {
         "build-docs": "node ./scripts/build-docs.js",
-        "build-test": "npm run build-istanbul && npm run build-v8",
+        "build-test": "npm run build-istanbul && npm run build-v8 && npm run build-esbuild",
         "build-istanbul": "npx webpack --config test/webpack.config-istanbul.js",
         "build-v8": "npx webpack --config test/webpack.config-v8.js",
+        "build-esbuild": "node ./scripts/esbuild.js",
         "build": "sf lint && sf b -p && npm run build-test && npm run build-docs",
         "test": "node ./test/test.js && npm run build-docs",
         "dev": "sf d v8",

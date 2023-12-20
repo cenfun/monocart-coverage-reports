@@ -6,6 +6,7 @@ const KSR = require('koa-static-resolver');
 const Koa = require('koa');
 
 const testV8 = require('./test-v8.js');
+const testV8EsBuild = require('./test-v8-esbuild.js');
 const testV8Minify = require('./test-v8-minify.js');
 
 const testIstanbul = require('./test-istanbul.js');
@@ -96,6 +97,7 @@ const test = async () => {
     await Promise.all([
         testIstanbul(serverUrl),
         testV8Minify(serverUrl),
+        testV8EsBuild(serverUrl),
         testV8(serverUrl)
     ]);
 

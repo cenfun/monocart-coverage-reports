@@ -48,11 +48,13 @@ const main = () => {
         console.log('never covered');
     }
 
-    const { compress, decompress } = window['lz-utils'];
-
     const str = '📙 Emoji — 😃 💁👌🎍😍';
 
-    console.assert(str === decompress(compress(str)));
+    const lz = window['lz-utils'];
+    if (lz) {
+        const { compress, decompress } = lz;
+        console.assert(str === decompress(compress(str)));
+    }
 
 };
 
