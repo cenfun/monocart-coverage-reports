@@ -1,3 +1,13 @@
+## TODO
+* css sourcemap
+* sever side node.js coverage
+* lines coverage js calculation
+
+## Changelog
+
+* 1.2.0
+    - added functions coverage for v8 (typescript)
+    - added lines coverage for v8 (blanks, comments)
 
 * 1.1.0
     - added onEnd hook

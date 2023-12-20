@@ -39,8 +39,8 @@ const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 </code></pre>
 <ul>
-<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js">example v8</a></li>
-<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js">example istanbul</a></li>
+<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js">example v8</a></li>
+<li><a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js">example istanbul</a></li>
 </ul>
 <h2>Default Options</h2>
 <ul>
@@ -166,15 +166,15 @@ console.log(coverageResults.summary);
 <ul>
 <li><p>Istanbul Workflows</p>
 <ul>
-<li>1, Only for source code: instrumenting code with <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a>，see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-istanbul.js">webpack.config-istanbul.js</a>, or using <a target="_blank" href="https://github.com/istanbuljs/nyc">nyc</a>.</li>
-<li>2, Collecting coverage data from browser <code>window.__coverage__</code>, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js">example</a>.</li>
+<li>1, Only for source code: instrumenting code with <a target="_blank" href="https://github.com/istanbuljs/babel-plugin-istanbul">babel-plugin-istanbul</a>，see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-istanbul.js">webpack.config-istanbul.js</a>, or using <a target="_blank" href="https://github.com/istanbuljs/nyc">nyc</a>.</li>
+<li>2, Collecting coverage data from browser <code>window.__coverage__</code>, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js">example</a>.</li>
 <li>3, Generating coverage report.</li>
 </ul>
 </li>
 <li><p>V8 Workflows</p>
 <ul>
-<li>1, For any runtime code: nothing to do. For source code: building code with <code>development</code> <a target="_blank" href="https://webpack.js.org/configuration/mode/">mode</a> and <a target="_blank" href="https://webpack.js.org/configuration/devtool/">sourcemap</a> support, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-v8.js">webpack.config-v8.js</a>.</li>
-<li>2, Collecting coverage data with <a href="#chromium-coverage-api">Chromium Coverage API</a>, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js">example</a>.</li>
+<li>1, For any runtime code: nothing to do. For source code: building code with <code>development</code> <a target="_blank" href="https://webpack.js.org/configuration/mode/">mode</a> and <a target="_blank" href="https://webpack.js.org/configuration/devtool/">sourcemap</a> support, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js">webpack.config-v8.js</a>.</li>
+<li>2, Collecting coverage data with <a href="#chromium-coverage-api">Chromium Coverage API</a>, see <a target="_blank" href="https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js">example</a>.</li>
 <li>3, Generating coverage report.</li>
 </ul>
 </li>
