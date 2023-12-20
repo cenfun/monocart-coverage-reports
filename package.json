@@ -14,17 +14,18 @@
     },
     "types": "./lib/index.d.ts",
     "scripts": {
-        "build-mock": "npm run build-istanbul && npm run build-v8",
-        "build-istanbul": "npx webpack --config mock/webpack.config-istanbul.js",
-        "build-v8": "npx webpack --config mock/webpack.config-v8.js",
-        "test": "node ./tests/test.js && npm run build-docs",
-        "build": "sf lint && sf b -p && npm run build-docs",
-        "dev": "sf d v8",
         "build-docs": "node ./scripts/build-docs.js",
+        "build-test": "npm run build-istanbul && npm run build-v8",
+        "build-istanbul": "npx webpack --config test/webpack.config-istanbul.js",
+        "build-v8": "npx webpack --config test/webpack.config-v8.js",
+        "build": "sf lint && sf b -p && npm run build-test && npm run build-docs",
+        "test": "node ./test/test.js && npm run build-docs",
+        "dev": "sf d v8",
         "patch": "npm run build && sf publish patch -r"
     },
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "test"
     ],
     "files": [
         "lib"
@@ -46,22 +47,11 @@
         "turbogrid": "~3.0.12"
     },
     "devDependencies": {
-        "babel-loader": "^9.1.3",
-        "babel-plugin-istanbul": "^6.1.1",
         "eslint": "^8.56.0",
         "eslint-config-plus": "^1.0.6",
         "eslint-plugin-html": "^7.1.0",
         "eslint-plugin-vue": "^9.19.2",
-        "github-markdown-css": "^5.5.0",
-        "koa": "^2.14.2",
-        "koa-static-resolver": "^1.0.4",
-        "marked": "^11.1.0",
-        "playwright": "^1.40.1",
         "stylelint": "^15.11.0",
-        "stylelint-config-plus": "^1.0.4",
-        "ts-loader": "^9.5.1",
-        "typescript": "^5.3.3",
-        "webpack": "^5.89.0",
-        "webpack-cli": "^5.1.4"
+        "stylelint-config-plus": "^1.0.4"
     }
 }

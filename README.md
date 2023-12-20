@@ -26,8 +26,8 @@ await coverageReport.add(coverageData2);
 const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 ```
-- [example v8](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js)
-- [example istanbul](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js)
+- [example v8](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js)
+- [example istanbul](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
 
 ## Default Options
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
@@ -111,13 +111,13 @@ console.log(coverageResults.summary);
 
 ## Compare Workflows
 - Istanbul Workflows
-    - 1, Only for source code: instrumenting code with [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)，see [webpack.config-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-istanbul.js), or using [nyc](https://github.com/istanbuljs/nyc).
-    - 2, Collecting coverage data from browser `window.__coverage__`, see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-istanbul.js).
+    - 1, Only for source code: instrumenting code with [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)，see [webpack.config-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-istanbul.js), or using [nyc](https://github.com/istanbuljs/nyc).
+    - 2, Collecting coverage data from browser `window.__coverage__`, see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js).
     - 3, Generating coverage report.
 
 - V8 Workflows
-    - 1, For any runtime code: nothing to do. For source code: building code with `development` [mode](https://webpack.js.org/configuration/mode/) and [sourcemap](https://webpack.js.org/configuration/devtool/) support, see [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/mock/webpack.config-v8.js).
-    - 2, Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/tests/test-v8.js).
+    - 1, For any runtime code: nothing to do. For source code: building code with `development` [mode](https://webpack.js.org/configuration/mode/) and [sourcemap](https://webpack.js.org/configuration/devtool/) support, see [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js).
+    - 2, Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js).
     - 3, Generating coverage report.
 
 ## Chromium Coverage API

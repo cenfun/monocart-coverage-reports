@@ -5,10 +5,10 @@ module.exports = {
 
     devtool: 'source-map',
 
-    entry: path.resolve('mock/src/index.js'),
+    entry: path.resolve('test/mock/src/index.js'),
 
     output: {
-        path: path.resolve('mock/v8/dist'),
+        path: path.resolve('test/mock/v8/dist'),
         filename: 'coverage-v8.js',
         umdNamedDefine: true,
         library: 'coverage-v8',

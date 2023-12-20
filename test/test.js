@@ -14,7 +14,7 @@ const serverPort = 8130;
 const serverUrl = `http://localhost:${serverPort}`;
 
 const serve = () => {
-    const mockDir = path.resolve(__dirname, '../mock');
+    const mockDir = path.resolve(__dirname, './mock');
 
     console.log('serve dir', mockDir);
 
@@ -94,9 +94,9 @@ const test = async () => {
 
 
     await Promise.all([
-        testV8(serverUrl),
+        testIstanbul(serverUrl),
         testV8Minify(serverUrl),
-        testIstanbul(serverUrl)
+        testV8(serverUrl)
     ]);
 
     console.log('close server ...');
