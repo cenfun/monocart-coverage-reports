@@ -35,7 +35,7 @@ const multipleReportsOptions = {
 
     onEnd: (coverageResults) => {
         const summary = coverageResults.summary;
-        console.log(summary);
+        // console.log(summary);
         CG({
             columns: [{
                 id: 'name'
@@ -182,10 +182,8 @@ const generate = async () => {
 
 
 module.exports = async (serverUrl) => {
-    // clean cache first if debug
-    if (multipleReportsOptions.logging === 'debug') {
-        await new CoverageReport(multipleReportsOptions).cleanCache();
-    }
+    // clean cache first
+    await new CoverageReport(multipleReportsOptions).cleanCache();
 
     await Promise.all([
         test1(serverUrl),

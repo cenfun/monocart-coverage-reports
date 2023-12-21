@@ -103,15 +103,13 @@ const generate = async () => {
     const coverageResults = await new CoverageReport(coverageOptions).generate();
     console.log('reportPath', EC.magenta(coverageResults.reportPath));
 
-    console.log('v8-esbuild coverage generated', coverageResults.summary);
+    console.log('v8-esbuild coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
 };
 
 
 module.exports = async (serverUrl) => {
-    // clean cache first if debug
-    if (coverageOptions.logging === 'debug') {
-        await new CoverageReport(coverageOptions).cleanCache();
-    }
+    // clean cache first
+    await new CoverageReport(coverageOptions).cleanCache();
 
     await Promise.all([
         test1(serverUrl),

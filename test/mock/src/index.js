@@ -4,6 +4,8 @@ import '../minify/demo.js';
 import './branch.js';
 import ts from './typescript.ts';
 
+import component from './component.js';
+
 export function foo(argument) {
     console.log('this is foo');
 
@@ -89,6 +91,8 @@ const onload = (something) => {
         return;
     }
     console.log('on loaded');
+
+    component();
 
     const number = something ? 1 : 2;
     return number;
