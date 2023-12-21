@@ -1,6 +1,5 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
-const CG = require('console-grid');
 
 const CoverageReport = require('../');
 
@@ -17,73 +16,6 @@ const coverageOptions = {
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 || sourcePath.search(/minify\//) !== -1,
 
     outputDir: './docs/v8'
-};
-
-// v8 and istanbul reports
-const multipleReportsOptions = {
-    // logging: 'debug',
-
-    // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
-    reports: [
-        ['v8'],
-        ['v8-json', {
-            // outputFile: 'json/v8-report.json'
-        }],
-        ['html', {
-            subdir: 'istanbul'
-        }],
-        ['json', {
-            file: 'my-json-file.json'
-        }],
-        'lcovonly'
-    ],
-
-    name: 'My V8 sub dir Coverage Report',
-    // v8 sub dir
-    outputFile: 'v8/index.html',
-    assetsPath: '../../assets',
-
-    // reportPath: 'lcov.info',
-    reportPath: () => {
-        return 'my-json-file.json';
-    },
-
-    onEnd: (coverageResults) => {
-        const summary = coverageResults.summary;
-        console.log(summary);
-        CG({
-            columns: [{
-                id: 'name'
-            }, {
-                id: 'value',
-                formatter: (v, row, column) => {
-                    if (row.name === 'pct') {
-                        // in red color if coverage less than 90%
-                        if (v < 90) {
-                            v = EC.red(v);
-                        }
-                        return v;
-                    }
-                    return v;
-                }
-            }],
-            rows: Object.keys(summary).map((id) => {
-                const indicator = summary[id];
-                return {
-                    name: id,
-                    value: '',
-                    subs: Object.keys(indicator).map((k) => {
-                        return {
-                            name: k,
-                            value: indicator[k]
-                        };
-                    })
-                };
-            })
-        });
-    },
-
-    outputDir: './docs/v8-and-istanbul'
 };
 
 const test1 = async (serverUrl) => {
@@ -133,9 +65,6 @@ const test1 = async (serverUrl) => {
     // v8
     const report = await new CoverageReport(coverageOptions).add(coverageList);
 
-    // to istanbul
-    await new CoverageReport(multipleReportsOptions).add(coverageList);
-
     console.log('v8 coverage1 added', report.type);
 
     await browser.close();
@@ -183,9 +112,6 @@ const test2 = async (serverUrl) => {
 
     const report = await new CoverageReport(coverageOptions).add(coverageList);
 
-    // to istanbul
-    await new CoverageReport(multipleReportsOptions).add(coverageList);
-
     console.log('v8 coverage2 added', report.type);
 
     await browser.close();
@@ -200,9 +126,6 @@ const generate = async () => {
     console.log('reportPath', EC.magenta(coverageResults1.reportPath));
     console.log('v8 coverage generated', Object.keys(coverageResults1), coverageResults1.summary);
 
-    // to istanbul
-    const coverageResults2 = await new CoverageReport(multipleReportsOptions).generate();
-    console.log('reportPath', EC.magenta(coverageResults2.reportPath));
 };
 
 
