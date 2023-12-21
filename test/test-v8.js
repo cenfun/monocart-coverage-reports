@@ -122,9 +122,9 @@ const generate = async () => {
 
     console.log('generate v8 coverage reports ...');
 
-    const coverageResults1 = await new CoverageReport(coverageOptions).generate();
-    console.log('reportPath', EC.magenta(coverageResults1.reportPath));
-    console.log('v8 coverage generated', Object.keys(coverageResults1), coverageResults1.summary);
+    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    console.log('reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('v8 coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
 
 };
 
