@@ -1,8 +1,8 @@
-import './branch.js';
-import './typescript.ts';
-
 import '../minify/comments.js';
 import '../minify/demo.js';
+
+import './branch.js';
+import ts from './typescript.ts';
 
 export function foo(argument) {
     console.log('this is foo');
@@ -96,4 +96,4 @@ const onload = (something) => {
 };
 
 // one line but two statements
-init(window._my_stop_key); onload(window._my_something);
+init(window._my_stop_key); onload(window._my_something); ts();

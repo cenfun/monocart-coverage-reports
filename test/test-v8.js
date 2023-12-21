@@ -209,8 +209,7 @@ const generate = async () => {
 module.exports = async (serverUrl) => {
     // clean cache first if debug
     if (coverageOptions.logging === 'debug') {
-        const coverageReport = new CoverageReport(coverageOptions);
-        await coverageReport.cleanCache();
+        await new CoverageReport(coverageOptions).cleanCache();
     }
 
     await Promise.all([

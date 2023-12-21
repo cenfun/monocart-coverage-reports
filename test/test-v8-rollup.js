@@ -7,16 +7,16 @@ const coverageOptions = {
     // logging: 'debug',
     reports: [
         ['v8', {
-            name: 'My V8 Minify Coverage Report',
+            name: 'My V8 Rollup Coverage Report',
             assetsPath: '../assets'
         }]
     ],
-    outputDir: './docs/v8-minify'
+    outputDir: './docs/v8-rollup'
 };
 
 const test1 = async (serverUrl) => {
 
-    console.log('start v8-minify test1 ...');
+    console.log('start v8-rollup test1 ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -31,7 +31,7 @@ const test1 = async (serverUrl) => {
         })
     ]);
 
-    const url = `${serverUrl}/minify/`;
+    const url = `${serverUrl}/rollup/`;
 
     console.log(`goto ${url}`);
 
@@ -49,7 +49,7 @@ const test1 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await new CoverageReport(coverageOptions).add(coverageList);
-    console.log('v8-minify coverage1 added', results.type);
+    console.log('v8-rollup coverage1 added', results.type);
 
     await browser.close();
 };
@@ -57,7 +57,7 @@ const test1 = async (serverUrl) => {
 
 const test2 = async (serverUrl) => {
 
-    console.log('start v8-minify test2 ...');
+    console.log('start v8-rollup test2 ...');
     const browser = await chromium.launch({
         // headless: false
     });
@@ -72,7 +72,7 @@ const test2 = async (serverUrl) => {
         })
     ]);
 
-    const url = `${serverUrl}/minify/`;
+    const url = `${serverUrl}/rollup/`;
 
     console.log(`goto ${url}`);
 
@@ -90,7 +90,7 @@ const test2 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await new CoverageReport(coverageOptions).add(coverageList);
-    console.log('v8-minify coverage2 added', results.type);
+    console.log('v8-rollup coverage2 added', results.type);
 
     await browser.close();
 };
@@ -98,12 +98,12 @@ const test2 = async (serverUrl) => {
 
 const generate = async () => {
 
-    console.log('generate v8-minify coverage reports ...');
+    console.log('generate v8-rollup coverage reports ...');
 
     const coverageResults = await new CoverageReport(coverageOptions).generate();
     console.log('reportPath', EC.magenta(coverageResults.reportPath));
 
-    console.log('v8-minify coverage generated', coverageResults.summary);
+    console.log('v8-rollup coverage generated', coverageResults.summary);
 };
 
 

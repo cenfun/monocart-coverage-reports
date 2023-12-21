@@ -1,29 +1,31 @@
-var str: string = "hello world";
-
 // point type
 type Point = {
     x: number,
     y: number
 }
 
-var p: Point = {
-    x: 1,
-    y: 2
+const fun = (p: Point, pointIn: Point) => {
+    const str: string = "hello world";
+    console.log(p, pointIn, str);
+    return str;
 }
 
-var fun = (v: Point) => {
-    console.log(v);
-}
 
-fun(p);
-
-var main = (p: Point, v: string) => {
+const main = (p: Point, s: string) => {
     /* 
-        block comment
+       typescript block comment
     */
+    const pointIn: Point = {
+        x: 1,
+        y: 2
+    }
 
-    console.log(p, v);
+    // typescript line comment
+
+    const v = fun(p, pointIn);
+
+    console.log(p, s, v);
 
 }
 
-module.exports = main;
+export default main;

@@ -3,11 +3,14 @@ const path = require('path');
 const esbuild = require('esbuild');
 const webpack = require('webpack');
 
+const { rollup } = require('rollup');
+const rollupTypescript = require('@rollup/plugin-typescript');
+const rollupCommonJs = require('@rollup/plugin-commonjs');
+
 const EC = require('eight-colors');
 
 const webpackConfIstanbul = require('../test/webpack.config-istanbul.js');
 const webpackConfV8 = require('../test/webpack.config-v8.js');
-
 
 const startWebpack = function(conf) {
     return new Promise(function(resolve) {
@@ -83,11 +86,53 @@ const runEsbuild = async () => {
     console.log(EC.green('finish esbuild'));
 };
 
+const runRollup = async () => {
+
+    const entry = path.resolve('test/mock/src/index.js');
+
+    const inputOptions = {
+        input: entry,
+        plugins: [
+            rollupCommonJs(),
+            rollupTypescript({
+                sourceMap: true,
+                inlineSources: true
+            })
+        ]
+    };
+
+    const outputOptions = {
+        file: path.resolve('test/mock/rollup/dist/coverage-rollup.js'),
+        name: 'coverageRollup',
+        format: 'iife',
+        sourcemap: true
+    };
+
+    let bundle;
+    let buildFailed = false;
+    try {
+        // create a bundle
+        bundle = await rollup(inputOptions);
+
+        await bundle.write(outputOptions);
+        console.log(EC.green('finish rollup'));
+
+    } catch (error) {
+        buildFailed = true;
+        // do some error reporting
+        console.error(error);
+    }
+    if (bundle) {
+        // closes the bundle
+        await bundle.close();
+    }
+    process.exit(buildFailed ? 1 : 0);
+};
 const build = async () => {
     await runWebpackIstanbul();
     await runWebpackV8();
     await runEsbuild();
-
+    await runRollup();
 
 };
 

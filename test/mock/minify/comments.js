@@ -1,18 +1,18 @@
 /* eslint-disable no-trailing-spaces,line-comment-position,no-inline-comments,indent,no-multi-spaces,no-multiple-empty-lines */
         // LineComment
 
-console.log('some//thing'); // comment /*
+console.log('some"//"\\\'thing\\'); // comment /*  
 
-  // comment /*
-console.log('some//thing/*'); /*
+  // comment /* ---
+console.log('some//thing/*'); /*  
     ddd
 */
                            console.log('some/*/thing');
-
+//
      console.log(`
-        /*
-            //
-        */
+        '/*
+            "//"
+        */'
      `);
 
 /**
