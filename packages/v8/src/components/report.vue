@@ -224,7 +224,6 @@ const renderReport = async () => {
     }
 
     data.cursor = null;
-    codeViewer.viewer.focus();
 
     state.loading = false;
 };
@@ -356,6 +355,8 @@ onMounted(() => {
     >
       <VuiSwitch
         v-model="state.formatted"
+        width="30px"
+        height="18px"
         :label-clickable="true"
         label-position="right"
       >
@@ -367,9 +368,9 @@ onMounted(() => {
         class="mcr-report-cursor"
         gap="10px"
       >
-        <div>Ln {{ Util.NF(data.cursor.line) }}</div>
-        <div>Col {{ Util.NF(data.cursor.column) }}</div>
-        <div>Pos {{ Util.NF(data.cursor.position) }}</div>
+        <div>Line {{ Util.NF(data.cursor.line) }}</div>
+        <div>Column {{ Util.NF(data.cursor.column) }}</div>
+        <div>Position {{ Util.NF(data.cursor.position) }}</div>
       </VuiFlex>
     </VuiFlex>
     <VuiLoading
