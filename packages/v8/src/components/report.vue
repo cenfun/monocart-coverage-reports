@@ -48,8 +48,6 @@ const updateTopExecutions = (executionCounts) => {
         return;
     }
 
-    data.executionCounts = executionCounts;
-
     const list = [];
     Object.keys(executionCounts).forEach((line) => {
         const arr = executionCounts[line];
@@ -62,7 +60,7 @@ const updateTopExecutions = (executionCounts) => {
         });
     });
 
-    if (!list.length) {
+    if (list.length < 2) {
         data.topExecutions = null;
         return;
     }
@@ -284,6 +282,7 @@ onMounted(() => {
         <div
           v-if="(typeof item.pct === 'number')"
           :class="'mcr-report-percent mcr-'+item.status"
+          :tooltip="item.name + ' Coverage'"
         >
           {{ Util.PF(item.pct, 100) }}
         </div>
@@ -291,22 +290,33 @@ onMounted(() => {
           gap="5px"
           class="mcr-report-values"
         >
-          <div :class="item.covered?'mcr-covered':''">
+          <div
+            :class="item.covered?'mcr-covered':''"
+            :tooltip="'Covered ' + item.name"
+          >
             {{ Util.NF(item.covered) }}
           </div>
-          <div :class="item.uncovered?'mcr-uncovered':''">
+          <div
+            :class="item.uncovered?'mcr-uncovered':''"
+            :tooltip="'Uncovered ' + item.name"
+          >
             {{ Util.NF(item.uncovered) }}
           </div>
-          <div>{{ Util.NF(item.total) }}</div>
+          <div :tooltip="'Total ' + item.name">
+            {{ Util.NF(item.total) }}
+          </div>
         </VuiFlex>
         <VuiFlex
           v-if="item.id==='lines'"
           gap="5px"
+          class="mcr-report-bc"
         >
-          <div>Blank</div>
-          <div>{{ item.blank }}</div>
-          <div>Comment</div>
-          <div>{{ item.comment }}</div>
+          <div tooltip="Blank Lines">
+            Blank {{ item.blank }}
+          </div>
+          <div tooltip="Comment Lines">
+            Comment {{ item.comment }}
+          </div>
         </VuiFlex>
       </VuiFlex>
       <VuiSwitch
@@ -364,6 +374,7 @@ onMounted(() => {
     width: 100%;
     border-bottom: 1px solid #dae9fa;
     background-color: #eef6ff;
+    cursor: default;
 
     a {
         word-break: break-all;
@@ -384,6 +395,11 @@ onMounted(() => {
         padding-right: 5px;
         border-right: 1px solid #ccc;
     }
+}
+
+.mcr-report-bc {
+    color: gray;
+    font-size: 12px;
 }
 
 .mcr-report-code {
