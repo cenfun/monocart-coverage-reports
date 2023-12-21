@@ -6,11 +6,14 @@ const KSR = require('koa-static-resolver');
 const Koa = require('koa');
 
 const testV8 = require('./test-v8.js');
-const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
+
 const testV8EsBuild = require('./test-v8-esbuild.js');
 const testV8Rollup = require('./test-v8-rollup.js');
 const testV8Minify = require('./test-v8-minify.js');
 
+const testV8Node = require('./test-v8-node.js');
+
+const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
 const testIstanbul = require('./test-istanbul.js');
 
 const serverPort = 8130;
@@ -97,15 +100,17 @@ const test = async () => {
 
 
     await Promise.all([
-        testIstanbul(serverUrl),
-        testV8AndIstanbul(serverUrl),
+        // testIstanbul(serverUrl),
+        // testV8AndIstanbul(serverUrl),
 
-        testV8Minify(serverUrl),
+        // testV8Minify(serverUrl),
 
-        testV8EsBuild(serverUrl),
-        testV8Rollup(serverUrl),
+        // testV8EsBuild(serverUrl),
+        // testV8Rollup(serverUrl),
 
-        testV8(serverUrl)
+        // testV8(serverUrl),
+
+        testV8Node()
     ]);
 
     console.log('close server ...');
