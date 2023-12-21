@@ -25,30 +25,6 @@ class CoverageParser {
             comment: 0
         };
 
-        // comments: original comment ranges { block, start, end }
-        const comments = item.comments;
-        comments.forEach((range) => {
-            const {
-                block, start, end
-            } = range;
-            const sLoc = mapping.getFormattedLocation(start);
-            const eLoc = mapping.getFormattedLocation(end);
-
-            const lines = Util.getRangeLines(sLoc, eLoc, block);
-
-            lines.forEach((it) => {
-                if (!it.entire) {
-                    return;
-                }
-                const line = formattedLines[it.line];
-                // blank in block comment count as blank
-                if (line && !line.blank) {
-                    line.comment = true;
-                }
-            });
-
-        });
-
         // blank and comment lines
         let blankCount = 0;
         let commentCount = 0;
