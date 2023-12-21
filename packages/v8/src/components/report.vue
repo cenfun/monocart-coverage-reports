@@ -27,16 +27,12 @@ const el = ref(null);
 let $el;
 let codeViewer;
 
-const scrollToLine = (line) => {
+const setSelection = (item) => {
     if (codeViewer) {
-        const viewer = codeViewer.viewer;
-        const top = (line - 1) * viewer.defaultLineHeight;
-        if (top >= 0) {
-            viewer.scrollDOM.scrollTo({
-                top,
-                behavior: 'auto'
-            });
-        }
+        const cm = codeViewer.viewer;
+        const lineInfo = cm.state.doc.line(item.line);
+        const start = lineInfo.from + item.column;
+        codeViewer.setSelection(start, item.end);
     }
 };
 
@@ -53,9 +49,9 @@ const updateTopExecutions = (executionCounts) => {
         const arr = executionCounts[line];
         arr.forEach((item) => {
             list.push({
+                ... item,
                 // line index to line number
-                line: parseInt(line) + 1,
-                count: item.value
+                line: parseInt(line) + 1
             });
         });
     });
@@ -66,7 +62,7 @@ const updateTopExecutions = (executionCounts) => {
     }
 
     list.sort((a, b) => {
-        return b.count - a.count;
+        return b.value - a.value;
     });
 
     const maxNumber = 5;
@@ -222,7 +218,13 @@ const renderReport = async () => {
         codeViewer.update(report);
     } else {
         codeViewer = createCodeViewer($el, report);
+        codeViewer.on('cursor', (loc) => {
+            data.cursor = loc;
+        });
     }
+
+    data.cursor = null;
+    codeViewer.viewer.focus();
 
     state.loading = false;
 };
@@ -319,13 +321,6 @@ onMounted(() => {
           </div>
         </VuiFlex>
       </VuiFlex>
-      <VuiSwitch
-        v-model="state.formatted"
-        :label-clickable="true"
-        label-position="right"
-      >
-        Format
-      </VuiSwitch>
     </VuiFlex>
 
     <VuiFlex
@@ -342,13 +337,10 @@ onMounted(() => {
         class="mcr-top-item"
         wrap
         gap="5px"
-        @click="scrollToLine(item.line)"
+        @click="setSelection(item)"
       >
-        <div class="mcr-top-line">
-          L{{ item.line }}
-        </div>
         <div class="mcr-top-count">
-          x{{ item.count }}
+          x{{ item.value }}
         </div>
       </VuiFlex>
     </VuiFlex>
@@ -357,6 +349,29 @@ onMounted(() => {
       ref="el"
       class="mcr-report-code vui-flex-auto"
     />
+
+    <VuiFlex
+      padding="5px"
+      class="mcr-report-foot"
+    >
+      <VuiSwitch
+        v-model="state.formatted"
+        :label-clickable="true"
+        label-position="right"
+      >
+        Format
+      </VuiSwitch>
+      <div class="vui-flex-auto" />
+      <VuiFlex
+        v-if="data.cursor"
+        class="mcr-report-cursor"
+        gap="10px"
+      >
+        <div>Ln {{ Util.NF(data.cursor.line) }}</div>
+        <div>Col {{ Util.NF(data.cursor.column) }}</div>
+        <div>Pos {{ Util.NF(data.cursor.position) }}</div>
+      </VuiFlex>
+    </VuiFlex>
     <VuiLoading
       center
       :visible="state.loading"
@@ -418,12 +433,6 @@ onMounted(() => {
 .mcr-top-item {
     cursor: pointer;
 
-    &:hover {
-        .mcr-top-line {
-            text-decoration: underline;
-        }
-    }
-
     .mcr-top-count {
         padding: 0 3px;
         font-size: 12px;
@@ -432,6 +441,15 @@ onMounted(() => {
         border-radius: 3px;
         background-color: #e6f5d0;
     }
+}
+
+.mcr-report-foot {
+    border-top: 1px solid #ddd;
+    background-color: #eee;
+}
+
+.mcr-report-cursor {
+    font-size: 12px;
 }
 
 </style>

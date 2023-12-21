@@ -39,7 +39,6 @@ const startV8Coverage = async () => {
         callCount: true,
         detailed: true
     });
-    // await session.post('Runtime.enable');
 
     return session;
 };
@@ -92,7 +91,7 @@ module.exports = async () => {
     const session = await startV8Coverage();
 
 
-    EC.logRed('first function');
+    EC.logGreen('first function');
     await collectV8Coverage(session);
 
 
