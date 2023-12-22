@@ -7,7 +7,9 @@ import { components } from 'vine-ui';
 import { microtask } from 'async-tick';
 
 import { createCodeViewer } from 'monocart-code-viewer';
-import { format, Mapping } from 'monocart-formatter';
+import {
+    format, Locator, MappingParser, generateMapping
+} from 'monocart-formatter';
 
 import Util from '../utils/util.js';
 
@@ -102,7 +104,7 @@ const formatSource = (item) => {
         // codemirror will replace all \r\n to \n, so end position will be mismatched
         // just replace all \r\n with \n
         const formattedContent = source.replace(Util.lineBreakPattern, '\n');
-        const mapping = Mapping.generate(source, formattedContent);
+        const mapping = generateMapping(source, formattedContent);
         // console.log(mapping);
         return {
             content: formattedContent,
@@ -137,12 +139,15 @@ const getReport = async (item) => {
     }
 
     const { content, mapping } = res;
-
-    const coverage = getCoverage(item, state, content, mapping);
+    const formattedLocator = new Locator(content);
+    const mappingParser = new MappingParser(mapping);
+    const coverage = getCoverage(item, state, mappingParser, formattedLocator);
 
     const report = {
         coverage,
-        content
+        content,
+        // for cursor change
+        mapping
     };
 
     item[cacheKey] = report;
@@ -153,6 +158,22 @@ const getReport = async (item) => {
     // console.log([content]);
 
     return report;
+};
+
+const onCursorChange = (loc) => {
+
+    // \r\n will be replaced with \n even not formatted
+    // mapping to original position
+    let originalPosition = loc.position;
+    if (data.mapping) {
+        const mappingParser = new MappingParser(data.mapping);
+        originalPosition = mappingParser.formattedToOriginal(loc.position);
+        // console.log('cursor location', loc, mappingParser.mapping);
+    }
+
+    loc.originalPosition = originalPosition;
+
+    data.cursor = loc;
 };
 
 const renderReport = async () => {
@@ -184,11 +205,14 @@ const renderReport = async () => {
 
     // console.log(data.summaryList);
 
+    // report for code viewer {coverage, content}
     const report = await getReport(item);
     if (!report) {
         console.log(`failed to format source: ${item.sourcePath}`);
         return;
     }
+
+    data.mapping = report.mapping;
 
     const { executionCounts, linesSummary } = report.coverage;
     // console.log('showReport executionCounts', executionCounts);
@@ -218,9 +242,7 @@ const renderReport = async () => {
         codeViewer.update(report);
     } else {
         codeViewer = createCodeViewer($el, report);
-        codeViewer.on('cursor', (loc) => {
-            data.cursor = loc;
-        });
+        codeViewer.on('cursor', onCursorChange);
     }
 
     data.cursor = null;
@@ -368,9 +390,9 @@ onMounted(() => {
         class="mcr-report-cursor"
         gap="10px"
       >
-        <div>Line {{ Util.NF(data.cursor.line) }}</div>
-        <div>Column {{ Util.NF(data.cursor.column) }}</div>
-        <div>Position {{ Util.NF(data.cursor.position) }}</div>
+        <div>Line: {{ Util.NF(data.cursor.line) }}</div>
+        <div>Column: {{ Util.NF(data.cursor.column) }}</div>
+        <div>Original Position: {{ Util.NF(data.cursor.originalPosition) }}</div>
       </VuiFlex>
     </VuiFlex>
     <VuiLoading

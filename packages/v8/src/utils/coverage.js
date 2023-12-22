@@ -1,19 +1,18 @@
-import { Mapping } from 'monocart-formatter';
 import Util from './util.js';
 
 class CoverageParser {
 
-    constructor(item, state, formattedContent, formattedMapping) {
+    constructor(item, state, mappingParser, formattedLocator) {
 
         this.uncoveredLines = {};
         this.uncoveredPieces = {};
         this.executionCounts = {};
 
         // parse comment and blank lines, include vue html for now
-        const mapping = new Mapping(formattedContent, formattedMapping);
-        this.mapping = mapping;
+        this.mappingParser = mappingParser;
+        this.formattedLocator = formattedLocator;
 
-        const formattedLines = mapping.formattedLines;
+        const formattedLines = formattedLocator.lines;
 
         this.linesSummary = {
             covered: 0,
@@ -146,6 +145,7 @@ class CoverageParser {
             const {
                 start, end, count
             } = range;
+
             if (count > 0) {
                 if (count > 1) {
                     this.setExecutionCounts(start, end, count);
@@ -182,12 +182,13 @@ class CoverageParser {
 
     setUncoveredRangeLines(start, end) {
 
-        // console.log('setUncoveredRangeLines', start, end);
+        const mappingParser = this.mappingParser;
+        const formattedStart = mappingParser.originalToFormatted(start);
+        const formattedEnd = mappingParser.originalToFormatted(end);
 
-        const mapping = this.mapping;
-        const skipIndent = true;
-        const sLoc = mapping.getFormattedLocation(start, skipIndent);
-        const eLoc = mapping.getFormattedLocation(end, skipIndent);
+        const locator = this.formattedLocator;
+        const sLoc = locator.offsetToLocation(formattedStart);
+        const eLoc = locator.offsetToLocation(formattedEnd);
 
         // location line is 0 based
 
@@ -195,15 +196,19 @@ class CoverageParser {
         // console.log(lines);
 
         lines.forEach((it) => {
+
+            // to index 0-base
+            const index = it.line - 1;
+
             // whole line
             if (it.entire) {
-                this.setUncoveredLine(it.line, 'uncovered');
+                this.setUncoveredLine(index, 'uncovered');
                 return;
             }
 
-            this.setUncoveredLine(it.line, 'partial');
+            this.setUncoveredLine(index, 'partial');
             // set pieces for partial, only js
-            this.setUncoveredPieces(it.line, it.range);
+            this.setUncoveredPieces(index, it.range);
 
         });
 
@@ -214,28 +219,35 @@ class CoverageParser {
     // only for js
     setExecutionCounts(start, end, count) {
 
-        const mapping = this.mapping;
+        // console.log('setExecutionCounts', start, end, count);
 
-        const skipIndent = true;
-        const sLoc = mapping.getFormattedLocation(start, skipIndent);
-        const line = sLoc.line;
-        let column = sLoc.column;
+        const mappingParser = this.mappingParser;
+        const formattedStart = mappingParser.originalToFormatted(start);
+        const formattedEnd = mappingParser.originalToFormatted(end);
 
+        const locator = this.formattedLocator;
+
+        // 1-base
+        const sLoc = locator.offsetToLocation(formattedStart);
+
+        // to index 0-base
+        const index = sLoc.line - 1;
+
+        // fix column
+        let column = Math.max(sLoc.column, sLoc.indent);
         // It should never be possible to start with }
         const pos = sLoc.start + column;
-        const char = mapping.getFormattedSlice(pos, pos + 1);
+        const char = locator.getSlice(pos, pos + 1);
         if (char === '}') {
         // console.log(line, char);
             column += 1;
         }
 
-        const eLoc = mapping.getFormattedLocation(end, skipIndent);
+        const eLoc = locator.offsetToLocation(formattedEnd);
         let endPos = eLoc.start;
         if (eLoc.column > eLoc.indent) {
             endPos += eLoc.column;
         }
-
-        // console.log(start, end, sLoc);
 
         const execution = {
         // for start position
@@ -245,17 +257,19 @@ class CoverageParser {
             end: endPos
         };
 
-        const prevList = this.executionCounts[line];
+        // console.log(formattedStart, formattedEnd, sLoc);
+
+        const prevList = this.executionCounts[index];
         if (prevList) {
             prevList.push(execution);
             return;
         }
-        this.executionCounts[line] = [execution];
+        this.executionCounts[index] = [execution];
     }
 }
 
-export const getCoverage = (item, state, formattedContent, formattedMapping) => {
-    const parser = new CoverageParser(item, state, formattedContent, formattedMapping);
+export const getCoverage = (item, state, mappingParser, formattedLocator) => {
+    const parser = new CoverageParser(item, state, mappingParser, formattedLocator);
     return parser.coverage;
 };
 
