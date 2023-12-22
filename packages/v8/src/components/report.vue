@@ -11,6 +11,8 @@ import {
     format, Locator, MappingParser, generateMapping
 } from 'monocart-formatter';
 
+import IconLabel from './icon-label.vue';
+
 import Util from '../utils/util.js';
 
 import { getCoverage } from '../utils/coverage.js';
@@ -29,15 +31,55 @@ const el = ref(null);
 let $el;
 let codeViewer;
 
-const setSelection = (item) => {
-    if (codeViewer) {
-        const cm = codeViewer.viewer;
-        const lineInfo = cm.state.doc.line(item.line);
-        const start = lineInfo.from + item.column;
-        codeViewer.setSelection(start, item.end);
-    }
+const focusExecution = (item) => {
+    const cm = codeViewer.viewer;
+    const lineInfo = cm.state.doc.line(item.line);
+    const start = lineInfo.from + item.column;
+    codeViewer.setSelection(start, item.end);
 };
 
+const showNextUncovered = () => {
+    let index = data.uncoveredIndex;
+    const list = data.uncoveredList;
+    const item = list[index];
+
+    // console.log(item);
+
+    const mappingParser = new MappingParser(data.mapping);
+    const start = mappingParser.originalToFormatted(item.start);
+
+    // const cm = codeViewer.viewer;
+    codeViewer.setCursor(start);
+
+    // next
+    const len = list.length;
+    index += 1;
+    if (index >= len) {
+        index = 0;
+    }
+    data.uncoveredIndex = index;
+
+};
+
+const updateUncoveredList = (uncoveredRanges) => {
+    data.uncoveredIndex = 0;
+
+    if (!uncoveredRanges) {
+        data.uncoveredList = null;
+        return;
+    }
+    const list = [];
+    uncoveredRanges.forEach((range) => {
+        list.push(range);
+    });
+
+    if (!list.length) {
+        data.uncoveredList = null;
+        return;
+    }
+
+    data.uncoveredList = list;
+};
 
 const updateTopExecutions = (executionCounts) => {
 
@@ -47,13 +89,13 @@ const updateTopExecutions = (executionCounts) => {
     }
 
     const list = [];
-    Object.keys(executionCounts).forEach((line) => {
-        const arr = executionCounts[line];
+    Object.keys(executionCounts).forEach((lineIndex) => {
+        const arr = executionCounts[lineIndex];
         arr.forEach((item) => {
             list.push({
                 ... item,
                 // line index to line number
-                line: parseInt(line) + 1
+                line: parseInt(lineIndex) + 1
             });
         });
     });
@@ -214,7 +256,12 @@ const renderReport = async () => {
 
     data.mapping = report.mapping;
 
-    const { executionCounts, linesSummary } = report.coverage;
+    const {
+        executionCounts, linesSummary, uncoveredRanges
+    } = report.coverage;
+
+    updateUncoveredList(uncoveredRanges);
+
     // console.log('showReport executionCounts', executionCounts);
     updateTopExecutions(executionCounts);
 
@@ -358,7 +405,7 @@ onMounted(() => {
         class="mcr-top-item"
         wrap
         gap="5px"
-        @click="setSelection(item)"
+        @click="focusExecution(item)"
       >
         <div class="mcr-top-count">
           x{{ item.value }}
@@ -374,6 +421,7 @@ onMounted(() => {
     <VuiFlex
       padding="5px"
       class="mcr-report-foot"
+      gap="10px"
     >
       <VuiSwitch
         v-model="state.formatted"
@@ -384,6 +432,14 @@ onMounted(() => {
       >
         Format
       </VuiSwitch>
+      <IconLabel
+        v-if="data.uncoveredList"
+        icon="location-hazard"
+        size="18px"
+        @click="showNextUncovered"
+      >
+        Uncovered
+      </IconLabel>
       <div class="vui-flex-auto" />
       <VuiFlex
         v-if="data.cursor"

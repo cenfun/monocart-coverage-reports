@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "monocart-code-viewer": "^1.0.10",
+        "monocart-code-viewer": "^1.0.11",
         "monocart-formatter": "~2.2.0",
         "turbogrid": "^3.0.12"
     },

@@ -134,6 +134,7 @@ watch(() => props.icon, () => {
 .mcr-icon-label-button {
     cursor: pointer;
     opacity: 0.8;
+    user-select: none;
 
     label {
         white-space: nowrap;

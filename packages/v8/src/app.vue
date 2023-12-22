@@ -34,19 +34,19 @@ const indicators = [{
     name: 'Bytes',
     indicator_width: 88,
     collapsed_width: 80,
-    expanded_width: 60
+    expanded_width: 70
 }, {
     id: 'functions',
     name: 'Functions',
     indicator_width: 75,
     collapsed_width: 100,
-    expanded_width: 60
+    expanded_width: 70
 }, {
     id: 'lines',
     name: 'Lines',
     indicator_width: 81,
     collapsed_width: 80,
-    expanded_width: 60
+    expanded_width: 70
 }];
 
 // =================================================================================
@@ -760,7 +760,7 @@ const initGrid = () => {
         },
         percent: (v) => {
             if (typeof v === 'number') {
-                return Util.PF(v, 100);
+                return Util.PF(v, 100, 2);
             }
             return v;
         },

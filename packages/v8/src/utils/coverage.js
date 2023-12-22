@@ -80,6 +80,9 @@ class CoverageParser {
             uncoveredPieces: this.uncoveredPieces,
             executionCounts: this.executionCounts,
 
+            // for locate
+            uncoveredRanges: this.uncoveredRanges,
+
             // updated lines summary after formatted
             linesSummary: this.linesSummary
         };
@@ -121,6 +124,8 @@ class CoverageParser {
             });
         }
 
+        console.log(uncoveredRanges);
+
         return uncoveredRanges;
     }
 
@@ -131,10 +136,14 @@ class CoverageParser {
             const { start, end } = range;
             this.setUncoveredRangeLines(start, end);
         });
+
+        this.uncoveredRanges = uncoveredRanges;
     }
 
     // js, source, ranges: [ {start, end, count} ]
     parseJs(ranges) {
+
+        this.uncoveredRanges = [];
 
         // no ranges mark all as covered
         if (!ranges.length) {
@@ -151,6 +160,7 @@ class CoverageParser {
                     this.setExecutionCounts(start, end, count);
                 }
             } else {
+                this.uncoveredRanges.push(range);
                 // set uncovered first
                 this.setUncoveredRangeLines(start, end);
             }
