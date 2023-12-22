@@ -41,12 +41,12 @@ const focusExecution = (item) => {
 const showNextUncovered = () => {
     let index = data.uncoveredIndex;
     const list = data.uncoveredList;
-    const item = list[index];
+    const position = list[index];
 
     // console.log(item);
 
     const mappingParser = new MappingParser(data.mapping);
-    const start = mappingParser.originalToFormatted(item.start);
+    const start = mappingParser.originalToFormatted(position);
 
     // const cm = codeViewer.viewer;
     codeViewer.setCursor(start);
@@ -61,24 +61,15 @@ const showNextUncovered = () => {
 
 };
 
-const updateUncoveredList = (uncoveredRanges) => {
+const updateUncoveredList = (uncoveredPositions) => {
     data.uncoveredIndex = 0;
 
-    if (!uncoveredRanges) {
-        data.uncoveredList = null;
-        return;
-    }
-    const list = [];
-    uncoveredRanges.forEach((range) => {
-        list.push(range);
-    });
-
-    if (!list.length) {
+    if (!uncoveredPositions || !uncoveredPositions.length) {
         data.uncoveredList = null;
         return;
     }
 
-    data.uncoveredList = list;
+    data.uncoveredList = uncoveredPositions;
 };
 
 const updateTopExecutions = (executionCounts) => {
@@ -257,10 +248,10 @@ const renderReport = async () => {
     data.mapping = report.mapping;
 
     const {
-        executionCounts, linesSummary, uncoveredRanges
+        executionCounts, linesSummary, uncoveredPositions
     } = report.coverage;
 
-    updateUncoveredList(uncoveredRanges);
+    updateUncoveredList(uncoveredPositions);
 
     // console.log('showReport executionCounts', executionCounts);
     updateTopExecutions(executionCounts);

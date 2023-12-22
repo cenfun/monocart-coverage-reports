@@ -44,7 +44,7 @@ class CoverageParser {
         if (item.js) {
             this.parseJs(item.ranges);
         } else {
-            this.parseCss(item.ranges, item.source.length);
+            this.parseCss(item.ranges, item.source.length, mappingParser, formattedLocator);
         }
 
         // calculate covered and uncovered after parse
@@ -81,7 +81,7 @@ class CoverageParser {
             executionCounts: this.executionCounts,
 
             // for locate
-            uncoveredRanges: this.uncoveredRanges,
+            uncoveredPositions: this.uncoveredPositions,
 
             // updated lines summary after formatted
             linesSummary: this.linesSummary
@@ -92,16 +92,16 @@ class CoverageParser {
     // ====================================================================================================
 
     getUncoveredFromCovered(ranges, contentLength) {
-        const uncoveredRanges = [];
+        const uncoveredList = [];
         if (!ranges.length) {
 
             // nothing covered
-            uncoveredRanges.push({
+            uncoveredList.push({
                 start: 0,
                 end: contentLength
             });
 
-            return uncoveredRanges;
+            return uncoveredList;
         }
 
         ranges.sort((a, b) => a.start - b.start);
@@ -109,7 +109,7 @@ class CoverageParser {
         let pos = 0;
         ranges.forEach((range) => {
             if (range.start > pos) {
-                uncoveredRanges.push({
+                uncoveredList.push({
                     start: pos,
                     end: range.start
                 });
@@ -118,32 +118,58 @@ class CoverageParser {
         });
 
         if (pos < contentLength) {
-            uncoveredRanges.push({
+            uncoveredList.push({
                 start: pos,
                 end: contentLength
             });
         }
 
-        console.log(uncoveredRanges);
-
-        return uncoveredRanges;
+        return uncoveredList;
     }
 
     // css, ranges: [ {start, end} ]
-    parseCss(ranges, contentLength) {
-        const uncoveredRanges = this.getUncoveredFromCovered(ranges, contentLength);
-        uncoveredRanges.forEach((range) => {
-            const { start, end } = range;
-            this.setUncoveredRangeLines(start, end);
+    parseCss(ranges, contentLength, mappingParser, formattedLocator) {
+        const uncoveredList = this.getUncoveredFromCovered(ranges, contentLength);
+
+        const uncoveredPositions = [];
+        uncoveredList.forEach((range) => {
+            const uncoveredLines = this.setUncoveredRangeLines(range);
+
+            // no blank and comments
+            if (!uncoveredLines.length) {
+                return;
+            }
+
+            let uncoveredPos = range.start;
+            // fix uncovered range for css
+            // let uncoveredRange;
+            const firstItem = uncoveredLines[0];
+            const lineInfo = formattedLocator.getLine(firstItem.line);
+            // console.log(firstItem, lineInfo);
+            if (lineInfo) {
+                if (firstItem.entire) {
+                    // getLine 1-base
+                    uncoveredPos = lineInfo.start + lineInfo.indent;
+                } else {
+                    // partial
+                    uncoveredPos = lineInfo.start + firstItem.range.start;
+                }
+            }
+            // to original pos
+            uncoveredPos = mappingParser.formattedToOriginal(uncoveredPos);
+
+            // filter blank and comments lines
+            uncoveredPositions.push(uncoveredPos);
+
         });
 
-        this.uncoveredRanges = uncoveredRanges;
+        this.uncoveredPositions = uncoveredPositions;
     }
 
     // js, source, ranges: [ {start, end, count} ]
     parseJs(ranges) {
 
-        this.uncoveredRanges = [];
+        this.uncoveredPositions = [];
 
         // no ranges mark all as covered
         if (!ranges.length) {
@@ -151,18 +177,16 @@ class CoverageParser {
         }
 
         ranges.forEach((range) => {
-            const {
-                start, end, count
-            } = range;
+            const { count } = range;
 
             if (count > 0) {
                 if (count > 1) {
-                    this.setExecutionCounts(start, end, count);
+                    this.setExecutionCounts(range);
                 }
             } else {
-                this.uncoveredRanges.push(range);
+                this.uncoveredPositions.push(range.start);
                 // set uncovered first
-                this.setUncoveredRangeLines(start, end);
+                this.setUncoveredRangeLines(range);
             }
         });
 
@@ -174,7 +198,7 @@ class CoverageParser {
         const prev = this.uncoveredLines[line];
         if (prev) {
             // maybe already blank or comment
-            return;
+            return true;
         }
         this.uncoveredLines[line] = value;
     }
@@ -190,7 +214,9 @@ class CoverageParser {
 
     // ====================================================================================================
 
-    setUncoveredRangeLines(start, end) {
+    setUncoveredRangeLines(range) {
+
+        const { start, end } = range;
 
         const mappingParser = this.mappingParser;
         const formattedStart = mappingParser.originalToFormatted(start);
@@ -205,6 +231,9 @@ class CoverageParser {
         const lines = Util.getRangeLines(sLoc, eLoc);
         // console.log(lines);
 
+        // uncovered lines without blank and comment lines for css
+        const uncoveredLines = [];
+
         lines.forEach((it) => {
 
             // to index 0-base
@@ -212,22 +241,34 @@ class CoverageParser {
 
             // whole line
             if (it.entire) {
-                this.setUncoveredLine(index, 'uncovered');
+                const prev = this.setUncoveredLine(index, 'uncovered');
+
+                // prev blank or comment
+                if (!prev) {
+                    uncoveredLines.push(it);
+                }
+
                 return;
             }
 
             this.setUncoveredLine(index, 'partial');
             // set pieces for partial, only js
             this.setUncoveredPieces(index, it.range);
+            uncoveredLines.push(it);
 
         });
 
+        return uncoveredLines;
     }
 
     // ====================================================================================================
 
     // only for js
-    setExecutionCounts(start, end, count) {
+    setExecutionCounts(range) {
+
+        const {
+            start, end, count
+        } = range;
 
         // console.log('setExecutionCounts', start, end, count);
 
