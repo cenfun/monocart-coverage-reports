@@ -17,6 +17,7 @@
         "build-docs": "node ./scripts/build-docs.js",
         "build-test": "node ./scripts/build-test.js",
         "build": "sf lint && sf b -p && npm run build-test && npm run build-docs",
+        "test-ast": "node ./test/ast/test-ast.js",
         "test": "node ./test/test.js && npm run build-docs",
         "dev": "sf d v8",
         "patch": "npm run build && sf publish patch -r"
