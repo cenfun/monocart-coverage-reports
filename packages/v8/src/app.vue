@@ -42,6 +42,12 @@ const indicators = [{
     collapsed_width: 100,
     expanded_width: 70
 }, {
+    id: 'branches',
+    name: 'Branches',
+    indicator_width: 75,
+    collapsed_width: 100,
+    expanded_width: 70
+}, {
     id: 'lines',
     name: 'Lines',
     indicator_width: 81,
@@ -64,6 +70,7 @@ const state = shallowReactive({
     watermarks: {
         bytes: [50, 80],
         functions: [50, 80],
+        branches: [50, 80],
         lines: [50, 80]
     },
     watermarkLow: true,

@@ -10,6 +10,7 @@ const coverageOptions = {
         // v8 will be ignored if input data istanbul
         'v8',
         ['html'],
+        ['json'],
         ['html-spa', {
             subdir: 'html-spa'
         }]

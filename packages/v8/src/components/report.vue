@@ -268,7 +268,7 @@ const renderReport = async () => {
         const originalSummary = item.summary.lines;
         Object.keys(originalSummary).forEach((k) => {
             if (originalSummary[k] !== lines[k]) {
-                console.log(k, originalSummary[k], '!=', lines[k]);
+                console.log('lines', k, originalSummary[k], '=>', lines[k]);
             }
         });
     }
@@ -343,7 +343,6 @@ onMounted(() => {
         <div
           v-if="(typeof item.pct === 'number')"
           :class="'mcr-report-percent mcr-'+item.status"
-          :tooltip="item.name + ' Coverage'"
         >
           {{ Util.PF(item.pct, 100) }}
         </div>

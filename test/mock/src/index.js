@@ -1,7 +1,7 @@
 import '../minify/comments.js';
 import '../minify/demo.js';
 
-import './branch.js';
+import branch from './branch.js';
 import ts from './typescript.ts';
 
 import component from './component.js';
@@ -92,6 +92,7 @@ const onload = (something) => {
     }
     console.log('on loaded');
 
+    branch();
     component();
 
     const number = something ? 1 : 2;
