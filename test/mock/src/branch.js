@@ -1,4 +1,3 @@
-
 // 4 x 10 = 40 ( (count if) x 2 )
 const IfStatement_11 = (tf1, tf2) => {
 
@@ -132,23 +131,23 @@ const ConditionalExpression_00 = (tf1, tf2) => {
 
 // 4 x 5 = 20
 const LogicalExpression_11 = (tf1, tf2) => {
-    const a = tf1 || 0;
-    const b = tf2 || a || 1;
+    const a = tf1 || tf2;
+    const b = tf2 || tf1 || a;
     console.log(b);
 };
 const LogicalExpression_10 = (tf1, tf2) => {
-    const a = tf1 || 0;
-    const b = tf2 || a || 1;
+    const a = tf1 || tf2;
+    const b = tf2 || tf1 || a;
     console.log(b);
 };
 const LogicalExpression_01 = (tf1, tf2) => {
-    const a = tf1 || 0;
-    const b = tf2 || a || 1;
+    const a = tf1 || tf2;
+    const b = tf2 || tf1 || a;
     console.log(b);
 };
 const LogicalExpression_00 = (tf1, tf2) => {
-    const a = tf1 || 0;
-    const b = tf2 || a || 1;
+    const a = tf1 || tf2;
+    const b = tf2 || tf1 || a;
     console.log(b);
 };
 
