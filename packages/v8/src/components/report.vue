@@ -76,7 +76,13 @@ const onGoClick = (e) => {
     }
     data.popoverVisible = false;
     data.popoverTarget = null;
-    codeViewer.setCursor(parseInt(data.gotoValue));
+
+    let pos = parseInt(data.gotoValue);
+    if (data.mapping) {
+        const mappingParser = new MappingParser(data.mapping);
+        pos = mappingParser.originalToFormatted(pos);
+    }
+    codeViewer.setCursor(pos);
 };
 
 const showGotoPopover = (e) => {
