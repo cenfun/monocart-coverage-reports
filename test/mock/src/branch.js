@@ -1,45 +1,45 @@
 /* branches test cases */
 /* eslint-disable default-case */
 
-const mixedStatement = (tf1, tf2) => {
-    if (tf1) {
-        const a = tf2 || 2;
-        if (a) {
-            console.log(a);
+const coveredFunction = () => {
+    for (let i = 0; i < 3; i++) {
+        if (i > 1) {
+            console.log(i);
         }
     }
+};
 
-    if (tf1) {
-        const a = tf1 || 2;
-        if (a) {
-            console.log(a);
+coveredFunction.uncoveredFunction = () => {
+    for (let i = 0; i < 3; i++) {
+        if (i > 1) {
+            console.log(i);
         }
     }
 };
 
 // 5 x 10 = 50 ( (count if) x 2 )
-const IfStatement = (tf1, tf2) => {
+// const IfStatement = (tf1, tf2) => {
 
-    if (tf1) {
-        console.log('if1');
-    }
+//     if (tf1) {
+//         console.log('if1');
+//     }
 
-    if (tf1) {
-        console.log('if2');
-    } else if (tf2) {
-        console.log('ifelse2');
-    }
+//     if (tf1) {
+//         console.log('if2');
+//     } else if (tf2) {
+//         console.log('ifelse2');
+//     }
 
-    if (tf1) {
-        console.log('if3');
-    } else if (tf2) {
-        console.log('ifelse3');
-    } else {
-        console.log('else3');
-    }
+//     if (tf1) {
+//         console.log('if3');
+//     } else if (tf2) {
+//         console.log('ifelse3');
+//     } else {
+//         console.log('else3');
+//     }
 
-    mixedStatement(tf1, tf2);
-};
+//     mixedStatement(tf1, tf2);
+// };
 
 const IfStatement_11 = (tf1, tf2) => {
 
@@ -61,7 +61,7 @@ const IfStatement_11 = (tf1, tf2) => {
         console.log('else3');
     }
 
-    IfStatement(tf1, tf2);
+    // IfStatement(tf1, tf2);
 
 };
 const IfStatement_10 = (tf1, tf2) => {
@@ -84,7 +84,7 @@ const IfStatement_10 = (tf1, tf2) => {
         console.log('else3');
     }
 
-    IfStatement(tf1, tf2);
+    // IfStatement(tf1, tf2);
 
 };
 const IfStatement_01 = (tf1, tf2) => {
@@ -107,7 +107,7 @@ const IfStatement_01 = (tf1, tf2) => {
         console.log('else3');
     }
 
-    IfStatement(tf1, tf2);
+    // IfStatement(tf1, tf2);
 
 };
 const IfStatement_00 = (tf1, tf2) => {
@@ -130,7 +130,7 @@ const IfStatement_00 = (tf1, tf2) => {
         console.log('else3');
     }
 
-    IfStatement(tf1, tf2);
+    // IfStatement(tf1, tf2);
 
 };
 
@@ -173,9 +173,13 @@ const ConditionalExpression_00 = (tf1, tf2) => {
 
 // 5 x 5 = 25
 const LogicalExpression = (tf1, tf2) => {
-    const a = tf1 || tf2;
-    const b = tf2 || tf1 || a;
-    console.log(b);
+
+    for (let i = 0; i < 2; i++) {
+        const a = tf1 || tf2;
+        const b = tf2 || tf1 || a;
+        console.log(b);
+    }
+
 };
 const LogicalExpression_11 = (tf1, tf2) => {
     const a = tf1 || tf2;
@@ -288,6 +292,7 @@ const SwitchStatement_5 = (n) => {
 // })();
 
 const branch = () => {
+    coveredFunction();
 
     IfStatement_11(true, true);
     IfStatement_10(true, false);
