@@ -197,14 +197,12 @@ const onCursorChange = (loc) => {
 
     // \r\n will be replaced with \n even not formatted
     // mapping to original position
-    let originalPosition = loc.position;
     if (data.mapping) {
         const mappingParser = new MappingParser(data.mapping);
-        originalPosition = mappingParser.formattedToOriginal(loc.position);
+        loc.original = true;
+        loc.originalPosition = mappingParser.formattedToOriginal(loc.position);
         // console.log('cursor location', loc, mappingParser.mapping);
     }
-
-    loc.originalPosition = originalPosition;
 
     data.cursor = loc;
 };
@@ -438,7 +436,9 @@ onMounted(() => {
       >
         <div>Line: {{ Util.NF(data.cursor.line) }}</div>
         <div>Column: {{ Util.NF(data.cursor.column) }}</div>
-        <div>Original Position: {{ Util.NF(data.cursor.originalPosition) }}</div>
+        <div v-if="data.cursor.original">
+          Original Position: {{ Util.NF(data.cursor.originalPosition) }}
+        </div>
       </VuiFlex>
     </VuiFlex>
     <VuiLoading
