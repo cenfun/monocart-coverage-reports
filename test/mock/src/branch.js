@@ -1,6 +1,21 @@
 /* branches test cases */
 /* eslint-disable default-case */
 
+const mixedStatement = (tf1, tf2) => {
+    if (tf1) {
+        const a = tf2 || 2;
+        if (a) {
+            console.log(a);
+        }
+    }
+
+    if (tf1) {
+        const a = tf1 || 2;
+        if (a) {
+            console.log(a);
+        }
+    }
+};
 
 // 5 x 10 = 50 ( (count if) x 2 )
 const IfStatement = (tf1, tf2) => {
@@ -23,6 +38,7 @@ const IfStatement = (tf1, tf2) => {
         console.log('else3');
     }
 
+    mixedStatement(tf1, tf2);
 };
 
 const IfStatement_11 = (tf1, tf2) => {
