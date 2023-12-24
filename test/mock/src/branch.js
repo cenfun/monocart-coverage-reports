@@ -1,3 +1,69 @@
+/* branches test cases */
+/* eslint-disable default-case */
+
+// 3 + 4 + 4 + 4 + 3 = 18
+const SwitchStatement_1 = (n) => {
+    switch (n) {
+        case 1:
+            console.log(1);
+            break;
+        case 2:
+        case 3:
+            console.log(2);
+    }
+};
+const SwitchStatement_2 = (n) => {
+    switch (n) {
+        case 1:
+            console.log(1);
+            break;
+        case 2:
+        case 3:
+            console.log(2);
+            break;
+        default:
+            console.log('default');
+    }
+};
+const SwitchStatement_3 = (n) => {
+    switch (n) {
+        case 1:
+            console.log(1);
+            break;
+        case 2:
+        case 3:
+            console.log(2);
+            break;
+        default:
+            console.log('default');
+    }
+};
+const SwitchStatement_4 = (n) => {
+    switch (n) {
+        case 1:
+            console.log(1);
+            break;
+        case 2:
+        case 3:
+            console.log(2);
+            break;
+        default:
+            console.log('default');
+    }
+};
+const SwitchStatement_5 = (n) => {
+    switch (n) {
+        case 1:
+            console.log(1);
+            break;
+        case 2:
+        case 3:
+            console.log(2);
+            break;
+    }
+};
+
+
 // 4 x 10 = 40 ( (count if) x 2 )
 const IfStatement_11 = (tf1, tf2) => {
 
@@ -111,24 +177,6 @@ const ConditionalExpression_00 = (tf1, tf2) => {
     console.log(b);
 };
 
-
-// SwitchStatement
-// ((a) => {
-
-//     switch (a) {
-//         case 1:
-//             console.log(1);
-//             break;
-//         case 2:
-//         case 3:
-//             console.log(2);
-//             break;
-//         default:
-//             console.log('default');
-//     }
-
-// })();
-
 // 4 x 5 = 20
 const LogicalExpression_11 = (tf1, tf2) => {
     const a = tf1 || tf2;
@@ -174,8 +222,11 @@ const branch = () => {
     LogicalExpression_01(false, true);
     LogicalExpression_00(false, false);
 
-    // ConditionalExpression(tf1, tf2);
-    //
+    SwitchStatement_1(1);
+    SwitchStatement_2(2);
+    SwitchStatement_3(3);
+    SwitchStatement_4(4);
+    SwitchStatement_5(5);
 };
 
 export default branch;
