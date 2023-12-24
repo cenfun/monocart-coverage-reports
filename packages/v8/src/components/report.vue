@@ -18,7 +18,7 @@ import Util from '../utils/util.js';
 import { getCoverage } from '../utils/coverage.js';
 
 const {
-    VuiFlex, VuiSwitch, VuiLoading
+    VuiFlex, VuiSwitch, VuiLoading, VuiPopover, VuiInput, VuiButton
 } = components;
 
 const state = inject('state');
@@ -59,6 +59,30 @@ const showNextUncovered = () => {
     }
     data.uncoveredIndex = index;
 
+};
+
+const onPopoverOpen = (elem) => {
+    setTimeout(() => {
+        const input = elem.querySelector('input');
+        if (input) {
+            input.focus();
+        }
+    });
+};
+
+const onGoClick = (e) => {
+    if (data.gotoValue === data.cursor.originalPosition) {
+        return;
+    }
+    data.popoverVisible = false;
+    data.popoverTarget = null;
+    codeViewer.setCursor(parseInt(data.gotoValue));
+};
+
+const showGotoPopover = (e) => {
+    data.gotoValue = data.cursor.originalPosition;
+    data.popoverTarget = e.target;
+    data.popoverVisible = true;
 };
 
 const updateUncoveredList = (uncoveredPositions) => {
@@ -436,11 +460,36 @@ onMounted(() => {
       >
         <div>Line: {{ Util.NF(data.cursor.line) }}</div>
         <div>Column: {{ Util.NF(data.cursor.column) }}</div>
-        <div v-if="data.cursor.original">
+        <div
+          v-if="data.cursor.original"
+          class="mcr-report-goto"
+          @click="showGotoPopover"
+        >
           Original Position: {{ Util.NF(data.cursor.originalPosition) }}
         </div>
       </VuiFlex>
     </VuiFlex>
+    <VuiPopover
+      v-model="data.popoverVisible"
+      :target="data.popoverTarget"
+      positions="top"
+      width="160px"
+      @open="onPopoverOpen"
+    >
+      <VuiFlex
+        gap="10px"
+        padding="5px"
+      >
+        <VuiInput
+          v-model="data.gotoValue"
+          type="number"
+          select-on-focus
+        />
+        <VuiButton @click="onGoClick">
+          Go
+        </VuiButton>
+      </VuiFlex>
+    </VuiPopover>
     <VuiLoading
       center
       :visible="state.loading"
@@ -519,6 +568,10 @@ onMounted(() => {
 
 .mcr-report-cursor {
     font-size: 12px;
+}
+
+.mcr-report-goto {
+    cursor: pointer;
 }
 
 </style>
