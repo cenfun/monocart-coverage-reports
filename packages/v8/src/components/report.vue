@@ -70,10 +70,29 @@ const onPopoverOpen = (elem) => {
     });
 };
 
-const onGoClick = (e) => {
-
+const closeGoto = () => {
     data.popoverVisible = false;
     data.popoverTarget = null;
+};
+
+const onGoKeyDown = (e) => {
+    // console.log(e.code);
+    if (e.code === 'Escape') {
+        // stop flyover close
+        e.preventDefault();
+        e.stopPropagation();
+        closeGoto();
+        return;
+    }
+
+    if (e.code === 'Enter') {
+        onGoClick();
+    }
+};
+
+const onGoClick = () => {
+
+    closeGoto();
 
     let pos = data.gotoValue;
     if (data.mapping) {
@@ -489,6 +508,7 @@ onMounted(() => {
           v-model="data.gotoValue"
           type="number"
           select-on-focus
+          @keydown="onGoKeyDown"
         />
         <VuiButton @click="onGoClick">
           Go
