@@ -1108,19 +1108,19 @@ window.addEventListener('message', (e) => {
         </tr>
         <tr>
           <td>ConditionalExpression</td>
-          <td>✔</td>
+          <td>✔ Not Perfect</td>
         </tr>
         <tr>
           <td>IfStatement</td>
-          <td>✔</td>
+          <td>✔ Not Perfect</td>
         </tr>
         <tr>
           <td>LogicalExpression</td>
-          <td>✔</td>
+          <td>✔ Not Perfect</td>
         </tr>
         <tr>
           <td>SwitchStatement</td>
-          <td>✔</td>
+          <td>✔ Not Perfect</td>
         </tr>
       </table>
     </VuiPopover>
