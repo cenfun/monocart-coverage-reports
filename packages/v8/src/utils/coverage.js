@@ -42,9 +42,9 @@ class CoverageParser {
 
         // do NOT use type, it could be ts or vue for source file
         if (item.js) {
-            this.parseJs(item.ranges);
+            this.parseJs(item.data.bytes);
         } else {
-            this.parseCss(item.ranges, item.source.length, mappingParser, formattedLocator);
+            this.parseCss(item.data.bytes, item.source.length, mappingParser, formattedLocator);
         }
 
         // calculate covered and uncovered after parse

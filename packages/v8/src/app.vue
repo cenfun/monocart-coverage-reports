@@ -1095,7 +1095,7 @@ window.addEventListener('message', (e) => {
           href="https://v8.dev/blog/javascript-code-coverage"
           target="_blank"
         >V8</a> coverage data.
-        However, the V8 cannot provide effective branch coverage information, so this result is not perfect but may be closer.
+        However, the V8 cannot provide effective branch coverage information, so the result is not perfect.
       </div>
       <table class="mcr-note-table">
         <tr>
