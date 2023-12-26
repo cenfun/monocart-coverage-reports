@@ -389,7 +389,7 @@ onMounted(() => {
           v-if="(typeof item.pct === 'number')"
           :class="'mcr-report-percent mcr-'+item.status"
         >
-          {{ Util.PF(item.pct, 100) }}
+          {{ Util.PF(item.pct, 100, 2) }}
         </div>
         <VuiFlex
           gap="5px"
