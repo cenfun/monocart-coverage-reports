@@ -53,7 +53,7 @@ const showNextUncovered = (id) => {
     }
 
     const current = list[index];
-    console.log('show next uncovered', current);
+    // console.log('show next uncovered', current);
 
     const mappingParser = new MappingParser(data.mapping);
     const start = mappingParser.originalToFormatted(current.start);
@@ -262,8 +262,8 @@ const renderReport = async () => {
     const summary = item.summary;
     // summary list
     data.summaryList = state.indicators.filter((it) => {
-        // no functions for css
-        if (!item.js && it.id === 'functions') {
+        // no functions,branches for css
+        if (!item.js && ['functions', 'branches'].includes(it.id)) {
             return false;
         }
         return true;

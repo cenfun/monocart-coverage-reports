@@ -126,13 +126,29 @@ class CoverageParser {
     // js, source, ranges: [ {start, end, count} ]
     parseJs(data) {
 
+        const uncoveredBytes = this.uncoveredInfo.bytes;
+        const uncoveredFunctions = this.uncoveredInfo.functions;
+        const uncoveredBranches = this.uncoveredInfo.branches;
+
+        data.functions.filter((it) => it.count === 0).forEach((it) => {
+            uncoveredFunctions.push({
+                start: it.start,
+                end: it.end
+            });
+        });
+        data.branches.filter((it) => it.count === 0).forEach((it) => {
+            uncoveredBranches.push({
+                start: it.start,
+                end: it.end
+            });
+        });
+
         const bytes = data.bytes;
         // no ranges mark all as covered
         if (!bytes.length) {
             return;
         }
 
-        const uncoveredBytes = this.uncoveredInfo.bytes;
         bytes.forEach((range) => {
             const {
                 start, end, count

@@ -8,3 +8,9 @@
 
 /* comments */
 .inline-unused{font-size:medium;}.inline-used {position:relative;}.next-unused{color:none}
+
+
+.uncovered-css {
+	/* comments in */
+	color: red; /* comments after */
+}
