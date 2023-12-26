@@ -11,8 +11,6 @@ const testV8EsBuild = require('./test-v8-esbuild.js');
 const testV8Rollup = require('./test-v8-rollup.js');
 const testV8Minify = require('./test-v8-minify.js');
 
-const testV8Node = require('./test-v8-node.js');
-
 const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
 const testIstanbul = require('./test-istanbul.js');
 
@@ -108,9 +106,7 @@ const test = async () => {
         testV8EsBuild(serverUrl),
         testV8Rollup(serverUrl),
 
-        testV8(serverUrl),
-
-        testV8Node()
+        testV8(serverUrl)
     ]);
 
     console.log('close server ...');

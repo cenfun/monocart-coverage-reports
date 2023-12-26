@@ -4,9 +4,13 @@ const { fileURLToPath } = require('url');
 
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const CoverageReport = require('../../');
 
-// v8 and lcov
+const {
+    foo, bar, app
+} = require('./app.js');
+
+
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -16,18 +20,9 @@ const coverageOptions = {
     assetsPath: '../assets',
     lcov: true,
 
-    outputDir: './docs/v8-node'
+    outputDir: './docs/v8-node-ins'
 };
 
-
-const generate = async () => {
-    console.log('generate v8-node coverage reports ...');
-
-    const coverageResults = await new CoverageReport(coverageOptions).generate();
-    console.log('reportPath', EC.magenta(coverageResults.reportPath));
-    console.log('v8-node coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
-
-};
 
 // ==================================================================
 // start node.js coverage
@@ -88,22 +83,30 @@ const collectV8Coverage = async (session) => {
 };
 
 
-module.exports = async () => {
+const generate = async () => {
     // clean cache first
     await new CoverageReport(coverageOptions).cleanCache();
 
     // =====================================================
     const session = await startV8Coverage();
 
+    foo();
+    bar();
 
-    EC.logGreen('first function');
     await collectV8Coverage(session);
 
+    app();
 
-    EC.logGreen('second function');
     await collectV8Coverage(session);
 
     // =====================================================
 
-    await generate();
+    console.log('generate v8-node coverage reports ...');
+
+    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    console.log('reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('v8-node coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
+
 };
+
+generate();
