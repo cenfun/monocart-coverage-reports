@@ -136,7 +136,7 @@ class CoverageParser {
                 end: it.end
             });
         });
-        data.branches.filter((it) => it.count === 0).forEach((it) => {
+        data.branches.filter((it) => it.count === 0 && !it.none).forEach((it) => {
             uncoveredBranches.push({
                 start: it.start,
                 end: it.end

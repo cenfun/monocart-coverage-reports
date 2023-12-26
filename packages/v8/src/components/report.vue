@@ -38,6 +38,27 @@ const focusExecution = (item) => {
     codeViewer.setSelection(start, item.end);
 };
 
+const getIndexByPosition = (list) => {
+    if (!data.cursor) {
+        return;
+    }
+
+    if (!data.cursor.original) {
+        return;
+    }
+
+    const originalPosition = data.cursor.originalPosition;
+
+    let index;
+    const item = list.find((it, i) => {
+        index = i;
+        return it.start > originalPosition;
+    });
+    if (item) {
+        return index;
+    }
+};
+
 const showNextUncovered = (id) => {
 
     const uncoveredInfo = data.uncoveredInfo;
@@ -50,6 +71,12 @@ const showNextUncovered = (id) => {
     let index = uncoveredInfo[key];
     if (typeof index !== 'number') {
         index = 0;
+    }
+
+    const posIndex = getIndexByPosition(list);
+    if (posIndex) {
+        // console.log('index', posIndex);
+        index = posIndex;
     }
 
     const current = list[index];
