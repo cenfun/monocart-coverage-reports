@@ -51,7 +51,7 @@ const serve = () => {
 const testFunctions = () => {
 
 
-    const { dedupeRanges } = require('../lib/converter/dedupe.js');
+    const { dedupeRanges } = require('../lib/utils/dedupe.js');
 
     const ranges = [{
         start: 0, end: 10
