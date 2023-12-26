@@ -38,18 +38,28 @@ const focusExecution = (item) => {
     codeViewer.setSelection(start, item.end);
 };
 
-const showNextUncovered = () => {
-    let index = data.uncoveredIndex;
-    const list = data.uncoveredList;
-    const position = list[index];
+const showNextUncovered = (id) => {
 
-    // console.log(item);
+    const uncoveredInfo = data.uncoveredInfo;
+    const list = uncoveredInfo[id];
+    if (!list.length) {
+        return;
+    }
+
+    const key = `${id}_index`;
+    let index = uncoveredInfo[key];
+    if (typeof index !== 'number') {
+        index = 0;
+    }
+
+    const current = list[index];
+    console.log('show next uncovered', current);
 
     const mappingParser = new MappingParser(data.mapping);
-    const start = mappingParser.originalToFormatted(position);
+    const start = mappingParser.originalToFormatted(current.start);
+    const end = mappingParser.originalToFormatted(current.end);
 
-    // const cm = codeViewer.viewer;
-    codeViewer.setCursor(start);
+    codeViewer.setSelection(start, end);
 
     // next
     const len = list.length;
@@ -57,7 +67,7 @@ const showNextUncovered = () => {
     if (index >= len) {
         index = 0;
     }
-    data.uncoveredIndex = index;
+    uncoveredInfo[key] = index;
 
 };
 
@@ -107,17 +117,6 @@ const showGotoPopover = (e) => {
     data.gotoValue = data.cursor.originalPosition;
     data.popoverTarget = e.target;
     data.popoverVisible = true;
-};
-
-const updateUncoveredList = (uncoveredPositions) => {
-    data.uncoveredIndex = 0;
-
-    if (!uncoveredPositions || !uncoveredPositions.length) {
-        data.uncoveredList = null;
-        return;
-    }
-
-    data.uncoveredList = uncoveredPositions;
 };
 
 const updateTopExecutions = (executionCounts) => {
@@ -294,10 +293,10 @@ const renderReport = async () => {
     data.mapping = report.mapping;
 
     const {
-        executionCounts, linesSummary, uncoveredPositions
+        executionCounts, uncoveredInfo, linesSummary
     } = report.coverage;
 
-    updateUncoveredList(uncoveredPositions);
+    data.uncoveredInfo = uncoveredInfo;
 
     // console.log('showReport executionCounts', executionCounts);
     updateTopExecutions(executionCounts);
@@ -396,31 +395,35 @@ onMounted(() => {
           gap="5px"
           class="mcr-report-values"
         >
-          <div
-            :class="item.covered?'mcr-covered':''"
-            :tooltip="'Covered ' + item.name"
-          >
-            {{ Util.NF(item.covered) }}
+          <div :tooltip="'Covered ' + item.id + ' / Total ' + item.id">
+            <span :class="item.covered?'mcr-covered':''">{{ Util.NF(item.covered) }}</span> / {{ Util.NF(item.total) }}
           </div>
-          <div
-            :class="item.uncovered?'mcr-uncovered':''"
-            :tooltip="'Uncovered ' + item.name"
-          >
-            {{ Util.NF(item.uncovered) }}
-          </div>
-          <div :tooltip="'Total ' + item.name">
-            {{ Util.NF(item.total) }}
-          </div>
+
+
+          <VuiFlex gap="5px">
+            <div
+              :class="item.uncovered?'mcr-uncovered':''"
+              :tooltip="'Uncovered ' + item.id"
+            >
+              {{ Util.NF(item.uncovered) }}
+            </div>
+            <IconLabel
+              v-if="item.uncovered && item.id!=='lines'"
+              class="mcr-uncovered"
+              icon="locate"
+              @click="showNextUncovered(item.id)"
+            />
+          </VuiFlex>
         </VuiFlex>
         <VuiFlex
           v-if="item.id==='lines'"
           gap="5px"
           class="mcr-report-bc"
         >
-          <div tooltip="Blank Lines">
+          <div tooltip="Blank lines">
             Blank {{ item.blank }}
           </div>
-          <div tooltip="Comment Lines">
+          <div tooltip="Comment lines">
             Comment {{ item.comment }}
           </div>
         </VuiFlex>
@@ -468,14 +471,6 @@ onMounted(() => {
       >
         Format
       </VuiSwitch>
-      <IconLabel
-        v-if="data.uncoveredList"
-        icon="location-hazard"
-        size="18px"
-        @click="showNextUncovered"
-      >
-        Uncovered
-      </IconLabel>
       <div class="vui-flex-auto" />
       <VuiFlex
         v-if="data.cursor"
@@ -549,7 +544,7 @@ onMounted(() => {
     border: 1px solid #ccc;
     border-radius: 3px;
 
-    div:not(:last-child) {
+    > div:not(:last-child) {
         padding-right: 5px;
         border-right: 1px solid #ccc;
     }

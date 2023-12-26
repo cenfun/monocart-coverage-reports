@@ -121,10 +121,10 @@ watchEffect(() => {
 
 // =================================================================================
 
-// let timeout_tooltip;
+let timeout_tooltip;
 const initTooltip = () => {
     generateTooltips((target, text) => {
-        // clearTimeout(timeout_tooltip);
+        clearTimeout(timeout_tooltip);
 
         if (Util.isTouchDevice()) {
             return;
@@ -134,13 +134,13 @@ const initTooltip = () => {
         tooltip.target = target;
         tooltip.text = text;
 
-        // timeout_tooltip = setTimeout(() => {
-        //     tooltip.visible = false;
-        //     tooltip.text = '';
-        // }, 2000);
+        timeout_tooltip = setTimeout(() => {
+            tooltip.visible = false;
+            tooltip.text = '';
+        }, 2000);
 
     }, (target) => {
-        //  clearTimeout(timeout_tooltip);
+        clearTimeout(timeout_tooltip);
         tooltip.visible = false;
         tooltip.text = '';
     });

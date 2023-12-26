@@ -40,11 +40,17 @@ class CoverageParser {
 
         });
 
+        this.uncoveredInfo = {
+            bytes: [],
+            functions: [],
+            branches: []
+        };
+
         // do NOT use type, it could be ts or vue for source file
         if (item.js) {
-            this.parseJs(item.data.bytes);
+            this.parseJs(item.data);
         } else {
-            this.parseCss(item.data.bytes, item.source.length, mappingParser, formattedLocator);
+            this.parseCss(item.data);
         }
 
         // calculate covered and uncovered after parse
@@ -81,7 +87,7 @@ class CoverageParser {
             executionCounts: this.executionCounts,
 
             // for locate
-            uncoveredPositions: this.uncoveredPositions,
+            uncoveredInfo: this.uncoveredInfo,
 
             // updated lines summary after formatted
             linesSummary: this.linesSummary
@@ -91,100 +97,56 @@ class CoverageParser {
 
     // ====================================================================================================
 
-    getUncoveredFromCovered(ranges, contentLength) {
-        const uncoveredList = [];
-        if (!ranges.length) {
-
-            // nothing covered
-            uncoveredList.push({
-                start: 0,
-                end: contentLength
-            });
-
-            return uncoveredList;
-        }
-
-        ranges.sort((a, b) => a.start - b.start);
-
-        let pos = 0;
-        ranges.forEach((range) => {
-            if (range.start > pos) {
-                uncoveredList.push({
-                    start: pos,
-                    end: range.start
-                });
-            }
-            pos = range.end;
-        });
-
-        if (pos < contentLength) {
-            uncoveredList.push({
-                start: pos,
-                end: contentLength
-            });
-        }
-
-        return uncoveredList;
-    }
-
     // css, ranges: [ {start, end} ]
-    parseCss(ranges, contentLength, mappingParser, formattedLocator) {
-        const uncoveredList = this.getUncoveredFromCovered(ranges, contentLength);
-
-        const uncoveredPositions = [];
-        uncoveredList.forEach((range) => {
-            const uncoveredLines = this.setUncoveredRangeLines(range);
-
-            // no blank and comments
-            if (!uncoveredLines.length) {
-                return;
-            }
-
-            let uncoveredPos = range.start;
-            // fix uncovered range for css
-            // let uncoveredRange;
-            const firstItem = uncoveredLines[0];
-            const lineInfo = formattedLocator.getLine(firstItem.line);
-            // console.log(firstItem, lineInfo);
-            if (lineInfo) {
-                if (firstItem.entire) {
-                    // getLine 1-base
-                    uncoveredPos = lineInfo.start + lineInfo.indent;
-                } else {
-                    // partial
-                    uncoveredPos = lineInfo.start + firstItem.range.start;
-                }
-            }
-            // to original pos
-            uncoveredPos = mappingParser.formattedToOriginal(uncoveredPos);
-
-            // filter blank and comments lines
-            uncoveredPositions.push(uncoveredPos);
-
-        });
-
-        this.uncoveredPositions = uncoveredPositions;
-    }
-
-    // js, source, ranges: [ {start, end, count} ]
-    parseJs(ranges) {
-
-        this.uncoveredPositions = [];
-
-        // no ranges mark all as covered
-        if (!ranges.length) {
+    parseCss(data) {
+        const bytes = data.bytes;
+        if (!bytes.length) {
             return;
         }
 
-        ranges.forEach((range) => {
-            const { count } = range;
+        const uncoveredBytes = this.uncoveredInfo.bytes;
+        bytes.forEach((range) => {
+            const {
+                start, end, count
+            } = range;
+
+            if (count === 0) {
+                uncoveredBytes.push({
+                    start,
+                    end
+                });
+                // set uncovered first
+                this.setUncoveredRangeLines(range);
+            }
+
+        });
+
+    }
+
+    // js, source, ranges: [ {start, end, count} ]
+    parseJs(data) {
+
+        const bytes = data.bytes;
+        // no ranges mark all as covered
+        if (!bytes.length) {
+            return;
+        }
+
+        const uncoveredBytes = this.uncoveredInfo.bytes;
+        bytes.forEach((range) => {
+            const {
+                start, end, count
+            } = range;
 
             if (count > 0) {
                 if (count > 1) {
                     this.setExecutionCounts(range);
                 }
             } else {
-                this.uncoveredPositions.push(range.start);
+                uncoveredBytes.push({
+                    start,
+                    end
+                });
                 // set uncovered first
                 this.setUncoveredRangeLines(range);
             }

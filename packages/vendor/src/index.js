@@ -9,6 +9,8 @@ import * as acorn from 'acorn';
 import * as acornLoose from 'acorn-loose';
 import * as acornWalk from 'acorn-walk';
 
+import parseCss from './parse-css.js';
+
 export {
 
     convertSourceMap,
@@ -20,5 +22,7 @@ export {
 
     acorn,
     acornLoose,
-    acornWalk
+    acornWalk,
+
+    parseCss
 };
