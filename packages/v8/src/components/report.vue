@@ -399,7 +399,6 @@ onMounted(() => {
             <span :class="item.covered?'mcr-covered':''">{{ Util.NF(item.covered) }}</span> / {{ Util.NF(item.total) }}
           </div>
 
-
           <VuiFlex gap="5px">
             <div
               :class="item.uncovered?'mcr-uncovered':''"
@@ -409,7 +408,6 @@ onMounted(() => {
             </div>
             <IconLabel
               v-if="item.uncovered && item.id!=='lines'"
-              class="mcr-uncovered"
               icon="locate"
               @click="showNextUncovered(item.id)"
             />
@@ -552,7 +550,6 @@ onMounted(() => {
 
 .mcr-report-bc {
     color: gray;
-    font-size: 12px;
 }
 
 .mcr-report-code {
