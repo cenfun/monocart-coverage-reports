@@ -4,7 +4,7 @@
 
 ## Changelog
 
-* 1.2.0
+* 2.0.0
     - added functions coverage for v8 (typescript)
     - added lines coverage for v8 (blanks, comments)
     - added node.js coverage test
