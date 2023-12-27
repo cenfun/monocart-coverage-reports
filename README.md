@@ -8,12 +8,12 @@
 
 ## Preview Reports
 - [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
-- [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
 - [V8 Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
 - [V8 Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup)
 - [V8 lcov.info](https://cenfun.github.io/monocart-coverage-reports/v8/lcov.info)
 - [V8 Node env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env)
 - [V8 Node Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins)
+- [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
 - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
 - [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/)
 - [Integration with Monocart Reporter](https://cenfun.github.io/monocart-reporter/) - Playwright test report
@@ -137,7 +137,7 @@ console.log(coverageResults.summary);
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
 
 
-## Node.js V8 Coverage for Server Side
+## Node.js V8 Coverage Report for Server Side
 There are two ways to collect native V8 coverage data and generate coverage report:
 - Using Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
     - 1, Before running your Node.js application, set env `NODE_V8_COVERAGE`=`dir`. After the application runs and exits, the coverage data will be saved to the `dir` directory in JSON file format.
@@ -212,7 +212,6 @@ const coverageOptions = {
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
-
 
 ## Istanbul Coverage
 - [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
