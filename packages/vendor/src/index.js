@@ -9,7 +9,7 @@ import * as acorn from 'acorn';
 import * as acornLoose from 'acorn-loose';
 import * as acornWalk from 'acorn-walk';
 
-import parseCss from './parse-css.js';
+import parseCss from 'postcss/lib/parse';
 
 export {
 
