@@ -18,7 +18,7 @@ const generate = async () => {
 
         name: 'My V8 Node Coverage Report',
         assetsPath: '../assets',
-        lcov: true,
+        // lcov: true,
 
         outputDir: './docs/v8-node-env'
     };
