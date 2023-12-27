@@ -3,7 +3,7 @@ const path = require('path');
 const { fileURLToPath } = require('url');
 const EC = require('eight-colors');
 
-const CoverageReport = require('../../');
+const CoverageReport = require('../../../');
 
 
 const generate = async () => {

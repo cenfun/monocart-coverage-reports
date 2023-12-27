@@ -1,7 +1,7 @@
 
-import ts from './typescript.ts';
+const ts = require('./typescript.ts');
 
-export default () => {
+module.exports = () => {
     console.log('this is component');
-    ts();
+    ts.default();
 };

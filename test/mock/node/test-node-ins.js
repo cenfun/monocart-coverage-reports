@@ -4,11 +4,14 @@ const { fileURLToPath } = require('url');
 
 const EC = require('eight-colors');
 
-const CoverageReport = require('../../');
+const CoverageReport = require('../../../');
 
+// test lib app
 const {
     foo, bar, app
-} = require('./app.js');
+} = require('./lib/app.js');
+// test dist with sourcemap
+const { component, branch } = require('./dist/coverage-node.js');
 
 
 const coverageOptions = {
@@ -92,11 +95,12 @@ const generate = async () => {
 
     foo();
     bar();
-
+    app();
     await collectV8Coverage(session);
 
-    app();
 
+    component();
+    branch();
     await collectV8Coverage(session);
 
     // =====================================================

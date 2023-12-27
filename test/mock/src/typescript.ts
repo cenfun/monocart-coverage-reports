@@ -11,7 +11,7 @@ const fun = (p: Point, pointIn: Point) => {
 }
 
 
-const main = (p: Point, s: string) => {
+const ts = (p: Point, s: string) => {
     /* 
        typescript block comment
     */
@@ -28,4 +28,4 @@ const main = (p: Point, s: string) => {
 
 }
 
-export default main;
+export default ts;

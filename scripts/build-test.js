@@ -47,12 +47,12 @@ const startWebpack = function(conf) {
 
 const runWebpackIstanbul = async () => {
     await startWebpack(webpackConfIstanbul);
-    console.log(EC.green('finish webpack istanbul build'));
+    console.log(EC.green('finish webpack istanbul'));
 };
 
 const runWebpackV8 = async () => {
     await startWebpack(webpackConfV8);
-    console.log(EC.green('finish webpack v8 build'));
+    console.log(EC.green('finish webpack v8'));
 };
 
 const runEsbuild = async () => {
@@ -75,12 +75,10 @@ const runEsbuild = async () => {
 
     }).catch((err) => {
         EC.logRed(err);
-        process.exit(1);
     });
 
     if (!fs.existsSync(outfile)) {
         EC.logRed(`Not found out file: ${outfile}`);
-        process.exit(1);
     }
 
     console.log(EC.green('finish esbuild'));
@@ -109,7 +107,6 @@ const runRollup = async () => {
     };
 
     let bundle;
-    let buildFailed = false;
     try {
         // create a bundle
         bundle = await rollup(inputOptions);
@@ -118,7 +115,6 @@ const runRollup = async () => {
         console.log(EC.green('finish rollup'));
 
     } catch (error) {
-        buildFailed = true;
         // do some error reporting
         console.error(error);
     }
@@ -126,14 +122,47 @@ const runRollup = async () => {
         // closes the bundle
         await bundle.close();
     }
-    process.exit(buildFailed ? 1 : 0);
+
 };
+
+const runNode = async () => {
+
+    const entry = path.resolve('test/mock/node/src/index.js');
+    const outfile = path.resolve('test/mock/node/dist/coverage-node.js');
+
+    await esbuild.build({
+        entryPoints: [entry],
+        outfile: outfile,
+        sourcemap: true,
+        minify: false,
+        bundle: true,
+
+        // this is only for legal comments (copyright,license), not code comments
+        // esbuild do not support keep code comments: https://github.com/evanw/esbuild/issues/1439
+        legalComments: 'inline',
+
+        target: 'es2020',
+        platform: 'node',
+        format: 'cjs'
+
+    }).catch((err) => {
+        EC.logRed(err);
+    });
+
+    if (!fs.existsSync(outfile)) {
+        EC.logRed(`Not found out file: ${outfile}`);
+    }
+
+    console.log(EC.green('finish node'));
+
+};
+
 const build = async () => {
     await runWebpackIstanbul();
     await runWebpackV8();
     await runEsbuild();
     await runRollup();
-
+    await runNode();
 };
 
 build();

@@ -37,4 +37,4 @@ const branch = () => {
 
 };
 
-export default branch;
+module.exports = branch;

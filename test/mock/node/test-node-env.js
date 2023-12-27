@@ -1,8 +1,11 @@
 const fs = require('fs');
 
+// test lib app
 const {
     foo, bar, app
-} = require('./app.js');
+} = require('./lib/app.js');
+// test dist with sourcemap
+const { component, branch } = require('./dist/coverage-node.js');
 
 // remove previous coverage files
 const dir = process.env.NODE_V8_COVERAGE;
@@ -14,7 +17,10 @@ if (fs.existsSync(dir)) {
 }
 
 foo();
-
 bar();
-
 app();
+
+console.log(component, branch);
+
+component();
+branch();

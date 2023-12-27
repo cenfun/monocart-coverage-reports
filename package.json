@@ -18,8 +18,8 @@
         "build-test": "node ./scripts/build-test.js",
         "build": "sf lint && sf b -p && npm run build-test && npm run build-docs",
         "test-node": "npm run test-node-env && npm run test-node-ins",
-        "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage node ./test/node/test-node-env.js && node ./test/node/generate-report.js",
-        "test-node-ins": "node ./test/node/test-node-ins.js",
+        "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage node ./test/mock/node/test-node-env.js && node ./test/mock/node/generate-report.js",
+        "test-node-ins": "node ./test/mock/node/test-node-ins.js",
         "test": "node ./test/test.js && npm run build-docs",
         "dev": "sf d v8",
         "patch": "npm run build && sf publish patch -r"
