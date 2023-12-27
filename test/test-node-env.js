@@ -3,9 +3,9 @@ const fs = require('fs');
 // test lib app
 const {
     foo, bar, app
-} = require('./lib/app.js');
+} = require('./mock/node/lib/app.js');
 // test dist with sourcemap
-const { component, branch } = require('./dist/coverage-node.js');
+const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
 // remove previous coverage files
 const dir = process.env.NODE_V8_COVERAGE;
