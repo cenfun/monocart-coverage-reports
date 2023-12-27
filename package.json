@@ -16,7 +16,7 @@
     "scripts": {
         "build-docs": "node ./scripts/build-docs.js",
         "build-test": "node ./scripts/build-test.js",
-        "build": "sf lint && sf b -p && npm run build-test && npm run build-docs",
+        "build": "sf lint && sf b -p && npm run build-test",
         "test-node": "npm run test-node-env && npm run test-node-ins",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage node ./test/test-node-env.js && node ./test/generate-node-report.js",
         "test-node-ins": "node ./test/test-node-ins.js",
