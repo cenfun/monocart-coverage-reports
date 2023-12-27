@@ -9,6 +9,11 @@
 ## Preview Reports
 - [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
 - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
+- [V8 Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
+- [V8 Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup)
+- [V8 lcov.info](https://cenfun.github.io/monocart-coverage-reports/v8/lcov.info)
+- [V8 Node env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env)
+- [V8 Node Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins)
 - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
 - [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/)
 - [Integration with Monocart Reporter](https://cenfun.github.io/monocart-reporter/) - Playwright test report
