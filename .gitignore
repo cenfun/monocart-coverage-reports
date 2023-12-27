@@ -5,3 +5,4 @@
 /lib/packages
 /docs/*/.cache
 /test/mock/*/dist
+/docs
