@@ -873,6 +873,7 @@ const init = async () => {
     state.reportData = reportData;
     state.title = reportData.name || reportData.title;
     Object.assign(state.watermarks, reportData.watermarks);
+    state.version = reportData.version;
 
     initTooltip();
 
@@ -961,17 +962,6 @@ window.addEventListener('message', (e) => {
       </VuiFlex>
 
       <div class="vui-flex-auto" />
-
-      <div class="mcr-about">
-        <a
-          href="https://github.com/cenfun/monocart-coverage-reports"
-          target="_blank"
-          title="Monocart Coverage Reports"
-        ><IconLabel
-          class="mcr-icon-monocart"
-          icon="monocart"
-        /></a>
-      </div>
     </VuiFlex>
 
     <VuiFlex
@@ -1227,12 +1217,6 @@ icon
         a {
             color: #fff;
             text-decoration: none;
-        }
-    }
-
-    .mcr-about {
-        a {
-            display: block;
         }
     }
 }

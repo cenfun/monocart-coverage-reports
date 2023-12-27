@@ -499,19 +499,30 @@ onMounted(() => {
       <div class="vui-flex-auto" />
       <VuiFlex
         v-if="data.cursor"
-        class="mcr-report-cursor"
         gap="10px"
       >
-        <div>Line: {{ Util.NF(data.cursor.line) }}</div>
-        <div>Column: {{ Util.NF(data.cursor.column) }}</div>
-        <div
+        <div>Line {{ Util.NF(data.cursor.line) }}</div>
+        <div>Column {{ Util.NF(data.cursor.column+1) }}</div>
+        <IconLabel
           v-if="data.cursor.original"
+          icon="location"
           class="mcr-report-goto"
           @click="showGotoPopover"
         >
-          Original Position: {{ Util.NF(data.cursor.originalPosition) }}
-        </div>
+          Position {{ Util.NF(data.cursor.originalPosition) }}
+        </IconLabel>
       </VuiFlex>
+
+      <div class="mcr-about">
+        <a
+          href="https://github.com/cenfun/monocart-coverage-reports"
+          target="_blank"
+          title="Monocart Coverage Reports"
+        ><IconLabel
+          class="mcr-icon-monocart"
+          icon="monocart"
+        >v{{ state.version }}</IconLabel></a>
+      </div>
     </VuiFlex>
     <VuiPopover
       v-model="data.popoverVisible"
@@ -610,8 +621,10 @@ onMounted(() => {
     background-color: #eee;
 }
 
-.mcr-report-cursor {
-    font-size: 12px;
+.mcr-about {
+    a {
+        color: #333;
+    }
 }
 
 .mcr-report-goto {
