@@ -1,8 +1,11 @@
 ## TODO
 * css sourcemap
-* css rules coverage
 
 ## Changelog
+
+* 2.0.2
+    - fixed TypeError: Cannot read properties of undefined (reading 'startOffset')
+    - updated css parser
 
 * 2.0.0
     - added functions coverage for v8 (typescript)
