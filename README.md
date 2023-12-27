@@ -100,17 +100,17 @@ console.log(coverageResults.summary);
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
-| Input | Istanbul (Object) | V8 (Array) | V8 (Array) |
+| Instrumenting code | Required | No | No |
+| Coverage data | Istanbul (Object) | V8 (Array) | V8 (Array) |
 | Output | [Istanbul reports](#istanbul-reports) | [V8 reports](#v8-reports)  | [Istanbul reports](#istanbul-reports) |
-| Bytes | ❌ | ✅ | ❌ |
-| Statements | ✅ | ❌ | ☑️❔ |
-| Branches | ✅ | ☑️❔ | ☑️❔ |
-| Functions | ✅ | ✅ | ✅ |
-| Lines | ✅ | ✅ | ✅ |
-| Execution Counts | ✅ | ✅ | ✅ |
+| - Bytes | ❌ | ✅ | ❌ |
+| - Statements | ✅ | ❌ | ☑️❔ |
+| - Branches | ✅ | ☑️❔ | ☑️❔ |
+| - Functions | ✅ | ✅ | ✅ |
+| - Lines | ✅ | ✅ | ✅ |
+| - Execution counts | ✅ | ✅ | ✅ |
 | CSS coverage | ❌ | ✅ | ✅ |
 | Minified code | ❌ | ✅ | ❌ |
-| Code formatting | ❌ | ✅ | ❌ |
 
 ❔ - Partial or conditional support
 
