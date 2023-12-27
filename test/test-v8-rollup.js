@@ -7,10 +7,12 @@ const coverageOptions = {
     // logging: 'debug',
     reports: [
         ['v8', {
-            name: 'My V8 Rollup Coverage Report',
             assetsPath: '../assets'
         }]
     ],
+
+    name: 'My V8 Rollup Coverage Report',
+
     outputDir: './docs/v8-rollup'
 };
 

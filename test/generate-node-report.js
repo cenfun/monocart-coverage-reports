@@ -16,7 +16,7 @@ const generate = async () => {
     // watermarks: [60, 90],
         reports: 'v8',
 
-        name: 'My V8 Node Coverage Report',
+        name: 'My V8 Node env Coverage Report',
         assetsPath: '../assets',
         // lcov: true,
 

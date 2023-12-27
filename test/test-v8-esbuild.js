@@ -7,10 +7,11 @@ const coverageOptions = {
     // logging: 'debug',
     reports: [
         ['v8', {
-            name: 'My V8 Esbuild Coverage Report',
             assetsPath: '../assets'
         }]
     ],
+    name: 'My V8 Esbuild Coverage Report',
+
     outputDir: './docs/v8-esbuild'
 };
 

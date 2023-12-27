@@ -19,7 +19,7 @@ const coverageOptions = {
     // watermarks: [60, 90],
     reports: 'v8',
 
-    name: 'My V8 Node Coverage Report',
+    name: 'My V8 Node Inspector Coverage Report',
     assetsPath: '../assets',
     // lcov: true,
 
