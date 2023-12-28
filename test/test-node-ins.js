@@ -67,7 +67,7 @@ const collectV8Coverage = async (session) => {
     // filter node modules
     coverageList = coverageList.filter((entry) => entry.url.indexOf('node_modules') === -1);
 
-    // attached source content
+    // attach source content
     coverageList.forEach((item) => {
         const filePath = fileURLToPath(item.url);
         if (fs.existsSync(filePath)) {
