@@ -74,7 +74,7 @@ const showNextUncovered = (id) => {
     }
 
     const posIndex = getIndexByPosition(list);
-    if (posIndex) {
+    if (typeof posIndex === 'number') {
         // console.log('index', posIndex);
         index = posIndex;
     }
