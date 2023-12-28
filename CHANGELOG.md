@@ -3,6 +3,9 @@
 
 ## Changelog
 
+* 2.0.3
+    - fixed branches count if no function ranges
+
 * 2.0.2
     - fixed TypeError: Cannot read properties of undefined (reading 'startOffset')
     - updated css parser
