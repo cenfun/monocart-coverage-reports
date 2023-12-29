@@ -127,33 +127,32 @@ const runRollup = async () => {
 
 const runNode = async () => {
 
-    const entry = path.resolve('test/mock/node/src/index.js');
-    const outfile = path.resolve('test/mock/node/dist/coverage-node.js');
+    await startWebpack({
+        mode: 'development',
 
-    await esbuild.build({
-        entryPoints: [entry],
-        outfile: outfile,
-        sourcemap: true,
-        minify: false,
-        bundle: true,
+        devtool: 'source-map',
 
-        // this is only for legal comments (copyright,license), not code comments
-        // esbuild do not support keep code comments: https://github.com/evanw/esbuild/issues/1439
-        legalComments: 'inline',
+        entry: path.resolve('test/mock/node/src/index.js'),
 
-        target: 'es2020',
-        platform: 'node',
-        format: 'cjs'
+        output: {
+            path: path.resolve('test/mock/node/dist'),
+            filename: 'coverage-node.js',
+            libraryTarget: 'commonjs'
+        },
 
-    }).catch((err) => {
-        EC.logRed(err);
+        module: {
+            rules: [{
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            }, {
+                test: /\.tsx?$/,
+                use: 'ts-loader'
+            }]
+        }
     });
-
-    if (!fs.existsSync(outfile)) {
-        EC.logRed(`Not found out file: ${outfile}`);
-    }
-
-    console.log(EC.green('finish node'));
+    console.log(EC.green('finish webpack node'));
 
 };
 

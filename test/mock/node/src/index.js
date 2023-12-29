@@ -1,4 +1,7 @@
-import component from '../../src/component.js';
-import branch from '../../src/branch.js';
+const component = require('../../src/component.js');
+const branch = require('../../src/branch.js');
 
-export { component, branch };
+module.exports = {
+    component,
+    branch
+};
