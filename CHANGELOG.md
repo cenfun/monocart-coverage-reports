@@ -3,6 +3,9 @@
 
 ## Changelog
 
+* 2.0.4
+    - fixed source mapping issue
+
 * 2.0.3
     - fixed branches count if no function ranges
 
