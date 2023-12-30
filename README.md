@@ -25,12 +25,8 @@
 * [Thanks](#thanks)
 
 ## Preview Reports
-- [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
-- [V8 Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup)
-- [V8 Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
-- [V8 Node v8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api)
-- [V8 Node env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env)
-- [V8 Node Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins)
+- [V8](https://cenfun.github.io/monocart-coverage-reports/v8) - Example for browser, build with webpack, and also [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
+- [V8 Node](https://cenfun.github.io/monocart-coverage-reports/v8-node-env) - Example for Node.js using env, and also [V8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api) and [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins)
 - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
 - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
 - [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/)
@@ -156,50 +152,22 @@ console.log(coverageResults.summary);
 
 
 ## Node.js V8 Coverage Report for Server Side
-There are two ways to collect native V8 coverage data and generate coverage report:
-- Using Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
-    - 1, Before running your Node.js application, set env `NODE_V8_COVERAGE`=`dir`. After the application runs and exits, the coverage data will be saved to the `dir` directory in JSON file format.
-    - 2, Read the json file(s) from the `dir` and generate coverage report. see example:
+There are 4 ways to collect native V8 coverage data and generate coverage report:
+- 1, Using Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
+    - Before running your Node.js application, set env `NODE_V8_COVERAGE`=`dir`. After the application runs and exits, the coverage data will be saved to the `dir` directory in JSON file format.
+    - Read the json file(s) from the `dir` and generate coverage report. see example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage` node [./test/test-node-env.js](./test/test-node-env.js) && node [./test/generate-node-report.js](./test/generate-node-report.js)
-    
-- Using [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API
-   - 1, Connecting to the V8 inspector and enable V8 coverage.
-   ```js
-    const inspector = require('inspector');
-    const startV8Coverage = async () => {
-        const session = new inspector.Session();
-        session.connect();
-        await session.post('Profiler.enable');
-        await session.post('Profiler.startPreciseCoverage', {
-            callCount: true,
-            detailed: true
-        });
-        return session;
-    };
-   ```
-   - 2, Taking coverage data and adding to the report after your application runs.
-   ```js
-    const takeV8Coverage = (session) => {
-        return new Promise((resolve) => {
-            session.post('Profiler.takePreciseCoverage', (error, coverage) => {
-                if (error) {
-                    console.log(error);
-                    resolve();
-                    return;
-                }
-                resolve(coverage.result);
-            });
-        });
-    };
-    const coverageList = await takeV8Coverage(session);
-    // filter node internal files
-    coverageList = coverageList.filter((entry) => entry.url && !entry.url.startsWith('node:'));
-    await new CoverageReport(coverageOptions).add(coverageList);
-   ```
-   - 3, Generating coverage report. see example: [./test/test-node-ins.js](./test/test-node-ins.js)
-   ```js
-    await new CoverageReport(coverageOptions).generate();
-   ```
+
+- 2, Using Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir` + [V8 API](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) `v8.takeCoverage()` and `v8.stopCoverage()`. see example: 
+    > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage` node [./test/test-node-api.js](./test/test-node-api.js)
+
+- 3, Using [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API
+   - Connecting to the V8 inspector and enable V8 coverage.
+   - Taking coverage data and adding to the report after your application runs. see example: [./test/test-node-ins.js](./test/test-node-ins.js)
+   
+- 4, Using [CDP](https://chromedevtools.github.io/devtools-protocol/) API
+    - Enabling [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started/)
+    - Collecting coverage data with CDP API. see example: [./test/test-node-cdp.js](./test/test-node-cdp.js)
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When you add coverage data with [Chromium Coverage API](#chromium-coverage-api), it actually contains the data of all entry files, for example:
