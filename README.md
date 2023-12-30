@@ -6,6 +6,24 @@
 
 > Code coverage tool to generate [V8](https://v8.dev/blog/javascript-code-coverage) or [Istanbul](https://istanbul.js.org/) coverage reports.
 
+* [Preview Reports](#preview-reports)
+* [Usage](#usage)
+* [Default Options](#default-options)
+* [Multiple Reports](#multiple-reports)
+    - [V8 reports](#v8-reports)
+    - [Istanbul reports](#istanbul-reports)
+* [Multiprocessing Support](#multiprocessing-support)
+* [Compare Reports](#compare-reports)
+* [Compare Workflows](#compare-workflows)
+* [Chromium Coverage API](#chromium-coverage-api)
+* [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
+* [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
+    - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
+    - [How Monocart Works](#how-monocart-works)
+* [Istanbul Introduction](#istanbul-introduction)
+* [Thanks](#thanks)
+
 ## Preview Reports
 - [V8](https://cenfun.github.io/monocart-coverage-reports/v8)
 - [V8 Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup)
@@ -213,12 +231,6 @@ const coverageOptions = {
 };
 ```
 
-## Istanbul Coverage
-- [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
-- [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)
-- [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
-- [Code Coverage Introduction](https://docs.cypress.io/guides/tooling/code-coverage)
-
 ## How to convert V8 to Istanbul
 ### Using [v8-to-istanbul](https://github.com/istanbuljs/v8-to-istanbul)
 It is a popular library which is used to convert V8 coverage format to istanbul's coverage format. Most test frameworks are using it, such as [Jest](https://github.com/jestjs/jest/), [Vitest](https://github.com/vitest-dev/vitest), but it has two major problems:
@@ -264,6 +276,12 @@ We have removed `v8-to-istanbul` because of the two major problems and implement
 | IfStatement | ✔ Not Perfect | 
 | LogicalExpression | ✔ Not Perfect | 
 | SwitchStatement | ✔ Not Perfect | 
+
+## Istanbul Introduction
+- [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
+- [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)
+- [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+- [Code Coverage Introduction](https://docs.cypress.io/guides/tooling/code-coverage)
 
 ## Thanks
 - Special thanks to [@edumserrano](https://github.com/edumserrano)
