@@ -172,8 +172,8 @@ console.log(coverageResults.summary);
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage` node [./test/test-node-env.js](./test/test-node-env.js) && node [./test/generate-node-report.js](./test/generate-node-report.js)
 
 - Using [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API
-    - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()` and `v8.stopCoverage()`. 
-    - example: 
+    - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()` and stopping with `v8.stopCoverage()`. 
+    - example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage` node [./test/test-node-api.js](./test/test-node-api.js)
 
 - Using [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API (or module [collect-v8-coverage](https://github.com/SimenB/collect-v8-coverage))
@@ -187,7 +187,7 @@ console.log(coverageResults.summary);
     - example: [./test/test-node-cdp.js](./test/test-node-cdp.js)
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
-When you add coverage data with [Chromium Coverage API](#chromium-coverage-api), it actually contains the data of all entry files, for example:
+When V8 coverage data collected, it actually contains the data of all entry files, for example:
 ```
 1, dist/main.js
 2, dist/vendor.js
