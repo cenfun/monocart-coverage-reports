@@ -1,5 +1,6 @@
 const fs = require('fs');
-const inspector = require('inspector');
+const { Session } = require('inspector');
+const { promisify } = require('util');
 const { fileURLToPath } = require('url');
 
 const EC = require('eight-colors');
@@ -30,33 +31,34 @@ const coverageOptions = {
 // ==================================================================
 // start node.js coverage
 const startV8Coverage = async () => {
-    const session = new inspector.Session();
+    const session = new Session();
     session.connect();
-    await session.post('Profiler.enable');
-    await session.post('Profiler.startPreciseCoverage', {
+
+    const postSession = promisify(session.post.bind(session));
+
+    await postSession('Profiler.enable');
+    await postSession('Profiler.startPreciseCoverage', {
         callCount: true,
         detailed: true
     });
-    return session;
+    return postSession;
 };
 
-const takeV8Coverage = (session) => {
-    return new Promise((resolve) => {
-        session.post('Profiler.takePreciseCoverage', (error, coverage) => {
-            if (error) {
-                console.log(error);
-                resolve();
-                return;
-            }
-            resolve(coverage.result);
-        });
-    });
+const takeV8Coverage = async (postSession) => {
+    const { result } = await postSession('Profiler.takePreciseCoverage');
+    return result;
 };
+
+const stopV8Coverage = async (postSession) => {
+    await postSession('Profiler.stopPreciseCoverage');
+    await postSession('Profiler.disable');
+};
+
 // ==================================================================
 
-const collectV8Coverage = async (session) => {
+const collectV8Coverage = async (postSession) => {
 
-    let coverageList = await takeV8Coverage(session);
+    let coverageList = await takeV8Coverage(postSession);
     if (!coverageList) {
         return;
     }
@@ -91,18 +93,19 @@ const generate = async () => {
     await new CoverageReport(coverageOptions).cleanCache();
 
     // =====================================================
-    const session = await startV8Coverage();
+    const postSession = await startV8Coverage();
 
     foo();
     bar();
     app();
-    await collectV8Coverage(session);
+    await collectV8Coverage(postSession);
 
 
     component();
     branch();
-    await collectV8Coverage(session);
+    await collectV8Coverage(postSession);
 
+    await stopV8Coverage(postSession);
     // =====================================================
 
     console.log('generate v8-node coverage reports ...');
