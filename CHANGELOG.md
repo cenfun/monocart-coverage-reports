@@ -1,7 +1,9 @@
-## TODO
-* css sourcemap
-
 ## Changelog
+
+* 2.0.5
+    - fixed AST parsing issue
+    - fixed worker issue
+    - updated formatter for worker issue
 
 * 2.0.4
     - fixed source mapping issue
