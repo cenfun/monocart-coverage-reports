@@ -19,6 +19,7 @@
         "koa": "^2.15.0",
         "koa-static-resolver": "^1.0.4",
         "marked": "^11.1.1",
+        "open": "^10.0.2",
         "playwright": "^1.40.1",
         "rollup": "^4.9.2",
         "ts-loader": "^9.5.1",

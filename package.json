@@ -25,6 +25,7 @@
         "test-browser": "node ./test/test.js",
         "test": "npm run test-browser && npm run test-node && npm run build-docs",
         "dev": "sf d v8",
+        "open": "node ./scripts/open.js",
         "patch": "npm run build && sf publish patch -r"
     },
     "workspaces": [
