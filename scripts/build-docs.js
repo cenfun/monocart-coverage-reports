@@ -19,6 +19,18 @@ const buildDocs = () => {
         path.resolve(cssDir, 'github-markdown.css')
     );
 
+    // copy images
+    const imagesDir = path.resolve(__dirname, '../docs/test');
+    if (!fs.existsSync(imagesDir)) {
+        fs.mkdirSync(imagesDir);
+    }
+    ['console-summary.png', 'v8.gif'].forEach((filename) => {
+        fs.copyFileSync(
+            path.resolve(__dirname, '../test', filename),
+            path.resolve(imagesDir, filename)
+        );
+    });
+
     const markdownTemplate = fs.readFileSync(path.resolve(__dirname, 'template/markdown.html'), {
         encoding: 'utf-8'
     });
