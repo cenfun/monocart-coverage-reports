@@ -7,7 +7,10 @@ const CoverageReport = require('../');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    reports: 'v8',
+    reports: [
+        ['console-summary'],
+        ['v8']
+    ],
 
     name: 'My V8 Coverage Report',
     assetsPath: '../assets',
@@ -123,9 +126,7 @@ const generate = async () => {
     console.log('generate v8 coverage reports ...');
 
     const coverageResults = await new CoverageReport(coverageOptions).generate();
-    console.log('reportPath', EC.magenta(coverageResults.reportPath));
-    console.log('v8 coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
-
+    console.log('v8 coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 

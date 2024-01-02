@@ -1,6 +1,5 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
-const CG = require('console-grid');
 
 const CoverageReport = require('../');
 
@@ -10,6 +9,7 @@ const multipleReportsOptions = {
 
     // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
     reports: [
+        // ['console-summary'],
         ['v8'],
         ['v8-json', {
             // outputFile: 'json/v8-report.json'
@@ -35,37 +35,7 @@ const multipleReportsOptions = {
 
     onEnd: (coverageResults) => {
         const summary = coverageResults.summary;
-        // console.log(summary);
-        CG({
-            columns: [{
-                id: 'name'
-            }, {
-                id: 'value',
-                formatter: (v, row, column) => {
-                    if (row.name === 'pct') {
-                        // in red color if coverage less than 90%
-                        if (v < 90) {
-                            v = EC.red(v);
-                        }
-                        return v;
-                    }
-                    return v;
-                }
-            }],
-            rows: Object.keys(summary).map((id) => {
-                const indicator = summary[id];
-                return {
-                    name: id,
-                    value: '',
-                    subs: Object.keys(indicator).map((k) => {
-                        return {
-                            name: k,
-                            value: indicator[k]
-                        };
-                    })
-                };
-            })
-        });
+        console.log('onEnd Bytes:', `${summary.bytes.pct} %`);
     },
 
     outputDir: './docs/v8-and-istanbul'

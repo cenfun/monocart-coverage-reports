@@ -7,6 +7,7 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
+        'console-summary',
         // v8 will be ignored if input data istanbul
         'v8',
         ['html'],
@@ -16,6 +17,7 @@ const coverageOptions = {
         }]
     ],
     lcov: true,
+    name: 'My Istanbul Report',
     outputDir: './docs/istanbul'
 };
 
@@ -96,9 +98,7 @@ const generate = async () => {
 
     const coverageResults = await new CoverageReport(coverageOptions).generate();
 
-    console.log('reportPath', EC.magenta(coverageResults.reportPath));
-
-    console.log('istanbul coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
+    console.log('istanbul coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 

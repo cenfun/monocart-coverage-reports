@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.0.6
+    - added console-summary report
+
 * 2.0.5
     - fixed AST parsing issue
     - fixed worker issue

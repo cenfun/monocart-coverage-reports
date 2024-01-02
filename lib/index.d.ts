@@ -28,6 +28,7 @@ export type ReportDescription =
     ['v8-json'] | ["v8-json", {
         outputFile?: string
     }] |
+    ['console-summary'] |
     ['clover'] | ['clover', {
         file?: string
     }] |

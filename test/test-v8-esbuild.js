@@ -102,9 +102,7 @@ const generate = async () => {
     console.log('generate v8-esbuild coverage reports ...');
 
     const coverageResults = await new CoverageReport(coverageOptions).generate();
-    console.log('reportPath', EC.magenta(coverageResults.reportPath));
-
-    console.log('v8-esbuild coverage generated', Object.keys(coverageResults.summary).map((k) => [k, coverageResults.summary[k].pct]));
+    console.log('v8-esbuild coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 

@@ -10,8 +10,6 @@
 * [Usage](#usage)
 * [Default Options](#default-options)
 * [Multiple Reports](#multiple-reports)
-    - [V8 reports](#v8-reports)
-    - [Istanbul reports](#istanbul-reports)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Compare Reports](#compare-reports)
 * [Compare Workflows](#compare-workflows)
@@ -54,10 +52,9 @@ console.log(coverageResults.summary);
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
 
 ## Multiple Reports
-### V8 reports
-- v8 (html)
-- v8-json
-### [Istanbul reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+- v8 (v8 data only)
+- v8-json (v8 data only)
+- console-summary
 - clover
 - cobertura
 - html
@@ -77,6 +74,7 @@ const CoverageReport = require('monocart-coverage-reports');
 const options = {
     outputDir: './coverage-reports',
     reports: [
+        ['console-summary'],
         ['v8'],
         ['html', {
             subdir: 'istanbul'
