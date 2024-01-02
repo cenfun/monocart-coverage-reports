@@ -61,28 +61,29 @@ const options = {
 }
 const coverageReport = new CoverageReport(options);
 ```
-- v8 (v8 data only)
+- `v8` (v8 data only)
     - [V8](https://cenfun.github.io/monocart-coverage-reports/v8) - Example for browser, build with webpack, and also [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
     - [V8 Node](https://cenfun.github.io/monocart-coverage-reports/v8-node-env) - Example for Node.js using env, and also [V8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
     - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
 
-- v8-json (v8 data only)
-- console-summary
-- clover
-- cobertura
-- html
+- `v8-json` (v8 data only)
+- `console-summary`
+> Following are [istanbul reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+- `clover`
+- `cobertura`
+- `html`
     - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
     - [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/) 
-- html-spa
-- json
-- json-summary
-- lcov
-- lcovonly
-- none
-- teamcity
-- text
-- text-lcov
-- text-summary
+- `html-spa`
+- `json`
+- `json-summary`
+- `lcov`
+- `lcovonly`
+- `none`
+- `teamcity`
+- `text`
+- `text-lcov`
+- `text-summary`
 
 ## Integration
 - [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
