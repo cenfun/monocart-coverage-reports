@@ -61,14 +61,19 @@ const options = {
 }
 const coverageReport = new CoverageReport(options);
 ```
-- `v8` (v8 data only)
+- `v8` (V8 data only)
     - [V8 html](https://cenfun.github.io/monocart-coverage-reports/v8) - Example for browser, build with webpack, and also [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
     - [V8 Node](https://cenfun.github.io/monocart-coverage-reports/v8-node-env) - Example for Node.js using env, and also [V8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
     - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
 
-- `v8-json` (v8 data only)
-    - [coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
-- `console-summary`
+![](test/v8.gif)
+
+- `v8-json` (V8 data only)
+    - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
+- `console-summary` shows coverage summary in console
+    
+    ![](test/console-summary.png)
+
 > Following are [istanbul reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
 - `clover`
 - `cobertura`
