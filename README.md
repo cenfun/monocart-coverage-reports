@@ -6,10 +6,9 @@
 
 > Code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
-* [Preview Reports](#preview-reports)
 * [Usage](#usage)
 * [Default Options](#default-options)
-* [Multiple Reports](#multiple-reports)
+* [Available Reports](#available-reports)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Compare Reports](#compare-reports)
 * [Compare Workflows](#compare-workflows)
@@ -23,14 +22,6 @@
 * [Chromium Coverage API](#chromium-coverage-api)
 * [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
-
-## Preview Reports
-- [V8](https://cenfun.github.io/monocart-coverage-reports/v8) - Example for browser, build with webpack, and also [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
-- [V8 Node](https://cenfun.github.io/monocart-coverage-reports/v8-node-env) - Example for Node.js using env, and also [V8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
-- [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
-- [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
-- [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/)
-- [Integration with Monocart Reporter](https://cenfun.github.io/monocart-reporter/) - Playwright test report
 
 ## Usage
 ```js
@@ -51,24 +42,7 @@ console.log(coverageResults.summary);
 ## Default Options
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
 
-## Multiple Reports
-- v8 (v8 data only)
-- v8-json (v8 data only)
-- console-summary
-- clover
-- cobertura
-- html
-- html-spa
-- json
-- json-summary
-- lcov
-- lcovonly
-- none
-- teamcity
-- text
-- text-lcov
-- text-summary
-
+## Available Reports
 ```js
 const CoverageReport = require('monocart-coverage-reports');
 const options = {
@@ -87,6 +61,33 @@ const options = {
 }
 const coverageReport = new CoverageReport(options);
 ```
+- v8 (v8 data only)
+    - [V8](https://cenfun.github.io/monocart-coverage-reports/v8) - Example for browser, build with webpack, and also [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
+    - [V8 Node](https://cenfun.github.io/monocart-coverage-reports/v8-node-env) - Example for Node.js using env, and also [V8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
+    - [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
+
+- v8-json (v8 data only)
+- console-summary
+- clover
+- cobertura
+- html
+    - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
+    - [Istanbul](https://cenfun.github.io/monocart-coverage-reports/istanbul/) 
+- html-spa
+- json
+- json-summary
+- lcov
+- lcovonly
+- none
+- teamcity
+- text
+- text-lcov
+- text-summary
+
+## Integration
+- [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
+- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Integration with [Vitest](https://github.com/vitest-dev/vitest) coverage
+
 
 ## Multiprocessing Support
 The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
