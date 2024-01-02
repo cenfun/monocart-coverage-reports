@@ -23,12 +23,15 @@ export type ReportDescription =
     ['v8'] | ["v8", {
         outputFile?: string,
         inline?: boolean,
-        assetsPath?: string
+        assetsPath?: string,
+        metrics?: Array<"bytes" | "functions" | "branches" | "lines">
     }] |
     ['v8-json'] | ["v8-json", {
         outputFile?: string
     }] |
-    ['console-summary'] |
+    ['console-summary'] | ['console-summary', {
+        metrics?: Array<"bytes" | "functions" | "branches" | "lines" | "statements">
+    }] |
     ['clover'] | ['clover', {
         file?: string
     }] |

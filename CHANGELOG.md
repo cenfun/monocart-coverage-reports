@@ -1,7 +1,10 @@
 ## Changelog
 
+* 2.0.7
+    - added `metrics` option for `v8` and `console-summary` report
+
 * 2.0.6
-    - added console-summary report
+    - added `console-summary` report
 
 * 2.0.5
     - fixed AST parsing issue

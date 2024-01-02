@@ -288,7 +288,7 @@ const renderReport = async () => {
 
     const summary = item.summary;
     // summary list
-    data.summaryList = state.indicators.filter((it) => {
+    data.summaryList = state.metrics.filter((it) => {
         // no functions,branches for css
         if (!item.js && ['functions', 'branches'].includes(it.id)) {
             return false;
@@ -330,19 +330,21 @@ const renderReport = async () => {
 
     // update lines summary after formatted
     const lines = data.summaryList.find((it) => it.id === 'lines');
-    Object.keys(linesSummary).forEach((k) => {
-        lines[k] = linesSummary[k];
-    });
-
-
-    if (!state.formatted) {
-        // compare summary between node and browser calculation
-        const originalSummary = item.summary.lines;
-        Object.keys(originalSummary).forEach((k) => {
-            if (originalSummary[k] !== lines[k]) {
-                console.log('lines', k, originalSummary[k], '=>', lines[k]);
-            }
+    // lines could NOT be in metrics
+    if (lines) {
+        Object.keys(linesSummary).forEach((k) => {
+            lines[k] = linesSummary[k];
         });
+
+        // compare summary between node and browser calculation
+        if (!state.formatted) {
+            const originalSummary = item.summary.lines;
+            Object.keys(originalSummary).forEach((k) => {
+                if (originalSummary[k] !== lines[k]) {
+                    console.log('lines', k, originalSummary[k], '=>', lines[k]);
+                }
+            });
+        }
     }
 
     // for code viewer debug

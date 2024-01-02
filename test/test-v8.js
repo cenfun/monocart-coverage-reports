@@ -8,8 +8,12 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
-        ['console-summary'],
-        ['v8']
+        ['console-summary', {
+            // metrics: ['bytes', 'functions', 'lines']
+        }],
+        ['v8', {
+            // metrics: ['bytes', 'functions', 'lines']
+        }]
     ],
 
     name: 'My V8 Coverage Report',

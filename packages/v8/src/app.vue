@@ -30,28 +30,28 @@ const {
 } = components;
 
 
-const indicators = [{
+const allMetrics = [{
     id: 'bytes',
     name: 'Bytes',
-    indicator_width: 88,
+    metrics_width: 88,
     collapsed_width: 80,
     expanded_width: 70
 }, {
     id: 'functions',
     name: 'Functions',
-    indicator_width: 75,
+    metrics_width: 75,
     collapsed_width: 100,
     expanded_width: 70
 }, {
     id: 'branches',
     name: 'Branches',
-    indicator_width: 75,
+    metrics_width: 75,
     collapsed_width: 120,
     expanded_width: 70
 }, {
     id: 'lines',
     name: 'Lines',
-    indicator_width: 81,
+    metrics_width: 81,
     collapsed_width: 80,
     expanded_width: 70
 }];
@@ -60,7 +60,7 @@ const indicators = [{
 // do not use reactive for grid data
 const state = shallowReactive({
     title: 'Coverage Report',
-    indicators,
+    metrics: [],
     summary: {},
 
     group: true,
@@ -78,7 +78,7 @@ const state = shallowReactive({
     watermarkMedium: true,
     watermarkHigh: true,
     watermarkType: 'bytes',
-    watermarkOptions: indicators.map((it) => {
+    watermarkOptions: allMetrics.map((it) => {
         return {
             label: it.name,
             value: it.id
@@ -245,8 +245,8 @@ const displayFlyoverWithHash = () => {
 
 const onHeaderClick = (grid, columnItem) => {
     const { id } = columnItem;
-    const isIndicator = indicators.find((it) => it.id === id);
-    if (!isIndicator) {
+    const isMetrics = allMetrics.find((it) => it.id === id);
+    if (!isMetrics) {
         return;
     }
 
@@ -257,7 +257,7 @@ const onHeaderClick = (grid, columnItem) => {
 
     const pctItem = columnItem.subs.find((it) => it.id.endsWith('_pct'));
     if (pctItem) {
-        pctItem.width = collapsed ? isIndicator.collapsed_width : isIndicator.expanded_width;
+        pctItem.width = collapsed ? isMetrics.collapsed_width : isMetrics.expanded_width;
     }
 
     if (collapsed) {
@@ -366,8 +366,8 @@ const mergeSingleSubGroups = (item) => {
 
 };
 
-const initGroupIndicators = (group) => {
-    indicators.map((it) => it.id).forEach((id) => {
+const initGroupMetrics = (group) => {
+    allMetrics.map((it) => it.id).forEach((id) => {
         group[`${id}_total`] = 0;
         group[`${id}_covered`] = 0;
         if (id === 'lines') {
@@ -384,7 +384,7 @@ const calculateGroups = (list, group) => {
     }
 
     if (typeof group.bytes_total !== 'number') {
-        initGroupIndicators(group);
+        initGroupMetrics(group);
     }
 
     list.forEach((item) => {
@@ -393,7 +393,7 @@ const calculateGroups = (list, group) => {
             calculateGroups(item.subs, item);
         }
 
-        indicators.map((it) => it.id).forEach((id) => {
+        allMetrics.map((it) => it.id).forEach((id) => {
             group[`${id}_total`] += item[`${id}_total`];
             group[`${id}_covered`] += item[`${id}_covered`];
 
@@ -406,7 +406,7 @@ const calculateGroups = (list, group) => {
     });
 
     // calculate group
-    indicators.map((it) => it.id).forEach((id) => {
+    allMetrics.map((it) => it.id).forEach((id) => {
         const total = group[`${id}_total`];
 
         const covered = group[`${id}_covered`];
@@ -487,21 +487,21 @@ const getFlatRows = (summaryRows) => {
 };
 
 const addSummaryToRow = (summary, row) => {
-    indicators.map((it) => it.id).forEach((id) => {
-        const indicatorData = summary[id];
+    allMetrics.map((it) => it.id).forEach((id) => {
+        const metricsData = summary[id];
         // css will no functions
-        if (!indicatorData) {
+        if (!metricsData) {
             return;
         }
-        Object.keys(indicatorData).forEach((k) => {
-            row[`${id}_${k}`] = indicatorData[k];
+        Object.keys(metricsData).forEach((k) => {
+            row[`${id}_${k}`] = metricsData[k];
         });
 
         // status background
-        row[`${id}_pctClassMap`] = `mcr-${indicatorData.status}`;
+        row[`${id}_pctClassMap`] = `mcr-${metricsData.status}`;
 
         // chart
-        row[`${id}_chart`] = indicatorData.pct;
+        row[`${id}_chart`] = metricsData.pct;
 
     });
 };
@@ -555,8 +555,8 @@ const getGridRows = () => {
     return rows;
 };
 
-const getIndicatorColumns = () => {
-    return indicators.map((it) => {
+const getMetricsColumns = () => {
+    return state.metrics.map((it) => {
         const item = {
             ... it
         };
@@ -579,24 +579,24 @@ const getIndicatorColumns = () => {
             id: `${id}_covered`,
             name: 'Covered',
             align: 'right',
-            width: item.indicator_width,
-            headerClassMap: 'mcr-indicator-head',
-            formatter: 'indicator'
+            width: item.metrics_width,
+            headerClassMap: 'mcr-metrics-head',
+            formatter: 'metrics'
         }, {
             id: `${id}_uncovered`,
             name: 'Uncovered',
             align: 'right',
-            width: item.indicator_width,
-            headerClassMap: 'mcr-indicator-head',
-            formatter: 'indicator'
+            width: item.metrics_width,
+            headerClassMap: 'mcr-metrics-head',
+            formatter: 'metrics'
         }, {
             id: `${id}_total`,
             name: 'Total',
             align: 'right',
-            width: item.indicator_width,
-            headerClassMap: 'mcr-column-separator mcr-indicator-head',
+            width: item.metrics_width,
+            headerClassMap: 'mcr-column-separator mcr-metrics-head',
             classMap: 'mcr-column-separator',
-            formatter: 'indicator'
+            formatter: 'metrics'
         }];
 
         if (id === 'lines') {
@@ -604,17 +604,17 @@ const getIndicatorColumns = () => {
                 id: `${id}_blank`,
                 name: 'Blank',
                 align: 'right',
-                width: item.indicator_width,
-                headerClassMap: 'mcr-indicator-head',
-                formatter: 'indicator'
+                width: item.metrics_width,
+                headerClassMap: 'mcr-metrics-head',
+                formatter: 'metrics'
             }, {
                 id: `${id}_comment`,
                 name: 'Comment',
                 align: 'right',
-                width: item.indicator_width,
-                headerClassMap: 'mcr-column-separator mcr-indicator-head',
+                width: item.metrics_width,
+                headerClassMap: 'mcr-column-separator mcr-metrics-head',
                 classMap: 'mcr-column-separator',
-                formatter: 'indicator'
+                formatter: 'metrics'
             }]);
         }
 
@@ -626,7 +626,7 @@ const getIndicatorColumns = () => {
 
 const getGridData = () => {
 
-    const indicatorColumns = getIndicatorColumns();
+    const metricsColumns = getMetricsColumns();
 
     const columns = [{
         id: 'name',
@@ -641,7 +641,7 @@ const getGridData = () => {
         width: 60,
         classMap: 'mcr-column-separator',
         headerClassMap: 'mcr-column-separator'
-    }, ... indicatorColumns, {
+    }, ... metricsColumns, {
         id: 'url',
         name: 'URL',
         width: 350,
@@ -753,8 +753,8 @@ const initGrid = () => {
     grid.setFormatter({
         header: function(value, rowItem, columnItem, cellNode) {
             const { id } = columnItem;
-            const isIndicator = indicators.find((it) => it.id === id);
-            if (isIndicator) {
+            const isMetrics = allMetrics.find((it) => it.id === id);
+            if (isMetrics) {
                 const cls = columnItem.collapsed ? 'collapsed' : 'expanded';
 
                 let note = '';
@@ -762,11 +762,11 @@ const initGrid = () => {
                     note = ' <span class="mcr-branches-note"></span>';
                 }
 
-                return `<div class="mcr-indicator-name mcr-indicator-${cls}">${value}${note}</div>`;
+                return `<div class="mcr-metrics-name mcr-metrics-${cls}">${value}${note}</div>`;
             }
             return value;
         },
-        indicator: (v, rowItem, columnItem) => {
+        metrics: (v, rowItem, columnItem) => {
             if (typeof v === 'number') {
 
                 const id = columnItem.id;
@@ -874,6 +874,28 @@ const init = async () => {
     state.title = reportData.name || reportData.title;
     Object.assign(state.watermarks, reportData.watermarks);
     state.version = reportData.version;
+
+    // update metrics
+    const metrics = reportData.metrics;
+    if (Util.isList(metrics)) {
+        const newMetrics = allMetrics.filter((item) => metrics.includes(item.id));
+        if (newMetrics.length) {
+            state.metrics = newMetrics;
+        }
+    } else {
+        state.metrics = allMetrics;
+    }
+
+    // update watermarks
+    state.watermarkOptions = state.metrics.map((it) => {
+        return {
+            label: it.name,
+            value: it.id
+        };
+    });
+
+    state.watermarkType = state.watermarkOptions[0].value;
+
 
     initTooltip();
 
@@ -1271,7 +1293,7 @@ icon
     cursor: pointer;
 }
 
-.mcr-indicator-head {
+.mcr-metrics-head {
     font-size: 12px;
 }
 
@@ -1342,7 +1364,7 @@ icon
     background-color: #4d9221;
 }
 
-.mcr-indicator-name {
+.mcr-metrics-name {
     padding-left: 20px;
     vertical-align: middle;
     background-repeat: no-repeat;
@@ -1351,11 +1373,11 @@ icon
     cursor: pointer;
 }
 
-.mcr-indicator-expanded {
+.mcr-metrics-expanded {
     background-image: url("./images/expanded.svg");
 }
 
-.mcr-indicator-collapsed {
+.mcr-metrics-collapsed {
     background-image: url("./images/collapsed.svg");
 }
 

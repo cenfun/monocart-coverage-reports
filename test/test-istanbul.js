@@ -7,7 +7,9 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
-        'console-summary',
+        ['console-summary', {
+            // metrics: ['lines']
+        }],
         // v8 will be ignored if input data istanbul
         'v8',
         ['html'],
