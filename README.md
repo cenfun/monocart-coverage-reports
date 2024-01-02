@@ -43,24 +43,6 @@ console.log(coverageResults.summary);
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
 
 ## Available Reports
-```js
-const CoverageReport = require('monocart-coverage-reports');
-const options = {
-    outputDir: './coverage-reports',
-    reports: [
-        ['console-summary'],
-        ['v8'],
-        ['html', {
-            subdir: 'istanbul'
-        }],
-        ['json', {
-            file: 'my-json-file.json'
-        }],
-        'lcovonly'
-    ]
-}
-const coverageReport = new CoverageReport(options);
-```
 - `v8` (V8 data only)
     - [V8 html](https://cenfun.github.io/monocart-coverage-reports/v8) - Example for browser, build with webpack, and also [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
     - [V8 Node](https://cenfun.github.io/monocart-coverage-reports/v8-node-env) - Example for Node.js using env, and also [V8 API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
@@ -93,6 +75,25 @@ const coverageReport = new CoverageReport(options);
 - `text`
 - `text-lcov`
 - `text-summary`
+
+```js
+const CoverageReport = require('monocart-coverage-reports');
+const options = {
+    outputDir: './coverage-reports',
+    reports: [
+        ['console-summary'],
+        ['v8'],
+        ['html', {
+            subdir: 'istanbul'
+        }],
+        ['json', {
+            file: 'my-json-file.json'
+        }],
+        'lcovonly'
+    ]
+}
+const coverageReport = new CoverageReport(options);
+```
 
 ## Integration
 - [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
