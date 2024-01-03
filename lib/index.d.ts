@@ -138,6 +138,9 @@ export type CoverageReportOptions = {
     // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
     watermarks?: Watermarks,
 
+    // (Boolean) Ignoring Uncovered Lines use the special comments: /* v8 ignore next */, /* v8 ignore next N */, /* v8 ignore start */ /* v8 ignore stop */
+    enableV8Ignore?: boolean,
+
     // (Function) onEnd hook
     onEnd?: (reportData: CoverageResults) => Promise<void>
 }

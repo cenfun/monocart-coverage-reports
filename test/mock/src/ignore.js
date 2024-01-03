@@ -4,6 +4,7 @@ const platform = 'wind32';
 /* v8 ignore next */
 if (platform === 'darwin') {
     console.info('hello darwin');
+    // v8 ignore next
 }
 
 
@@ -15,12 +16,10 @@ if (platform === 'linux') {
 
 const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
 
-/* v8 ignore start */
-function uncovered(v) {
+/* v8 ignore start */ function uncovered(v) { /* v8 ignore stop */
     console.log(os);
 }
 
-/* v8 ignore stop */
 
 const ignore = () => {
     const v = 1;
