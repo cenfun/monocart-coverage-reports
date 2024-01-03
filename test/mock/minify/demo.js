@@ -7,6 +7,7 @@ function callback() {
     block comment
 */
 
+/* v8 ignore next 3 */
 function other() {
 
 }

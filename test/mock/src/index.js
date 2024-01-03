@@ -1,6 +1,7 @@
 import '../minify/comments.js';
 import '../minify/demo.js';
 
+import './ignore.js';
 import branch from './branch.js';
 import ts from './typescript.ts';
 
