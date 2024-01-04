@@ -90,8 +90,12 @@ const runRollup = async () => {
 
     const inputOptions = {
         input: entry,
+        treeshake: false,
         plugins: [
-            rollupCommonJs(),
+            rollupCommonJs({
+                transformMixedEsModules: true,
+                extensions: ['.js', '.ts']
+            }),
             rollupTypescript({
                 sourceMap: true,
                 inlineSources: true
@@ -102,7 +106,7 @@ const runRollup = async () => {
     const outputOptions = {
         file: path.resolve('test/mock/rollup/dist/coverage-rollup.js'),
         name: 'coverageRollup',
-        format: 'iife',
+        format: 'umd',
         sourcemap: true
     };
 

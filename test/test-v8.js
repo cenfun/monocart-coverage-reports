@@ -22,7 +22,7 @@ const coverageOptions = {
 
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 || sourcePath.search(/minify\//) !== -1,
 
-    enableV8Ignore: true,
+    // v8Ignore: false,
 
     outputDir: './docs/v8'
 };

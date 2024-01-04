@@ -1,13 +1,15 @@
-import '../minify/comments.js';
-import '../minify/demo.js';
+require('../minify/comments.js');
 
-import './ignore.js';
-import branch from './branch.js';
-import ts from './typescript.ts';
+require('../minify/demo.js');
 
-import component from './component.js';
+const { ignore } = require('./ignore.js');
 
-export function foo(argument) {
+const branch = require('./branch.js');
+const typescript = require('./typescript.ts');
+
+const component = require('./component.js');
+
+function foo(argument) {
     console.log('this is foo');
 
     if (argument) {
@@ -15,7 +17,7 @@ export function foo(argument) {
     }
 }
 
-export function bar(argument) {
+function bar(argument) {
     console.log('this is bar');
 
     if (argument) {
@@ -23,7 +25,7 @@ export function bar(argument) {
     }
 }
 
-export function start() {
+function start() {
     console.log('this is start');
 
     foo(true);
@@ -93,6 +95,8 @@ const onload = (something) => {
     }
     console.log('on loaded');
 
+    ignore();
+    typescript();
     branch();
     component();
 
@@ -101,5 +105,11 @@ const onload = (something) => {
 
 };
 
+
 // one line but two statements
-init(window._my_stop_key); onload(window._my_something); ts();
+init(window._my_stop_key); onload(window._my_something);
+
+
+module.exports = {
+    foo, bar, start
+};

@@ -123,6 +123,9 @@ export type CoverageReportOptions = {
     // [V8 only](Function) A filter function to execute for each element in the sources which unpacked from the source map.
     sourceFilter?: (sourcePath: string) => boolean,
 
+    // [V8 only](Boolean) Enable/Disable ignoring uncovered codes with the special comments: /* v8 ignore next/next N/start/stop */
+    v8Ignore?: boolean,
+
     // [Istanbul only] defaultSummarizer, sourceFinder
 
     // (Boolean) Generate lcov.info file, same as lcovonly report. Defaults to false.
@@ -137,9 +140,6 @@ export type CoverageReportOptions = {
     // (Array) watermarks for low/medium/high. Defaults to [50, 80]
     // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
     watermarks?: Watermarks,
-
-    // (Boolean) Ignoring Uncovered Lines use the special comments: /* v8 ignore next */, /* v8 ignore next N */, /* v8 ignore start */ /* v8 ignore stop */
-    enableV8Ignore?: boolean,
 
     // (Function) onEnd hook
     onEnd?: (reportData: CoverageResults) => Promise<void>

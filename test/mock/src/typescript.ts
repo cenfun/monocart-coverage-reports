@@ -11,7 +11,7 @@ const fun = (p: Point, pointIn: Point) => {
 }
 
 
-const ts = (p: Point, s: string) => {
+const typescript = (p: Point, s: string) => {
     /* 
        typescript block comment
     */
@@ -28,4 +28,4 @@ const ts = (p: Point, s: string) => {
 
 }
 
-export default ts;
+module.exports = typescript;
