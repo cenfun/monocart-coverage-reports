@@ -166,8 +166,9 @@ console.log(coverageResults.summary);
 
 ## Collecting V8 Coverage Data
 - For source code: enable `sourcemap` and do not compress/minify:
-    - Webpack: with `source-map` [devtool](https://webpack.js.org/configuration/devtool/) and `development` [mode](https://webpack.js.org/configuration/mode/), example [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js)
-    - Rollup: [options](https://rollupjs.org/configuration-options/) `sourcemap: true`
+    - Webpack: build with `source-map` [devtool](https://webpack.js.org/configuration/devtool/) and `development` [mode](https://webpack.js.org/configuration/mode/), example [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js)
+    - Rollup: build with [options](https://rollupjs.org/configuration-options/) `sourcemap: true`
+    - Vite: build with [options](https://vitejs.dev/config/build-options.html) `sourcemap: true` and `minify: false` 
 - Browser (Chromium Only)
     > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js)
 - Node.js
