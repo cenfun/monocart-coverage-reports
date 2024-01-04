@@ -46,6 +46,8 @@ class CoverageParser {
             branches: []
         };
 
+        this.ignoredCount = 0;
+
         // do NOT use type, it could be ts or vue for source file
         if (item.js) {
             this.parseJs(item.data);
@@ -59,12 +61,17 @@ class CoverageParser {
         this.linesSummary.comment = commentCount;
 
         const allCount = formattedLines.length;
-        const total = allCount - blankCount - commentCount;
-        this.linesSummary.total = total;
 
-        const values = Object.values(this.uncoveredLines);
-        // console.log(values);
-        const covered = allCount - values.length;
+        // 1, blank, comment, ignored,
+        // 2, uncovered
+        // 3, partial
+        const uncoveredCount = Object.values(this.uncoveredLines).length;
+        // 4, covered
+        const covered = allCount - uncoveredCount;
+
+        const ignoredCount = Object.values(this.uncoveredLines).filter((it) => it === 'ignored').length;
+        const total = allCount - blankCount - commentCount - ignoredCount;
+        this.linesSummary.total = total;
 
         this.linesSummary.covered = covered;
         this.linesSummary.uncovered = total - covered;
@@ -130,13 +137,13 @@ class CoverageParser {
         const uncoveredFunctions = this.uncoveredInfo.functions;
         const uncoveredBranches = this.uncoveredInfo.branches;
 
-        data.functions.filter((it) => it.count === 0).forEach((it) => {
+        data.functions.filter((it) => it.count === 0 && !it.ignored).forEach((it) => {
             uncoveredFunctions.push({
                 start: it.start,
                 end: it.end
             });
         });
-        data.branches.filter((it) => it.count === 0 && !it.none).forEach((it) => {
+        data.branches.filter((it) => it.count === 0 && !it.ignored && !it.none).forEach((it) => {
             uncoveredBranches.push({
                 start: it.start,
                 end: it.end
@@ -151,7 +158,7 @@ class CoverageParser {
 
         bytes.forEach((range) => {
             const {
-                start, end, count
+                start, end, count, ignored
             } = range;
 
             if (count > 0) {
@@ -159,11 +166,13 @@ class CoverageParser {
                     this.setExecutionCounts(range);
                 }
             } else {
-                uncoveredBytes.push({
-                    start,
-                    end
-                });
-                // set uncovered first
+                if (!ignored) {
+                    uncoveredBytes.push({
+                        start,
+                        end
+                    });
+                }
+                // set uncovered first, then could be changed to ignored if uncovered
                 this.setUncoveredRangeLines(range);
             }
         });
@@ -176,9 +185,10 @@ class CoverageParser {
         const prev = this.uncoveredLines[line];
         if (prev) {
             // maybe already blank or comment
-            return true;
+            return prev;
         }
         this.uncoveredLines[line] = value;
+        return value;
     }
 
     setUncoveredPieces(line, value) {
@@ -194,7 +204,9 @@ class CoverageParser {
 
     setUncoveredRangeLines(range) {
 
-        const { start, end } = range;
+        const {
+            start, end, ignored
+        } = range;
 
         const mappingParser = this.mappingParser;
         const formattedStart = mappingParser.originalToFormatted(start);
@@ -209,9 +221,6 @@ class CoverageParser {
         const lines = Util.getRangeLines(sLoc, eLoc);
         // console.log(lines);
 
-        // uncovered lines without blank and comment lines for css
-        const uncoveredLines = [];
-
         lines.forEach((it) => {
 
             // to index 0-base
@@ -219,24 +228,25 @@ class CoverageParser {
 
             // whole line
             if (it.entire) {
-                const prev = this.setUncoveredLine(index, 'uncovered');
-
-                // prev blank or comment
-                if (!prev) {
-                    uncoveredLines.push(it);
+                if (ignored) {
+                    this.setUncoveredLine(index, 'ignored');
+                    this.ignoredCount += 1;
+                } else {
+                    this.setUncoveredLine(index, 'uncovered');
                 }
+                return;
+            }
 
+            if (ignored) {
                 return;
             }
 
             this.setUncoveredLine(index, 'partial');
             // set pieces for partial, only js
             this.setUncoveredPieces(index, it.range);
-            uncoveredLines.push(it);
 
         });
 
-        return uncoveredLines;
     }
 
     // ====================================================================================================
