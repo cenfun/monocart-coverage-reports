@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.0.8
+    - added new feature `v8 ignore next N/start/stop`
+
 * 2.0.7
     - added `metrics` option for `v8` and `console-summary` report
 

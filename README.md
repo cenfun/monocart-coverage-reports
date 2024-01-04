@@ -19,6 +19,7 @@
 * [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
+* [Ignoring Uncovered Lines](#ignoring-uncovered-lines)
 * [Chromium Coverage API](#chromium-coverage-api)
 * [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
@@ -270,6 +271,28 @@ We have removed `v8-to-istanbul` because of the two major problems and implement
 | IfStatement | ✔ Not Perfect | 
 | LogicalExpression | ✔ Not Perfect | 
 | SwitchStatement | ✔ Not Perfect | 
+
+## Ignoring Uncovered Codes
+To ignore codes, use the special comment which starts with `v8 ignore `:
+- ignoring all until told
+```js
+/* v8 ignore start */
+function uncovered() {
+}
+/* v8 ignore stop */
+```
+- ignoring the next line or next N lines
+```js
+/* v8 ignore next */
+const os = platform === 'wind32' ? 'Windows' : 'Other';
+
+const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
+
+/* v8 ignore next 3 */
+if (platform === 'linux') {
+    console.info('hello linux');
+}
+```
 
 ## Chromium Coverage API
 - [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
