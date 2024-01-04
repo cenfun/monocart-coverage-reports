@@ -393,6 +393,10 @@ const calculateGroups = (list, group) => {
             calculateGroups(item.subs, item);
         }
 
+        if (item.debug) {
+            return;
+        }
+
         allMetrics.map((it) => it.id).forEach((id) => {
             group[`${id}_total`] += item[`${id}_total`];
             group[`${id}_covered`] += item[`${id}_covered`];
@@ -523,6 +527,10 @@ const getGridRows = () => {
             ... it
         };
 
+        if (it.debug) {
+            row.nameClassMap = 'mcr-debug';
+        }
+
         addSummaryToRow(it.summary, row);
 
         return row;
@@ -634,6 +642,7 @@ const getGridData = () => {
         width: 350,
         maxWidth: 1230,
         classMap: 'mcr-column-name'
+
     }, {
         id: 'type',
         name: 'Type',
@@ -766,6 +775,7 @@ const initGrid = () => {
             }
             return value;
         },
+
         metrics: (v, rowItem, columnItem) => {
             if (typeof v === 'number') {
 
@@ -1415,6 +1425,16 @@ icon
     th {
         padding: 3px 5px;
         border-bottom: 1px solid #ccc;
+    }
+}
+
+.mcr-debug {
+    .tg-tree-name {
+        padding-left: 20px;
+        background-image: url("./images/debug.svg");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 16px 16px;
     }
 }
 
