@@ -247,11 +247,9 @@ functions.forEach(block => {
             // Problem: not every block is branch, and the first block is actually function.
             if (block.functionName && i === 0) {
                 // v8-to-istanbul: count range as function here. 
-                // Problem: there is no function name if the function is anonymous or expression.
             }
         } else if (block.functionName) {
             // v8-to-istanbul: count range as function here. 
-            // Problem: same as above function.
         }
     }
 });
