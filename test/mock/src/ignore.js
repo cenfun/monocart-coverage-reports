@@ -23,4 +23,7 @@ const ignore = /* v8 ignore start */ () => {
     uncovered(v);
 };
 
+/* v8 ignore stop */
+
 export { ignore };
+
