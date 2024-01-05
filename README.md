@@ -10,6 +10,7 @@
 * [Default Options](#default-options)
 * [Available Reports](#available-reports)
 * [Multiprocessing Support](#multiprocessing-support)
+* [onEnd Hook](#onend-hook)
 * [Compare Reports](#compare-reports)
 * [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
@@ -129,6 +130,37 @@ const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 ```
 
+## onEnd Hook
+For example, checking thresholds:
+```js
+const EC = require('eight-colors');
+const coverageOptions = {
+    name: 'My Coverage Report',
+    outputDir: './coverage-reports',
+    onEnd: (coverageResults) => {
+        const thresholds = {
+            bytes: 80,
+            lines: 60
+        };
+        console.log('check thresholds ...', thresholds);
+        const errors = [];
+        const { summary } = coverageResults;
+        Object.keys(thresholds).forEach((k) => {
+            const pct = summary[k].pct;
+            if (pct < thresholds[k]) {
+                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
+            }
+        });
+        if (errors.length) {
+            const errMsg = errors.join('\n');
+            console.log(EC.red(errMsg));
+            // throw new Error(errMsg);
+            // process.exit(1);
+        }
+    }
+}
+```
+
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
@@ -245,13 +277,15 @@ And also there are some problems about counting the functions and branches:
 functions.forEach(block => {
     block.ranges.forEach((range, i) => {
         if (block.isBlockCoverage) {
-            // v8-to-istanbul: count range as branch here. 
+            // v8-to-istanbul: new CovBranch() 
             // Problem: not every block is branch, and the first block is actually function.
             if (block.functionName && i === 0) {
-                // v8-to-istanbul: count range as function here. 
+                // v8-to-istanbul: new CovFunction()
+                // Problem: no anonymous function
             }
         } else if (block.functionName) {
-            // v8-to-istanbul: count range as function here. 
+            // v8-to-istanbul: new CovFunction()
+            // Problem: no anonymous function
         }
     }
 });
