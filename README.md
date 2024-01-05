@@ -164,8 +164,8 @@ const coverageOptions = {
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
-| Coverage data | Istanbul (Object) | V8 (Array) | V8 (Array) |
-| Output | [Istanbul reports](#istanbul-reports) | [V8 reports](#v8-reports)  | [Istanbul reports](#istanbul-reports) |
+| Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) (Array) | V8 (Array) |
+| Output | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
 | - Bytes | ❌ | ✅ | ❌ |
 | - Statements | ✅ | ❌ | ☑️❔ |
 | - Branches | ✅ | ☑️❔ | ☑️❔ |
