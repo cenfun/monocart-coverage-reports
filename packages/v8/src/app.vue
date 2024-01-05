@@ -265,6 +265,8 @@ const onHeaderClick = (grid, columnItem) => {
     } else {
         grid.showColumn(ids);
     }
+
+    store.set(`collapsed_${id}`, collapsed);
 };
 
 const onRowClick = (grid, rowItem, columnItem) => {
@@ -295,6 +297,13 @@ const showBranchesNote = (target, visible) => {
     state.branchesNoteTarget = null;
 
 };
+
+const plusColumnWidth = (e, grid, columnItem) => {
+    e.preventDefault();
+    e.stopPropagation();
+    grid.setColumnWidth(columnItem, columnItem.tg_width + 100);
+};
+
 // =================================================================================
 
 const bindGridEvents = (grid) => {
@@ -325,6 +334,11 @@ const bindGridEvents = (grid) => {
             const target = d.e.target;
             if (target.className === 'mcr-branches-note') {
                 showBranchesNote(target, !state.branchesNoteVisible);
+                return;
+            }
+
+            if (target.className === 'mcr-url-plus') {
+                plusColumnWidth(d.e, grid, columnItem);
                 return;
             }
 
@@ -572,12 +586,13 @@ const getMetricsColumns = () => {
             id: `${id}_chart`,
             name: '<div class="mcr-pct-chart-header" />',
             width: 110,
-            formatter: 'chart'
+            formatter: 'chart',
+            invisible: it.collapsed
         }, {
             id: `${id}_pct`,
             name: '%',
             align: 'right',
-            width: it.expanded_width,
+            width: it.collapsed ? it.collapsed_width : it.expanded_width,
             formatter: 'percent'
         }, {
             id: `${id}_covered`,
@@ -585,14 +600,16 @@ const getMetricsColumns = () => {
             align: 'right',
             width: item.metrics_width,
             headerClassMap: 'mcr-metrics-head',
-            formatter: 'metrics'
+            formatter: 'metrics',
+            invisible: it.collapsed
         }, {
             id: `${id}_uncovered`,
             name: 'Uncovered',
             align: 'right',
             width: item.metrics_width,
             headerClassMap: 'mcr-metrics-head',
-            formatter: 'metrics'
+            formatter: 'metrics',
+            invisible: it.collapsed
         }, {
             id: `${id}_total`,
             name: 'Total',
@@ -600,7 +617,8 @@ const getMetricsColumns = () => {
             width: item.metrics_width,
             headerClassMap: 'mcr-column-separator mcr-metrics-head',
             classMap: 'mcr-column-separator',
-            formatter: 'metrics'
+            formatter: 'metrics',
+            invisible: it.collapsed
         }];
 
         if (id === 'lines') {
@@ -610,7 +628,8 @@ const getMetricsColumns = () => {
                 align: 'right',
                 width: item.metrics_width,
                 headerClassMap: 'mcr-metrics-head',
-                formatter: 'metrics'
+                formatter: 'metrics',
+                invisible: it.collapsed
             }, {
                 id: `${id}_comment`,
                 name: 'Comment',
@@ -618,7 +637,8 @@ const getMetricsColumns = () => {
                 width: item.metrics_width,
                 headerClassMap: 'mcr-column-separator mcr-metrics-head',
                 classMap: 'mcr-column-separator',
-                formatter: 'metrics'
+                formatter: 'metrics',
+                invisible: it.collapsed
             }]);
         }
 
@@ -769,6 +789,11 @@ const initGrid = () => {
 
                 return `<div class="mcr-metrics-name mcr-metrics-${cls}">${value}${note}</div>`;
             }
+
+            if (id === 'url') {
+                return `<span>${value}</span><span class="mcr-url-plus" tooltip="Increase width"></span>`;
+            }
+
             return value;
         },
 
@@ -872,6 +897,19 @@ const initStore = () => {
         }
         // console.log(item, v);
         state[item] = v;
+    });
+
+    allMetrics.forEach((m) => {
+        const id = m.id;
+        const v = store.get(`collapsed_${id}`);
+        if (!v) {
+            return;
+        }
+
+        if (Util.hasOwn(mapping, v)) {
+            m.collapsed = mapping[v];
+        }
+
     });
 };
 
@@ -1449,6 +1487,15 @@ icon
 .mcr-source {
     padding-left: 15px;
     background-image: url("./images/source.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 16px 16px;
+}
+
+.mcr-url-plus {
+    margin-left: 5px;
+    padding-left: 16px;
+    background-image: url("./images/plus.svg");
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 16px 16px;
