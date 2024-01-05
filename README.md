@@ -22,6 +22,7 @@
     - [How Monocart Works](#how-monocart-works)
 * [Ignoring Uncovered Lines](#ignoring-uncovered-lines)
 * [Chromium Coverage API](#chromium-coverage-api)
+* [V8 Coverage Data Format](#v8-coverage-data-format)
 * [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
 
