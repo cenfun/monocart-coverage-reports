@@ -20,7 +20,7 @@ if (fs.existsSync(dir)) {
         recursive: true,
         force: true
     });
-    EC.logRed(`removed previous: ${dir}`);
+    console.log(`removed previous: ${dir}`);
 }
 
 const coverageOptions = {

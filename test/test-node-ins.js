@@ -7,14 +7,6 @@ const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
-// test lib app
-const {
-    foo, bar, app
-} = require('./mock/node/lib/app.js');
-// test dist with sourcemap
-const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
-
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -94,6 +86,14 @@ const generate = async () => {
 
     // =====================================================
     const postSession = await startV8Coverage();
+
+    // import lib after v8 coverage started
+    // test lib app
+    const {
+        foo, bar, app
+    } = require('./mock/node/lib/app.js');
+    // test dist with sourcemap
+    const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
     foo();
     bar();

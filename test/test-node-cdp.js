@@ -7,13 +7,6 @@ const EC = require('eight-colors');
 
 const CoverageReport = require('../');
 
-// test lib app
-const {
-    foo, bar, app
-} = require('./mock/node/lib/app.js');
-// test dist with sourcemap
-const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
 
 const coverageOptions = {
     // logging: 'debug',
@@ -101,6 +94,10 @@ const collectV8Coverage = async (ws) => {
     // console.log(coverageList);
     coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
+    if (!coverageList.length) {
+        return;
+    }
+
     // attach source content
     coverageList.forEach((item) => {
         const filePath = fileURLToPath(item.url);
@@ -126,6 +123,14 @@ const generate = async () => {
 
     // =====================================================
     const ws = await startV8Coverage();
+
+    // import lib after v8 coverage started
+    // test lib app
+    const {
+        foo, bar, app
+    } = require('./mock/node/lib/app.js');
+    // test dist with sourcemap
+    const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
     foo();
     bar();
