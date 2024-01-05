@@ -527,10 +527,6 @@ const getGridRows = () => {
             ... it
         };
 
-        if (it.debug) {
-            row.nameClassMap = 'mcr-debug';
-        }
-
         addSummaryToRow(it.summary, row);
 
         return row;
@@ -642,14 +638,14 @@ const getGridData = () => {
         width: 350,
         maxWidth: 1230,
         classMap: 'mcr-column-name'
-
     }, {
         id: 'type',
         name: 'Type',
         align: 'center',
         width: 60,
         classMap: 'mcr-column-separator',
-        headerClassMap: 'mcr-column-separator'
+        headerClassMap: 'mcr-column-separator',
+        formatter: 'type'
     }, ... metricsColumns, {
         id: 'url',
         name: 'URL',
@@ -774,6 +770,20 @@ const initGrid = () => {
                 return `<div class="mcr-metrics-name mcr-metrics-${cls}">${value}${note}</div>`;
             }
             return value;
+        },
+
+        type: (v, rowItem, columnItem) => {
+
+            if (rowItem.debug) {
+                return `<span class="mcr-debug" tooltip="debug file">${v}</span>`;
+            }
+
+            const distFile = rowItem.distFile;
+            if (distFile) {
+                return `<span class="mcr-source" tooltip="source from ${distFile}">${v}</span>`;
+            }
+
+            return v;
         },
 
         metrics: (v, rowItem, columnItem) => {
@@ -1429,13 +1439,19 @@ icon
 }
 
 .mcr-debug {
-    .tg-tree-name {
-        padding-left: 20px;
-        background-image: url("./images/debug.svg");
-        background-repeat: no-repeat;
-        background-position: left center;
-        background-size: 16px 16px;
-    }
+    padding-left: 18px;
+    background-image: url("./images/debug.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 16px 16px;
+}
+
+.mcr-source {
+    padding-left: 15px;
+    background-image: url("./images/source.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 16px 16px;
 }
 
 .mcr-covered {
