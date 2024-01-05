@@ -98,7 +98,7 @@ const generate = async () => {
     foo();
     bar();
     app();
-    await collectV8Coverage(postSession);
+    // await collectV8Coverage(postSession);
 
 
     component();

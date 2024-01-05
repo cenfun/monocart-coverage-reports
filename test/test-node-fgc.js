@@ -12,8 +12,8 @@ const dir = '.temp/v8-coverage-fgc';
 const generate = async () => {
 
     const coverageOptions = {
-    // logging: 'debug',
-    // watermarks: [60, 90],
+        // logging: 'debug',
+        // watermarks: [60, 90],
         reports: 'v8',
 
         name: 'My V8 Node foreground-child Coverage Report',
@@ -25,6 +25,9 @@ const generate = async () => {
 
 
     const coverageReport = new CoverageReport(coverageOptions);
+
+    // clean cache before add coverage data
+    coverageReport.cleanCache();
 
     const files = fs.readdirSync(dir);
 

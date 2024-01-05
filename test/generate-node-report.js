@@ -26,6 +26,9 @@ const generate = async () => {
 
     const coverageReport = new CoverageReport(coverageOptions);
 
+    // clean cache before add coverage data
+    coverageReport.cleanCache();
+
     const files = fs.readdirSync(dir);
     for (const filename of files) {
         const content = fs.readFileSync(path.resolve(dir, filename)).toString('utf-8');
