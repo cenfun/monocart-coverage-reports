@@ -302,6 +302,7 @@ const plusColumnWidth = (e, grid, columnItem) => {
     e.preventDefault();
     e.stopPropagation();
     grid.setColumnWidth(columnItem, columnItem.tg_width + 100);
+    grid.scrollToColumn(columnItem);
 };
 
 // =================================================================================
