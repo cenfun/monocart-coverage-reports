@@ -15,6 +15,7 @@
         "babel-plugin-istanbul": "^6.1.1",
         "cross-env": "^7.0.3",
         "esbuild": "^0.19.11",
+        "foreground-child": "^3.1.1",
         "github-markdown-css": "^5.5.0",
         "koa": "^2.15.0",
         "koa-static-resolver": "^1.0.4",

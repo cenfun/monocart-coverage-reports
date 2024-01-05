@@ -216,10 +216,13 @@ const coverageOptions = {
     - example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-env` node [./test/test-node-env.js](./test/test-node-env.js) && node [./test/generate-node-report.js](./test/generate-node-report.js)
 
-- Using [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API
+- Using [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API + NODE_V8_COVERAGE
     - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()` and stopping with `v8.stopCoverage()`. 
     - example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-api` node [./test/test-node-api.js](./test/test-node-api.js)
+
+- Using [foreground-child](https://github.com/tapjs/foreground-child) + NODE_V8_COVERAGE
+    - example: [./test/test-node-fgc.js](./test/test-node-fgc.js)
 
 - Using [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API (or module [collect-v8-coverage](https://github.com/SimenB/collect-v8-coverage))
    - Connecting to the V8 inspector and enable V8 coverage.
@@ -234,24 +237,24 @@ const coverageOptions = {
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
 ```
-1, dist/main.js
-2, dist/vendor.js
-3, dist/something-else.js
+dist/main.js
+dist/vendor.js
+dist/something-else.js
 ```
 We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
 ```
-1, dist/main.js
+dist/main.js
 ```
 When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
 ```
-1, src/index.js
-2, src/components/app.js
-3, node_modules/dependency/dist/dependency.js
+> src/index.js
+> src/components/app.js
+> node_modules/dependency/dist/dependency.js
 ```
 We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
 ```
-1, src/index.js
-2, src/components/app.js
+> src/index.js
+> src/components/app.js
 ```
 Example:
 ```js

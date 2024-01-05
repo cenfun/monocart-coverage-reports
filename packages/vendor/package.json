@@ -15,7 +15,7 @@
         "acorn-walk": "^8.3.1",
         "axios": "^1.6.4",
         "convert-source-map": "^2.0.0",
-        "postcss": "^8.4.32"
+        "postcss": "^8.4.33"
     },
     "platform": "node"
 }
