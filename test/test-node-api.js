@@ -51,9 +51,8 @@ const generate = async () => {
         // filter node internal files
         coverageList = coverageList.filter((entry) => entry.url && entry.url.startsWith('file:'));
 
-        coverageList = coverageList.filter((entry) => !entry.url.includes('/node_modules/'));
-
-        coverageList = coverageList.filter((entry) => !entry.url.includes('lib/'));
+        // console.log(coverageList);
+        coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
         // console.log(coverageList);
 

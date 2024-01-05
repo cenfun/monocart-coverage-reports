@@ -36,6 +36,7 @@ const generate = async () => {
         coverageList = coverageList.filter((entry) => entry.url && entry.url.startsWith('file:'));
 
         // console.log(coverageList);
+        coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
         // attached source content
         coverageList.forEach((entry) => {

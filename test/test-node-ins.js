@@ -64,10 +64,10 @@ const collectV8Coverage = async (postSession) => {
     }
 
     // filter node internal files
-    coverageList = coverageList.filter((entry) => entry.url && !entry.url.startsWith('node:'));
+    coverageList = coverageList.filter((entry) => entry.url && entry.url.startsWith('file:'));
 
-    // filter node modules
-    coverageList = coverageList.filter((entry) => entry.url.indexOf('node_modules') === -1);
+    // console.log(coverageList);
+    coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
     // attach source content
     coverageList.forEach((item) => {
