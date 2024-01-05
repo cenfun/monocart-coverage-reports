@@ -164,7 +164,7 @@ const coverageOptions = {
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
-| Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) (Array) | V8 (Array) |
+| Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |
 | Output | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
 | - Bytes | ❌ | ✅ | ❌ |
 | - Statements | ✅ | ❌ | ☑️❔ |
@@ -333,6 +333,50 @@ if (platform === 'linux') {
 - [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
+
+## V8 Coverage Data Format
+```js
+// Coverage data for a source range.
+export interface CoverageRange {
+    // JavaScript script source offset for the range start.
+    startOffset: integer;
+    // JavaScript script source offset for the range end.
+    endOffset: integer;
+    // Collected execution count of the source range.
+    count: integer;
+}
+
+// Coverage data for a JavaScript function.
+/**
+ * @functionName can be an empty string.
+ * @ranges is always non-empty. The first range is called the "root range".
+ * @isBlockCoverage indicates if the function has block coverage information.
+    If this is false, it usually means that the functions was never called.
+    It seems to be equivalent to ranges.length === 1 && ranges[0].count === 0.
+*/
+export interface FunctionCoverage {
+    // JavaScript function name.
+    functionName: string;
+    // Source ranges inside the function with coverage data.
+    ranges: CoverageRange[];
+    // Whether coverage data for this function has block granularity.
+    isBlockCoverage: boolean;
+}
+
+// Coverage data for a JavaScript script.
+export interface ScriptCoverage {
+    // JavaScript script id.
+    scriptId: Runtime.ScriptId;
+    // JavaScript script name or url.
+    url: string;
+    // Functions contained in the script that has coverage data.
+    functions: FunctionCoverage[];
+}
+
+export type V8CoverageData = ScriptCoverage[];
+```
+see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage)
+
 
 ## Istanbul Introduction
 - [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
