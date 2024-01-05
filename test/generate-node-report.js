@@ -8,7 +8,7 @@ const CoverageReport = require('../');
 
 const generate = async () => {
 
-    const dir = '.temp/v8-coverage';
+    const dir = '.temp/v8-coverage-env';
 
 
     const coverageOptions = {
