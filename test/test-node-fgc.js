@@ -63,16 +63,17 @@ const generate = async () => {
 
     EC.logGreen('done');
 
-    // exit code for foregroundChild
-    return 0;
 };
 
 const test = () => {
     process.env.NODE_V8_COVERAGE = dir;
 
     const testPath = path.resolve('./test/test-node-env.js');
-    foregroundChild(`node ${testPath}`, () => {
-        return generate();
+    foregroundChild(`node ${testPath}`, async () => {
+        await generate();
+
+        // exit code for foregroundChild
+        return 0;
     });
 };
 
