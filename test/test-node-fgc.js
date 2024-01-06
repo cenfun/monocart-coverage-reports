@@ -42,6 +42,10 @@ const generate = async () => {
         // console.log(coverageList);
         coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
+        if (!coverageList.length) {
+            continue;
+        }
+
         // attached source content
         coverageList.forEach((entry) => {
             const filePath = fileURLToPath(entry.url);
@@ -59,6 +63,8 @@ const generate = async () => {
 
     EC.logGreen('done');
 
+    // exit code for foregroundChild
+    return 0;
 };
 
 const test = () => {
