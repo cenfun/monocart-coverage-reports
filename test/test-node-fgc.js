@@ -69,7 +69,9 @@ const generate = async () => {
 
 const test = () => {
     process.env.NODE_V8_COVERAGE = dir;
-    foregroundChild('node ./test/test-node-env.js', () => {
+
+    const testPath = path.resolve('./test/test-node-env.js');
+    foregroundChild(`node ${testPath}`, () => {
         return generate();
     });
 };
