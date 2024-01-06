@@ -121,70 +121,52 @@ watchEffect(() => {
 
 // =================================================================================
 
-let timeout_tooltip;
-const initTooltip = () => {
-    generateTooltips((target, text) => {
-        clearTimeout(timeout_tooltip);
-
-        if (Util.isTouchDevice()) {
-            return;
-        }
-
-        tooltip.visible = true;
-        tooltip.target = target;
-        tooltip.text = text;
-
-        timeout_tooltip = setTimeout(() => {
-            tooltip.visible = false;
-            tooltip.text = '';
-        }, 2000);
-
-    }, (target) => {
-        clearTimeout(timeout_tooltip);
-        tooltip.visible = false;
-        tooltip.text = '';
-    });
-};
-
 const hideTooltip = () => {
-    if (Util.isTouchDevice()) {
-        return;
-    }
-
-    if (state.tooltip) {
-        state.tooltip.visible = false;
-        state.tooltip.text = '';
-        state.tooltip.html = false;
-        state.tooltip.classMap = '';
-    }
+    tooltip.visible = false;
+    tooltip.target = null;
+    tooltip.text = '';
 };
 
-const showTooltip = (elem, text, html) => {
+let timeout_tooltip;
+const showTooltip = (target, text) => {
+    clearTimeout(timeout_tooltip);
+
     if (Util.isTouchDevice()) {
+        hideTooltip();
         return;
     }
-
-    hideTooltip();
 
     if (!text) {
+        hideTooltip();
         return;
     }
-    if (state.tooltip) {
-        state.tooltip.target = elem;
-        state.tooltip.text = text;
-        state.tooltip.html = html;
-        state.tooltip.classMap = 'mcr-searchable';
-        state.tooltip.visible = true;
-    }
 
+    tooltip.target = target;
+    tooltip.text = text;
+    tooltip.visible = true;
+
+    timeout_tooltip = setTimeout(() => {
+        hideTooltip();
+    }, 2000);
+};
+
+const initTooltip = () => {
+    generateTooltips((target, text) => {
+        showTooltip(target, text);
+    }, (target) => {
+        hideTooltip();
+    });
 };
 
 const isNodeTruncated = (node) => {
     if (!node) {
         return false;
     }
+    // name and url
     node = node.querySelector('.tg-tree-name') || node;
+    // console.log(node.clientWidth, node.scrollWidth);
     if (node.clientWidth < node.scrollWidth) {
+        // console.log('isNodeTruncated');
         return true;
     }
     return false;
@@ -310,10 +292,9 @@ const plusColumnWidth = (e, grid, columnItem) => {
 const bindGridEvents = (grid) => {
 
     grid.bind('onCellMouseEnter', (e, d) => {
-        const cellNode = d.cellNode;
+        const { cellNode } = d;
         if (isNodeTruncated(cellNode)) {
-            const text = cellNode.innerText;
-            showTooltip(cellNode, text);
+            showTooltip(d.e.target, cellNode.innerText);
         }
     }).bind('onCellMouseLeave', (e, d) => {
         hideTooltip();
@@ -498,7 +479,7 @@ const getGroupRows = (summaryRows) => {
 const getFlatRows = (summaryRows) => {
     const flatRows = [];
     summaryRows.forEach((item) => {
-        item.name = Util.getSourceName(item.sourcePath);
+        item.name = item.sourcePath;
         flatRows.push(item);
     });
 
@@ -545,11 +526,6 @@ const getGridRows = () => {
         addSummaryToRow(it.summary, row);
 
         return row;
-    });
-
-    // sort before summary
-    fileRows.sort((a, b) => {
-        return b.uncovered - a.uncovered;
     });
 
     const summaryRow = {
@@ -792,7 +768,7 @@ const initGrid = () => {
             }
 
             if (id === 'url') {
-                return `<span>${value}</span><span class="mcr-url-plus" tooltip="Increase width"></span>`;
+                return `<div class="vui vui-flex vui-flex-row"><div class="vui-flex-auto">${value}</div><div class="mcr-url-plus" tooltip="Increase width"></div></div>`;
             }
 
             return value;
@@ -1494,7 +1470,9 @@ icon
 }
 
 .mcr-url-plus {
-    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
     padding-left: 16px;
     background-image: url("./images/plus.svg");
     background-repeat: no-repeat;
