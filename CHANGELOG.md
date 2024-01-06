@@ -3,7 +3,7 @@
 * 2.0.9
     - fixed ignore for istanbul (#3)
     - fixed duplicate source file 
-    - updated UI
+    - fixed UI issues
 
 * 2.0.8
     - added new feature `v8 ignore next N/start/stop`

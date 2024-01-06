@@ -661,17 +661,25 @@ const getGridData = () => {
 };
 
 const watermarkFilter = (status) => {
-    if (!status) {
-        return false;
-    }
+
     const map = {
         low: state.watermarkLow,
         medium: state.watermarkMedium,
         high: state.watermarkHigh
     };
+
+    // always true if all checked
+    if (map.low && map.medium && map.high) {
+        return true;
+    }
+
+    // shows unknown if all unchecked
+    map.unknown = !map.low && !map.medium && !map.high;
+
     if (map[status]) {
         return true;
     }
+
     return false;
 };
 
@@ -684,7 +692,7 @@ const searchHandler = (rowItem) => {
     const status = rowItem[`${state.watermarkType}_status`];
     const watermarkGate = watermarkFilter(status);
     if (!watermarkGate) {
-        return;
+        return false;
     }
 
     const keywords = state.keywords.trim().toLowerCase();
