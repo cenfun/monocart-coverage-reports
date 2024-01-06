@@ -68,6 +68,7 @@ const generate = async () => {
 const test = () => {
     process.env.NODE_V8_COVERAGE = dir;
 
+    // NOT work in github actions
     const testPath = path.resolve('./test/test-node-env.js');
     foregroundChild(`node ${testPath}`, async () => {
         await generate();

@@ -223,9 +223,6 @@ const coverageOptions = {
     - example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-api` node [./test/test-node-api.js](./test/test-node-api.js)
 
-- Using [foreground-child](https://github.com/tapjs/foreground-child) + NODE_V8_COVERAGE
-    - example: [./test/test-node-fgc.js](./test/test-node-fgc.js)
-
 - Using [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API (or module [collect-v8-coverage](https://github.com/SimenB/collect-v8-coverage))
    - Connecting to the V8 inspector and enable V8 coverage.
    - Taking coverage data and adding to the report after your application runs.

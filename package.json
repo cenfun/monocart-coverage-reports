@@ -17,7 +17,7 @@
         "build-docs": "node ./scripts/build-docs.js",
         "build-test": "node ./scripts/build-test.js",
         "build": "sf lint && sf b -p && npm run build-test",
-        "test-node": "npm run test-node-env && npm run test-node-api && npm run test-node-fgc && npm run test-node-ins && npm run test-node-cdp",
+        "test-node": "npm run test-node-env && npm run test-node-api && npm run test-node-ins && npm run test-node-cdp",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-node-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",
         "test-node-fgc": "node ./test/test-node-fgc.js",
