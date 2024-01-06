@@ -3,6 +3,8 @@
 [![](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
 [![](https://badgen.net/npm/dw/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
 ![](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
+![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/static.yml)
+
 
 > Code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
