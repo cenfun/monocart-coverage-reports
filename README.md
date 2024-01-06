@@ -325,7 +325,7 @@ const os = platform === 'wind32' ? 'Windows' : 'Other';
 
 const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
 
-/* v8 ignore next 3 */
+// v8 ignore next 3
 if (platform === 'linux') {
     console.info('hello linux');
 }
@@ -378,7 +378,7 @@ export interface ScriptCoverage {
 
 export type V8CoverageData = ScriptCoverage[];
 ```
-see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage)
+see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 
 
 ## Istanbul Introduction
