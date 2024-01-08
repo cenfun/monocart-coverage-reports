@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.0.10
+    - updated dependencies
+
 * 2.0.9
     - fixed ignore for istanbul (#3)
     - fixed duplicate source file 
