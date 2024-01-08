@@ -13,7 +13,7 @@
         "@jridgewell/sourcemap-codec": "^1.4.15",
         "acorn-loose": "^8.4.0",
         "acorn-walk": "^8.3.1",
-        "axios": "^1.6.4",
+        "axios": "^1.6.5",
         "convert-source-map": "^2.0.0",
         "postcss": "^8.4.33"
     },
