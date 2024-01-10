@@ -1,6 +1,6 @@
 declare namespace CoverageReport {
     // https://playwright.dev/docs/api/class-coverage
-    export type V8CoverageEntry = {
+    export interface V8CoverageEntry {
         url: string;
         // css
         text?: string;
@@ -150,7 +150,7 @@ declare namespace CoverageReport {
         files: CoverageFile[];
     } | undefined;
 
-    export type CoverageReportOptions = {
+    export interface CoverageReportOptions {
 
         // (String) logging levels: off, error, info, debug
         logging?: string;
