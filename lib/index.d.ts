@@ -1,22 +1,27 @@
 declare namespace CoverageReport {
-    // https://playwright.dev/docs/api/class-coverage
+
     export interface V8CoverageEntry {
         url: string;
-        // css
+        /** css only */
         text?: string;
+        /** css only */
         ranges?: any[];
-        // js
+        /** js only */
         scriptId?: string;
+        /** js only */
         source?: string;
+        /** js only */
         functions?: any[];
     }
 
     export type Watermarks = [number, number] | {
-        statements?: [number, number];
         functions?: [number, number];
         branches?: [number, number];
         lines?: [number, number];
+        /** V8 only */
         bytes?: [number, number];
+        /** Istanbul only */
+        statements?: [number, number];
     }
 
     export type ReportDescription =
@@ -102,8 +107,9 @@ declare namespace CoverageReport {
     }
 
     export interface LinesSummary extends MetricsSummary {
-        // v8 only
+        /** V8 only */
         blank?: number;
+        /** V8 only */
         comment?: number;
     }
 
@@ -111,12 +117,13 @@ declare namespace CoverageReport {
         functions: MetricsSummary;
         branches: MetricsSummary;
         lines: LinesSummary;
-        // v8 only
+        /** V8 only */
         bytes?: MetricsSummary;
-        // istanbul only
+        /** Istanbul only */
         statements?: MetricsSummary;
     }
 
+    /** V8 only */
     export interface CoverageRange {
         start: number;
         end: number;
@@ -127,13 +134,19 @@ declare namespace CoverageReport {
     export interface CoverageFile {
         sourcePath: string;
         summary: CoverageSummary;
-        // v8 only
+        /** V8 only */
         url?: string;
+        /** V8 only */
         id?: string;
+        /** V8 only */
         type?: string;
+        /** V8 only */
         source?: string;
+        /** V8 only */
         distFile?: string;
+        /** V8 only */
         js?: boolean;
+        /** V8 only */
         data?: {
             bytes: CoverageRange[];
             functions: CoverageRange[];
@@ -152,52 +165,52 @@ declare namespace CoverageReport {
 
     export interface CoverageReportOptions {
 
-        // (String) logging levels: off, error, info, debug
+        /** {string} logging levels: off, error, info, debug */
         logging?: string;
 
-        // (String) output dir
+        /** {string} output dir */
         outputDir?: string;
 
-        // (String) v8 or html for istanbul by default
-        // (Array) multiple reports with options
-        // v8 report or istanbul supported reports
+        /** {string} v8 or html for istanbul by default
+        * {array} multiple reports with options
+        * v8 report or istanbul supported reports */
         reports?: string | ReportDescription[];
 
-        // (String) Report name. Defaults to "Coverage Report".
+        /** {string} Report name. Defaults to "Coverage Report". */
         name?: string;
 
-        // [V8 only](String) Output [sub dir/]filename. Defaults to "index.html"
+        /** (V8 only) {string} Output [sub dir/]filename. Defaults to "index.html" */
         outputFile?: string;
-        // [V8 only](Boolean) Inline all scripts to the single HTML file. Defaults to false.
+        /** (V8 only) {boolean} Inline all scripts to the single HTML file. Defaults to false. */
         inline?: boolean;
-        // [V8 only](String) Assets path if not inline. Defaults to "./assets"
+        /** (V8 only) {string} Assets path if not inline. Defaults to "./assets" */
         assetsPath?: string;
 
-        // [V8 only](Function) A filter function to execute for each element in the V8 list.
+        /** (V8 only) {function} A filter function to execute for each element in the V8 list. */
         entryFilter?: (entry: V8CoverageEntry) => boolean;
 
-        // [V8 only](Function) A filter function to execute for each element in the sources which unpacked from the source map.
+        /** (V8 only) {function} A filter function to execute for each element in the sources which unpacked from the source map. */
         sourceFilter?: (sourcePath: string) => boolean;
 
-        // [V8 only](Boolean) Enable/Disable ignoring uncovered codes with the special comments: /* v8 ignore next/next N/start/stop */
+        /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
         v8Ignore?: boolean;
 
-        // [Istanbul only] defaultSummarizer, sourceFinder
+        /** (Istanbul only) defaultSummarizer, sourceFinder  */
 
-        // (Boolean) Generate lcov.info file, same as lcovonly report. Defaults to false.
+        /** {boolean} Generate lcov.info file, same as lcovonly report. Defaults to false.  */
         lcov?: boolean;
 
-        // (Function) Source path handler.
+        /** {function} Source path handler. */
         sourcePath?: (filePath: string) => string;
 
-        // (String|Function) Specify the report path, especially when there are multiple reports. Defaults to outputDir/index.html.
+        /** {string|function} Specify the report path, especially when there are multiple reports. Defaults to outputDir/index.html. */
         reportPath?: string | (() => string);
 
-        // (Array) watermarks for low/medium/high. Defaults to [50, 80]
-        // (Object) Istanbul: { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] }.
+        /** {array} watermarks for low/medium/high. Defaults to [50, 80]
+        * {object} { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] } */
         watermarks?: Watermarks;
 
-        // (Function) onEnd hook
+        /** {function} onEnd hook */
         onEnd?: (reportData: CoverageResults) => Promise<void>;
     }
 
@@ -207,16 +220,16 @@ declare namespace CoverageReport {
 declare class CoverageReport {
     constructor(options?: CoverageReport.CoverageReportOptions);
 
-    // add coverage data: (Array) V8 format, (Object) Istanbul format
+    /** add coverage data: {array} V8 format, {object} Istanbul format */
     add: (coverageData: any[] | any) => Promise<CoverageReport.AddedResults>;
 
-    // generate report
+    /** generate report */
     generate: () => Promise<CoverageReport.CoverageResults>;
 
-    // check if cache exists
+    /** check if cache exists */
     hasCache: () => boolean;
 
-    // clean cache
+    /** clean previous cache, return `false` if no cache */
     cleanCache: () => boolean;
 
 }
