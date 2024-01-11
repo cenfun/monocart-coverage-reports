@@ -1,4 +1,4 @@
-declare namespace CoverageReport {
+declare namespace MCR {
 
     export interface V8CoverageEntry {
         url: string;
@@ -131,6 +131,7 @@ declare namespace CoverageReport {
         ignored?: boolean;
         none?: boolean;
     }
+
     export interface CoverageFile {
         sourcePath: string;
         summary: CoverageSummary;
@@ -214,28 +215,26 @@ declare namespace CoverageReport {
         onEnd?: (reportData: CoverageResults) => Promise<void>;
     }
 
-    export class CoverageReport extends CoverageReportBase { }
-    export function createCoverageReport(options?: CoverageReportOptions): CoverageReport;
+    export class CoverageReport {
 
-}
-declare class CoverageReportBase {
+        constructor(options?: CoverageReportOptions);
 
-    constructor(options?: CoverageReport.CoverageReportOptions);
+        /** add coverage data: {array} V8 format, {object} Istanbul format */
+        add: (coverageData: any[] | any) => Promise<AddedResults>;
 
-    /** add coverage data: {array} V8 format, {object} Istanbul format */
-    add: (coverageData: any[] | any) => Promise<CoverageReport.AddedResults>;
+        /** generate report */
+        generate: () => Promise<CoverageResults>;
 
-    /** generate report */
-    generate: () => Promise<CoverageReport.CoverageResults>;
+        /** check if cache exists */
+        hasCache: () => boolean;
 
-    /** check if cache exists */
-    hasCache: () => boolean;
-
-    /** clean previous cache, return `false` if no cache */
-    cleanCache: () => boolean;
+        /** clean previous cache, return `false` if no cache */
+        cleanCache: () => boolean;
+    }
 
 }
 
-declare class CoverageReport extends CoverageReportBase { }
+/** create coverage report */
+declare function MCR(options?: MCR.CoverageReportOptions): MCR.CoverageReport;
 
-export = CoverageReport;
+export = MCR;

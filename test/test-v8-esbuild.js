@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 const coverageOptions = {
     // logging: 'debug',
@@ -49,7 +49,7 @@ const test1 = async (serverUrl) => {
 
     const coverageList = [... jsCoverage, ... cssCoverage];
 
-    const results = await new CoverageReport(coverageOptions).add(coverageList);
+    const results = await MCR(coverageOptions).add(coverageList);
     console.log('v8-esbuild coverage1 added', results.type);
 
     await browser.close();
@@ -90,7 +90,7 @@ const test2 = async (serverUrl) => {
 
     const coverageList = [... jsCoverage, ... cssCoverage];
 
-    const results = await new CoverageReport(coverageOptions).add(coverageList);
+    const results = await MCR(coverageOptions).add(coverageList);
     console.log('v8-esbuild coverage2 added', results.type);
 
     await browser.close();
@@ -101,14 +101,14 @@ const generate = async () => {
 
     console.log('generate v8-esbuild coverage reports ...');
 
-    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    const coverageResults = await MCR(coverageOptions).generate();
     console.log('v8-esbuild coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 
 module.exports = async (serverUrl) => {
     // clean cache first
-    await new CoverageReport(coverageOptions).cleanCache();
+    await MCR(coverageOptions).cleanCache();
 
     await Promise.all([
         test1(serverUrl),

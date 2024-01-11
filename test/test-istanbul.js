@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 const coverageOptions = {
     // logging: 'debug',
@@ -53,7 +53,7 @@ const test1 = async (serverUrl) => {
 
     const coverageData = await page.evaluate(() => window.__coverage__);
 
-    const results = await new CoverageReport(coverageOptions).add(coverageData);
+    const results = await MCR(coverageOptions).add(coverageData);
 
     console.log('istanbul coverage1 added', results.type);
 
@@ -86,7 +86,7 @@ const test2 = async (serverUrl) => {
 
     const coverageData = await page.evaluate(() => window.__coverage__);
 
-    const results = await new CoverageReport(coverageOptions).add(coverageData);
+    const results = await MCR(coverageOptions).add(coverageData);
 
     console.log('istanbul coverage2 added', results.type);
 
@@ -98,7 +98,7 @@ const generate = async () => {
 
     console.log('generate istanbul coverage reports ...');
 
-    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    const coverageResults = await MCR(coverageOptions).generate();
 
     console.log('istanbul coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
@@ -106,7 +106,7 @@ const generate = async () => {
 
 module.exports = async (serverUrl) => {
     // clean cache first if debug
-    await new CoverageReport(coverageOptions).cleanCache();
+    await MCR(coverageOptions).cleanCache();
 
     await Promise.all([
         test1(serverUrl),

@@ -5,7 +5,7 @@ const EC = require('eight-colors');
 
 const { foregroundChild } = require('foreground-child');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 const dir = '.temp/v8-coverage-fgc';
 
@@ -24,7 +24,7 @@ const generate = async () => {
     };
 
 
-    const coverageReport = new CoverageReport(coverageOptions);
+    const coverageReport = MCR(coverageOptions);
 
     // clean cache before add coverage data
     coverageReport.cleanCache();

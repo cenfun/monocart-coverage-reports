@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 // v8 and lcov
 const coverageOptions = {
@@ -94,7 +94,7 @@ const test1 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     // v8
-    const report = await new CoverageReport(coverageOptions).add(coverageList);
+    const report = await MCR(coverageOptions).add(coverageList);
 
     console.log('v8 coverage1 added', report.type);
 
@@ -141,7 +141,7 @@ const test2 = async (serverUrl) => {
 
     const coverageList = [... jsCoverage, ... cssCoverage];
 
-    const report = await new CoverageReport(coverageOptions).add(coverageList);
+    const report = await MCR(coverageOptions).add(coverageList);
 
     console.log('v8 coverage2 added', report.type);
 
@@ -153,14 +153,14 @@ const generate = async () => {
 
     console.log('generate v8 coverage reports ...');
 
-    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    const coverageResults = await MCR(coverageOptions).generate();
     console.log('v8 coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 
 module.exports = async (serverUrl) => {
     // clean cache first
-    await new CoverageReport(coverageOptions).cleanCache();
+    await MCR(coverageOptions).cleanCache();
 
     await Promise.all([
         test1(serverUrl),

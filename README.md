@@ -30,12 +30,12 @@
 
 ## Usage
 ```js
-const CoverageReport = require('monocart-coverage-reports');
+const MCR = require('monocart-coverage-reports');
 const options = {
     outputDir: './coverage-reports',
     reports: "v8"
 }
-const coverageReport = new CoverageReport(options);
+const coverageReport = MCR(options);
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 const coverageResults = await coverageReport.generate();
@@ -82,7 +82,7 @@ console.log(coverageResults.summary);
 - `text-summary`
 
 ```js
-const CoverageReport = require('monocart-coverage-reports');
+const MCR = require('monocart-coverage-reports');
 const options = {
     outputDir: './coverage-reports',
     reports: [
@@ -97,7 +97,7 @@ const options = {
         'lcovonly'
     ]
 }
-const coverageReport = new CoverageReport(options);
+const coverageReport = MCR(options);
 ```
 
 ## Integration
@@ -109,26 +109,26 @@ const coverageReport = new CoverageReport(options);
 The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
 - sub process 1
 ```js
-const CoverageReport = require('monocart-coverage-reports');
+const MCR = require('monocart-coverage-reports');
 const options = require('path-to/same-options.js');
-const coverageReport = new CoverageReport(options);
+const coverageReport = MCR(options);
 await coverageReport.add(coverageData1);
 ```
 
 - sub process 2
 ```js
-const CoverageReport = require('monocart-coverage-reports');
+const MCR = require('monocart-coverage-reports');
 const options = require('path-to/same-options.js');
-const coverageReport = new CoverageReport(options);
+const coverageReport = MCR(options);
 await coverageReport.add(coverageData2);
 ```
 
 - main process
 ```js
 // after all sub processes finished
-const CoverageReport = require('monocart-coverage-reports');
+const MCR = require('monocart-coverage-reports');
 const options = require('path-to/same-options.js');
-const coverageReport = new CoverageReport(options);
+const coverageReport = MCR(options);
 const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 ```

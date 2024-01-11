@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 // v8 and istanbul reports
 const multipleReportsOptions = {
@@ -86,7 +86,7 @@ const test1 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     // to istanbul
-    const report = await new CoverageReport(multipleReportsOptions).add(coverageList);
+    const report = await MCR(multipleReportsOptions).add(coverageList);
 
     console.log('v8-and-istanbul coverage1 added', report.type);
 
@@ -134,7 +134,7 @@ const test2 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     // to istanbul
-    const report = await new CoverageReport(multipleReportsOptions).add(coverageList);
+    const report = await MCR(multipleReportsOptions).add(coverageList);
 
     console.log('v8-and-istanbul coverage2 added', report.type);
 
@@ -146,14 +146,14 @@ const generate = async () => {
 
     console.log('generate v8-and-istanbul coverage reports ...');
     // to istanbul
-    const coverageResults2 = await new CoverageReport(multipleReportsOptions).generate();
+    const coverageResults2 = await MCR(multipleReportsOptions).generate();
     console.log('reportPath', EC.magenta(coverageResults2.reportPath));
 };
 
 
 module.exports = async (serverUrl) => {
     // clean cache first
-    await new CoverageReport(multipleReportsOptions).cleanCache();
+    await MCR(multipleReportsOptions).cleanCache();
 
     await Promise.all([
         test1(serverUrl),

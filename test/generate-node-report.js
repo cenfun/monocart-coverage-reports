@@ -3,7 +3,7 @@ const path = require('path');
 const { fileURLToPath } = require('url');
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 
 const generate = async () => {
@@ -24,7 +24,7 @@ const generate = async () => {
     };
 
 
-    const coverageReport = new CoverageReport(coverageOptions);
+    const coverageReport = MCR(coverageOptions);
 
     // clean cache before add coverage data
     coverageReport.cleanCache();

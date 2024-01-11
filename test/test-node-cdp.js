@@ -5,7 +5,7 @@ const { fileURLToPath } = require('url');
 
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 
 const coverageOptions = {
@@ -111,7 +111,7 @@ const collectV8Coverage = async (ws) => {
     // console.log(coverageList);
 
     console.log('add node.js cdp coverage ...');
-    await new CoverageReport(coverageOptions).add(coverageList);
+    await MCR(coverageOptions).add(coverageList);
 
 
 };
@@ -119,7 +119,7 @@ const collectV8Coverage = async (ws) => {
 
 const generate = async () => {
     // clean cache first
-    await new CoverageReport(coverageOptions).cleanCache();
+    await MCR(coverageOptions).cleanCache();
 
     // =====================================================
     const ws = await startV8Coverage();
@@ -146,7 +146,7 @@ const generate = async () => {
 
     console.log('generate v8-node cdp coverage reports ...');
 
-    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    const coverageResults = await MCR(coverageOptions).generate();
     console.log('v8-node cdp coverage reportPath', EC.magenta(coverageResults.reportPath));
 
     ws.close();

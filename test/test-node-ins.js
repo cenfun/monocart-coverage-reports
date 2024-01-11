@@ -5,7 +5,7 @@ const { fileURLToPath } = require('url');
 
 const EC = require('eight-colors');
 
-const CoverageReport = require('../');
+const MCR = require('../');
 
 const coverageOptions = {
     // logging: 'debug',
@@ -74,7 +74,7 @@ const collectV8Coverage = async (postSession) => {
     // console.log(coverageList);
 
     console.log('add node.js coverage ...');
-    await new CoverageReport(coverageOptions).add(coverageList);
+    await MCR(coverageOptions).add(coverageList);
 
 
 };
@@ -82,7 +82,7 @@ const collectV8Coverage = async (postSession) => {
 
 const generate = async () => {
     // clean cache first
-    await new CoverageReport(coverageOptions).cleanCache();
+    await MCR(coverageOptions).cleanCache();
 
     // =====================================================
     const postSession = await startV8Coverage();
@@ -110,7 +110,7 @@ const generate = async () => {
 
     console.log('generate v8-node coverage reports ...');
 
-    const coverageResults = await new CoverageReport(coverageOptions).generate();
+    const coverageResults = await MCR(coverageOptions).generate();
     console.log('v8-node coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
