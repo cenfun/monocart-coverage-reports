@@ -6,6 +6,8 @@
     - import CoverageReport, { createCoverageReport } from 'monocart-coverage-reports';
     + import createCoverageReport, { CoverageReport } from 'monocart-coverage-reports';
     ```
+    - fixed format for `files` of coverage results
+    - fixed types for commonjs
 
 * 2.0.10
     - updated dependencies
