@@ -104,19 +104,16 @@ declare namespace MCR {
         total: number;
         pct: number | "";
         status: "low" | "medium" | "high" | "unknown";
-    }
-
-    export interface LinesSummary extends MetricsSummary {
-        /** V8 only */
+        /** V8 lines only */
         blank?: number;
-        /** V8 only */
+        /** V8 lines only */
         comment?: number;
     }
 
     export interface CoverageSummary {
         functions: MetricsSummary;
         branches: MetricsSummary;
-        lines: LinesSummary;
+        lines: MetricsSummary;
         /** V8 only */
         bytes?: MetricsSummary;
         /** Istanbul only */
