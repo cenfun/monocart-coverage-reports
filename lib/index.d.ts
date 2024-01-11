@@ -214,10 +214,12 @@ declare namespace CoverageReport {
         onEnd?: (reportData: CoverageResults) => Promise<void>;
     }
 
+    export class CoverageReport extends CoverageReportBase { }
     export function createCoverageReport(options?: CoverageReportOptions): CoverageReport;
 
 }
-declare class CoverageReport {
+declare class CoverageReportBase {
+
     constructor(options?: CoverageReport.CoverageReportOptions);
 
     /** add coverage data: {array} V8 format, {object} Istanbul format */
@@ -233,5 +235,7 @@ declare class CoverageReport {
     cleanCache: () => boolean;
 
 }
+
+declare class CoverageReport extends CoverageReportBase { }
 
 export = CoverageReport;
