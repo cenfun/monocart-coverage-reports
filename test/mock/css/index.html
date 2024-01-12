@@ -16,6 +16,8 @@
         h1 .uncovered {
             font-size: 14px;
         }
+
+        /*# sourceURL=style1.css */
     </style>
     <style>
         /* style 2 */
@@ -26,18 +28,22 @@
         h2 .uncovered {
             font-size: 14px;
         }
+
+        /*# sourceURL=style2.css */
     </style>
     <script>
         // create style 3 with js
         window.onload = function() {
             const styleElement = document.createElement('style');
-            styleElement.innerHTML = `/* style 3 */
+            styleElement.innerHTML = `
+                /* style 3 */
                 h3 {
                     color: blue;
                 }
                 h3 .uncovered {
                     font-size: 14px;
                 }
+                /*# sourceURL=style3.css */
             `;
             document.head.appendChild(styleElement);
         };
