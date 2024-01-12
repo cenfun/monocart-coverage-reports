@@ -333,7 +333,6 @@ if (platform === 'linux') {
 
 ## Chromium Coverage API
 - [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
-- [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
 
