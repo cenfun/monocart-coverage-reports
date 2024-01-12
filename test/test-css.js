@@ -27,7 +27,6 @@ const test1 = async (serverUrl) => {
     });
 
     const url = `${serverUrl}/css/`;
-
     console.log(`goto ${url}`);
 
     await page.goto(url);
@@ -36,20 +35,9 @@ const test1 = async (serverUrl) => {
         setTimeout(resolve, 500);
     });
 
-    // take screenshot
-    await page.screenshot({
-        path: '.temp/css-screenshot1.png'
-    });
-
     const coverageData = await page.coverage.stopCSSCoverage();
-
-    console.log(coverageData.map((it) => it.url));
-
-    // v8
     const report = await MCR(coverageOptions).add(coverageData);
-
     console.log('css coverage1 added', report.type);
-
     await browser.close();
 };
 
@@ -67,7 +55,6 @@ const test2 = async (serverUrl) => {
     });
 
     const url = `${serverUrl}/css/`;
-
     console.log(`goto ${url}`);
 
     await page.goto(url);
@@ -76,22 +63,11 @@ const test2 = async (serverUrl) => {
         setTimeout(resolve, 500);
     });
 
-    // take screenshot
-    await page.screenshot({
-        path: '.temp/css-screenshot2.png'
-    });
-
     const coverageData = await page.coverage.stopCSSCoverage();
-
-    console.log(coverageData.map((it) => it.url));
-
     const report = await MCR(coverageOptions).add(coverageData);
-
     console.log('css coverage2 added', report.type);
-
     await browser.close();
 };
-
 
 const generate = async () => {
 
@@ -100,7 +76,6 @@ const generate = async () => {
     const coverageResults = await MCR(coverageOptions).generate();
     console.log('css coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
-
 
 module.exports = async (serverUrl) => {
     // clean cache first
