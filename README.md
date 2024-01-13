@@ -212,26 +212,29 @@ const coverageOptions = {
 
 
 ## Node.js V8 Coverage Report for Server Side
-- Using Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
+- Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
     - Before running your Node.js application, set env `NODE_V8_COVERAGE`=`dir`. After the application runs and exits, the coverage data will be saved to the `dir` directory in JSON file format
     - Read the json file(s) from the `dir` and generate coverage report
     - example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-env` node [./test/test-node-env.js](./test/test-node-env.js) && node [./test/generate-node-report.js](./test/generate-node-report.js)
 
-- Using [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API + NODE_V8_COVERAGE
+- [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API + NODE_V8_COVERAGE
     - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()` and stopping with `v8.stopCoverage()`. 
     - example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-api` node [./test/test-node-api.js](./test/test-node-api.js)
 
-- Using [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API (or module [collect-v8-coverage](https://github.com/SimenB/collect-v8-coverage))
+- [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API (or module [collect-v8-coverage](https://github.com/SimenB/collect-v8-coverage))
    - Connecting to the V8 inspector and enable V8 coverage.
    - Taking coverage data and adding to the report after your application runs.
    - example: [./test/test-node-ins.js](./test/test-node-ins.js)
    
-- Using [CDP](https://chromedevtools.github.io/devtools-protocol/) API
+- [CDP](https://chromedevtools.github.io/devtools-protocol/) API
     - Enabling [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started/)
     - Collecting coverage data with CDP API.
     - example: [./test/test-node-cdp.js](./test/test-node-cdp.js)
+
+- [Debugger](https://nodejs.org/en/guides/debugging-getting-started) + NODE_V8_COVERAGE + CDP
+    - example: [global-teardown.js](https://github.com/cenfun/nextjs-with-playwright/blob/main/global-teardown.js)
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:

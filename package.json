@@ -2,7 +2,7 @@
     "name": "monocart-coverage-reports",
     "version": "2.1.0",
     "description": "Monocart coverage reports",
-    "main": "lib/index.js",
+    "main": "./lib/index.js",
     "exports": {
         ".": {
             "types": "./lib/index.d.ts",
