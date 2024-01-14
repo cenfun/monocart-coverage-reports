@@ -212,6 +212,7 @@ const coverageOptions = {
 
 
 ## Node.js V8 Coverage Report for Server Side
+Possible solutions:
 - Node.js env [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
     - Before running your Node.js application, set env `NODE_V8_COVERAGE`=`dir`. After the application runs and exits, the coverage data will be saved to the `dir` directory in JSON file format
     - Read the json file(s) from the `dir` and generate coverage report
