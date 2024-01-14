@@ -234,8 +234,9 @@ const coverageOptions = {
     - example: [./test/test-node-cdp.js](./test/test-node-cdp.js)
 
 - [Debugger](https://nodejs.org/en/guides/debugging-getting-started) + NODE_V8_COVERAGE + CDP + V8 API
-    > cross-env NODE_V8_COVERAGE=.v8-coverage NODE_OPTIONS=--inspect next dev
-    - example: [global-teardown.js](https://github.com/cenfun/nextjs-with-playwright/blob/main/global-teardown.js)
+    > cross-env NODE_V8_COVERAGE=.temp/v8-coverage-koa node --inspect=9229 [./test/koa.js](./test/koa.js)
+    - example:
+    > node [./test/test-node-koa.js](./test/test-node-koa.js)
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
