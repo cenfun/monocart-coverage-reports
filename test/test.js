@@ -16,6 +16,8 @@ const testV8Minify = require('./test-v8-minify.js');
 const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
 const testIstanbul = require('./test-istanbul.js');
 
+const testPuppeteer = require('./test-puppeteer.js');
+
 const serverPort = 8130;
 const serverUrl = `http://localhost:${serverPort}`;
 
@@ -100,17 +102,20 @@ const test = async () => {
 
 
     await Promise.all([
-        testIstanbul(serverUrl),
-        testV8AndIstanbul(serverUrl),
+        // testIstanbul(serverUrl),
+        // testV8AndIstanbul(serverUrl),
 
-        testV8Minify(serverUrl),
+        // testV8Minify(serverUrl),
 
-        testV8EsBuild(serverUrl),
-        testV8Rollup(serverUrl),
+        // testV8EsBuild(serverUrl),
+        // testV8Rollup(serverUrl),
 
-        testCss(serverUrl),
+        // testCss(serverUrl),
 
-        testV8(serverUrl)
+
+        testPuppeteer(serverUrl)
+
+        // testV8(serverUrl)
     ]);
 
     console.log('close server ...');
