@@ -340,6 +340,7 @@ if (platform === 'linux') {
 ## Chromium Coverage API
 - [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
+- [Puppeteer Coverage class](https://pptr.dev/api/puppeteer.coverage)
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
 
 ## V8 Coverage Data Format
@@ -385,6 +386,25 @@ export type V8CoverageData = ScriptCoverage[];
 ```
 see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 
+### Collect raw v8 coverage data with Puppeteer
+```js
+await page.coverage.startJSCoverage({
+    // provide raw v8 coverage data
+    includeRawScriptCoverage: true
+});
+
+await page.goto(url);
+
+const jsCoverage = await page.coverage.stopJSCoverage();
+const rawV8CoverageData = jsCoverage.map((it) => {
+    // Convert to raw v8 coverage format
+    return {
+        source: it.text,
+        ... it.rawScriptCoverage
+    };
+}
+```
+see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 
 ## Istanbul Introduction
 - [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
