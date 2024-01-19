@@ -78,7 +78,7 @@ const killSubProcess = (cp) => {
 
     // In case of POSIX and `SIGINT` signal, send it to the main process group only.
     try {
-        process.kill(-cp.pid, 'SIGINT');
+        process.kill(cp.pid, 'SIGKILL');
     } catch (e) {
         // the process might have already stopped
     }
