@@ -20,7 +20,7 @@ foo();
 bar();
 app();
 
-console.log(component, branch);
+// console.log(component, branch);
 
 component();
 branch();

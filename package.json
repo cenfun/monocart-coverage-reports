@@ -28,8 +28,8 @@
         "test-node-cdp": "node --inspect=9229 ./test/test-node-cdp.js",
         "test-node-koa": "node ./test/test-node-koa.js",
         "test-browser": "node ./test/test.js",
-        "test": "npm run test-browser && npm run test-node && npm run build-docs",
-        "cli": "npx mcr \"node ./test/test-node-env.js\" --outputDir=docs/cli",
+        "test-cli": "npx mcr \"node ./test/test-node-env.js\" --outputDir=docs/cli",
+        "test": "npm run test-browser && npm run test-node && npm run test-cli && npm run build-docs",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
         "patch": "npm run build && sf publish patch -r"
