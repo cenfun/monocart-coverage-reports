@@ -102,20 +102,18 @@ const test = async () => {
 
 
     await Promise.all([
-        // testIstanbul(serverUrl),
-        // testV8AndIstanbul(serverUrl),
+        testIstanbul(serverUrl),
+        testV8AndIstanbul(serverUrl),
 
-        // testV8Minify(serverUrl),
+        testV8Minify(serverUrl),
 
-        // testV8EsBuild(serverUrl),
-        // testV8Rollup(serverUrl),
+        testV8EsBuild(serverUrl),
+        testV8Rollup(serverUrl),
 
-        // testCss(serverUrl),
+        testCss(serverUrl),
 
-
-        testPuppeteer(serverUrl)
-
-        // testV8(serverUrl)
+        testPuppeteer(serverUrl),
+        testV8(serverUrl)
     ]);
 
     console.log('close server ...');
