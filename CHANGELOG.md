@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.2.0
+    - (New Feature) supports `mcr` CLI
+
 * 2.1.0 (Breaking Change) 
     - defaults to export `createCoverageReport` function instead of `CoverageReport` class
     ```diff

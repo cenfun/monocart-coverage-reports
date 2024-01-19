@@ -13,7 +13,7 @@
 * [Available Reports](#available-reports)
 * [Multiprocessing Support](#multiprocessing-support)
 * [onEnd Hook](#onend-hook)
-* [mcr CLI](#mcr-cli)
+* [`mcr` CLI](#mcr-cli)
 * [Compare Reports](#compare-reports)
 * [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
@@ -200,6 +200,10 @@ Options:
   --assetsPath <path>          assets path if not inline
   --lcov                       generate lcov.info file
   -h, --help                   display help for command
+```
+- Using configuration file for more options
+```sh
+mcr "node ./test/test-node-env.js" -c test/cli-options.js
 ```
 
 ## Compare Reports
