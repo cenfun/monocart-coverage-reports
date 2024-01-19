@@ -229,6 +229,11 @@ declare namespace MCR {
         cleanCache: () => boolean;
     }
 
+    export interface McrCliOptions extends CoverageReportOptions {
+        /** {function} onStart hook */
+        onStart?: (coverageReport: CoverageReport) => Promise<void>;
+    }
+
 }
 
 /** create coverage report */

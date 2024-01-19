@@ -13,6 +13,7 @@
 * [Available Reports](#available-reports)
 * [Multiprocessing Support](#multiprocessing-support)
 * [onEnd Hook](#onend-hook)
+* [mcr CLI](#mcr-cli)
 * [Compare Reports](#compare-reports)
 * [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
@@ -166,6 +167,39 @@ const coverageOptions = {
         }
     }
 }
+```
+
+## `mcr` CLI
+- Global mode
+```sh
+npm i monocart-coverage-reports -g
+mcr "node ./test/test-node-env.js" -r v8,console-summary --lcov
+```
+- Current working directory mode
+```sh
+npm i monocart-coverage-reports
+npx mcr "node ./test/test-node-env.js" -r v8,console-summary --lcov
+```
+- CLI Options
+```sh
+Usage: mcr [options] <command>
+
+CLI to generate coverage reports
+
+Arguments:
+  command                      command to execute
+
+Options:
+  -V, --version                output the version number
+  -c, --config <path>          config path for options
+  -o, --outputDir <dir>        output dir for reports
+  -r, --reports <name[,name]>  coverage reports to use
+  -n, --name <name>            report name for title
+  --outputFile <path>          output file for v8 report
+  --inline                     inline html for v8 report
+  --assetsPath <path>          assets path if not inline
+  --lcov                       generate lcov.info file
+  -h, --help                   display help for command
 ```
 
 ## Compare Reports
