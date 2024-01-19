@@ -51,6 +51,8 @@ module.exports = {
 
     // logging: 'debug',
 
+    name: 'My CLI Coverage Report',
+
     onStart: async (coverageReport) => {
 
         const list = [];
@@ -65,7 +67,7 @@ module.exports = {
         return entry.url.includes('mock/node') || entry.url.search(/src\/.+/) !== -1;
     },
 
-    sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
+    // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
     onEnd: () => {
         console.log('test cli end');
