@@ -6,3 +6,4 @@
 /docs/*/.cache
 /test/mock/*/dist
 /docs
+/packages/*/node_modules/

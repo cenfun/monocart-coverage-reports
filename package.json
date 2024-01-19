@@ -3,6 +3,9 @@
     "version": "2.1.0",
     "description": "Monocart coverage reports",
     "main": "./lib/index.js",
+    "bin": {
+        "mcr": "./lib/cli.js"
+    },
     "exports": {
         ".": {
             "types": "./lib/index.d.ts",
@@ -26,6 +29,7 @@
         "test-node-koa": "node ./test/test-node-koa.js",
         "test-browser": "node ./test/test.js",
         "test": "npm run test-browser && npm run test-node && npm run build-docs",
+        "cli": "npx mcr \"node ./test/test-node-env.js\" --outputDir=docs/cli",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
         "patch": "npm run build && sf publish patch -r"
@@ -54,6 +58,7 @@
         "turbogrid": "^3.0.13"
     },
     "devDependencies": {
+        "commander": "^11.1.0",
         "eslint": "^8.56.0",
         "eslint-config-plus": "^1.0.6",
         "eslint-plugin-html": "^7.1.0",

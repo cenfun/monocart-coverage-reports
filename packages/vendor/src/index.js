@@ -11,6 +11,9 @@ import * as acornWalk from 'acorn-walk';
 
 import parseCss from 'postcss/lib/parse';
 
+import { program } from 'commander';
+import { foregroundChild } from 'foreground-child';
+
 export {
 
     convertSourceMap,
@@ -24,5 +27,8 @@ export {
     acornLoose,
     acornWalk,
 
-    parseCss
+    parseCss,
+
+    program,
+    foregroundChild
 };
