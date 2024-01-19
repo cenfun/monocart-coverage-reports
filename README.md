@@ -206,7 +206,7 @@ const coverageOptions = {
     - Rollup: build with [options](https://rollupjs.org/configuration-options/) `sourcemap: true`
     - Vite: build with [options](https://vitejs.dev/config/build-options.html) `sourcemap: true` and `minify: false` 
 - Browser (Chromium Only)
-    > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js)
+    > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js) or [puppeteer example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
 - Node.js
     > see [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 
