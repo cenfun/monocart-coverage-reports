@@ -28,7 +28,7 @@
         "test-node-cdp": "node --inspect=9229 ./test/test-node-cdp.js",
         "test-node-koa": "node ./test/test-node-koa.js",
         "test-browser": "node ./test/test.js",
-        "test-cli": "npx mcr \"node ./test/test-node-env.js\" --outputDir=docs/cli",
+        "test-cli": "npx mcr \"node ./test/test-node-env.js\" -o docs/cli -r v8,console-summary --lcov -c test/cli-options.js",
         "test": "npm run test-browser && npm run test-node && npm run test-cli && npm run build-docs",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
