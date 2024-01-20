@@ -202,7 +202,7 @@ Options:
   --lcov                       generate lcov.info file
   -h, --help                   display help for command
 ```
-- Using configuration file for more options
+- Using configuration file for more [options](#default-options)
 ```sh
 mcr "node ./test/test-node-env.js" -c test/cli-options.js
 ```
@@ -326,16 +326,17 @@ const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
 ```
-> `m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` if we don't fix it to `p`. Especially the generated code is different from the original code, such as minified, compressed or converted, then it becomes very difficult to find the middle position between two mappings.
+> `m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position.
 
 - 2, The coverage of functions and branches is incorrect. V8 only provided coverage at functions and it's blocks. But if a function is uncovered (count = 0), there is no information for it's blocks and sub-level functions.
 And also there are some problems about counting the functions and branches:
 ```js
+// Problem: When the function or parent-level function is uncovered, then its sub-level functions will never be counted.
 functions.forEach(block => {
     block.ranges.forEach((range, i) => {
         if (block.isBlockCoverage) {
             // v8-to-istanbul: new CovBranch() 
-            // Problem: not every block is branch, and the first block is actually function.
+            // Problem: not every block is branch, and the first block could be function.
             if (block.functionName && i === 0) {
                 // v8-to-istanbul: new CovFunction()
                 // Problem: no anonymous function
@@ -346,22 +347,21 @@ functions.forEach(block => {
         }
     }
 });
-// Problem: When the function or parent-level function is uncovered, then its sub-level functions will never be counted.
 ```
 see source code [v8-to-istanbul.js](https://github.com/istanbuljs/v8-to-istanbul/blob/master/lib/v8-to-istanbul.js)
 
 ### How Monocart Works
-We have removed `v8-to-istanbul` because of the two major problems and implemented new converter:
-- 1, Trying to fix the middle position if not found the exact mapping.
-- 2, Finding all functions and branches by parsing the source code [AST](https://github.com/acornjs/acorn), however the V8 cannot provide effective branch coverage information, so the branches is still not perfect.
+We implemented new converter instead of v8-to-istanbul:
+- 1, Trying to fix the middle position if not found the exact mapping for the position.
+- 2, Finding all functions and branches by parsing the source code [AST](https://github.com/acornjs/acorn), however the V8 cannot provide effective branch coverage information, so the branches is still not perfect but close to reality.
 
-| AST | V8 | 
-| :--------------| :------ | 
-| AssignmentPattern | 🛇 Not Support | 
+| AST                   | V8             | 
+| :---------------------| :------------- | 
+| AssignmentPattern     | 🛇 Not Support | 
 | ConditionalExpression | ✔ Not Perfect | 
-| IfStatement | ✔ Not Perfect | 
-| LogicalExpression | ✔ Not Perfect | 
-| SwitchStatement | ✔ Not Perfect | 
+| IfStatement           | ✔ Not Perfect | 
+| LogicalExpression     | ✔ Not Perfect | 
+| SwitchStatement       | ✔ Not Perfect | 
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
