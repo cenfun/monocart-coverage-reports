@@ -170,7 +170,7 @@ const coverageOptions = {
 ```
 
 ## `mcr` CLI
-> The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` util it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
+> The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
 - Global mode
 ```sh
 npm i monocart-coverage-reports -g
@@ -280,7 +280,7 @@ Possible solutions:
     > node --inspect=9229 [./test/test-node-cdp.js](./test/test-node-cdp.js)
 
 - [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started) + CDP + NODE_V8_COVERAGE + V8 API
-    > cross-env NODE_V8_COVERAGE=.temp/v8-coverage-koa node --inspect=9229 [./test/koa.js](./test/koa.js)
+    - When the program starts a server, it will not exit on its own, thus requiring a manual invocation of the `v8.takeCoverage()` interface to manually collect coverage data. Remote invocation of the `v8.takeCoverage()` interface can be accomplished through the `Runtime.evaluate` of the CDP.
     - Example for [koa](https://github.com/koajs/koa) web server:
     > node [./test/test-node-koa.js](./test/test-node-koa.js)
 
