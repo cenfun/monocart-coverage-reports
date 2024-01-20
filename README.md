@@ -11,7 +11,7 @@
 * [Usage](#usage)
 * [Default Options](#default-options)
 * [Available Reports](#available-reports)
-* [Multiprocessing Support](#multiprocessing-support)
+* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
 * [onEnd Hook](#onend-hook)
 * [`mcr` CLI](#mcr-cli)
 * [Compare Reports](#compare-reports)
@@ -19,13 +19,14 @@
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
 * [Collecting V8 Coverage Data](#collecting-v8-coverage-data)
 * [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
-* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
+* [Multiprocessing Support](#multiprocessing-support)
+* [Integration](#integration)
+* [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
+* [Chromium Coverage API](#chromium-coverage-api)
+* [V8 Coverage Data Format](#v8-coverage-data-format)
 * [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
-* [Ignoring Uncovered Lines](#ignoring-uncovered-lines)
-* [Chromium Coverage API](#chromium-coverage-api)
-* [V8 Coverage Data Format](#v8-coverage-data-format)
 * [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
 
@@ -105,37 +106,34 @@ const options = {
 const coverageReport = MCR(options);
 ```
 
-## Integration
-- [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
-- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Integration with [Vitest](https://github.com/vitest-dev/vitest) coverage
-
-
-## Multiprocessing Support
-The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
-- sub process 1
-```js
-const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-const coverageReport = MCR(options);
-await coverageReport.add(coverageData1);
+## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
+When V8 coverage data collected, it actually contains the data of all entry files, for example:
 ```
-
-- sub process 2
-```js
-const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-const coverageReport = MCR(options);
-await coverageReport.add(coverageData2);
+dist/main.js
+dist/vendor.js
+dist/something-else.js
 ```
-
-- main process
+We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
+```
+dist/main.js
+```
+When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
+```
+> src/index.js
+> src/components/app.js
+> node_modules/dependency/dist/dependency.js
+```
+We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
+```
+> src/index.js
+> src/components/app.js
+```
+Example:
 ```js
-// after all sub processes finished
-const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-const coverageReport = MCR(options);
-const coverageResults = await coverageReport.generate();
-console.log(coverageResults.summary);
+const coverageOptions = {
+    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
+};
 ```
 
 ## onEnd Hook
@@ -287,81 +285,37 @@ Possible solutions:
 - [Child Process](https://nodejs.org/docs/latest/api/child_process.html) + NODE_V8_COVERAGE
     - see [`mcr` CLI](#mcr-cli)
 
-## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
-When V8 coverage data collected, it actually contains the data of all entry files, for example:
-```
-dist/main.js
-dist/vendor.js
-dist/something-else.js
-```
-We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
-```
-dist/main.js
-```
-When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
-```
-> src/index.js
-> src/components/app.js
-> node_modules/dependency/dist/dependency.js
-```
-We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
-```
-> src/index.js
-> src/components/app.js
-```
-Example:
+## Multiprocessing Support
+The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
+- sub process 1
 ```js
-const coverageOptions = {
-    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
-    sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
-};
+const MCR = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+const coverageReport = MCR(options);
+await coverageReport.add(coverageData1);
 ```
 
-## How to convert V8 to Istanbul
-### Using [v8-to-istanbul](https://github.com/istanbuljs/v8-to-istanbul)
-It is a popular library which is used to convert V8 coverage format to istanbul's coverage format. Most test frameworks are using it, such as [Jest](https://github.com/jestjs/jest/), [Vitest](https://github.com/vitest-dev/vitest), but it has two major problems:
-- 1, The source mapping does not work well if the position is between the two consecutive mappings. for example: 
+- sub process 2
 ```js
-const a = tf ? 'true' : 'false';
-               ^     ^  ^
-              m1     p  m2
+const MCR = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+const coverageReport = MCR(options);
+await coverageReport.add(coverageData2);
 ```
-> `m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position.
 
-- 2, The coverage of functions and branches is incorrect. V8 only provided coverage at functions and it's blocks. But if a function is uncovered (count = 0), there is no information for it's blocks and sub-level functions.
-And also there are some problems about counting the functions and branches:
+- main process
 ```js
-// Problem: When the function or parent-level function is uncovered, then its sub-level functions will never be counted.
-functions.forEach(block => {
-    block.ranges.forEach((range, i) => {
-        if (block.isBlockCoverage) {
-            // v8-to-istanbul: new CovBranch() 
-            // Problem: not every block is branch, and the first block could be function.
-            if (block.functionName && i === 0) {
-                // v8-to-istanbul: new CovFunction()
-                // Problem: no anonymous function
-            }
-        } else if (block.functionName) {
-            // v8-to-istanbul: new CovFunction()
-            // Problem: no anonymous function
-        }
-    }
-});
+// after all sub processes finished
+const MCR = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+const coverageReport = MCR(options);
+const coverageResults = await coverageReport.generate();
+console.log(coverageResults.summary);
 ```
-see source code [v8-to-istanbul.js](https://github.com/istanbuljs/v8-to-istanbul/blob/master/lib/v8-to-istanbul.js)
 
-### How Monocart Works
-We implemented new converter instead of v8-to-istanbul:
-- 1, Trying to fix the middle position if not found the exact mapping for the position.
-- 2, Finding all functions and branches by parsing the source code [AST](https://github.com/acornjs/acorn), however the V8 cannot provide effective branch coverage information, so the branches is still not perfect but close to reality.
-
-| AST                   | V8             | 
-| :---------------------| :------------- | 
-| AssignmentPattern     | 🛇 Not Support | 
-| ConditionalExpression | ✔ Not Perfect | 
-| IfStatement           | ✔ Not Perfect | 
-| LogicalExpression     | ✔ Not Perfect | 
-| SwitchStatement       | ✔ Not Perfect | 
+## Integration
+- [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
+- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Integration with [Vitest](https://github.com/vitest-dev/vitest) coverage
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
@@ -453,6 +407,52 @@ const rawV8CoverageData = jsCoverage.map((it) => {
 }
 ```
 see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
+
+## How to convert V8 to Istanbul
+### Using [v8-to-istanbul](https://github.com/istanbuljs/v8-to-istanbul)
+It is a popular library which is used to convert V8 coverage format to istanbul's coverage format. Most test frameworks are using it, such as [Jest](https://github.com/jestjs/jest/), [Vitest](https://github.com/vitest-dev/vitest), but it has two major problems:
+- 1, The source mapping does not work well if the position is between the two consecutive mappings. for example: 
+```js
+const a = tf ? 'true' : 'false';
+               ^     ^  ^
+              m1     p  m2
+```
+> `m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position.
+
+- 2, The coverage of functions and branches is incorrect. V8 only provided coverage at functions and it's blocks. But if a function is uncovered (count = 0), there is no information for it's blocks and sub-level functions.
+And also there are some problems about counting the functions and branches:
+```js
+// Problem: When the function or parent-level function is uncovered, then its sub-level functions will never be counted.
+functions.forEach(block => {
+    block.ranges.forEach((range, i) => {
+        if (block.isBlockCoverage) {
+            // v8-to-istanbul: new CovBranch() 
+            // Problem: not every block is branch, and the first block could be function.
+            if (block.functionName && i === 0) {
+                // v8-to-istanbul: new CovFunction()
+                // Problem: no anonymous function
+            }
+        } else if (block.functionName) {
+            // v8-to-istanbul: new CovFunction()
+            // Problem: no anonymous function
+        }
+    }
+});
+```
+see source code [v8-to-istanbul.js](https://github.com/istanbuljs/v8-to-istanbul/blob/master/lib/v8-to-istanbul.js)
+
+### How Monocart Works
+We implemented new converter instead of v8-to-istanbul:
+- 1, Trying to fix the middle position if not found the exact mapping for the position.
+- 2, Finding all functions and branches by parsing the source code [AST](https://github.com/acornjs/acorn), however the V8 cannot provide effective branch coverage information, so the branches is still not perfect but close to reality.
+
+| AST                   | V8             | 
+| :---------------------| :------------- | 
+| AssignmentPattern     | 🛇 Not Support | 
+| ConditionalExpression | ✔ Not Perfect | 
+| IfStatement           | ✔ Not Perfect | 
+| LogicalExpression     | ✔ Not Perfect | 
+| SwitchStatement       | ✔ Not Perfect | 
 
 ## Istanbul Introduction
 - [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
