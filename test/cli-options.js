@@ -4,16 +4,14 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const Util = require('../lib/utils/util.js');
 
-const addEmptyCoverage = (list, dir, distFile, sourceRoot) => {
+const addEmptyCoverage = (list, dir, distFile) => {
     // add empty coverage
     Util.forEachFile(dir, [], (filename, p) => {
 
         const filePath = path.resolve(p, filename);
         const source = fs.readFileSync(filePath).toString('utf-8');
 
-        const resPath = Util.relativePath(filePath);
-
-        const sourcePath = sourceRoot ? `${sourceRoot}/${resPath}` : resPath;
+        const sourcePath = Util.relativePath(filePath);
 
         const url = pathToFileURL(sourcePath).toString();
 
@@ -21,8 +19,9 @@ const addEmptyCoverage = (list, dir, distFile, sourceRoot) => {
         if (['.css'].includes(extname)) {
 
             list.push({
+                empty: true,
+                type: 'css',
                 url,
-                ranges: [],
                 distFile,
                 text: source
             });
@@ -31,15 +30,9 @@ const addEmptyCoverage = (list, dir, distFile, sourceRoot) => {
         }
 
         list.push({
+            empty: true,
+            type: 'js',
             url,
-            functions: [{
-                functionName: '',
-                ranges: [{
-                    startOffset: 0,
-                    endOffset: source.length,
-                    count: 0
-                }]
-            }],
             distFile,
             source
         });
@@ -53,10 +46,17 @@ module.exports = {
 
     name: 'My CLI Coverage Report',
 
+    reports: [
+        'v8',
+        'console-summary'
+    ],
+
+    lcov: true,
+
     onStart: async (coverageReport) => {
 
         const list = [];
-        addEmptyCoverage(list, 'test/mock/src', 'coverage-node.js', 'monocart-coverage-reports');
+        addEmptyCoverage(list, 'test/mock/src', 'coverage-node.js');
         addEmptyCoverage(list, 'test/mock/node/lib');
 
         await coverageReport.add(list);
