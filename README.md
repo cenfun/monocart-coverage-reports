@@ -233,9 +233,9 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
 ## Collecting Istanbul Coverage Data
 - Instrumenting source code
     > Before collecting Istanbul coverage data, It requires your source code is instrumented with Istanbul
-    - Webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-istanbul.js)
-    - Rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
-    - Vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
+    - webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-istanbul.js)
+    - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
+    - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
 - Browser
     > Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
 - Node.js
@@ -243,9 +243,10 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
 
 ## Collecting V8 Coverage Data
 - For source code: enable `sourcemap` and do not compress/minify:
-    - Webpack: build with `source-map` [devtool](https://webpack.js.org/configuration/devtool/) and `development` [mode](https://webpack.js.org/configuration/mode/), example [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js)
-    - Rollup: build with [options](https://rollupjs.org/configuration-options/) `sourcemap: true`
-    - Vite: build with [options](https://vitejs.dev/config/build-options.html) `sourcemap: true` and `minify: false` 
+    - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js)
+    - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true`
+    - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
+    - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
 - Browser (Chromium Only)
     > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js) or [puppeteer example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
 - Node.js
