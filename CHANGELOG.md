@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.2.2
+    - added codecov report
+
 * 2.2.1
     - fixed anonymous url for linux
 

@@ -48,7 +48,9 @@ module.exports = {
 
     reports: [
         'v8',
-        'console-summary'
+        // 'v8-json',
+        'console-summary',
+        'codecov'
     ],
 
     lcov: true,

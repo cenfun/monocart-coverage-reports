@@ -51,7 +51,7 @@ jobs:
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./docs/cli/lcov.info
+          files: ./docs/cli/codecov.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v3

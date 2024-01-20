@@ -34,6 +34,9 @@ declare namespace MCR {
         ['v8-json'] | ["v8-json", {
             outputFile?: string;
         }] |
+        ['codecov'] | ["codecov", {
+            outputFile?: string;
+        }] |
         ['console-summary'] | ['console-summary', {
             metrics?: Array<"bytes" | "functions" | "branches" | "lines" | "statements">;
         }] |
