@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.2.1
+    - fixed anonymous url for linux
+
 * 2.2.0
     - (New Feature) supports `mcr` CLI
 
