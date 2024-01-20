@@ -55,6 +55,7 @@ console.log(coverageResults.summary);
         - Build with webpack: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
         - Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
         - Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/) 
+        - [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
     - Test in Node.js
         - Collect with [env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
         - Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/v8-node-koa/)
@@ -249,7 +250,7 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
 - Browser (Chromium Only)
     > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api):
-    - [Playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js), and [anonymous scripts](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-anonymous.js), [css](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-css.js)
+    - [Playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js), and [anonymous](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-anonymous.js), [css](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-css.js)
     - [Puppeteer example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
 - Node.js
     - see following [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
