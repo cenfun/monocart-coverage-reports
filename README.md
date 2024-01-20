@@ -170,6 +170,7 @@ const coverageOptions = {
 ```
 
 ## `mcr` CLI
+> The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` util it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
 - Global mode
 ```sh
 npm i monocart-coverage-reports -g
@@ -256,31 +257,35 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
 ## Node.js V8 Coverage Report for Server Side
 Possible solutions:
 - [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
-    - Sets Node.js env `NODE_V8_COVERAGE`=`dir` before the program running, the coverage data will be saved to the `dir` after the program exits gracefully 
-    - Read the JSON file(s) from the `dir` and generate coverage report
-    - example:
+    - Sets Node.js env `NODE_V8_COVERAGE`=`dir` before the program running, the coverage data will be saved to the `dir` after the program exits gracefully.
+    - Read the JSON file(s) from the `dir` and generate coverage report.
+    - Example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-env` node [./test/test-node-env.js](./test/test-node-env.js) && node [./test/generate-node-report.js](./test/generate-node-report.js)
 
 - [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API + NODE_V8_COVERAGE
-    - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()`, it does not require waiting until the program exits gracefully
-    - example:
+    - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()`, it does not require waiting until the program exits gracefully.
+    - Example:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-api` node [./test/test-node-api.js](./test/test-node-api.js)
 
 - [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API
    - Connecting to the V8 inspector and enable V8 coverage.
-   - Taking coverage data and adding to the report after your application runs.
-   - example: [./test/test-node-ins.js](./test/test-node-ins.js)
-   - see module [collect-v8-coverage](https://github.com/SimenB/collect-v8-coverage)
+   - Taking coverage data and adding it to the report.
+   - Example: 
+   > node [./test/test-node-ins.js](./test/test-node-ins.js)
    
 - [CDP](https://chromedevtools.github.io/devtools-protocol/) API
-    - Enabling [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started/)
+    - Enabling [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started/).
     - Collecting coverage data with CDP API.
-    - example: [./test/test-node-cdp.js](./test/test-node-cdp.js)
+    - Example: 
+    > node --inspect=9229 [./test/test-node-cdp.js](./test/test-node-cdp.js)
 
 - [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started) + CDP + NODE_V8_COVERAGE + V8 API
     > cross-env NODE_V8_COVERAGE=.temp/v8-coverage-koa node --inspect=9229 [./test/koa.js](./test/koa.js)
-    - example for [koa](https://github.com/koajs/koa) web server:
+    - Example for [koa](https://github.com/koajs/koa) web server:
     > node [./test/test-node-koa.js](./test/test-node-koa.js)
+
+- [Child Process](https://nodejs.org/docs/latest/api/child_process.html) + NODE_V8_COVERAGE
+    - see [`mcr` CLI](#mcr-cli)
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
