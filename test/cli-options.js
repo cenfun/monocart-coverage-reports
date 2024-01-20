@@ -63,11 +63,19 @@ module.exports = {
 
     },
 
+    sourcePath: (filePath) => {
+        const pre = 'monocart-coverage-reports/';
+        if (filePath.startsWith(pre)) {
+            return filePath.slice(pre.length);
+        }
+        return filePath;
+    },
+
     entryFilter: (entry) => {
         return entry.url.includes('mock/node') || entry.url.search(/src\/.+/) !== -1;
     },
 
-    // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
+    sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
     onEnd: () => {
         console.log('test cli end');
