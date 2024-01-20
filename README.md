@@ -65,7 +65,7 @@ console.log(coverageResults.summary);
 - `v8-json` (V8 data only)
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 - `codecov` (V8 data only)
-    - for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format)
+    - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 - `console-summary` shows coverage summary in console
     
     ![](test/console-summary.png)
