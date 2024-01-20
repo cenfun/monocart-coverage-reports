@@ -45,9 +45,13 @@ jobs:
 
       - name: Coveralls
         uses: coverallsapp/github-action@v2
+        with:
+          files: ./docs/v8/lcov.info
       
       - name: Codecov
         uses: codecov/codecov-action@v3
+        with:
+          files: ./docs/v8/lcov.info
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
