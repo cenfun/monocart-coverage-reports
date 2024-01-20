@@ -365,14 +365,14 @@ We implemented new converter instead of v8-to-istanbul:
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
-- ignoring all until told
+- Ignoring all until stop
 ```js
 /* v8 ignore start */
 function uncovered() {
 }
 /* v8 ignore stop */
 ```
-- ignoring the next line or next N lines
+- Ignoring the next line or next N lines
 ```js
 /* v8 ignore next */
 const os = platform === 'wind32' ? 'Windows' : 'Other';
