@@ -8,6 +8,7 @@ const Koa = require('koa');
 const testV8 = require('./test-v8.js');
 
 const testCss = require('./test-css.js');
+const testAnonymous = require('./test-anonymous.js');
 
 const testV8EsBuild = require('./test-v8-esbuild.js');
 const testV8Rollup = require('./test-v8-rollup.js');
@@ -111,6 +112,7 @@ const test = async () => {
         testV8Rollup(serverUrl),
 
         testCss(serverUrl),
+        testAnonymous(serverUrl),
 
         testPuppeteer(serverUrl),
         testV8(serverUrl)
