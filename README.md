@@ -237,9 +237,9 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
     - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
 - Browser
-    > Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
+    - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
 - Node.js
-    > Collecting coverage data from `global.__coverage__`
+    - Collecting coverage data from `global.__coverage__`
 
 ## Collecting V8 Coverage Data
 - For source code: enable `sourcemap` and do not compress/minify:
@@ -248,9 +248,11 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
 - Browser (Chromium Only)
-    > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api), see [playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js) or [puppeteer example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
+    > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api):
+    - [Playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js), and [anonymous scripts](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-anonymous.js), [css](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-css.js)
+    - [Puppeteer example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
 - Node.js
-    > see [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+    - see following [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 
 
 ## Node.js V8 Coverage Report for Server Side
