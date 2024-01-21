@@ -18,6 +18,8 @@
 * [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
 * [Collecting V8 Coverage Data](#collecting-v8-coverage-data)
+* [Manually Resolve the Sourcemap](#manually-resolve-the-sourcemap)
+* [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 * [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Integration](#integration)
@@ -250,13 +252,48 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
     - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true`
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
+    - [Manually Resolve the Sourcemap](#manually-resolve-the-sourcemap)
 - Browser (Chromium Only)
     > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api):
     - [Playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js), and [anonymous](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-anonymous.js), [css](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-css.js)
-    - [Puppeteer example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
+    - see [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 - Node.js
-    - see following [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+    - see [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 
+## Manually Resolve the Sourcemap
+> If the `js` file is loaded with `addScriptTag` [API](https://playwright.dev/docs/api/class-page#page-add-script-tag), then its sourcemap file may not work. You can try to manually read the sourcemap file before the coverage data is added to the report.
+```js
+const jsCoverage = await page.coverage.stopJSCoverage();
+jsCoverage.forEach((entry) => {
+    // read sourcemap for the my-dist.js manually
+    if (entry.url.endsWith('my-dist.js')) {
+        entry.sourceMap = JSON.parse(fs.readFileSync('dist/my-dist.js.map').toString('utf-8'));
+    }
+});
+
+await MCR(coverageOptions).add(jsCoverage);
+
+```
+
+## Collecting Raw V8 Coverage Data with Puppeteer
+> Puppeteer does not provide raw v8 coverage data by default. A simple conversion is required, see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
+```js
+await page.coverage.startJSCoverage({
+    // provide raw v8 coverage data
+    includeRawScriptCoverage: true
+});
+
+await page.goto(url);
+
+const jsCoverage = await page.coverage.stopJSCoverage();
+const rawV8CoverageData = jsCoverage.map((it) => {
+    // Convert to raw v8 coverage format
+    return {
+        source: it.text,
+        ... it.rawScriptCoverage
+    };
+}
+```
 
 ## Node.js V8 Coverage Report for Server Side
 Possible solutions:
@@ -393,26 +430,6 @@ export interface ScriptCoverage {
 export type V8CoverageData = ScriptCoverage[];
 ```
 see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
-
-### Collect raw v8 coverage data with Puppeteer
-```js
-await page.coverage.startJSCoverage({
-    // provide raw v8 coverage data
-    includeRawScriptCoverage: true
-});
-
-await page.goto(url);
-
-const jsCoverage = await page.coverage.stopJSCoverage();
-const rawV8CoverageData = jsCoverage.map((it) => {
-    // Convert to raw v8 coverage format
-    return {
-        source: it.text,
-        ... it.rawScriptCoverage
-    };
-}
-```
-see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 
 ## How to convert V8 to Istanbul
 ### Using [v8-to-istanbul](https://github.com/istanbuljs/v8-to-istanbul)
