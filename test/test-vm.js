@@ -11,9 +11,13 @@ const MCR = require('../');
 const path = require('path');
 
 const coverageOptions = {
-    logging: 'debug',
+    // logging: 'debug',
     // watermarks: [60, 90],
-    reports: 'v8',
+    reports: [
+        'v8',
+        'raw',
+        'console-summary'
+    ],
 
     name: 'My V8 Node VM Coverage Report',
     assetsPath: '../assets',
