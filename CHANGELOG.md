@@ -2,7 +2,7 @@
 
 * 2.3.0
     - added support for custom reporter
-    - added support for wrapper script mapping
+    - added support for vm script offset
 
 * 2.2.2
     - added codecov report
