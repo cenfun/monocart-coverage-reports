@@ -1,5 +1,9 @@
 ## Changelog
 
+* 2.3.0
+    - added support for custom reporter
+    - added support for wrapper script mapping
+
 * 2.2.2
     - added codecov report
 

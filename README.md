@@ -115,11 +115,13 @@ console.log(coverageResults.summary);
     - v8 custom reporter
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
+### Multiple Reports:
 ```js
 const MCR = require('monocart-coverage-reports');
 const options = {
     outputDir: './coverage-reports',
     reports: [
+        // build-in reports
         ['console-summary'],
         ['v8'],
         ['html', {
@@ -128,7 +130,18 @@ const options = {
         ['json', {
             file: 'my-json-file.json'
         }],
-        'lcovonly'
+        'lcovonly',
+
+        // custom reports
+        // Specify reporter name with the NPM package
+        ["custom-reporter-1"],
+        ["custom-reporter-2", {
+            type: "istanbul",
+            option: "value"
+        }],
+        // Specify reporter name with local path
+        ['/absolute/path/to/custom-reporter.js']
+
     ]
 }
 const coverageReport = MCR(options);
