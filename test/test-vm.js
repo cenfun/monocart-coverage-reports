@@ -142,6 +142,10 @@ const generate = async () => {
     foo, bar, app
 } = require('./test/mock/node/lib/app.js');
 
+if (require.a) {
+    console.log("uncovered block a");
+}
+
 const uncovered = () => {
     // this is uncovered function in vm, test scriptOffset
     console.log("uncovered");
@@ -155,7 +159,12 @@ function fun(a) {
     if (a) {console.log(a);}
 }
 
+if (require.b) {
+    console.log("uncovered block b");
+}
+
 fun();
+
 
 function useless() {
     console.log("useless");
