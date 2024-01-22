@@ -63,6 +63,8 @@ const collectV8Coverage = async (postSession, files) => {
     // filter node internal files
     coverageList = coverageList.filter((entry) => entry.url && entry.url.startsWith('file:'));
 
+    coverageList = coverageList.filter((entry) => !entry.url.includes('test-vm.js'));
+
     // attach source content
     coverageList.forEach((item) => {
         const filePath = fileURLToPath(item.url);
@@ -140,19 +142,24 @@ const generate = async () => {
     foo, bar, app
 } = require('./test/mock/node/lib/app.js');
 
-// test dist with sourcemap
-const { component, branch } = require('./test/mock/node/dist/coverage-node.js');
-
 const uncovered = () => {
     // this is uncovered function in vm, test scriptOffset
+    console.log("uncovered");
 }
 
 foo();
 bar();
 app();
 
-component();
-branch();
+function fun(a) {
+    if (a) {console.log(a);}
+}
+
+fun();
+
+function useless() {
+    console.log("useless");
+}
 
 /** the sourcemap url comments here ########################################################################################################### */
 `;
