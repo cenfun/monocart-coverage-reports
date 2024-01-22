@@ -91,6 +91,10 @@ declare namespace MCR {
         }] |
         ['text-summary'] | ['text-summary', {
             file?: string;
+        }] |
+        [string] | [string, {
+            type?: "v8" | "istanbul" | "both";
+            [key: string]: any;
         }];
 
     export type AddedResults = {

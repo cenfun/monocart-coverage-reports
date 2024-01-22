@@ -92,6 +92,29 @@ console.log(coverageResults.summary);
 - `text-lcov`
 - `text-summary`
 
+- Custom Reporter
+    ```js
+    {
+        reports: [
+            [path.resolve('./test/custom-istanbul-reporter.js'), {
+                type: 'istanbul',
+                file: 'custom-istanbul-coverage.text'
+            }],
+            [path.resolve('./test/custom-v8-reporter.js'), {
+                type: 'v8',
+                outputFile: 'custom-v8-coverage.json'
+            }],
+            [path.resolve('./test/custom-v8-reporter.mjs'), {
+                type: 'both'
+            }]
+        ]
+    }
+    ```
+    - istanbul custom reporter
+    > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference, 
+    - v8 custom reporter
+    > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
+
 ```js
 const MCR = require('monocart-coverage-reports');
 const options = {

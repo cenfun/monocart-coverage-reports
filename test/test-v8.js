@@ -1,3 +1,4 @@
+const path = require('path');
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
@@ -13,6 +14,17 @@ const coverageOptions = {
         }],
         ['v8', {
             // metrics: ['bytes', 'functions', 'lines']
+        }],
+        [path.resolve('./test/custom-istanbul-reporter.js'), {
+            type: 'istanbul',
+            file: 'custom-istanbul-coverage.text'
+        }],
+        [path.resolve('./test/custom-v8-reporter.js'), {
+            type: 'v8',
+            outputFile: 'custom-v8-coverage.json'
+        }],
+        [path.resolve('./test/custom-v8-reporter.mjs'), {
+            type: 'both'
         }]
     ],
 
