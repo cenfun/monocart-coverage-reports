@@ -788,6 +788,10 @@ const initGrid = () => {
                 return `<span class="mcr-debug" tooltip="debug file">${v}</span>`;
             }
 
+            if (rowItem.empty) {
+                return `<span class="mcr-empty" tooltip="empty coverage">${v}</span>`;
+            }
+
             const distFile = rowItem.distFile;
             if (distFile) {
                 return `<span class="mcr-source" tooltip="source from ${distFile}">${v}</span>`;
@@ -1467,6 +1471,14 @@ icon
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 16px 16px;
+}
+
+.mcr-empty {
+    padding-left: 13px;
+    background-image: url("./images/empty.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 11px 11px;
 }
 
 .mcr-source {
