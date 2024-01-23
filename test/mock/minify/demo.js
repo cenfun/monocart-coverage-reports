@@ -9,7 +9,7 @@ function callback() {
 
 // v8 ignore next 3
 function other() {
-
+    console.log('has been ignored');
 }
 
 /* inline block */

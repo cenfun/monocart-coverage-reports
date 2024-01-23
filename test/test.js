@@ -54,7 +54,7 @@ const serve = () => {
 const testFunctions = () => {
 
 
-    const { dedupeRanges } = require('../lib/utils/dedupe.js');
+    const { dedupeFlatRanges } = require('../lib/utils/dedupe.js');
 
     const ranges = [{
         start: 0, end: 10
@@ -77,11 +77,11 @@ const testFunctions = () => {
     }, {
         start: 30, end: 50
     }];
-    const newRanges = dedupeRanges(ranges);
-    console.log('dedupeRanges', newRanges);
+    const newRanges = dedupeFlatRanges(ranges);
+    console.log('dedupeFlatRanges', newRanges);
 
     console.assert(JSON.stringify(newRanges) === '[{"start":0,"end":15},{"start":18,"end":80},{"start":100,"end":200}]');
-    console.log(EC.green('passed'), 'test dedupeRanges');
+    console.log(EC.green('passed'), 'test dedupeFlatRanges');
 
 };
 
