@@ -68,11 +68,10 @@ console.log(coverageResults.summary);
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 - `codecov` (V8 data only)
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
-- `console-summary` shows coverage summary in console
     
     ![](test/console-summary.png)
 
-> Following are [istanbul reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+> Istanbul [build-in reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
 - `clover`
 - `cobertura`
 - `html`
@@ -91,6 +90,10 @@ console.log(coverageResults.summary);
 - `text`
 - `text-lcov`
 - `text-summary`
+
+> Other reports
+- `console-summary` shows coverage summary in console
+- `raw` only keep all original data, which can be used for other reports input with `inputDir`
 
 - Custom Reporter
     ```js

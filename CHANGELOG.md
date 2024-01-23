@@ -1,8 +1,14 @@
 ## Changelog
 
 * 2.3.0
-    - added support for custom reporter
-    - added support for vm script offset
+    - added new feature: custom reporter
+    - added new reporter: raw
+    - added new option: inputDir
+    - added support for vm scriptOffset
+    - fixed branches if exists in wrapper function
+    - fixed performance for decoding source mappings
+    - fixed branch locations range error
+    
 
 * 2.2.2
     - added codecov report

@@ -37,9 +37,6 @@ declare namespace MCR {
         ['codecov'] | ["codecov", {
             outputFile?: string;
         }] |
-        ['console-summary'] | ['console-summary', {
-            metrics?: Array<"bytes" | "functions" | "branches" | "lines" | "statements">;
-        }] |
         ['clover'] | ['clover', {
             file?: string;
         }] |
@@ -91,6 +88,12 @@ declare namespace MCR {
         }] |
         ['text-summary'] | ['text-summary', {
             file?: string;
+        }] |
+        ['console-summary'] | ['console-summary', {
+            metrics?: Array<"bytes" | "functions" | "branches" | "lines" | "statements">;
+        }] |
+        ['raw'] | ['raw', {
+            outputDir?: string;
         }] |
         [string] | [string, {
             type?: "v8" | "istanbul" | "both";
