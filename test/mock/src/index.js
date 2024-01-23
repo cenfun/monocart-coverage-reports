@@ -98,7 +98,7 @@ const onload = (something) => {
     ignore();
     typescript();
     branch();
-    component();
+    component(1);
 
     const number = something ? 1 : 2;
     return number;

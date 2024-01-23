@@ -11,7 +11,12 @@ const MCR = require('../');
 const coverageOptions = {
     logging: 'debug',
     // watermarks: [60, 90],
-    reports: 'v8',
+    reports: [
+        'v8',
+        ['html', {
+            subdir: 'html'
+        }]
+    ],
 
     // merge from exists raw dirs
     mergeFrom: [
@@ -148,7 +153,7 @@ const testNode = async () => {
     // test dist with sourcemap
     const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
-    component(true);
+    component(3);
     branch();
 
     await collectV8Coverage(postSession);
