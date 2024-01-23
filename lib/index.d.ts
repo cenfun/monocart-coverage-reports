@@ -176,6 +176,9 @@ declare namespace MCR {
         /** {string} output dir */
         outputDir?: string;
 
+        /** {string|string[]} input raw dir(s) */
+        inputDir?: string | string[];
+
         /** {string} v8 or html for istanbul by default
         * {array} multiple reports with options
         * v8 report or istanbul supported reports */
