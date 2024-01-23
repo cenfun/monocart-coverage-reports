@@ -4,7 +4,7 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const Util = require('../lib/utils/util.js');
 
-const addEmptyCoverage = (list, dir, distFile) => {
+const addEmptyCoverage = (list, dir) => {
     // add empty coverage
     Util.forEachFile(dir, [], (filename, p) => {
 
@@ -22,7 +22,6 @@ const addEmptyCoverage = (list, dir, distFile) => {
                 empty: true,
                 type: 'css',
                 url,
-                distFile,
                 text: source
             });
 
@@ -33,7 +32,6 @@ const addEmptyCoverage = (list, dir, distFile) => {
             empty: true,
             type: 'js',
             url,
-            distFile,
             source
         });
 
@@ -50,6 +48,7 @@ module.exports = {
         'v8',
         // 'v8-json',
         'console-summary',
+        'raw',
         'codecov'
     ],
 
@@ -58,7 +57,7 @@ module.exports = {
     onStart: async (coverageReport) => {
 
         const list = [];
-        addEmptyCoverage(list, 'test/mock/src', 'coverage-node.js');
+        addEmptyCoverage(list, 'test/mock/src');
         addEmptyCoverage(list, 'test/mock/node/lib');
 
         await coverageReport.add(list);

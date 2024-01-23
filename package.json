@@ -30,7 +30,8 @@
         "test-vm": "node ./test/test-vm.js",
         "test-browser": "node ./test/test.js",
         "test-cli": "npx mcr \"node ./test/test-node-env.js\" -o docs/cli -c test/cli-options.js",
-        "test": "npm run test-browser && npm run test-node && npm run test-cli && npm run build-docs",
+        "test-merge": "node ./test/test-merge.js",
+        "test": "npm run test-browser && npm run test-node && npm run test-cli && npm run test-merge && npm run build-docs",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
         "patch": "npm run build && sf publish patch -r"
