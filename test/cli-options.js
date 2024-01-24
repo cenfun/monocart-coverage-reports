@@ -44,13 +44,7 @@ module.exports = {
 
     name: 'My CLI Coverage Report',
 
-    reports: [
-        'v8',
-        // 'v8-json',
-        'console-summary',
-        'raw',
-        'codecov'
-    ],
+    reports: 'v8,console-summary,raw,codecov',
 
     lcov: true,
 
