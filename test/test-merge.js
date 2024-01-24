@@ -9,7 +9,7 @@ const EC = require('eight-colors');
 const MCR = require('../');
 
 const coverageOptions = {
-    logging: 'debug',
+    // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
         'v8',
@@ -19,10 +19,7 @@ const coverageOptions = {
     ],
 
     // merge from exists raw dirs
-    mergeFrom: [
-        './docs/vm/raw',
-        './docs/cli/raw'
-    ],
+    inputDir: './docs/vm/raw, ./docs/cli/raw, ./wrong-raw-dir',
 
     name: 'My Merge Coverage Report',
     assetsPath: '../assets',
