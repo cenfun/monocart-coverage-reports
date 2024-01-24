@@ -454,7 +454,8 @@ see example: [./test/test-merge.js](./test/test-merge.js)
 
 ## Integration
 - [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
-- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Integration with [Vitest](https://github.com/vitest-dev/vitest) coverage
+- [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - Integration with [Jest](https://github.com/jestjs/jest/) for coverage reports
+- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Integration with [Vitest](https://github.com/vitest-dev/vitest) for coverage reports
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
