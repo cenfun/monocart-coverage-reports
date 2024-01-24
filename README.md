@@ -420,7 +420,8 @@ const coverageOptions = {
 ```
 Then, after all the tests are completed, generate a merged report with option `inputDir`:
 ```js
-import {CoverageReport} from 'monocart-coverage-reports';
+import fs from "fs";
+import { CoverageReport } from 'monocart-coverage-reports';
 const coverageOptions = {
     name: 'My Merged Coverage Report',
     inputDir: [
@@ -431,7 +432,14 @@ const coverageOptions = {
     reports: [
         ['v8'],
         ['console-summary']
-    ]
+    ],
+    onEnd: () => {
+        // remove the raw files if it useless
+        fs.rmSync('./coverage-reports/unit/raw', {
+            recursive: true,
+            force: true
+        })
+    }
 };
 await new CoverageReport(coverageOptions).generate();
 ```
