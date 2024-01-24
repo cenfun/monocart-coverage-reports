@@ -8,7 +8,6 @@
     - fixed branches if exists in wrapper function
     - fixed performance for decoding source mappings
     - fixed branch locations range error
-    
 
 * 2.2.2
     - added codecov report

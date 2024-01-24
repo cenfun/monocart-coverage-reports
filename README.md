@@ -22,6 +22,7 @@
 * [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 * [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 * [Multiprocessing Support](#multiprocessing-support)
+* [Merge Coverage Reports](#merge-coverage-reports)
 * [Integration](#integration)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Chromium Coverage API](#chromium-coverage-api)
@@ -94,6 +95,7 @@ console.log(coverageResults.summary);
 > Other reports
 - `console-summary` shows coverage summary in console
 - `raw` only keep all original data, which can be used for other reports input with `inputDir`
+    - see [Merge Coverage Reports](#merge-coverage-reports)
 
 - Custom Reporter
     ```js
@@ -394,6 +396,61 @@ const coverageReport = MCR(options);
 const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 ```
+
+## Merge Coverage Reports
+The following usage scenarios may require merging coverage reports:
+- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
+- When the code is subjected to different kinds of testing. For example, unit tests with Jest might cover certain parts of the code, while end-to-end tests with Playwright might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
+- When tests are run on different machines or different shards, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
+
+First, using the `raw` report to export the original coverage data to the specified directory.
+```js
+const coverageOptions = {
+    name: 'My Unit Test Coverage Report',
+    outputDir: "./coverage-reports/unit",
+    reports: [
+        ['raw', {
+            // relative path will be "./coverage-reports/unit/raw"
+            outputDir: "raw"
+        }],
+        ['v8'],
+        ['console-summary']
+    ]
+};
+```
+Then, after all the tests are completed, generate a merged report with option `inputDir`:
+```js
+import {CoverageReport} from 'monocart-coverage-reports';
+const coverageOptions = {
+    name: 'My Merged Coverage Report',
+    inputDir: [
+        './coverage-reports/unit/raw',
+        './coverage-reports/e2e/raw'
+    ],
+    outputDir: './coverage-reports/merged',
+    reports: [
+        ['v8'],
+        ['console-summary']
+    ]
+};
+await new CoverageReport(coverageOptions).generate();
+```
+If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to convert it.
+```js
+const coverageOptions = {
+    sourcePath: (filePath) => {
+        // Remove the virtual prefix
+        const list = ['my-dist-file1/', 'my-dist-file2/'];
+        for (const str of list) {
+            if (filePath.startsWith(str)) {
+                return filePath.slice(str.length);
+            }
+        }
+        return filePath;
+    }
+};
+```
+see example: [./test/test-merge.js](./test/test-merge.js)
 
 ## Integration
 - [monocart-reporter](https://cenfun.github.io/monocart-reporter/) - Test reporter for [Playwright](https://github.com/microsoft/playwright)
