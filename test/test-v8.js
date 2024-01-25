@@ -36,6 +36,19 @@ const coverageOptions = {
 
     // v8Ignore: false,
 
+    sourcePath: (filePath) => {
+        const map = {
+            'localhost-8130/': 'test/mock/',
+            'coverage-v8/': ''
+        };
+        for (const key in map) {
+            if (filePath.startsWith(key)) {
+                return map[key] + filePath.slice(key.length);
+            }
+        }
+        return filePath;
+    },
+
     onEnd: (coverageResults) => {
         const thresholds = {
             bytes: 80,
