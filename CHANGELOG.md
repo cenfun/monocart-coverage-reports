@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.3.1
+    - fixed issue for a source file fully uncovered
+
 * 2.3.0
     - added new feature: custom reporter
     - added new reporter: raw
