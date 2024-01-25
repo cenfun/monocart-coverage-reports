@@ -50,7 +50,9 @@ jobs:
         with:
           projectBaseDir: ./
           args: >
+            -Dsonar.organization=cenfun
             -Dsonar.projectKey=monocart-coverage-reports
+            -Dsonar.projectName=monocart-coverage-reports
             -Dsonar.javascript.lcov.reportPaths=docs/v8/lcov.info
             -Dsonar.sources=test/mock/src
 
