@@ -43,6 +43,15 @@ jobs:
       - run: npm run build
       - run: npm run test
 
+      - name: Analyze with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ./
+          args: >
+            -Dsonar.projectKey=monocart-coverage-reports
+            -Dsonar.javascript.lcov.reportPaths=docs/v8/lcov.info
+            -Dsonar.sources=test/mock/src
+
       - name: Coveralls
         uses: coverallsapp/github-action@v2
         with:
