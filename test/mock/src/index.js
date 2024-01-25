@@ -1,6 +1,4 @@
-require('../minify/comments.js');
-
-require('../minify/demo.js');
+require('./comments.js');
 
 const { ignore } = require('./ignore.js');
 

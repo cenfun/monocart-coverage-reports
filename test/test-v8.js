@@ -103,7 +103,7 @@ const test = async () => {
     const fileList = [
         './test/mock/v8/dist/coverage-v8.js',
         // './test/mock/minify/with-map/bootstrap.min.css',
-        './test/mock/minify/style.css'
+        './test/mock/css/src/style.css'
     ];
     for (const filePath of fileList) {
         const content = fs.readFileSync(filePath).toString('utf-8');
