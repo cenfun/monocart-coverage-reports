@@ -1,5 +1,11 @@
 ## Changelog
 
+* 2.3.2
+    - fixed issue for rmSync
+    - fixed issue for AssignmentPattern
+    - fixed url issue if entry url is a path 
+    - added inputDir option for CLI
+
 * 2.3.1
     - fixed issue for a source file fully uncovered
 
