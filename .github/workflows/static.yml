@@ -54,8 +54,9 @@ jobs:
             -Dsonar.projectKey=monocart-coverage-reports
             -Dsonar.projectName=monocart-coverage-reports
             -Dsonar.javascript.lcov.reportPaths=docs/mcr/lcov.info
-            -Dsonar.sources=lib,packages,test
-            -Dsonar.exclusions=dist/*,minify/*
+            -Dsonar.sources=lib
+            -Dsonar.tests=test
+            -Dsonar.exclusions=dist/*,packages/*
 
       - name: Coveralls
         uses: coverallsapp/github-action@v2
