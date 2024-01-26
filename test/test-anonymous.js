@@ -11,7 +11,7 @@ const coverageOptions = {
     outputDir: './docs/anonymous'
 };
 
-const test = async (serverUrl) => {
+const test = async () => {
 
     console.log('start anonymous test ...');
     const browser = await chromium.launch({
@@ -60,11 +60,13 @@ const generate = async () => {
 };
 
 
-module.exports = async (serverUrl) => {
+const main = async () => {
     // clean cache first
     await MCR(coverageOptions).cleanCache();
 
-    await test(serverUrl);
+    await test();
 
     await generate();
 };
+
+main();
