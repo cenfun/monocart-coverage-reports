@@ -23,19 +23,15 @@ const coverageOptions = {
     outputDir: './docs/istanbul'
 };
 
-const test1 = async (serverUrl) => {
+const test = async () => {
 
-    console.log('start istanbul test1 ...');
-    const browser = await chromium.launch({
-        //  headless: false
-    });
+    console.log('start istanbul test ...');
+    const browser = await chromium.launch();
     const page = await browser.newPage();
 
-    const url = `${serverUrl}/istanbul/`;
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    await page.addScriptTag({
+        path: './test/mock/istanbul/dist/coverage-istanbul.js'
+    });
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -55,40 +51,7 @@ const test1 = async (serverUrl) => {
 
     const results = await MCR(coverageOptions).add(coverageData);
 
-    console.log('istanbul coverage1 added', results.type);
-
-    await browser.close();
-};
-
-
-const test2 = async (serverUrl) => {
-
-    console.log('start istanbul test2 ...');
-    const browser = await chromium.launch({
-        // headless: false
-    });
-    const page = await browser.newPage();
-
-    const url = `${serverUrl}/istanbul/`;
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-    });
-
-    await page.evaluate(() => {
-        const { start } = window['coverage-istanbul'];
-        start();
-    });
-
-    const coverageData = await page.evaluate(() => window.__coverage__);
-
-    const results = await MCR(coverageOptions).add(coverageData);
-
-    console.log('istanbul coverage2 added', results.type);
+    console.log('istanbul coverage added', results.type);
 
     await browser.close();
 };
@@ -104,14 +67,10 @@ const generate = async () => {
 };
 
 
-module.exports = async (serverUrl) => {
-    // clean cache first if debug
+const main = async () => {
     await MCR(coverageOptions).cleanCache();
-
-    await Promise.all([
-        test1(serverUrl),
-        test2(serverUrl)
-    ]);
-
+    await test();
     await generate();
 };
+
+main();

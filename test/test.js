@@ -10,7 +10,6 @@ const testV8Rollup = require('./test-v8-rollup.js');
 const testV8Minify = require('./test-v8-minify.js');
 
 const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
-const testIstanbul = require('./test-istanbul.js');
 
 const testPuppeteer = require('./test-puppeteer.js');
 
@@ -98,7 +97,7 @@ const test = async () => {
 
 
     await Promise.all([
-        testIstanbul(serverUrl),
+
         testV8AndIstanbul(serverUrl),
 
         testV8Minify(serverUrl),

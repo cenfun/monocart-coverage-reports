@@ -116,9 +116,6 @@ const test = async () => {
     });
 
     await page.evaluate(() => {
-
-        dispatchEvent(new Event('load'));
-
         const { foo } = window['coverage-v8'];
         foo();
     });
