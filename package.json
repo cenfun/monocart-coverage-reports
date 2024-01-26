@@ -21,7 +21,7 @@
         "build-test": "node ./scripts/build-test.js",
         "build": "sf lint && sf b -p && npm run build-test",
         "test-node": "npm run test-node-env && npm run test-node-api && npm run test-node-ins && npm run test-node-cdp && npm run test-node-koa && npm run test-vm",
-        "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-node-report.js",
+        "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",
         "test-node-fgc": "node ./test/test-node-fgc.js",
         "test-node-ins": "node ./test/test-node-ins.js",
@@ -34,7 +34,8 @@
         "test-css": "node ./test/test-css.js",
         "test-cli": "npx mcr \"node ./test/test-node-env.js\" -o docs/cli -c test/cli-options.js",
         "test-merge": "node ./test/test-merge.js",
-        "test": "npm run test-browser && npm run test-node && npm run test-cli && npm run test-merge && npm run build-docs",
+        "test-all": "npm run test-browser && npm run test-node && npm run test-cli && npm run test-merge && npm run build-docs",
+        "test": "npx mcr \"npm run test-all\" -c test/mcr-options.js",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
         "patch": "npm run build && sf publish patch -r"

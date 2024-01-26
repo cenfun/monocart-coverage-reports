@@ -16,6 +16,15 @@ const addEmptyCoverage = (list, dir) => {
         const url = pathToFileURL(sourcePath).toString();
 
         const extname = path.extname(filename);
+
+        if (filename.startsWith('monocart-')) {
+            return;
+        }
+
+        if (['.html', '.ts'].includes(extname)) {
+            return;
+        }
+
         if (['.css'].includes(extname)) {
 
             list.push({
@@ -42,40 +51,40 @@ module.exports = {
 
     // logging: 'debug',
 
-    name: 'My CLI Coverage Report',
+    name: 'My MCR Coverage Report',
 
-    reports: 'v8,console-summary,raw,codecov',
+    outputDir: 'docs/mcr',
+
+    reports: 'v8,console-summary,codecov',
 
     assetsPath: '../assets',
-
     lcov: true,
 
     onStart: async (coverageReport) => {
 
         const list = [];
-        addEmptyCoverage(list, 'test/mock/src');
-        addEmptyCoverage(list, 'test/mock/node/lib');
+        addEmptyCoverage(list, 'lib');
 
         await coverageReport.add(list);
 
     },
 
-    sourcePath: (filePath) => {
-        const pre = 'monocart-coverage-reports/';
-        if (filePath.startsWith(pre)) {
-            return filePath.slice(pre.length);
-        }
-        return filePath;
-    },
-
     entryFilter: (entry) => {
-        return entry.url.includes('mock/node') || entry.url.search(/src\/.+/) !== -1;
+        if (entry.url.includes('node_modules')) {
+            return false;
+        }
+
+        if (entry.url.includes('packages/')) {
+            return false;
+        }
+
+        return true;
     },
 
-    sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
+    // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
     onEnd: () => {
-        console.log('test cli end');
+        console.log('test mcr end');
     }
 
 };

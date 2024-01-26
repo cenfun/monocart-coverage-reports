@@ -53,19 +53,19 @@ jobs:
             -Dsonar.organization=cenfun
             -Dsonar.projectKey=monocart-coverage-reports
             -Dsonar.projectName=monocart-coverage-reports
-            -Dsonar.javascript.lcov.reportPaths=docs/v8/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=docs/mcr/lcov.info
             -Dsonar.sources=lib,packages,test
             -Dsonar.exclusions=dist/*,minify/*
 
       - name: Coveralls
         uses: coverallsapp/github-action@v2
         with:
-          files: ./docs/cli/lcov.info
+          files: ./docs/mcr/lcov.info
       
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./docs/cli/codecov.json
+          files: ./docs/mcr/codecov.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
