@@ -29,7 +29,7 @@
 * [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
-* [Integration](#integration)
+* [Integration](#integration) - Playwright, Jest, Vitest, Codecov, Coveralls, Sonar Cloud
 * [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
 
