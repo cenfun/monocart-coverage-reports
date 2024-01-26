@@ -75,7 +75,7 @@ const coverageOptions = {
 
 const test = async () => {
 
-    console.log('start v8 test1 ...');
+    console.log('start v8 test ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -135,7 +135,7 @@ const test = async () => {
     // v8
     const report = await MCR(coverageOptions).add(coverageList);
 
-    console.log('v8 coverage1 added', report.type);
+    console.log('v8 coverage added', report.type);
 
     await browser.close();
 };

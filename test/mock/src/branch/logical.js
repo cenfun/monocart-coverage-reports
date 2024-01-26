@@ -1,5 +1,5 @@
-// 5 x 5 = 25
-/* eslint-disable complexity */
+/* eslint-disable complexity,no-mixed-operators */
+
 const LogicalExpression = (tf1, tf2) => {
 
     for (let i = 0; i < 2; i++) {
@@ -70,4 +70,5 @@ module.exports = () => {
     LogicalExpression_10(true, false);
     LogicalExpression_01(false, true);
     LogicalExpression_00(false, false);
+
 };
