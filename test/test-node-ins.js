@@ -95,6 +95,10 @@ const generate = async () => {
     // test dist with sourcemap
     const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
+    // silent
+    const log = console.log;
+    console.log = () => {};
+
     foo();
     bar();
     app();
@@ -104,6 +108,8 @@ const generate = async () => {
     component();
     branch();
     await collectV8Coverage(postSession);
+
+    console.log = log;
 
     await stopV8Coverage(postSession);
     // =====================================================

@@ -54,7 +54,9 @@ const generate = async () => {
         // console.log(coverageList);
         coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
-        // console.log(coverageList);
+        if (!coverageList.length) {
+            continue;
+        }
 
         // attached source content
         coverageList.forEach((entry) => {
@@ -71,18 +73,17 @@ const generate = async () => {
 
     await coverageReport.generate();
 
-    EC.logGreen('done');
-
 };
 
 const test = async () => {
 
+    // silent
+    const log = console.log;
+    console.log = () => {};
+
     foo();
     bar();
     app();
-    // v8.takeCoverage();
-
-    console.log(component, branch);
 
     component();
     branch();
@@ -90,6 +91,8 @@ const test = async () => {
 
     // stop
     v8.stopCoverage();
+
+    console.log = log;
 
     await generate();
 

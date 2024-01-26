@@ -150,8 +150,14 @@ const testNode = async () => {
     // test dist with sourcemap
     const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
+    // silent
+    const log = console.log;
+    console.log = () => {};
+
     component(3);
     branch();
+
+    console.log = log;
 
     await collectV8Coverage(postSession);
 

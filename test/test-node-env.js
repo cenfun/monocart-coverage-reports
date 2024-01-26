@@ -16,6 +16,10 @@ if (fs.existsSync(dir)) {
     });
 }
 
+// silent
+const log = console.log;
+console.log = () => {};
+
 foo();
 bar();
 app();
@@ -24,3 +28,5 @@ app();
 
 component();
 branch();
+
+console.log = log;

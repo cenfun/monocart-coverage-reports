@@ -5,7 +5,6 @@ const EC = require('eight-colors');
 
 const MCR = require('../');
 
-
 const generate = async () => {
 
     const dir = '.temp/v8-coverage-env';
@@ -22,7 +21,6 @@ const generate = async () => {
 
         outputDir: './docs/v8-node-env'
     };
-
 
     const coverageReport = MCR(coverageOptions);
 
@@ -41,6 +39,10 @@ const generate = async () => {
         // console.log(coverageList);
         coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
 
+        if (!coverageList.length) {
+            continue;
+        }
+
         // attached source content
         coverageList.forEach((entry) => {
             const filePath = fileURLToPath(entry.url);
@@ -55,8 +57,6 @@ const generate = async () => {
     }
 
     await coverageReport.generate();
-
-    EC.logGreen('done');
 
 };
 
