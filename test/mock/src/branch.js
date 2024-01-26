@@ -1,5 +1,6 @@
 /* branches test cases */
 
+const AssignmentPattern = require('./branch/assignment.js');
 const ConditionalExpression = require('./branch/conditional.js');
 const IfStatement = require('./branch/if.js');
 const LogicalExpression = require('./branch/logical.js');
@@ -22,14 +23,10 @@ const coveredFunction = () => {
     }
 };
 
-// AssignmentPattern
-// ((a = 0) => {
-//     console.log(a);
-// })();
-
 const branch = () => {
     coveredFunction();
 
+    AssignmentPattern();
     ConditionalExpression();
     IfStatement();
     LogicalExpression();
