@@ -609,7 +609,7 @@ We implemented new converter instead of v8-to-istanbul:
           files: ./coverage-reports/lcov.info
     ```
  - [Sonar Cloud](https://sonarcloud.io/)
-    - [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=monocart-coverage-reports&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=monocart-coverage-reports)
+    - [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=monocart-coverage-reports&metric=coverage)](https://sonarcloud.io/summary/new_code?id=monocart-coverage-reports)
     - Github Actions example:
     ```yml
     - name: Analyze with SonarCloud
