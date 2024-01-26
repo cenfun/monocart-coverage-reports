@@ -90,24 +90,17 @@ const test = async () => {
         })
     ]);
 
-    await page.setContent(`<!DOCTYPE html>
-    <html>
-    <head>
-        <title>coverage page</title>
-    </head>
-    <body>
-        <h3 class="red inline-used and-used">Mock V8 Webpack Coverage</h3>
-    </body>
-    </html>`);
-
     const fileList = [
+        './test/mock/v8/index.html',
         './test/mock/v8/dist/coverage-v8.js',
-        // './test/mock/minify/with-map/bootstrap.min.css',
         './test/mock/css/style.css'
     ];
     for (const filePath of fileList) {
         const content = fs.readFileSync(filePath).toString('utf-8');
-        if (path.extname(filePath) === '.css') {
+        const extname = path.extname(filePath);
+        if (extname === '.html') {
+            await page.setContent(content);
+        } else if (extname === '.css') {
             await page.addStyleTag({
                 content: `${content}\n/*# sourceURL=${filePath} */`
             });

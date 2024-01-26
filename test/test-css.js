@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
@@ -14,22 +16,36 @@ const coverageOptions = {
     outputDir: './docs/css'
 };
 
-const test1 = async (serverUrl) => {
+const test = async (serverUrl) => {
 
-    console.log('start css test1 ...');
-    const browser = await chromium.launch({
-        //  headless: false
-    });
+    console.log('start css test ...');
+    const browser = await chromium.launch();
     const page = await browser.newPage();
 
     await page.coverage.startCSSCoverage({
         resetOnNavigation: false
     });
 
-    const url = `${serverUrl}/css/`;
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    const fileList = [
+        './test/mock/css/index.html',
+        './test/mock/minify/with-map/bootstrap.min.css',
+        './test/mock/css/style.css'
+    ];
+    for (const filePath of fileList) {
+        const content = fs.readFileSync(filePath).toString('utf-8');
+        const extname = path.extname(filePath);
+        if (extname === '.html') {
+            await page.setContent(content);
+        } else if (extname === '.css') {
+            await page.addStyleTag({
+                content: `${content}\n/*# sourceURL=${filePath} */`
+            });
+        } else {
+            await page.addScriptTag({
+                content: `${content}\n//# sourceURL=${filePath}`
+            });
+        }
+    }
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -37,35 +53,7 @@ const test1 = async (serverUrl) => {
 
     const coverageData = await page.coverage.stopCSSCoverage();
     const report = await MCR(coverageOptions).add(coverageData);
-    console.log('css coverage1 added', report.type);
-    await browser.close();
-};
-
-
-const test2 = async (serverUrl) => {
-
-    console.log('start css test2 ...');
-    const browser = await chromium.launch({
-        // headless: false
-    });
-    const page = await browser.newPage();
-
-    await page.coverage.startCSSCoverage({
-        resetOnNavigation: false
-    });
-
-    const url = `${serverUrl}/css/`;
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-    });
-
-    const coverageData = await page.coverage.stopCSSCoverage();
-    const report = await MCR(coverageOptions).add(coverageData);
-    console.log('css coverage2 added', report.type);
+    console.log('css coverage added', report.type);
     await browser.close();
 };
 
@@ -77,14 +65,13 @@ const generate = async () => {
     console.log('css coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
-module.exports = async (serverUrl) => {
+const main = async () => {
     // clean cache first
     await MCR(coverageOptions).cleanCache();
 
-    await Promise.all([
-        test1(serverUrl),
-        test2(serverUrl)
-    ]);
+    await test();
 
     await generate();
 };
+
+main();

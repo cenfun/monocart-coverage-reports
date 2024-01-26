@@ -5,7 +5,6 @@ const EC = require('eight-colors');
 const KSR = require('koa-static-resolver');
 const Koa = require('koa');
 
-const testCss = require('./test-css.js');
 const testAnonymous = require('./test-anonymous.js');
 
 const testV8EsBuild = require('./test-v8-esbuild.js');
@@ -109,7 +108,6 @@ const test = async () => {
         testV8EsBuild(serverUrl),
         testV8Rollup(serverUrl),
 
-        testCss(serverUrl),
         testAnonymous(serverUrl),
 
         testPuppeteer(serverUrl)
