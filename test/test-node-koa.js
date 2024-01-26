@@ -3,8 +3,7 @@ const path = require('path');
 const { fileURLToPath } = require('url');
 const { execSync, spawn } = require('child_process');
 const assert = require('assert');
-
-const WebSocket = require('ws');
+const CDP = require('chrome-remote-interface');
 const axios = require('axios');
 const EC = require('eight-colors');
 
@@ -21,24 +20,6 @@ const coverageOptions = {
 
     outputDir: './docs/v8-node-koa'
 };
-
-
-function send(ws, command) {
-    return new Promise((resolve) => {
-
-        const callback = function(text) {
-            const response = JSON.parse(text);
-            if (response.id === command.id) {
-                ws.removeListener('message', callback);
-                resolve(response);
-            }
-        };
-
-        ws.on('message', callback);
-        ws.send(JSON.stringify(command));
-
-    });
-}
 
 // ==================================================================
 
@@ -113,47 +94,29 @@ const generate = async () => {
 
     // after webServer is debugging on ws://127.0.0.1:9229
     // connect to the server with Chrome Devtools Protocol
-    const res = await axios.get('http://127.0.0.1:9229/json');
-    // using first one debugger process
-    const webSocketDebuggerUrl = res.data[0].webSocketDebuggerUrl;
-    const ws = new WebSocket(webSocketDebuggerUrl);
-
-    await new Promise((resolve) => {
-        ws.once('open', resolve);
+    const client = await CDP({
+        port: 9229
     });
-    console.log(EC.magenta('webSocketDebuggerUrl'), EC.cyan(webSocketDebuggerUrl), EC.green('connected!'));
+
 
     // enable and start v8 coverage
-    await send(ws, {
-        id: 1,
-        method: 'Runtime.enable'
-    });
+    await client.Runtime.enable();
 
     //  write the coverage started by NODE_V8_COVERAGE to disk on demand
-    const data = await send(ws, {
-        id: 2,
-        method: 'Runtime.evaluate',
-        params: {
-            expression: `new Promise(resolve=>{
-                require("v8").takeCoverage();
-                resolve(process.env.NODE_V8_COVERAGE);
-            })`,
-            includeCommandLineAPI: true,
-            returnByValue: true,
-            awaitPromise: true
-        }
+    const data = await client.Runtime.evaluate({
+        expression: 'new Promise(resolve=>{ require("v8").takeCoverage(); resolve(process.env.NODE_V8_COVERAGE); })',
+        includeCommandLineAPI: true,
+        returnByValue: true,
+        awaitPromise: true
     });
 
-    await send(ws, {
-        id: 3,
-        method: 'Runtime.disable'
-    });
+    await client.Runtime.disable();
 
     // close debugger
-    ws.close();
+    await client.close();
 
     // check coverage dir
-    assert(path.resolve(dir) === data.result.result.value);
+    assert(path.resolve(dir) === data.result.value);
 
     const coverageReport = MCR(coverageOptions);
     // clean previous cache first
