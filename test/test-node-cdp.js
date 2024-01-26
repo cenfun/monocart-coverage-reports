@@ -1,12 +1,9 @@
 const fs = require('fs');
-const WebSocket = require('ws');
-const axios = require('axios');
 const { fileURLToPath } = require('url');
-
+const CDP = require('chrome-remote-interface');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
 
 const coverageOptions = {
     // logging: 'debug',
@@ -20,71 +17,13 @@ const coverageOptions = {
     outputDir: './docs/v8-node-cdp'
 };
 
+const collectV8Coverage = async (client) => {
 
-function send(ws, command) {
-    return new Promise((resolve) => {
+    const data = await client.Profiler.takePreciseCoverage();
+    let coverageList = data.result;
 
-        const callback = function(text) {
-            const response = JSON.parse(text);
-            if (response.id === command.id) {
-                ws.removeListener('message', callback);
-                resolve(response);
-            }
-        };
-
-        ws.on('message', callback);
-        ws.send(JSON.stringify(command));
-
-    });
-}
-
-// ==================================================================
-// start node.js coverage
-const startV8Coverage = async () => {
-    // after webServer is debugging on ws://127.0.0.1:9229
-    // connect to the server with Chrome Devtools Protocol
-    const res = await axios.get('http://127.0.0.1:9229/json');
-    // using first one debugger process
-    const webSocketDebuggerUrl = res.data[0].webSocketDebuggerUrl;
-    const ws = new WebSocket(webSocketDebuggerUrl);
-
-    await new Promise((resolve) => {
-        ws.once('open', resolve);
-    });
-    console.log(EC.magenta('webSocketDebuggerUrl'), EC.cyan(webSocketDebuggerUrl), EC.green('connected!'));
-
-    // enable and start v8 coverage
-    await send(ws, {
-        id: 1,
-        method: 'Profiler.enable'
-    });
-
-    await send(ws, {
-        id: 2,
-        method: 'Profiler.startPreciseCoverage',
-        params: {
-            callCount: true,
-            detailed: true
-        }
-    });
-
-
-    return ws;
-};
-
-const takeV8Coverage = async (ws) => {
-    const data = await send(ws, {
-        id: 3,
-        method: 'Profiler.takePreciseCoverage'
-    });
-    return data.result.result;
-};
-// ==================================================================
-
-const collectV8Coverage = async (ws) => {
-
-    let coverageList = await takeV8Coverage(ws);
     if (!coverageList) {
+        console.log('failed to take coverage data');
         return;
     }
 
@@ -113,7 +52,6 @@ const collectV8Coverage = async (ws) => {
     console.log('add node.js cdp coverage ...');
     await MCR(coverageOptions).add(coverageList);
 
-
 };
 
 
@@ -122,7 +60,25 @@ const generate = async () => {
     await MCR(coverageOptions).cleanCache();
 
     // =====================================================
-    const ws = await startV8Coverage();
+    // after webServer is debugging on ws://127.0.0.1:9229
+    // connect to the server with Chrome Devtools Protocol
+
+    const client = await CDP({
+        port: 9229
+    });
+
+    client.on('error', (err) => {
+        console.log(err);
+    });
+
+    await client.Profiler.enable();
+
+    await client.Profiler.startPreciseCoverage({
+        callCount: true,
+        detailed: true
+    });
+
+    // =====================================================
 
     // import lib after v8 coverage started
     // test lib app
@@ -135,12 +91,15 @@ const generate = async () => {
     foo();
     bar();
     app();
-    await collectV8Coverage(ws);
+    await collectV8Coverage(client);
 
 
     component();
     branch();
-    await collectV8Coverage(ws);
+    await collectV8Coverage(client);
+
+    await client.Profiler.disable();
+    await client.close();
 
     // =====================================================
 
@@ -149,7 +108,6 @@ const generate = async () => {
     const coverageResults = await MCR(coverageOptions).generate();
     console.log('v8-node cdp coverage reportPath', EC.magenta(coverageResults.reportPath));
 
-    ws.close();
 };
 
 generate();
