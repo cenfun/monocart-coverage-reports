@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.3.3
+    - supports c8 ignore
+
 * 2.3.2
     - fixed issue for rmSync
     - fixed issue for AssignmentPattern
