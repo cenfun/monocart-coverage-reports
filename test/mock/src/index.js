@@ -1,8 +1,8 @@
 require('./comments.js');
 
-const { ignore } = require('./ignore.js');
+const { ignore } = require('./ignore/ignore.js');
 
-const branch = require('./branch.js');
+const { branch } = require('./branch/branch.js');
 const typescript = require('./typescript.ts');
 
 const component = require('./component.js');

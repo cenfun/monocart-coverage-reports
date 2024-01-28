@@ -1,10 +1,10 @@
 /* branches test cases */
 
-const AssignmentPattern = require('./branch/assignment.js');
-const ConditionalExpression = require('./branch/conditional.js');
-const IfStatement = require('./branch/if.js');
-const LogicalExpression = require('./branch/logical.js');
-const SwitchStatement = require('./branch/switch.js');
+const AssignmentPattern = require('./assignment.js');
+const ConditionalExpression = require('./conditional.js');
+const IfStatement = require('./if.js');
+const LogicalExpression = require('./logical.js');
+const SwitchStatement = require('./switch.js');
 
 const uncoveredFunction = () => {
     const list = [1, 2, 3, 4, 5];
@@ -34,4 +34,6 @@ const branch = () => {
 
 };
 
-module.exports = branch;
+module.exports = {
+    branch
+};
