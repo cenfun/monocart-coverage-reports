@@ -1,6 +1,6 @@
 const a = 99
 const b = true ? 1 : 2
-if (true) {
+if (a + b) {
   console.info('covered')
 /* v8 ignore start */
 } else {
@@ -14,7 +14,7 @@ function notExecuted () {
 }
 /* v8 ignore stop */
 
-if (true) {
+if (a + b) {
   console.info('covered')
 } else { /* v8 ignore start */
   console.info('uncovered')

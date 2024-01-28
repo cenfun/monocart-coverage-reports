@@ -1,6 +1,6 @@
 function fn() {
   return true;
-  /* v8 ignore next */
+      /* v8 ignore next */
   console.log('never runs');
 }
 

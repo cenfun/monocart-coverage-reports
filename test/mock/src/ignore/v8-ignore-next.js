@@ -1,6 +1,6 @@
 const a = 99
 const b = true ? 1 /* v8 ignore next */ : 2
-if (true) {
+if (a + b) {
   console.info('covered')
 /* v8 ignore next 3 */
 } else {
@@ -8,14 +8,14 @@ if (true) {
 }
 
 /* v8 ignore next */
-if (false) console.info('uncovered')
+if (a < b) console.info('uncovered')
 
 /* v8 ignore next 3 */
 function notExecuted () {
 
 }
 
-if (true) {
+if (a + b) {
   console.info('covered')
 } else { /* c8 ignore next */
   console.info('uncovered')
