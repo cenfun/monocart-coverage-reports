@@ -2,6 +2,7 @@
 
 * 2.3.3
     - supports c8 ignore
+    - fixed ignore range
 
 * 2.3.2
     - fixed issue for rmSync
