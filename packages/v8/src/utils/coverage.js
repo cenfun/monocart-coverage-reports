@@ -25,6 +25,7 @@ class CoverageParser {
         };
 
         // blank and comment lines
+        const lineMap = new Map();
         let blankCount = 0;
         let commentCount = 0;
         formattedLines.forEach((it) => {
@@ -37,8 +38,20 @@ class CoverageParser {
                 this.uncoveredLines[it.line] = 'comment';
                 commentCount += 1;
             }
-
+            // 1-base
+            const line = it.line + 1;
+            lineMap.set(line, it);
         });
+
+        const ignoredList = item.data.ignores;
+        if (ignoredList) {
+            lineMap.forEach((it) => {
+                const ignoredItem = Util.findInRanges(it.start + it.indent, it.end, ignoredList, 'start', 'end');
+                if (ignoredItem) {
+                    it.ignored = true;
+                }
+            });
+        }
 
         this.uncoveredInfo = {
             bytes: [],
@@ -50,7 +63,7 @@ class CoverageParser {
 
         // do NOT use type, it could be ts or vue for source file
         if (item.js) {
-            this.parseJs(item.data);
+            this.parseJs(item.data, lineMap);
         } else {
             this.parseCss(item.data);
         }
@@ -131,7 +144,7 @@ class CoverageParser {
     }
 
     // js, source, ranges: [ {start, end, count} ]
-    parseJs(data) {
+    parseJs(data, lineMap) {
 
         const uncoveredBytes = this.uncoveredInfo.bytes;
         const uncoveredFunctions = this.uncoveredInfo.functions;
@@ -173,7 +186,7 @@ class CoverageParser {
                     });
                 }
                 // set uncovered first, then could be changed to ignored if uncovered
-                this.setUncoveredRangeLines(range);
+                this.setUncoveredRangeLines(range, lineMap);
             }
         });
 
@@ -202,7 +215,7 @@ class CoverageParser {
 
     // ====================================================================================================
 
-    setUncoveredRangeLines(range) {
+    setUncoveredRangeLines(range, lineMap) {
 
         const {
             start, end, ignored
@@ -222,6 +235,11 @@ class CoverageParser {
         // console.log(lines);
 
         lines.forEach((it) => {
+            const line = lineMap.get(it.line);
+            if (!line) {
+                // not found line, could be comment or blank line
+                return;
+            }
 
             // to index 0-base
             const index = it.line - 1;
@@ -237,13 +255,16 @@ class CoverageParser {
                 return;
             }
 
+            // byte range ignored
             if (ignored) {
                 return;
             }
 
+            // pieces could be ignored?
+
             this.setUncoveredLine(index, 'partial');
             // set pieces for partial, only js
-            this.setUncoveredPieces(index, it.range);
+            this.setUncoveredPieces(index, it.pieces);
 
         });
 

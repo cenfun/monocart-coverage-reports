@@ -341,7 +341,7 @@ const renderReport = async () => {
             const originalSummary = item.summary.lines;
             Object.keys(originalSummary).forEach((k) => {
                 if (originalSummary[k] !== lines[k]) {
-                    console.log('lines', k, originalSummary[k], '=>', lines[k]);
+                    console.log('lines', k, 'node', originalSummary[k], '=> ui', lines[k]);
                 }
             });
         }
