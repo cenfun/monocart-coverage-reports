@@ -31,7 +31,6 @@
     - [How Monocart Works](#how-monocart-works)
 * [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 * [Integration](#integration) - Playwright, Jest, Vitest, Codecov, Coveralls, Sonar Cloud
-* [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
 
 ## Usage
@@ -621,6 +620,12 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
     ```
 - [Coveralls](https://coveralls.io/)
     - [![Coverage Status](https://coveralls.io/repos/github/cenfun/monocart-coverage-reports/badge.svg?branch=main)](https://coveralls.io/github/cenfun/monocart-coverage-reports?branch=main)
+    ```js
+    const coverageOptions = {
+        outputDir: "./coverage-reports",
+        lcov: true
+    };
+    ```
     - Github Actions example:
     ```yml
     - name: Coveralls
@@ -647,13 +652,6 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
             -Dsonar.tests=test
             -Dsonar.exclusions=dist/*,packages/*
     ```
-
-
-## Istanbul Introduction
-- [Istanbul coverage report](https://istanbul.js.org/) - Instrumenting source codes and generating coverage reports
-- [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul)
-- [istanbul-reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
-- [Code Coverage Introduction](https://docs.cypress.io/guides/tooling/code-coverage)
 
 ## Thanks
 - Special thanks to [@edumserrano](https://github.com/edumserrano)
