@@ -371,25 +371,31 @@ Possible solutions:
 
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
-- sub process 1
+- Main process, before the start of testing
+```js
+// clean previous cache before the start of testing (option)
+const MCR = require('monocart-coverage-reports');
+const options = require('path-to/same-options.js');
+MCR(options).cleanCache();
+```
+
+- Sub process 1, testing stage 1
 ```js
 const MCR = require('monocart-coverage-reports');
 const options = require('path-to/same-options.js');
-const coverageReport = MCR(options);
-await coverageReport.add(coverageData1);
+await MCR(options).add(coverageData1);
 ```
 
-- sub process 2
+- Sub process 2, testing stage 2
 ```js
 const MCR = require('monocart-coverage-reports');
 const options = require('path-to/same-options.js');
-const coverageReport = MCR(options);
-await coverageReport.add(coverageData2);
+await MCR(options).add(coverageData2);
 ```
 
-- main process
+- Main process, after the completion of testing
 ```js
-// after all sub processes finished
+// generate coverage reports after the completion of testing
 const MCR = require('monocart-coverage-reports');
 const options = require('path-to/same-options.js');
 const coverageReport = MCR(options);
@@ -652,6 +658,10 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
             -Dsonar.tests=test
             -Dsonar.exclusions=dist/*,packages/*
     ```
+- Integration with any testing framework
+    - First, you need to collect coverage data when any stage of the test is completed. Then, add the coverage data to the coverage report.
+    - Upon the completion of all tests, generate the coverage report. 
+    - see [Multiprocessing Support](#multiprocessing-support)
 
 ## Thanks
 - Special thanks to [@edumserrano](https://github.com/edumserrano)
