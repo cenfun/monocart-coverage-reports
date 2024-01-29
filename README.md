@@ -371,7 +371,7 @@ Possible solutions:
     - see [`mcr` CLI](#mcr-cli)
 
 ## Multiprocessing Support
-The data will be added to `[outputDir]/.cache`, and the cache will be removed after reports generated.
+> The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 - sub process 1
 ```js
 const MCR = require('monocart-coverage-reports');
@@ -590,7 +590,7 @@ const coverageOptions = {
     ]
 };
 ```
-The dist file will be preserved in the v8 list, and by opening the browser's devtool,  it makes data verification visualization effortless.
+When `logging` is `debug`, the raw report data will be preserved in `[outputDir]/.cache` or `[outputDir]/raw` if `raw` report is used. And the dist file will be preserved in the V8 list, and by opening the browser's devtool, it makes data verification visualization effortless.
 ![](./test/debug-coverage.png)
 
 - Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
