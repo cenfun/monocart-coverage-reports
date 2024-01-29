@@ -65,7 +65,7 @@ class CoverageParser {
         if (item.js) {
             this.parseJs(item.data, lineMap);
         } else {
-            this.parseCss(item.data);
+            this.parseCss(item.data, lineMap);
         }
 
         // calculate covered and uncovered after parse
@@ -118,7 +118,7 @@ class CoverageParser {
     // ====================================================================================================
 
     // css, ranges: [ {start, end} ]
-    parseCss(data) {
+    parseCss(data, lineMap) {
         const bytes = data.bytes;
         if (!bytes.length) {
             return;
@@ -136,7 +136,7 @@ class CoverageParser {
                     end
                 });
                 // set uncovered first
-                this.setUncoveredRangeLines(range);
+                this.setUncoveredRangeLines(range, lineMap);
             }
 
         });
