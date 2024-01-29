@@ -303,7 +303,7 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
     - see [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 
 ## Manually Resolve the Sourcemap
-> If the `js` file is loaded with `addScriptTag` [API](https://playwright.dev/docs/api/class-page#page-add-script-tag), then its sourcemap file may not work. You can try to manually read the sourcemap file before the coverage data is added to the report.
+> Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
 ```js
 const jsCoverage = await page.coverage.stopJSCoverage();
 jsCoverage.forEach((entry) => {
