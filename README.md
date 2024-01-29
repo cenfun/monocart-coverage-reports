@@ -29,6 +29,7 @@
 * [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
+* [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 * [Integration](#integration) - Playwright, Jest, Vitest, Codecov, Coveralls, Sonar Cloud
 * [Istanbul Introduction](#istanbul-introduction)
 * [Thanks](#thanks)
@@ -576,6 +577,25 @@ We implemented new converter instead of v8-to-istanbul:
 | IfStatement           | ✔ Not Perfect | 
 | LogicalExpression     | ✔ Not Perfect | 
 | SwitchStatement       | ✔ Not Perfect | 
+
+## Debug for Coverage and Sourcemap
+> Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
+- Start debugging for v8 report with option `logging: 'debug'`
+```js
+const coverageOptions = {
+    logging: 'debug',
+    reports: [
+        ['v8'],
+        ['console-summary']
+    ]
+};
+```
+The dist file will be preserved in the v8 list, and by opening the browser's devtool,  it makes data verification visualization effortless.
+![](./test/debug-coverage.png)
+
+- Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
+
+![](./test/debug-sourcemap.png)
 
 ## Integration
 - [monocart-reporter](https://github.com/cenfun/monocart-reporter) - A [Playwright](https://github.com/microsoft/playwright) custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)

@@ -24,9 +24,10 @@ const buildDocs = () => {
     if (!fs.existsSync(imagesDir)) {
         fs.mkdirSync(imagesDir);
     }
-    ['console-summary.png', 'v8.gif'].forEach((filename) => {
+
+    Util.forEachFile('./test', ['.png', '.gif'], (filename, fileDir) => {
         fs.copyFileSync(
-            path.resolve(__dirname, '../test', filename),
+            path.resolve(fileDir, filename),
             path.resolve(imagesDir, filename)
         );
     });
