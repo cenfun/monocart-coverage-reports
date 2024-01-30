@@ -1,5 +1,10 @@
 ## Changelog
 
+* 2.3.4
+    - fixed ignore lines
+    - fixed AssignmentPattern branches
+    - added skip lines
+
 * 2.3.3
     - supports c8 ignore
     - fixed ignore range
