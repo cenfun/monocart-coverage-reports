@@ -447,11 +447,23 @@ onMounted(() => {
           gap="5px"
           class="mcr-report-bc"
         >
-          <div tooltip="Blank lines">
+          <div
+            v-if="item.blank"
+            tooltip="Blank lines"
+          >
             Blank {{ item.blank }}
           </div>
-          <div tooltip="Comment lines">
+          <div
+            v-if="item.comment"
+            tooltip="Comment lines"
+          >
             Comment {{ item.comment }}
+          </div>
+          <div
+            v-if="item.skip"
+            tooltip="Skip lines"
+          >
+            Skip {{ item.skip }}
           </div>
         </VuiFlex>
       </VuiFlex>

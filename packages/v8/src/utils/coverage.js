@@ -58,8 +58,6 @@ class CoverageParser {
             branches: []
         };
 
-        this.ignoredCount = 0;
-
         // do NOT use type, it could be ts or vue for source file
         if (item.js) {
             this.parseJs(item.data, lineMap);
@@ -84,6 +82,8 @@ class CoverageParser {
         const covered = allCount - uncoveredCount;
 
         const ignoredCount = Object.values(this.uncoveredLines).filter((it) => it === 'ignored').length;
+        this.linesSummary.skip = ignoredCount;
+
         const total = allCount - blankCount - commentCount - ignoredCount;
         this.linesSummary.total = total;
 
@@ -238,11 +238,8 @@ class CoverageParser {
 
             const index = lineItem.line;
             if (ignored) {
-
-                // console.log(index, lineItem);
-
+                // could be comment already
                 this.setUncoveredLine(index, 'ignored');
-                this.ignoredCount += 1;
                 return;
             }
 

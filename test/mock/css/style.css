@@ -52,6 +52,7 @@
   suffix: " ";
 }
 
+/* v8 ignore start */
 @font-face {
   font-family: "Trickster";
   src:
@@ -60,6 +61,7 @@
     url("trickster-outline.otf") format("opentype"),
     url("trickster-outline.woff") format("woff");
 }
+/* v8 ignore stop */
 
 @import url("my-imported-styles.css");
 
@@ -70,6 +72,7 @@
     float: none;
   }
 
+/* v8 ignore next 3*/
   .flex-container {
     display: flex;
   }
