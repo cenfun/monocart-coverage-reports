@@ -24,34 +24,33 @@ class CoverageParser {
             comment: 0
         };
 
+        const formattedIgnores = this.getFormattedIgnores(item.data.ignores, mappingParser);
+
         // blank and comment lines
         const lineMap = new Map();
         let blankCount = 0;
         let commentCount = 0;
-        formattedLines.forEach((it) => {
-            if (it.blank) {
-                this.uncoveredLines[it.line] = 'blank';
+        formattedLines.forEach((lineItem) => {
+            if (lineItem.blank) {
+                this.uncoveredLines[lineItem.line] = 'blank';
                 blankCount += 1;
                 return;
             }
-            if (it.comment) {
-                this.uncoveredLines[it.line] = 'comment';
+            if (lineItem.comment) {
+                this.uncoveredLines[lineItem.line] = 'comment';
                 commentCount += 1;
             }
             // 1-base
-            const line = it.line + 1;
-            lineMap.set(line, it);
-        });
+            const line = lineItem.line + 1;
+            lineItem.coveredCount = 1;
+            lineItem.uncoveredEntire = null;
+            lineItem.uncoveredPieces = [];
 
-        const ignoredList = item.data.ignores;
-        if (ignoredList) {
-            lineMap.forEach((it) => {
-                const ignoredItem = Util.findInRanges(it.start + it.indent, it.end, ignoredList, 'start', 'end');
-                if (ignoredItem) {
-                    it.ignored = true;
-                }
-            });
-        }
+            // need set `ignore` line, and will add ignoredCount
+            lineItem.ignored = this.isLineIgnored(lineItem, formattedIgnores);
+
+            lineMap.set(line, lineItem);
+        });
 
         this.uncoveredInfo = {
             bytes: [],
@@ -67,6 +66,8 @@ class CoverageParser {
         } else {
             this.parseCss(item.data, lineMap);
         }
+
+        this.updateLinesInfo(lineMap);
 
         // calculate covered and uncovered after parse
 
@@ -115,6 +116,34 @@ class CoverageParser {
 
     }
 
+    getFormattedIgnores(ignoredRanges, mappingParser) {
+
+        // the start and end is formatted position
+        // the ignoredRanges is original positions, requires updating to formatted positions too
+        // could be /r/n to /n only
+        if (ignoredRanges) {
+            return ignoredRanges.map((it) => {
+                const start = mappingParser.originalToFormatted(it.start);
+                const end = mappingParser.originalToFormatted(it.end);
+                return {
+                    start,
+                    end
+                };
+            });
+        }
+
+    }
+
+    isLineIgnored(lineItem, formattedIgnores) {
+        if (formattedIgnores) {
+            const found = Util.findInRanges(lineItem.start, lineItem.end, formattedIgnores);
+            if (found) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // ====================================================================================================
 
     // css, ranges: [ {start, end} ]
@@ -127,8 +156,12 @@ class CoverageParser {
         const uncoveredBytes = this.uncoveredInfo.bytes;
         bytes.forEach((range) => {
             const {
-                start, end, count
+                start, end, count, ignored
             } = range;
+
+            if (ignored) {
+                return;
+            }
 
             if (count === 0) {
                 uncoveredBytes.push({
@@ -174,20 +207,121 @@ class CoverageParser {
                 start, end, count, ignored
             } = range;
 
+            if (ignored) {
+                return;
+            }
+
             if (count > 0) {
                 if (count > 1) {
                     this.setExecutionCounts(range);
                 }
             } else {
-                if (!ignored) {
-                    uncoveredBytes.push({
-                        start,
-                        end
-                    });
-                }
+                uncoveredBytes.push({
+                    start,
+                    end
+                });
                 // set uncovered first, then could be changed to ignored if uncovered
                 this.setUncoveredRangeLines(range, lineMap);
             }
+        });
+
+    }
+
+    updateLinesInfo(lineMap) {
+
+        // console.log(lineMap);
+
+        lineMap.forEach((lineItem) => {
+            const {
+                ignored, uncoveredEntire, uncoveredPieces, coveredCount
+            } = lineItem;
+
+            const index = lineItem.line;
+            if (ignored) {
+
+                // console.log(index, lineItem);
+
+                this.setUncoveredLine(index, 'ignored');
+                this.ignoredCount += 1;
+                return;
+            }
+
+            if (uncoveredEntire) {
+                this.setUncoveredLine(index, 'uncovered');
+                lineItem.count = 0;
+                return;
+            }
+
+            // has covered
+            lineItem.count = coveredCount;
+
+            // only uncovered
+            const uncoveredLen = uncoveredPieces.length;
+            if (uncoveredLen === 0) {
+                return;
+            }
+
+            // pieces uncovered
+            this.setUncoveredLine(index, 'partial');
+            uncoveredPieces.forEach((it) => {
+                const { pieces } = it;
+                if (!pieces) {
+                    console.log('not found pieces', uncoveredPieces);
+                    return;
+                }
+                this.setUncoveredPieces(index, pieces);
+            });
+
+        });
+
+    }
+
+    setUncoveredRangeLines(range, lineMap) {
+
+        // already ignored
+        const {
+            start, end, count
+        } = range;
+
+        const mappingParser = this.mappingParser;
+        const formattedStart = mappingParser.originalToFormatted(start);
+        const formattedEnd = mappingParser.originalToFormatted(end);
+
+        const locator = this.formattedLocator;
+        const sLoc = locator.offsetToLocation(formattedStart);
+        const eLoc = locator.offsetToLocation(formattedEnd);
+
+        // location line is 0 based
+
+        const lines = Util.getRangeLines(sLoc, eLoc);
+        // console.log(lines);
+
+        lines.forEach((it) => {
+            const lineItem = lineMap.get(it.line);
+            if (!lineItem) {
+                // not found line, could be comment or blank line
+                return;
+            }
+
+            if (lineItem.ignored) {
+                return;
+            }
+
+            it.count = count;
+
+            // default is covered, so only focus on
+            // 1, last covered count
+            // 2, uncovered entire and pieces
+            if (count > 0) {
+                lineItem.coveredCount = count;
+            } else {
+                if (it.entire) {
+                    lineItem.uncoveredEntire = it;
+                } else {
+                    lineItem.uncoveredPieces.push(it);
+                }
+            }
+
         });
 
     }
@@ -211,63 +345,6 @@ class CoverageParser {
             return;
         }
         this.uncoveredPieces[line] = [value];
-    }
-
-    // ====================================================================================================
-
-    setUncoveredRangeLines(range, lineMap) {
-
-        const {
-            start, end, ignored
-        } = range;
-
-        const mappingParser = this.mappingParser;
-        const formattedStart = mappingParser.originalToFormatted(start);
-        const formattedEnd = mappingParser.originalToFormatted(end);
-
-        const locator = this.formattedLocator;
-        const sLoc = locator.offsetToLocation(formattedStart);
-        const eLoc = locator.offsetToLocation(formattedEnd);
-
-        // location line is 0 based
-
-        const lines = Util.getRangeLines(sLoc, eLoc);
-        // console.log(lines);
-
-        lines.forEach((it) => {
-            const line = lineMap.get(it.line);
-            if (!line) {
-                // not found line, could be comment or blank line
-                return;
-            }
-
-            // to index 0-base
-            const index = it.line - 1;
-
-            // whole line
-            if (it.entire) {
-                if (ignored) {
-                    this.setUncoveredLine(index, 'ignored');
-                    this.ignoredCount += 1;
-                } else {
-                    this.setUncoveredLine(index, 'uncovered');
-                }
-                return;
-            }
-
-            // byte range ignored
-            if (ignored) {
-                return;
-            }
-
-            // pieces could be ignored?
-
-            this.setUncoveredLine(index, 'partial');
-            // set pieces for partial, only js
-            this.setUncoveredPieces(index, it.pieces);
-
-        });
-
     }
 
     // ====================================================================================================

@@ -1,5 +1,5 @@
 
-function callback() {
+function callback(a = 1) {
 
 }
 
