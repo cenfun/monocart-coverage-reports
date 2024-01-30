@@ -1,10 +1,10 @@
 const a = 99
 const b = true ? 1 : 2
 if (a + b) {
-  console.info('covered')
+  console.log('covered')
 /* v8 ignore start */
 } else {
-  console.info('uncovered')
+  console.log('uncovered')
 }
 /* v8 ignore stop */
 
@@ -15,7 +15,7 @@ function notExecuted () {
 /* v8 ignore stop */
 
 if (a + b) {
-  console.info('covered')
+  console.log('covered')
 } else { /* v8 ignore start */
-  console.info('uncovered')
+  console.log('uncovered')
 }

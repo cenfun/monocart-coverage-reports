@@ -80,6 +80,10 @@ const generate = async () => {
 
     // =====================================================
 
+    // silent
+    const log = console.log;
+    console.log = () => {};
+
     // import lib after v8 coverage started
     // test lib app
     const {
@@ -87,10 +91,6 @@ const generate = async () => {
     } = require('./mock/node/lib/app.js');
     // test dist with sourcemap
     const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
-    // silent
-    const log = console.log;
-    console.log = () => {};
 
     foo();
     bar();

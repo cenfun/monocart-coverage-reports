@@ -1,5 +1,10 @@
 const fs = require('fs');
 
+
+// silent
+const log = console.log;
+console.log = () => {};
+
 // test lib app
 const {
     foo, bar, app
@@ -15,10 +20,6 @@ if (fs.existsSync(dir)) {
         force: true
     });
 }
-
-// silent
-const log = console.log;
-console.log = () => {};
 
 foo();
 bar();

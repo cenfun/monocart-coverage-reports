@@ -6,13 +6,13 @@ const platform = 'wind32';
 
 /* v8 ignore next */
 if (platform === 'darwin') {
-    console.info('hello darwin');
+    console.log('hello darwin');
 // v8 ignore next
 }
 
 /* v8 ignore next 3 */
 if (platform === 'linux') {
-    console.info('hello linux');
+    console.log('hello linux');
 }
 
 

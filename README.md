@@ -484,7 +484,7 @@ const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
 
 // v8 ignore next 3
 if (platform === 'linux') {
-    console.info('hello linux');
+    console.log('hello linux');
 }
 ```
 

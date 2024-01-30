@@ -6,22 +6,7 @@ const EC = require('eight-colors');
 
 const MCR = require('../');
 
-// test lib app
-const {
-    foo, bar, app
-} = require('./mock/node/lib/app.js');
-// test dist with sourcemap
-const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
 const dir = process.env.NODE_V8_COVERAGE;
-// remove previous coverage files
-if (fs.existsSync(dir)) {
-    fs.rmSync(dir, {
-        recursive: true,
-        force: true
-    });
-    console.log(`removed previous: ${dir}`);
-}
 
 const coverageOptions = {
     // logging: 'debug',
@@ -75,11 +60,18 @@ const generate = async () => {
 
 };
 
-const test = async () => {
+const test = () => {
 
     // silent
     const log = console.log;
     console.log = () => {};
+
+    // test lib app
+    const {
+        foo, bar, app
+    } = require('./mock/node/lib/app.js');
+    // test dist with sourcemap
+    const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
     foo();
     bar();
@@ -87,16 +79,31 @@ const test = async () => {
 
     component();
     branch();
-    v8.takeCoverage();
-
-    // stop
-    v8.stopCoverage();
 
     console.log = log;
 
-    await generate();
+    v8.takeCoverage();
+
+    // stop will cased ''result' from coverage profile response is not an object'
+    // v8.stopCoverage();
 
 };
 
 
-test();
+const main = async () => {
+
+    // remove previous coverage files
+    if (fs.existsSync(dir)) {
+        fs.rmSync(dir, {
+            recursive: true,
+            force: true
+        });
+        console.log(`removed previous: ${dir}`);
+    }
+
+    test();
+
+    await generate();
+};
+
+main();

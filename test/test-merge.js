@@ -146,13 +146,13 @@ const testNode = async () => {
     // =====================================================
     const postSession = await startV8Coverage();
 
-    // import lib after v8 coverage started
-    // test dist with sourcemap
-    const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
     // silent
     const log = console.log;
     console.log = () => {};
+
+    // import lib after v8 coverage started
+    // test dist with sourcemap
+    const { component, branch } = require('./mock/node/dist/coverage-node.js');
 
     component(3);
     branch();
