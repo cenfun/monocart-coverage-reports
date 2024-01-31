@@ -23,14 +23,18 @@ module.exports = {
                     plugins: [
                         ['istanbul', {
                             // the test or tests folder will be excluded by default
-                            'exclude': []
+                            // https://github.com/istanbuljs/schema/blob/master/default-exclude.js
+                            exclude: []
                         }]
                     ]
                 }
             }
         }, {
             test: /\.tsx?$/,
-            use: 'ts-loader'
+            use: [
+                '@jsdevtools/coverage-istanbul-loader',
+                'ts-loader'
+            ]
         }]
     }
 };

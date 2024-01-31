@@ -33,6 +33,24 @@ const multipleReportsOptions = {
         return 'my-json-file.json';
     },
 
+    entryFilter: (entry) => {
+        return entry.url.includes('v8/');
+    },
+
+    sourceFilter: (filePath) => {
+        return filePath.includes('src/');
+    },
+
+    sourcePath: (filePath) => {
+        const list = ['coverage-v8/'];
+        for (const str of list) {
+            if (filePath.startsWith(str)) {
+                return filePath.slice(str.length);
+            }
+        }
+        return filePath;
+    },
+
     onEnd: (coverageResults) => {
         const summary = coverageResults.summary;
         console.log('onEnd Bytes:', `${summary.bytes.pct} %`);
