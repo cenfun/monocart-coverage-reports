@@ -515,8 +515,12 @@ onMounted(() => {
         v-if="data.cursor"
         gap="10px"
       >
-        <div>Line {{ Util.NF(data.cursor.line) }}</div>
-        <div>Column {{ Util.NF(data.cursor.column+1) }}</div>
+        <div tooltip="1-base">
+          Line {{ Util.NF(data.cursor.line) }}
+        </div>
+        <div tooltip="0-base">
+          Column {{ Util.NF(data.cursor.column) }}
+        </div>
         <IconLabel
           v-if="data.cursor.original"
           icon="location"
