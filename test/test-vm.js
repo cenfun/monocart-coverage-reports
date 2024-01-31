@@ -150,6 +150,13 @@ if (require.a) {
     console.log("uncovered block a");
 }
 
+const uncoveredFunction = () => {
+    const list = [1, 2, 3, 4, 5];
+    list.forEach((v) => {
+        console.log(v);
+    });
+};
+
 const uncovered = () => {
     // this is uncovered function in vm, test scriptOffset
     console.log("uncovered");

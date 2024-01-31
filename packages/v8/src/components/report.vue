@@ -54,33 +54,48 @@ const getIndexByPosition = (list) => {
         index = i;
         return it.start > originalPosition;
     });
+
     if (item) {
         return index;
     }
+    return 0;
 };
 
-const showNextUncovered = (id) => {
+const switchLocate = () => {
+    state.locate = state.locate === 'Uncovered' ? 'All' : 'Uncovered';
+};
 
-    const uncoveredInfo = data.uncoveredInfo;
-    const list = uncoveredInfo[id];
-    if (!list.length) {
+const showNextRange = (id) => {
+
+    let dataList = data.item.data[id];
+    if (!dataList) {
+        return;
+    }
+
+    // console.log(dataList);
+    if (state.locate === 'Uncovered') {
+        dataList = dataList.filter((it) => it.count === 0 && !it.ignored && !it.none);
+    }
+
+    if (!Util.isList(dataList)) {
         return;
     }
 
     const key = `${id}_index`;
-    let index = uncoveredInfo[key];
-    if (typeof index !== 'number') {
+    let index = data[key];
+    if (typeof index !== 'number' || index >= dataList.length) {
         index = 0;
     }
 
-    const posIndex = getIndexByPosition(list);
+    // if same range will be skip to next
+    const posIndex = getIndexByPosition(dataList);
     if (typeof posIndex === 'number') {
         // console.log('index', posIndex);
         index = posIndex;
     }
 
-    const current = list[index];
-    // console.log('show next uncovered', current);
+    const current = dataList[index];
+    // console.log(index);
 
     const mappingParser = new MappingParser(data.mapping);
     const start = mappingParser.originalToFormatted(current.start);
@@ -89,12 +104,12 @@ const showNextUncovered = (id) => {
     codeViewer.setSelection(start, end);
 
     // next
-    const len = list.length;
+    const len = dataList.length;
     index += 1;
     if (index >= len) {
         index = 0;
     }
-    uncoveredInfo[key] = index;
+    data[key] = index;
 
 };
 
@@ -319,11 +334,7 @@ const renderReport = async () => {
 
     data.mapping = report.mapping;
 
-    const {
-        executionCounts, uncoveredInfo, linesSummary
-    } = report.coverage;
-
-    data.uncoveredInfo = uncoveredInfo;
+    const { executionCounts, linesSummary } = report.coverage;
 
     // console.log('showReport executionCounts', executionCounts);
     updateTopExecutions(executionCounts);
@@ -436,9 +447,9 @@ onMounted(() => {
               {{ Util.NF(item.uncovered) }}
             </div>
             <IconLabel
-              v-if="item.uncovered && item.id!=='lines'"
+              v-if="item.id!=='lines'"
               icon="locate"
-              @click="showNextUncovered(item.id)"
+              @click="showNextRange(item.id)"
             />
           </VuiFlex>
         </VuiFlex>
@@ -510,7 +521,7 @@ onMounted(() => {
       >
         Format
       </VuiSwitch>
-      <div class="vui-flex-auto" />
+
       <VuiFlex
         v-if="data.cursor"
         gap="10px"
@@ -531,6 +542,15 @@ onMounted(() => {
         </IconLabel>
       </VuiFlex>
 
+      <div class="vui-flex-auto" />
+
+      <IconLabel
+        icon="locate"
+        :tooltip="'Locate '+state.locate+' Range'"
+        @click="switchLocate()"
+      >
+        {{ state.locate }}
+      </IconLabel>
       <div class="mcr-about">
         <a
           href="https://github.com/cenfun/monocart-coverage-reports"

@@ -49,6 +49,12 @@ const allMetrics = [{
     collapsed_width: 120,
     expanded_width: 70
 }, {
+    id: 'statements',
+    name: 'Statements',
+    metrics_width: 75,
+    collapsed_width: 120,
+    expanded_width: 70
+}, {
     id: 'lines',
     name: 'Lines',
     metrics_width: 81,
@@ -65,6 +71,7 @@ const state = shallowReactive({
 
     group: true,
     formatted: false,
+    locate: 'Uncovered',
 
     keywords: '',
 
@@ -72,6 +79,7 @@ const state = shallowReactive({
         bytes: [50, 80],
         functions: [50, 80],
         branches: [50, 80],
+        statements: [50, 80],
         lines: [50, 80]
     },
     watermarkLow: true,
@@ -873,7 +881,7 @@ const initStore = () => {
         'true': true,
         'false': false
     };
-    ['group', 'formatted'].forEach((item) => {
+    ['group', 'formatted', 'locate'].forEach((item) => {
         // default empty string
         const v = store.get(item);
         // console.log(item, v);
@@ -969,6 +977,10 @@ watch(() => state.group, (v) => {
 
 watch(() => state.formatted, (v) => {
     store.set('formatted', v);
+});
+
+watch(() => state.locate, (v) => {
+    store.set('locate', v);
 });
 
 const updateGridAsync = debounce(updateGrid, 200);
