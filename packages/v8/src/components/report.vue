@@ -446,13 +446,16 @@ onMounted(() => {
             >
               {{ Util.NF(item.uncovered) }}
             </div>
-            <IconLabel
-              v-if="item.id!=='lines'"
-              icon="locate"
-              @click="showNextRange(item.id)"
-            />
           </VuiFlex>
+
+          <IconLabel
+            v-if="item.id!=='lines'"
+            :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
+            icon="locate"
+            @click="showNextRange(item.id)"
+          />
         </VuiFlex>
+
         <VuiFlex
           v-if="item.id==='lines'"
           gap="5px"
@@ -546,6 +549,7 @@ onMounted(() => {
 
       <IconLabel
         icon="locate"
+        :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
         :tooltip="'Locate '+state.locate+' Range'"
         @click="switchLocate()"
       >
@@ -667,6 +671,10 @@ onMounted(() => {
 
 .mcr-report-goto {
     cursor: pointer;
+}
+
+.mcr-locate-uncovered {
+    color: red;
 }
 
 </style>
