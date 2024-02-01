@@ -15,7 +15,7 @@ const uncoveredFunction = () => {
 
 function coveredFunction() {
     // branches in a block statement
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0, j = 1; i < 5; i++) {
         if (i > 2) {
             console.log(i);
         } else if (i > 100) {
@@ -50,6 +50,16 @@ function coveredFunction() {
         }
         i++;
     }
+
+}
+
+class MyCLass {
+    static propTypes = 1;
+    #privateField = 42;
+    static #privateKey = 2;
+}
+
+function funD() {
 
 }
 
