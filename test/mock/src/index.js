@@ -3,6 +3,7 @@ require('./comments.js');
 const { ignore } = require('./ignore/ignore.js');
 
 const { branch } = require('./branch/branch.js');
+const { statement } = require('./statement.js');
 const typescript = require('./typescript.ts');
 
 const component = require('./component.js');
@@ -95,7 +96,10 @@ const onload = (something) => {
 
     ignore();
     typescript();
+
     branch();
+    statement();
+
     component(1);
 
     const number = something ? 1 : 2;
