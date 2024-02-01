@@ -150,12 +150,16 @@ if (require.a) {
     console.log("uncovered block a");
 }
 
+if (require.s) console.log("statement")
+
 const uncoveredFunction = () => {
     const list = [1, 2, 3, 4, 5];
     list.forEach((v) => {
         console.log(v);
     });
 };
+
+const uncoveredArrowFunction = () => require.v
 
 const uncovered = () => {
     // this is uncovered function in vm, test scriptOffset
