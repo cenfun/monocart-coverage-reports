@@ -229,7 +229,7 @@ declare namespace MCR {
         reportPath?: string | (() => string);
 
         /** {array} watermarks for low/medium/high. Defaults to [50, 80]
-        * {object} { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] } */
+        * {object} { bytes:[50,80], statements:[50,80], branches:[50,80], functions:[50,80], lines:[50,80] } */
         watermarks?: Watermarks;
 
         /** {function} onEnd hook */
