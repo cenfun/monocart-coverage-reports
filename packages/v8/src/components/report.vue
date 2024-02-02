@@ -321,7 +321,7 @@ const renderReport = async () => {
     // summary list
     data.summaryList = state.metrics.filter((it) => {
         // no functions,branches for css
-        if (!item.js && ['functions', 'branches'].includes(it.id)) {
+        if (!item.js && ['functions', 'branches', 'statements'].includes(it.id)) {
             return false;
         }
         return true;
