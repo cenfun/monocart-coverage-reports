@@ -72,6 +72,11 @@ const enableLocate = (item) => {
         return false;
     }
 
+    // bytes has total but possible no ranges
+    if (item.id === 'bytes' && !data.item.data.bytes.length) {
+        return false;
+    }
+
     if (state.locate === 'Uncovered' && item.uncovered === 0) {
         return false;
     }
