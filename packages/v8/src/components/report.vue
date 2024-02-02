@@ -61,6 +61,22 @@ const getIndexByPosition = (list) => {
     return 0;
 };
 
+const enableLocate = (item) => {
+    if (item.id === 'lines') {
+        return false;
+    }
+
+    if (item.total === 0) {
+        return false;
+    }
+
+    if (state.locate === 'Uncovered' && item.uncovered === 0) {
+        return false;
+    }
+
+    return true;
+};
+
 const switchLocate = () => {
     state.locate = state.locate === 'Uncovered' ? 'All' : 'Uncovered';
 };
@@ -449,7 +465,7 @@ onMounted(() => {
           </VuiFlex>
 
           <IconLabel
-            v-if="item.id!=='lines'"
+            v-if="enableLocate(item)"
             :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
             icon="locate"
             @click="showNextRange(item.id)"
