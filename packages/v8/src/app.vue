@@ -153,9 +153,11 @@ const showTooltip = (target, text) => {
     tooltip.text = text;
     tooltip.visible = true;
 
+    const timeout = parseInt(target.getAttribute('tooltip-timeout')) || 2000;
+
     timeout_tooltip = setTimeout(() => {
         hideTooltip();
-    }, 2000);
+    }, timeout);
 };
 
 const initTooltip = () => {
@@ -1143,7 +1145,7 @@ window.addEventListener('message', (e) => {
     <div class="mcr-coverage-grid vui-flex-auto" />
 
     <Flyover>
-      <Report />
+      <Report @jump="showFlyover" />
     </Flyover>
 
     <VuiPopover
@@ -1219,12 +1221,6 @@ html {
 
 body {
     --font-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
-    --bg-failed: #fff0ef;
-    --bg-flaky: #fcf7de;
-    --color-passed: green;
-    --color-failed: #d00;
-    --color-flaky: orange;
-    --color-skipped: gray;
 
     width: 100%;
     height: 100%;

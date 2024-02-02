@@ -27,6 +27,8 @@ const data = shallowReactive({
 
 });
 
+const emit = defineEmits(['jump']);
+
 const el = ref(null);
 let $el;
 let codeViewer;
@@ -81,8 +83,7 @@ const switchLocate = () => {
     state.locate = state.locate === 'Uncovered' ? 'All' : 'Uncovered';
 };
 
-const showNextRange = (id) => {
-
+const getLocateDataList = (id) => {
     let dataList = data.item.data[id];
     if (!dataList) {
         return;
@@ -97,7 +98,10 @@ const showNextRange = (id) => {
         return;
     }
 
-    const key = `${id}_index`;
+    return dataList;
+};
+
+const getLocateIndex = (key, dataList) => {
     let index = data[key];
     if (typeof index !== 'number' || index >= dataList.length) {
         index = 0;
@@ -110,22 +114,90 @@ const showNextRange = (id) => {
         index = posIndex;
     }
 
+    return index;
+};
+
+const renderRange = (range) => {
+    const mappingParser = new MappingParser(data.mapping);
+    const start = mappingParser.originalToFormatted(range.start);
+    const end = mappingParser.originalToFormatted(range.end);
+
+    if (Util.hasOwn(range, 'generatedStart')) {
+        range.showGenerated = true;
+    }
+
+    new Promise((resolve) => {
+        data.resolve = resolve;
+        codeViewer.setSelection(start, end);
+    }).then(() => {
+        data.range = range;
+    });
+};
+
+const showNextRange = (id) => {
+
+    const dataList = getLocateDataList(id);
+
+    const key = `${id}_index`;
+    let index = getLocateIndex(key, dataList);
+
     const current = dataList[index];
+    if (!current) {
+        return;
+    }
+
     // console.log(index);
 
-    const mappingParser = new MappingParser(data.mapping);
-    const start = mappingParser.originalToFormatted(current.start);
-    const end = mappingParser.originalToFormatted(current.end);
-
-    codeViewer.setSelection(start, end);
-
-    // next
+    // update next index
     const len = dataList.length;
     index += 1;
     if (index >= len) {
         index = 0;
     }
     data[key] = index;
+
+    // show current data
+
+    renderRange(current);
+
+};
+
+const jumpToGeneratedRange = () => {
+    // console.log(data.range);
+
+    const distFile = data.item.distFile;
+    if (!distFile) {
+        return;
+    }
+
+    const { files } = state.reportData;
+
+    const item = files.find((it) => it.sourcePath === distFile);
+    if (!item) {
+        return;
+    }
+
+    // console.log(item);
+
+    data.autoSelectedRange = {
+        start: data.range.generatedStart,
+        end: data.range.generatedEnd
+    };
+
+    // state.flyoverData = item.id;
+    emit('jump', item);
+
+};
+
+const showAutoSelectedRange = () => {
+    if (!data.autoSelectedRange) {
+        return;
+    }
+
+    const range = data.autoSelectedRange;
+    data.autoSelectedRange = null;
+
+    renderRange(range);
 
 };
 
@@ -166,6 +238,14 @@ const onGoClick = () => {
     if (data.mapping) {
         const mappingParser = new MappingParser(data.mapping);
         pos = mappingParser.originalToFormatted(pos);
+    }
+
+    if (pos < 0) {
+        return;
+    }
+    if (pos >= data.maxContentLength) {
+        console.log(`Max length of formatted content is ${data.maxContentLength}`);
+        return;
     }
 
     codeViewer.setCursor(pos);
@@ -308,8 +388,11 @@ const onCursorChange = (loc) => {
         loc.originalPosition = mappingParser.formattedToOriginal(loc.position);
         // console.log('cursor location', loc, mappingParser.mapping);
     }
-
+    data.range = null;
     data.cursor = loc;
+    if (data.resolve) {
+        data.resolve();
+    }
 };
 
 const renderReport = async () => {
@@ -349,6 +432,7 @@ const renderReport = async () => {
     }
 
     data.mapping = report.mapping;
+    data.maxContentLength = report.content.length;
 
     const { executionCounts, linesSummary } = report.coverage;
 
@@ -385,6 +469,9 @@ const renderReport = async () => {
     }
 
     data.cursor = null;
+    data.range = null;
+
+    showAutoSelectedRange();
 
     state.loading = false;
 };
@@ -541,45 +628,65 @@ onMounted(() => {
         Format
       </VuiSwitch>
 
-      <VuiFlex
-        v-if="data.cursor"
-        gap="10px"
-      >
-        <div tooltip="1-base">
-          Line {{ Util.NF(data.cursor.line) }}
-        </div>
-        <div tooltip="0-base">
-          Column {{ Util.NF(data.cursor.column) }}
-        </div>
-        <IconLabel
-          v-if="data.cursor.original"
-          icon="location"
-          class="mcr-report-goto"
-          @click="showGotoPopover"
-        >
-          Position {{ Util.NF(data.cursor.originalPosition) }}
-        </IconLabel>
-      </VuiFlex>
-
-      <div class="vui-flex-auto" />
-
       <IconLabel
+        class="mcr-locate-switch"
         icon="locate"
         :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
         :tooltip="'Locate '+state.locate+' Range'"
         @click="switchLocate()"
       >
-        {{ state.locate }}
+        <span>{{ state.locate }}</span>
       </IconLabel>
+
+      <VuiFlex
+        v-if="data.range"
+        gap="5px"
+      >
+        <span>{{ data.range.start }}~{{ data.range.end }}</span>
+        <span
+          v-if="data.range.showGenerated"
+          class="mcr-generated-range"
+          tooltip="Generated Range"
+          @click="jumpToGeneratedRange()"
+        >({{ data.range.generatedStart }}~{{ data.range.generatedEnd }})</span>
+      </VuiFlex>
+
+      <div class="vui-flex-auto" />
+
+      <VuiFlex
+        v-if="data.cursor"
+        center
+        gap="10px"
+        class="mcr-cursor-foot"
+      >
+        <div>
+          <span tooltip="1-base">Ln {{ Util.NF(data.cursor.line) }}</span>,
+          <span tooltip="0-base">Col {{ Util.NF(data.cursor.column) }}</span>
+        </div>
+        <VuiFlex gap="5px">
+          <IconLabel
+            icon="location"
+            class="mcr-report-goto"
+            @click="showGotoPopover"
+          >
+            Pos
+          </IconLabel>
+          <div v-if="data.cursor.original">
+            <span>{{ Util.NF(data.cursor.originalPosition) }}</span>
+          </div>
+        </VuiFlex>
+      </VuiFlex>
+
       <div class="mcr-about">
         <a
           href="https://github.com/cenfun/monocart-coverage-reports"
           target="_blank"
-          title="Monocart Coverage Reports"
+          tooltip-timeout="30000"
+          :tooltip="'Monocart Coverage Reports v'+state.version"
         ><IconLabel
           class="mcr-icon-monocart"
           icon="monocart"
-        >v{{ state.version }}</IconLabel></a>
+        /></a>
       </div>
     </VuiFlex>
     <VuiPopover
@@ -691,6 +798,27 @@ onMounted(() => {
 
 .mcr-locate-uncovered {
     color: red;
+}
+
+.mcr-locate-switch {
+    span {
+        color: #333;
+    }
+}
+
+.mcr-cursor-foot {
+    span {
+        font-size: var(--font-monospace);
+    }
+}
+
+.mcr-generated-range {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.mcr-generated-range:hover {
+    opacity: 1;
 }
 
 </style>

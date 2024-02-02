@@ -19,3 +19,5 @@ if (a + b) {
 } else { /* v8 ignore start */
   console.log('uncovered')
 }
+// have to stop if build in dist will ignore all others
+/* v8 ignore stop */
