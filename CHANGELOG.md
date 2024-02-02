@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.4.0
+    - added statements to report
+
 * 2.3.4
     - fixed ignore lines
     - fixed AssignmentPattern branches

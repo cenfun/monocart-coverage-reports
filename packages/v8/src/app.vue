@@ -37,10 +37,10 @@ const allMetrics = [{
     collapsed_width: 80,
     expanded_width: 70
 }, {
-    id: 'functions',
-    name: 'Functions',
+    id: 'statements',
+    name: 'Statements',
     metrics_width: 75,
-    collapsed_width: 100,
+    collapsed_width: 120,
     expanded_width: 70
 }, {
     id: 'branches',
@@ -49,10 +49,10 @@ const allMetrics = [{
     collapsed_width: 120,
     expanded_width: 70
 }, {
-    id: 'statements',
-    name: 'Statements',
+    id: 'functions',
+    name: 'Functions',
     metrics_width: 75,
-    collapsed_width: 120,
+    collapsed_width: 100,
     expanded_width: 70
 }, {
     id: 'lines',
