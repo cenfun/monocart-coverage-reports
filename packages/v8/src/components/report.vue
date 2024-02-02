@@ -182,7 +182,8 @@ const jumpToGeneratedRange = () => {
         return;
     }
 
-    // console.log(item);
+    // show jump data range
+    console.log(data.range);
 
     data.autoSelectedRange = {
         start: data.range.generatedStart,
@@ -645,15 +646,18 @@ onMounted(() => {
 
       <VuiFlex
         v-if="data.range"
-        gap="5px"
+        gap="10px"
       >
         <span>{{ Util.NF(data.range.start) }}~{{ Util.NF(data.range.end) }}</span>
-        <span
+        <IconLabel
           v-if="data.range.showGenerated"
+          icon="debug"
           class="mcr-generated-range"
           tooltip="Jump to Generated Range"
           @click="jumpToGeneratedRange()"
-        >({{ Util.NF(data.range.generatedStart) }}~{{ Util.NF(data.range.generatedEnd) }})</span>
+        >
+          {{ Util.NF(data.range.generatedStart) }}~{{ Util.NF(data.range.generatedEnd) }}
+        </IconLabel>
       </VuiFlex>
 
       <div class="vui-flex-auto" />

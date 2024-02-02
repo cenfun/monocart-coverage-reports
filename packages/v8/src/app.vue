@@ -1475,7 +1475,7 @@ icon
 
 .mcr-debug {
     padding-left: 18px;
-    background-image: url("./images/debug.svg");
+    background-image: url("./images/icons/debug.svg");
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 16px 16px;
