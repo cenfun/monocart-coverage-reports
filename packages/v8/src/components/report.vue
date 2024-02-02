@@ -145,6 +145,9 @@ const renderRange = (range) => {
 const showNextRange = (id) => {
 
     const dataList = getLocateDataList(id);
+    if (!dataList) {
+        return;
+    }
 
     const key = `${id}_index`;
     let index = getLocateIndex(key, dataList);
