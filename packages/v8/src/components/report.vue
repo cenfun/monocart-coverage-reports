@@ -642,13 +642,13 @@ onMounted(() => {
         v-if="data.range"
         gap="5px"
       >
-        <span>{{ data.range.start }}~{{ data.range.end }}</span>
+        <span>{{ Util.NF(data.range.start) }}~{{ Util.NF(data.range.end) }}</span>
         <span
           v-if="data.range.showGenerated"
           class="mcr-generated-range"
-          tooltip="Generated Range"
+          tooltip="Jump to Generated Range"
           @click="jumpToGeneratedRange()"
-        >({{ data.range.generatedStart }}~{{ data.range.generatedEnd }})</span>
+        >({{ Util.NF(data.range.generatedStart) }}~{{ Util.NF(data.range.generatedEnd) }})</span>
       </VuiFlex>
 
       <div class="vui-flex-auto" />
