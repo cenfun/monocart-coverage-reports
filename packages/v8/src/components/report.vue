@@ -94,9 +94,12 @@ const getLocateDataList = (id) => {
         return;
     }
 
+    // no ignored and none even is all
+    dataList = dataList.filter((it) => !it.ignored && !it.none);
+
     // console.log(dataList);
     if (state.locate === 'Uncovered') {
-        dataList = dataList.filter((it) => it.count === 0 && !it.ignored && !it.none);
+        dataList = dataList.filter((it) => it.count === 0);
     }
 
     if (!Util.isList(dataList)) {
