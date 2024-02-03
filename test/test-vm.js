@@ -86,7 +86,17 @@ const collectV8Coverage = async (postSession, files) => {
         }
     });
 
-    // console.log(coverageList);
+    // console.log(coverageList.map((it) => it.url));
+    // add fake case
+    const appItem = coverageList.find((it) => it.url.endsWith('app.js'));
+    const fakeItem = {
+        ... appItem,
+        fake: true,
+        url: `${appItem.url}.fake`,
+        source: appItem.source.replace(/\S/g, '*')
+    };
+
+    coverageList.push(fakeItem);
 
     console.log('add node.js coverage ...');
     await MCR(coverageOptions).add(coverageList);
