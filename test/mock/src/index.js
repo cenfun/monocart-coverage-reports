@@ -1,4 +1,5 @@
 require('./comments.js');
+require('./async.js');
 
 const { ignore } = require('./ignore/ignore.js');
 
