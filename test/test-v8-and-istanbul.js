@@ -14,7 +14,7 @@ const multipleReportsOptions = {
         ['v8-json', {
             // outputFile: 'json/v8-report.json'
         }],
-        ['text'],
+        // ['text'],
         ['html', {
             subdir: 'istanbul'
         }],
