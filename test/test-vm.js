@@ -16,6 +16,10 @@ const coverageOptions = {
     reports: [
         'v8',
         'raw',
+        // 'text',
+        // ['html', {
+        //     subdir: 'html'
+        // }],
         'console-summary'
     ],
 
@@ -86,7 +90,25 @@ const collectV8Coverage = async (postSession, files) => {
         }
     });
 
-    // console.log(coverageList);
+    // console.log(coverageList.map((it) => it.url));
+    // add fake case
+    const appItem = coverageList.find((it) => it.url.endsWith('app.js'));
+    const fakeItem = {
+        ... appItem,
+        fake: true,
+        source: appItem.source.replace(/\S/g, '*'),
+        url: `${appItem.url}.fake.js`
+    };
+    coverageList.push(fakeItem);
+
+    // const sItem = coverageList.find((it) => it.url.endsWith('typescript.js'));
+    // // sItem.source = sItem.source.replace(/\S/g, '*');
+    // sItem.sourceMap = JSON.parse(fs.readFileSync('./test/mock/istanbul/branches.typescript.js.map').toString('utf-8'));
+    // sItem.sourceMap.sourcesContent = [fs.readFileSync('./test/mock/istanbul/branches.typescript.ts').toString('utf-8')];
+
+    // fs.writeFileSync('./test/mock/istanbul/branches.typescript.js1.map', JSON.stringify(sItem.sourceMap));
+
+    // sItem.fake = true;
 
     console.log('add node.js coverage ...');
     await MCR(coverageOptions).add(coverageList);
@@ -146,9 +168,22 @@ const generate = async () => {
     foo, bar, app
 } = require('./test/mock/node/lib/app.js');
 
+// require('./test/mock/istanbul/branches.typescript.js');
+
 if (require.a) {
     console.log("uncovered block a");
 }
+
+if (require.s) console.log("statement")
+
+const uncoveredFunction = () => {
+    const list = [1, 2, 3, 4, 5];
+    list.forEach((v) => {
+        console.log(v);
+    });
+};
+
+const uncoveredArrowFunction = () => require.v
 
 const uncovered = () => {
     // this is uncovered function in vm, test scriptOffset

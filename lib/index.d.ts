@@ -15,13 +15,12 @@ declare namespace MCR {
     }
 
     export type Watermarks = [number, number] | {
-        functions?: [number, number];
-        branches?: [number, number];
-        lines?: [number, number];
         /** V8 only */
         bytes?: [number, number];
-        /** Istanbul only */
         statements?: [number, number];
+        branches?: [number, number];
+        functions?: [number, number];
+        lines?: [number, number];
     }
 
     export type ReportDescription =
@@ -29,7 +28,7 @@ declare namespace MCR {
             outputFile?: string;
             inline?: boolean;
             assetsPath?: string;
-            metrics?: Array<"bytes" | "functions" | "branches" | "lines">;
+            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
         }] |
         ['v8-json'] | ["v8-json", {
             outputFile?: string;
@@ -56,7 +55,7 @@ declare namespace MCR {
             verbose?: boolean;
             linkMapper?: any;
             skipEmpty?: boolean;
-            metricsToShow?: Array<"lines" | "branches" | "functions" | "statements">;
+            metricsToShow?: Array<"statements" | "branches" | "functions" | "lines">;
         }] |
         ['json'] | ['json', {
             file?: string;
@@ -90,7 +89,7 @@ declare namespace MCR {
             file?: string;
         }] |
         ['console-summary'] | ['console-summary', {
-            metrics?: Array<"bytes" | "functions" | "branches" | "lines" | "statements">;
+            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
         }] |
         ['raw'] | ['raw', {
             outputDir?: string;
@@ -121,13 +120,12 @@ declare namespace MCR {
     }
 
     export interface CoverageSummary {
-        functions: MetricsSummary;
-        branches: MetricsSummary;
-        lines: MetricsSummary;
         /** V8 only */
         bytes?: MetricsSummary;
-        /** Istanbul only */
         statements?: MetricsSummary;
+        branches: MetricsSummary;
+        functions: MetricsSummary;
+        lines: MetricsSummary;
     }
 
     /** V8 only */
@@ -137,6 +135,13 @@ declare namespace MCR {
         count: number;
         ignored?: boolean;
         none?: boolean;
+    }
+
+    export interface IgnoredRange {
+        start: number;
+        end: number;
+        type: string;
+        n?: number;
     }
 
     export interface CoverageFile {
@@ -157,8 +162,14 @@ declare namespace MCR {
         /** V8 only */
         data?: {
             bytes: CoverageRange[];
-            functions: CoverageRange[];
+            statements: CoverageRange[];
             branches: CoverageRange[];
+            functions: CoverageRange[];
+            ignores?: IgnoredRange[];
+            /** codecov json format */
+            lines: {
+                [key: string]: number | string
+            };
         }
     }
 
@@ -218,7 +229,7 @@ declare namespace MCR {
         reportPath?: string | (() => string);
 
         /** {array} watermarks for low/medium/high. Defaults to [50, 80]
-        * {object} { statements:[50,80], functions:[50,80], branches:[50,80], lines:[50,80] }, V8: { bytes:[50,80] } */
+        * {object} { bytes:[50,80], statements:[50,80], branches:[50,80], functions:[50,80], lines:[50,80] } */
         watermarks?: Watermarks;
 
         /** {function} onEnd hook */

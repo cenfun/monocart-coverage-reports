@@ -52,12 +52,6 @@ class CoverageParser {
             lineMap.set(line, lineItem);
         });
 
-        this.uncoveredInfo = {
-            bytes: [],
-            functions: [],
-            branches: []
-        };
-
         // do NOT use type, it could be ts or vue for source file
         if (item.js) {
             this.parseJs(item.data, lineMap);
@@ -107,9 +101,6 @@ class CoverageParser {
             uncoveredPieces: this.uncoveredPieces,
             executionCounts: this.executionCounts,
 
-            // for locate
-            uncoveredInfo: this.uncoveredInfo,
-
             // updated lines summary after formatted
             linesSummary: this.linesSummary
         };
@@ -153,21 +144,14 @@ class CoverageParser {
             return;
         }
 
-        const uncoveredBytes = this.uncoveredInfo.bytes;
         bytes.forEach((range) => {
-            const {
-                start, end, count, ignored
-            } = range;
+            const { count, ignored } = range;
 
             if (ignored) {
                 return;
             }
 
             if (count === 0) {
-                uncoveredBytes.push({
-                    start,
-                    end
-                });
                 // set uncovered first
                 this.setUncoveredRangeLines(range, lineMap);
             }
@@ -179,23 +163,6 @@ class CoverageParser {
     // js, source, ranges: [ {start, end, count} ]
     parseJs(data, lineMap) {
 
-        const uncoveredBytes = this.uncoveredInfo.bytes;
-        const uncoveredFunctions = this.uncoveredInfo.functions;
-        const uncoveredBranches = this.uncoveredInfo.branches;
-
-        data.functions.filter((it) => it.count === 0 && !it.ignored).forEach((it) => {
-            uncoveredFunctions.push({
-                start: it.start,
-                end: it.end
-            });
-        });
-        data.branches.filter((it) => it.count === 0 && !it.ignored && !it.none).forEach((it) => {
-            uncoveredBranches.push({
-                start: it.start,
-                end: it.end
-            });
-        });
-
         const bytes = data.bytes;
         // no ranges mark all as covered
         if (!bytes.length) {
@@ -203,9 +170,7 @@ class CoverageParser {
         }
 
         bytes.forEach((range) => {
-            const {
-                start, end, count, ignored
-            } = range;
+            const { count, ignored } = range;
 
             if (ignored) {
                 return;
@@ -216,10 +181,6 @@ class CoverageParser {
                     this.setExecutionCounts(range);
                 }
             } else {
-                uncoveredBytes.push({
-                    start,
-                    end
-                });
                 // set uncovered first, then could be changed to ignored if uncovered
                 this.setUncoveredRangeLines(range, lineMap);
             }

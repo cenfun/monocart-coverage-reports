@@ -24,8 +24,10 @@ const {
 const state = inject('state');
 
 const data = shallowReactive({
-
+    indexes: {}
 });
+
+const emit = defineEmits(['jump']);
 
 const el = ref(null);
 let $el;
@@ -54,47 +56,160 @@ const getIndexByPosition = (list) => {
         index = i;
         return it.start > originalPosition;
     });
+
     if (item) {
         return index;
     }
+    return 0;
 };
 
-const showNextUncovered = (id) => {
+const enableLocate = (item) => {
+    if (item.id === 'lines') {
+        return false;
+    }
 
-    const uncoveredInfo = data.uncoveredInfo;
-    const list = uncoveredInfo[id];
-    if (!list.length) {
+    if (item.total === 0) {
+        return false;
+    }
+
+    // bytes has total but possible no ranges
+    if (item.id === 'bytes' && !data.item.data.bytes.length) {
+        return false;
+    }
+
+    if (state.locate === 'Uncovered' && item.uncovered === 0) {
+        return false;
+    }
+
+    return true;
+};
+
+const switchLocate = () => {
+    state.locate = state.locate === 'Uncovered' ? 'All' : 'Uncovered';
+};
+
+const getLocateDataList = (id) => {
+    let dataList = data.item.data[id];
+    if (!dataList) {
         return;
     }
 
-    const key = `${id}_index`;
-    let index = uncoveredInfo[key];
-    if (typeof index !== 'number') {
+    // no ignored and none even is all
+    dataList = dataList.filter((it) => !it.ignored && !it.none);
+
+    // console.log(dataList);
+    if (state.locate === 'Uncovered') {
+        dataList = dataList.filter((it) => it.count === 0);
+    }
+
+    if (!Util.isList(dataList)) {
+        return;
+    }
+
+    return dataList;
+};
+
+const getLocateIndex = (key, dataList) => {
+    let index = data.indexes[key];
+    if (typeof index !== 'number' || index >= dataList.length) {
         index = 0;
     }
 
-    const posIndex = getIndexByPosition(list);
+    // if same range will be skip to next
+    const posIndex = getIndexByPosition(dataList);
     if (typeof posIndex === 'number') {
         // console.log('index', posIndex);
         index = posIndex;
     }
 
-    const current = list[index];
-    // console.log('show next uncovered', current);
+    return index;
+};
 
+const renderRange = (range) => {
     const mappingParser = new MappingParser(data.mapping);
-    const start = mappingParser.originalToFormatted(current.start);
-    const end = mappingParser.originalToFormatted(current.end);
+    const start = mappingParser.originalToFormatted(range.start);
+    const end = mappingParser.originalToFormatted(range.end);
 
-    codeViewer.setSelection(start, end);
+    if (Util.hasOwn(range, 'generatedStart')) {
+        range.showGenerated = true;
+    }
 
-    // next
-    const len = list.length;
+    new Promise((resolve) => {
+        data.resolve = resolve;
+        codeViewer.setSelection(start, end);
+    }).then(() => {
+        data.range = range;
+    });
+};
+
+const showNextRange = (id) => {
+
+    const dataList = getLocateDataList(id);
+    if (!dataList) {
+        return;
+    }
+
+    const key = `${id}_index`;
+    let index = getLocateIndex(key, dataList);
+
+    const current = dataList[index];
+    if (!current) {
+        return;
+    }
+
+    // console.log(index);
+
+    // update next index
+    const len = dataList.length;
     index += 1;
     if (index >= len) {
         index = 0;
     }
-    uncoveredInfo[key] = index;
+    data.indexes[key] = index;
+
+    // show current data
+
+    renderRange(current);
+
+};
+
+const jumpToGeneratedRange = () => {
+    // console.log(data.range);
+
+    const distFile = data.item.distFile;
+    if (!distFile) {
+        return;
+    }
+
+    const { files } = state.reportData;
+
+    const item = files.find((it) => it.sourcePath === distFile);
+    if (!item) {
+        return;
+    }
+
+    // show jump data range
+    console.log(data.range);
+
+    data.autoSelectedRange = {
+        start: data.range.generatedStart,
+        end: data.range.generatedEnd
+    };
+
+    // state.flyoverData = item.id;
+    emit('jump', item);
+
+};
+
+const showAutoSelectedRange = () => {
+    if (!data.autoSelectedRange) {
+        return;
+    }
+
+    const range = data.autoSelectedRange;
+    data.autoSelectedRange = null;
+
+    renderRange(range);
 
 };
 
@@ -135,6 +250,14 @@ const onGoClick = () => {
     if (data.mapping) {
         const mappingParser = new MappingParser(data.mapping);
         pos = mappingParser.originalToFormatted(pos);
+    }
+
+    if (pos < 0) {
+        return;
+    }
+    if (pos >= data.maxContentLength) {
+        console.log(`Max length of formatted content is ${data.maxContentLength}`);
+        return;
     }
 
     codeViewer.setCursor(pos);
@@ -277,8 +400,11 @@ const onCursorChange = (loc) => {
         loc.originalPosition = mappingParser.formattedToOriginal(loc.position);
         // console.log('cursor location', loc, mappingParser.mapping);
     }
-
+    data.range = null;
     data.cursor = loc;
+    if (data.resolve) {
+        data.resolve();
+    }
 };
 
 const renderReport = async () => {
@@ -290,7 +416,7 @@ const renderReport = async () => {
     // summary list
     data.summaryList = state.metrics.filter((it) => {
         // no functions,branches for css
-        if (!item.js && ['functions', 'branches'].includes(it.id)) {
+        if (!item.js && ['functions', 'branches', 'statements'].includes(it.id)) {
             return false;
         }
         return true;
@@ -318,12 +444,9 @@ const renderReport = async () => {
     }
 
     data.mapping = report.mapping;
+    data.maxContentLength = report.content.length;
 
-    const {
-        executionCounts, uncoveredInfo, linesSummary
-    } = report.coverage;
-
-    data.uncoveredInfo = uncoveredInfo;
+    const { executionCounts, linesSummary } = report.coverage;
 
     // console.log('showReport executionCounts', executionCounts);
     updateTopExecutions(executionCounts);
@@ -358,6 +481,10 @@ const renderReport = async () => {
     }
 
     data.cursor = null;
+    data.range = null;
+    data.indexes = {};
+
+    showAutoSelectedRange();
 
     state.loading = false;
 };
@@ -435,13 +562,16 @@ onMounted(() => {
             >
               {{ Util.NF(item.uncovered) }}
             </div>
-            <IconLabel
-              v-if="item.uncovered && item.id!=='lines'"
-              icon="locate"
-              @click="showNextUncovered(item.id)"
-            />
           </VuiFlex>
+
+          <IconLabel
+            v-if="enableLocate(item)"
+            :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
+            icon="locate"
+            @click="showNextRange(item.id)"
+          />
         </VuiFlex>
+
         <VuiFlex
           v-if="item.id==='lines'"
           gap="5px"
@@ -510,32 +640,69 @@ onMounted(() => {
       >
         Format
       </VuiSwitch>
-      <div class="vui-flex-auto" />
+
+      <IconLabel
+        class="mcr-locate-switch"
+        icon="locate"
+        :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
+        :tooltip="'Locate '+state.locate+' Range'"
+        @click="switchLocate()"
+      >
+        <span>{{ state.locate }}</span>
+      </IconLabel>
+
       <VuiFlex
-        v-if="data.cursor"
+        v-if="data.range"
         gap="10px"
       >
-        <div>Line {{ Util.NF(data.cursor.line) }}</div>
-        <div>Column {{ Util.NF(data.cursor.column+1) }}</div>
+        <span>{{ Util.NF(data.range.start) }}~{{ Util.NF(data.range.end) }}</span>
         <IconLabel
-          v-if="data.cursor.original"
-          icon="location"
-          class="mcr-report-goto"
-          @click="showGotoPopover"
+          v-if="data.range.showGenerated"
+          icon="debug"
+          class="mcr-generated-range"
+          tooltip="Jump to Generated Range"
+          @click="jumpToGeneratedRange()"
         >
-          Position {{ Util.NF(data.cursor.originalPosition) }}
+          {{ Util.NF(data.range.generatedStart) }}~{{ Util.NF(data.range.generatedEnd) }}
         </IconLabel>
+      </VuiFlex>
+
+      <div class="vui-flex-auto" />
+
+      <VuiFlex
+        v-if="data.cursor"
+        center
+        gap="10px"
+        class="mcr-cursor-foot"
+      >
+        <div>
+          <span tooltip="1-base">Ln {{ Util.NF(data.cursor.line) }}</span>,
+          <span tooltip="0-base">Col {{ Util.NF(data.cursor.column) }}</span>
+        </div>
+        <VuiFlex gap="5px">
+          <IconLabel
+            icon="location"
+            class="mcr-report-goto"
+            @click="showGotoPopover"
+          >
+            Pos
+          </IconLabel>
+          <div v-if="data.cursor.original">
+            <span>{{ Util.NF(data.cursor.originalPosition) }}</span>
+          </div>
+        </VuiFlex>
       </VuiFlex>
 
       <div class="mcr-about">
         <a
           href="https://github.com/cenfun/monocart-coverage-reports"
           target="_blank"
-          title="Monocart Coverage Reports"
+          tooltip-timeout="30000"
+          :tooltip="'Monocart Coverage Reports v'+state.version"
         ><IconLabel
           class="mcr-icon-monocart"
           icon="monocart"
-        >v{{ state.version }}</IconLabel></a>
+        /></a>
       </div>
     </VuiFlex>
     <VuiPopover
@@ -643,6 +810,31 @@ onMounted(() => {
 
 .mcr-report-goto {
     cursor: pointer;
+}
+
+.mcr-locate-uncovered {
+    color: red;
+}
+
+.mcr-locate-switch {
+    span {
+        color: #333;
+    }
+}
+
+.mcr-cursor-foot {
+    span {
+        font-size: var(--font-monospace);
+    }
+}
+
+.mcr-generated-range {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.mcr-generated-range:hover {
+    opacity: 1;
 }
 
 </style>

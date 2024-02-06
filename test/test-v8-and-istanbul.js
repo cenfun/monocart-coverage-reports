@@ -14,6 +14,7 @@ const multipleReportsOptions = {
         ['v8-json', {
             // outputFile: 'json/v8-report.json'
         }],
+        // ['text'],
         ['html', {
             subdir: 'istanbul'
         }],
@@ -33,6 +34,24 @@ const multipleReportsOptions = {
         return 'my-json-file.json';
     },
 
+    entryFilter: (entry) => {
+        return entry.url.includes('v8/');
+    },
+
+    sourceFilter: (filePath) => {
+        return filePath.includes('src/');
+    },
+
+    sourcePath: (filePath) => {
+        const list = ['coverage-v8/'];
+        for (const str of list) {
+            if (filePath.startsWith(str)) {
+                return filePath.slice(str.length);
+            }
+        }
+        return filePath;
+    },
+
     onEnd: (coverageResults) => {
         const summary = coverageResults.summary;
         console.log('onEnd Bytes:', `${summary.bytes.pct} %`);
@@ -41,9 +60,9 @@ const multipleReportsOptions = {
     outputDir: './docs/v8-and-istanbul'
 };
 
-const test1 = async (serverUrl) => {
+const test = async (serverUrl) => {
 
-    console.log('start v8-and-istanbul test1 ...');
+    console.log('start v8-and-istanbul test ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -88,59 +107,10 @@ const test1 = async (serverUrl) => {
     // to istanbul
     const report = await MCR(multipleReportsOptions).add(coverageList);
 
-    console.log('v8-and-istanbul coverage1 added', report.type);
+    console.log('v8-and-istanbul coverage added', report.type);
 
     await browser.close();
 };
-
-
-const test2 = async (serverUrl) => {
-
-    console.log('start v8-and-istanbul test2 ...');
-    const browser = await chromium.launch({
-        // headless: false
-    });
-    const page = await browser.newPage();
-
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
-
-    const url = `${serverUrl}/v8/`;
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-    });
-
-    await page.evaluate(() => {
-        const { start } = window['coverage-v8'];
-        start();
-    });
-
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
-
-    const coverageList = [... jsCoverage, ... cssCoverage];
-
-    // to istanbul
-    const report = await MCR(multipleReportsOptions).add(coverageList);
-
-    console.log('v8-and-istanbul coverage2 added', report.type);
-
-    await browser.close();
-};
-
 
 const generate = async () => {
 
@@ -155,10 +125,7 @@ module.exports = async (serverUrl) => {
     // clean cache first
     await MCR(multipleReportsOptions).cleanCache();
 
-    await Promise.all([
-        test1(serverUrl),
-        test2(serverUrl)
-    ]);
+    await test(serverUrl);
 
     await generate();
 };

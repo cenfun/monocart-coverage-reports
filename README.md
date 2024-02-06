@@ -2,6 +2,7 @@
 
 [![](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
 [![](https://badgen.net/npm/dw/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
+![](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
 ![](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
 ![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/static.yml)
 
@@ -405,10 +406,11 @@ console.log(coverageResults.summary);
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:
-- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
+- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage. see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright) for automatic report merging.
 - When the code is subjected to different kinds of testing. For example, unit tests with Jest might cover certain parts of the code, while end-to-end tests with Playwright might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
 - When tests are run on different machines or different shards, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
 
+If the reports cannot be merged automatically, then here is how to manually merge the reports.
 First, using the `raw` report to export the original coverage data to the specified directory.
 ```js
 const coverageOptions = {

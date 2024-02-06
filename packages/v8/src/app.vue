@@ -37,16 +37,22 @@ const allMetrics = [{
     collapsed_width: 80,
     expanded_width: 70
 }, {
-    id: 'functions',
-    name: 'Functions',
+    id: 'statements',
+    name: 'Statements',
     metrics_width: 75,
-    collapsed_width: 100,
+    collapsed_width: 120,
     expanded_width: 70
 }, {
     id: 'branches',
     name: 'Branches',
     metrics_width: 75,
     collapsed_width: 120,
+    expanded_width: 70
+}, {
+    id: 'functions',
+    name: 'Functions',
+    metrics_width: 75,
+    collapsed_width: 100,
     expanded_width: 70
 }, {
     id: 'lines',
@@ -65,6 +71,7 @@ const state = shallowReactive({
 
     group: true,
     formatted: false,
+    locate: 'Uncovered',
 
     keywords: '',
 
@@ -72,6 +79,7 @@ const state = shallowReactive({
         bytes: [50, 80],
         functions: [50, 80],
         branches: [50, 80],
+        statements: [50, 80],
         lines: [50, 80]
     },
     watermarkLow: true,
@@ -145,9 +153,11 @@ const showTooltip = (target, text) => {
     tooltip.text = text;
     tooltip.visible = true;
 
+    const timeout = parseInt(target.getAttribute('tooltip-timeout')) || 2000;
+
     timeout_tooltip = setTimeout(() => {
         hideTooltip();
-    }, 2000);
+    }, timeout);
 };
 
 const initTooltip = () => {
@@ -873,7 +883,7 @@ const initStore = () => {
         'true': true,
         'false': false
     };
-    ['group', 'formatted'].forEach((item) => {
+    ['group', 'formatted', 'locate'].forEach((item) => {
         // default empty string
         const v = store.get(item);
         // console.log(item, v);
@@ -969,6 +979,10 @@ watch(() => state.group, (v) => {
 
 watch(() => state.formatted, (v) => {
     store.set('formatted', v);
+});
+
+watch(() => state.locate, (v) => {
+    store.set('locate', v);
 });
 
 const updateGridAsync = debounce(updateGrid, 200);
@@ -1131,7 +1145,7 @@ window.addEventListener('message', (e) => {
     <div class="mcr-coverage-grid vui-flex-auto" />
 
     <Flyover>
-      <Report />
+      <Report @jump="showFlyover" />
     </Flyover>
 
     <VuiPopover
@@ -1207,12 +1221,6 @@ html {
 
 body {
     --font-monospace: sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
-    --bg-failed: #fff0ef;
-    --bg-flaky: #fcf7de;
-    --color-passed: green;
-    --color-failed: #d00;
-    --color-flaky: orange;
-    --color-skipped: gray;
 
     width: 100%;
     height: 100%;
@@ -1467,7 +1475,7 @@ icon
 
 .mcr-debug {
     padding-left: 18px;
-    background-image: url("./images/debug.svg");
+    background-image: url("./images/icons/debug.svg");
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 16px 16px;

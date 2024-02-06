@@ -16,6 +16,7 @@ const coverageOptions = {
         ['v8', {
             // metrics: ['bytes', 'functions', 'lines']
         }],
+        ['json'],
         [path.resolve('./test/custom-istanbul-reporter.js'), {
             type: 'istanbul',
             file: 'custom-istanbul-coverage.text'
@@ -32,6 +33,8 @@ const coverageOptions = {
     name: 'My V8 Coverage Report',
     assetsPath: '../assets',
     lcov: true,
+
+    outputDir: './docs/v8',
 
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 || sourcePath.search(/minify\//) !== -1,
 
@@ -68,9 +71,19 @@ const coverageOptions = {
             const errMsg = errors.join('\n');
             console.log(EC.red(errMsg));
         }
-    },
 
-    outputDir: './docs/v8'
+
+        // debug diff json
+
+        const json1 = JSON.parse(fs.readFileSync('./docs/istanbul/coverage-final.json').toString('utf-8'));
+        const json2 = JSON.parse(fs.readFileSync('./docs/v8/coverage-final.json').toString('utf-8'));
+
+        const data1 = json1[Object.keys(json1).find((it) => it.endsWith('logical.js'))];
+        const data2 = json2[Object.keys(json2).find((it) => it.endsWith('logical.js'))];
+
+        fs.writeFileSync('./docs/v8/branch1.json', JSON.stringify(data1, null, 4));
+        fs.writeFileSync('./docs/v8/branch2.json', JSON.stringify(data2, null, 4));
+    }
 };
 
 const test = async () => {
@@ -80,6 +93,12 @@ const test = async () => {
         //  headless: false
     });
     const page = await browser.newPage();
+
+    // page.on('console', async (msg) => {
+    //     for (const arg of msg.args()) {
+    //         console.log(await arg.jsonValue());
+    //     }
+    // });
 
     await Promise.all([
         page.coverage.startJSCoverage({
