@@ -24,7 +24,7 @@ const {
 const state = inject('state');
 
 const data = shallowReactive({
-
+    indexes: {}
 });
 
 const emit = defineEmits(['jump']);
@@ -110,7 +110,7 @@ const getLocateDataList = (id) => {
 };
 
 const getLocateIndex = (key, dataList) => {
-    let index = data[key];
+    let index = data.indexes[key];
     if (typeof index !== 'number' || index >= dataList.length) {
         index = 0;
     }
@@ -165,7 +165,7 @@ const showNextRange = (id) => {
     if (index >= len) {
         index = 0;
     }
-    data[key] = index;
+    data.indexes[key] = index;
 
     // show current data
 
@@ -482,6 +482,7 @@ const renderReport = async () => {
 
     data.cursor = null;
     data.range = null;
+    data.indexes = {};
 
     showAutoSelectedRange();
 
