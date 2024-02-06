@@ -95,12 +95,14 @@ class CoverageParser {
         this.linesSummary.pct = pct;
         this.linesSummary.status = status;
 
+        const decorations = this.getDecorations(item.data.branches);
+
         this.coverage = {
             // required for code viewer
             uncoveredLines: this.uncoveredLines,
             uncoveredPieces: this.uncoveredPieces,
             executionCounts: this.executionCounts,
-
+            decorations,
             // updated lines summary after formatted
             linesSummary: this.linesSummary
         };
@@ -360,6 +362,46 @@ class CoverageParser {
             return;
         }
         this.executionCounts[index] = [execution];
+    }
+
+    getDecorations(branches) {
+
+        const uncoveredNoneBranches = branches.filter((it) => it.none && it.count === 0 && !it.ignored);
+
+        const decorations = {};
+
+        const mappingParser = this.mappingParser;
+        const locator = this.formattedLocator;
+
+        uncoveredNoneBranches.forEach((it) => {
+
+            const { end } = it;
+            const formattedEnd = mappingParser.originalToFormatted(end);
+
+            const eLoc = locator.offsetToLocation(formattedEnd);
+            const column = Math.max(eLoc.column, eLoc.indent);
+
+            // to index 0-base
+            const index = eLoc.line - 1;
+
+            const decoration = {
+                column,
+                value: 'E',
+                attrs: {
+                    'class': 'mcr-uncovered-else',
+                    'tooltip': 'uncovered else path'
+                }
+            };
+
+            const prevList = decorations[index];
+            if (prevList) {
+                prevList.push(decoration);
+                return;
+            }
+            decorations[index] = [decoration];
+        });
+
+        return decorations;
     }
 }
 

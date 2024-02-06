@@ -6,11 +6,15 @@ const IfStatement = require('./if.js');
 const LogicalExpression = require('./logical.js');
 const SwitchStatement = require('./switch.js');
 
-const uncoveredFunction = () => {
+const uncoveredFunction = (a) => {
     const list = [1, 2, 3, 4, 5];
     list.forEach((v) => {
         console.log(v);
     });
+
+    if (a) {
+        console.log(a);
+    }
 };
 
 function coveredFunction() {

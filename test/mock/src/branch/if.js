@@ -25,6 +25,8 @@ const IfStatement_11 = (tf1, tf2) => {
 
     if (tf1) {
         console.log('if1');
+    } else {
+        console.log('else1');
     }
 
     if (tf1) {
