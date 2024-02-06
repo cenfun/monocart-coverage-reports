@@ -1,7 +1,8 @@
 ## Changelog
 
 * 2.4.0
-    - added statements to report
+    - (New Feature) added statements to report
+    - optimized source mapping related codes
 
 * 2.3.4
     - fixed ignore lines
