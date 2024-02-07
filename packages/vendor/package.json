@@ -1,6 +1,6 @@
 {
     "name": "monocart-coverage-vendor",
-    "version": "2.4.1",
+    "version": "2.4.2",
     "private": true,
     "main": "dist/monocart-coverage-vendor.js",
     "files": [
