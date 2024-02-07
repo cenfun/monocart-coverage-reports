@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.4.3
+    - fixed original offset if reversed
+
 * 2.4.2
     - fixed default reports with lcov
 
