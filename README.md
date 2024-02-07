@@ -257,15 +257,13 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
 | Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |
 | Output | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
 | - Bytes | ❌ | ✅ | ❌ |
-| - Statements | ✅ | ✅ | ☑️❔ |
-| - Branches | ✅ | ☑️❔ | ☑️❔ |
+| - Statements | ✅ | ✅ | ✅ |
+| - Branches | ✅ | ✅ | ✅ |
 | - Functions | ✅ | ✅ | ✅ |
 | - Lines | ✅ | ✅ | ✅ |
 | - Execution counts | ✅ | ✅ | ✅ |
 | CSS coverage | ❌ | ✅ | ✅ |
 | Minified code | ❌ | ✅ | ❌ |
-
-❔ - Partial or conditional support
 
 ## Compare Workflows
 - Istanbul Workflows
