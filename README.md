@@ -24,6 +24,7 @@
 * [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Merge Coverage Reports](#merge-coverage-reports)
+* [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Chromium Coverage API](#chromium-coverage-api)
@@ -449,7 +450,10 @@ const coverageOptions = {
 };
 await new CoverageReport(coverageOptions).generate();
 ```
-If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to convert it.
+
+## Resolve `sourcePath` for the Source Files
+If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
+For example, we have tested multiple dist files, which contain some common files. We hope to merge the coverage of the same files, so we need to unify the `sourcePath` in order to be able to merge the coverage data.
 ```js
 const coverageOptions = {
     sourcePath: (filePath) => {
@@ -502,6 +506,7 @@ for (const filename of fileList) {
 const options = require('path-to/same-options.js');
 await MCR(options).add(coverageData);
 ```
+see example: [./test/cli-options.js](./test/cli-options.js)
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
