@@ -1,7 +1,8 @@
 ## Changelog
 
 * 2.4.1
-    - (New Feature) supports decorations for uncovered none else branches
+    - fixed issue if uncovered in indent or ends with ";"
+    - supports decorations for uncovered none else branches
 
 * 2.4.0
     - (New Feature) added statements to report
