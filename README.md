@@ -257,7 +257,7 @@ mcr "node ./test/test-node-env.js" -c test/cli-options.js
 | Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |
 | Output | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
 | - Bytes | ❌ | ✅ | ❌ |
-| - Statements | ✅ | ❌ | ☑️❔ |
+| - Statements | ✅ | ✅ | ☑️❔ |
 | - Branches | ✅ | ☑️❔ | ☑️❔ |
 | - Functions | ✅ | ✅ | ✅ |
 | - Lines | ✅ | ✅ | ✅ |
@@ -574,15 +574,15 @@ see source code [v8-to-istanbul.js](https://github.com/istanbuljs/v8-to-istanbul
 ### How Monocart Works
 We implemented new converter instead of v8-to-istanbul:
 - 1, Trying to fix the middle position if not found the exact mapping for the position.
-- 2, Finding all functions and branches by parsing the source code [AST](https://github.com/acornjs/acorn), however the V8 cannot provide effective branch coverage information, so the branches is still not perfect but close to reality.
+- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn), however the V8 cannot provide effective branch coverage information for `AssignmentPattern`.
 
 | AST                   | V8             | 
 | :---------------------| :------------- | 
 | AssignmentPattern     | 🛇 Not Support | 
-| ConditionalExpression | ✔ Not Perfect | 
-| IfStatement           | ✔ Not Perfect | 
-| LogicalExpression     | ✔ Not Perfect | 
-| SwitchStatement       | ✔ Not Perfect | 
+| ConditionalExpression | ✔  | 
+| IfStatement           | ✔  | 
+| LogicalExpression     | ✔  | 
+| SwitchStatement       | ✔  | 
 
 ## Debug for Coverage and Sourcemap
 > Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
