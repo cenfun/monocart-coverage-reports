@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.4.2
+    - fixed default reports with lcov
+
 * 2.4.1
     - fixed issue if uncovered in indent or ends with ";"
     - supports decorations for uncovered none else branches
