@@ -24,6 +24,7 @@
 * [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Merge Coverage Reports](#merge-coverage-reports)
+* [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Chromium Coverage API](#chromium-coverage-api)
 * [V8 Coverage Data Format](#v8-coverage-data-format)
@@ -464,6 +465,43 @@ const coverageOptions = {
 };
 ```
 see example: [./test/test-merge.js](./test/test-merge.js)
+
+## Adding Empty Coverage for Untested Files
+By default the untested files will not be included in the coverage report, we can first add empty coverage data for all files, so the files with coverage data will be merged, and untested files will retain 0% coverage.
+```js
+const fs = require('fs');
+const path = require('path');
+const { pathToFileURL } = require('url');
+const MCR = require('monocart-coverage-reports');
+
+const dir = "./src";
+const coverageData = [];
+const fileList = fs.readdirSync(dir);
+for (const filename of fileList) {
+    const filePath = path.resolve(dir, filename);
+    const source = fs.readFileSync(filePath).toString('utf-8');
+    const sourcePath = path.relative(process.cwd(), filePath);
+    const url = pathToFileURL(sourcePath).toString();
+    const extname = path.extname(filename);
+    if (['.css'].includes(extname)) {
+        coverageData.push({
+            empty: true,
+            type: 'css',
+            url,
+            text: source
+        });
+    } else {
+        coverageData.push({
+            empty: true,
+            type: 'js',
+            url,
+            source
+        });
+    }
+}
+const options = require('path-to/same-options.js');
+await MCR(options).add(coverageData);
+```
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
