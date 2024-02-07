@@ -375,10 +375,11 @@ class CoverageParser {
 
         uncoveredNoneBranches.forEach((it) => {
 
-            const { end } = it;
-            const formattedEnd = mappingParser.originalToFormatted(end);
+            // shows before start position
+            // end position could be imprecise, for example not found "}" when minify
+            const formattedOffset = mappingParser.originalToFormatted(it.start);
 
-            const eLoc = locator.offsetToLocation(formattedEnd);
+            const eLoc = locator.offsetToLocation(formattedOffset);
             const column = Math.max(eLoc.column, eLoc.indent);
 
             // to index 0-base
@@ -387,9 +388,9 @@ class CoverageParser {
             const decoration = {
                 column,
                 value: 'E',
+                className: 'mcr-uncovered-else',
                 attrs: {
-                    'class': 'mcr-uncovered-else',
-                    'tooltip': 'uncovered else path'
+                    title: 'else path uncovered'
                 }
             };
 
@@ -399,6 +400,17 @@ class CoverageParser {
                 return;
             }
             decorations[index] = [decoration];
+        });
+
+        // Ranges must be added sorted by `from` position and `startSide`
+        // requires sort by column
+        Object.keys(decorations).forEach((index) => {
+            const list = decorations[index];
+            if (list.length > 1) {
+                list.sort((a, b) => {
+                    return a.column - b.column;
+                });
+            }
         });
 
         return decorations;

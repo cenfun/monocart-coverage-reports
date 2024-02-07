@@ -384,8 +384,12 @@ const getReport = async (item) => {
 
     // console.log(cacheKey);
     console.log(item);
-    // console.log([item.source]);
-    // console.log([content]);
+
+    // for code viewer debug
+    // console.log(JSON.stringify({
+    //     coverage, content
+    // }));
+
 
     return report;
 };

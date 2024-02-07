@@ -13,7 +13,32 @@ const uncoveredFunction = (a) => {
     });
 
     if (a) {
+        // both if and else path are uncovered
         console.log(a);
+    }
+};
+
+const listForEach = (a) => {
+    const list = [1, 2, 3, 4, 5];
+    list.forEach((v) => {
+        if (v > 2) {
+            console.log(v);
+            return;
+        }
+        console.log(v);
+    });
+
+    if (!a) {
+        // else path should be uncovered
+        console.log(a);
+    }
+
+    for (const item of list) {
+        if (item > 3) {
+            console.log(item);
+            break;
+        }
+        console.log(item);
     }
 };
 
@@ -27,22 +52,7 @@ function coveredFunction() {
         }
     }
 
-    const list = [1, 2, 3, 4, 5];
-    list.forEach((v) => {
-        if (v > 2) {
-            console.log(v);
-            return;
-        }
-        console.log(v);
-    });
-
-    for (const item of list) {
-        if (item > 3) {
-            console.log(item);
-            break;
-        }
-        console.log(item);
-    }
+    listForEach();
 
     const l = 5;
     let i = 0;
@@ -63,14 +73,22 @@ class MyCLass {
     static #privateKey = 2;
 }
 
-function funD() {
-
+function functionNeverMind(a) {
+    if (a) {
+        console.log(a);
+        // not covered
+    }
 }
 
-const branch = () => {
+const branch = (a) => {
 
     coveredFunction();
     coveredFunction();
+
+    if (a) {
+        // else path should be covered
+        functionNeverMind(a);
+    }
 
     AssignmentPattern();
     ConditionalExpression();
