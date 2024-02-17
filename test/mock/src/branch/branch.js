@@ -20,6 +20,10 @@ const uncoveredFunction = (a) => {
 
 const listForEach = function(a) {
 
+    if (a < 3 || a > 6) {
+        console.log(a);
+    }
+
     // same branch start
     const defaultArg = arguments.length > 1 && typeof arguments[1] !== 'undefined' ? arguments[1] : true;
     console.log(defaultArg);
@@ -61,7 +65,7 @@ function coveredFunction(a) {
         }
     }
 
-    listForEach();
+    listForEach(a);
 
     const l = 5;
     let i = 0;
