@@ -16,7 +16,7 @@
         "axios": "^1.6.7",
         "convert-source-map": "^2.0.0",
         "foreground-child": "^3.1.1",
-        "postcss": "^8.4.34"
+        "postcss": "^8.4.35"
     },
     "platform": "node"
 }
