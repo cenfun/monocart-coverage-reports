@@ -18,7 +18,12 @@ const uncoveredFunction = (a) => {
     }
 };
 
-const listForEach = (a) => {
+const listForEach = function(a) {
+
+    // same branch start
+    const defaultArg = arguments.length > 1 && typeof arguments[1] !== 'undefined' ? arguments[1] : true;
+    console.log(defaultArg);
+
     const list = [1, 2, 3, 4, 5];
     list.forEach((v) => {
         if (v > 2) {
@@ -82,7 +87,7 @@ class MyCLass {
         this.myMethod(a);
     }
 
-    myMethod() {
+    myMethod(a) {
 
     }
 
