@@ -18,15 +18,28 @@ const uncoveredFunction = (a) => {
     }
 };
 
-const listForEach = function(a) {
-
-    if (a < 3 || a > 6) {
+const logicalReturn = function(a) {
+    if (a < 5 || a > 8) {
         console.log(a);
     }
 
     // same branch start
     const defaultArg = arguments.length > 1 && typeof arguments[1] !== 'undefined' ? arguments[1] : true;
     console.log(defaultArg);
+
+    // test return count
+    if (a < 3) {
+        return;
+    }
+
+    // count will be left 10 - 2 = 8
+    if (a < 5 || a > 8) {
+        console.log(a);
+    }
+
+};
+
+const listForEach = function(a) {
 
     const list = [1, 2, 3, 4, 5];
     list.forEach((v) => {
@@ -55,6 +68,7 @@ function coveredFunction(a) {
 
     // branch count should be 10:0 not 1:0
     const testCountWithFunName = a || 0;
+    logicalReturn(a);
 
     // branches in a block statement
     for (let i = 0, j = 1; i < 5; i++) {
