@@ -1,5 +1,9 @@
 ## Changelog
 
+* 2.4.4
+    - fixed branch count
+    - fixed function range for class method
+
 * 2.4.3
     - fixed original offset if reversed
 
