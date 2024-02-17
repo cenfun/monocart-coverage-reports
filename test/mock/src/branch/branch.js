@@ -42,7 +42,11 @@ const listForEach = (a) => {
     }
 };
 
-function coveredFunction() {
+function coveredFunction(a) {
+
+    // branch count should be 10:0 not 1:0
+    const testCountWithFunName = a || 0;
+
     // branches in a block statement
     for (let i = 0, j = 1; i < 5; i++) {
         if (i > 2) {
@@ -71,7 +75,19 @@ class MyCLass {
     static propTypes = 1;
     #privateField = 42;
     static #privateKey = 2;
+
+    constructor(a) {
+        // branch count should be 10:0 not 1:0
+        const testCountWithFunName = a || 0;
+        this.myMethod(a);
+    }
+
+    myMethod() {
+
+    }
+
 }
+
 
 function functionNeverMind(a) {
     if (a) {
@@ -82,8 +98,13 @@ function functionNeverMind(a) {
 
 const branch = (a) => {
 
-    coveredFunction();
-    coveredFunction();
+    let i = 0;
+    while (i < 10) {
+        coveredFunction(i + 1);
+        new MyCLass(i + 1);
+        i++;
+    }
+
 
     if (a) {
         // else path should be covered
