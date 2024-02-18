@@ -58,14 +58,8 @@ console.log(coverageResults.summary);
 ## Available Reports
 > V8 build-in reports (V8 data only):
 - `v8`
-    - Test in browser
-        - Build with webpack: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
-        - Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
-        - Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/) 
-        - [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
-    - Test in Node.js
-        - Collect with [env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp)
-        - Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/v8-node-koa/)
+    - Browser: Build with webpack [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify); Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild); Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/); [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
+    - Node.js: Collect with [env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp); Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/v8-node-koa/)
 
 ![](test/v8.gif)
 
