@@ -56,7 +56,7 @@ console.log(coverageResults.summary);
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
 
 ## Available Reports
-> V8 build-in reports:
+> V8 build-in reports (V8 data only):
 - `v8`
     - Test in browser
         - Build with webpack: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
@@ -74,8 +74,9 @@ console.log(coverageResults.summary);
 - `codecov`
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 - `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8.
+![](test/console-details.png)
 
-> Istanbul build-in reports:
+> Istanbul build-in reports (both V8 and istanbul data):
 - `clover`
 - `cobertura`
 - `html`
