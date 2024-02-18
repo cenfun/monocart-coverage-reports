@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.0
+    - (New Feature) added new report `console-details`
+
 * 2.4.4
     - fixed branch count
     - fixed function range for class method
