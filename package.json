@@ -1,6 +1,6 @@
 {
     "name": "monocart-coverage-reports",
-    "version": "2.4.4",
+    "version": "2.5.0",
     "description": "Monocart coverage reports",
     "main": "./lib/index.js",
     "bin": {
