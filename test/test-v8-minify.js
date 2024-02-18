@@ -8,10 +8,14 @@ const coverageOptions = {
     reports: [
         ['v8', {
             assetsPath: '../assets'
-        }]
+        }],
+        ['cobertura']
     ],
 
     name: 'My V8 Minify Coverage Report',
+    sourcePath: (filePath) => {
+        return filePath.replace(/&/g, '&amp;');
+    },
 
     outputDir: './docs/v8-minify'
 };
