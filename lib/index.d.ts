@@ -36,6 +36,11 @@ declare namespace MCR {
         ['codecov'] | ["codecov", {
             outputFile?: string;
         }] |
+        ['console-details'] | ['console-details', {
+            maxCols?: number;
+            skipPercent?: number;
+            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+        }] |
         ['clover'] | ['clover', {
             file?: string;
         }] |

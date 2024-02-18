@@ -9,6 +9,10 @@ const coverageOptions = {
         ['v8', {
             assetsPath: '../assets'
         }],
+        // ['console-details', {
+        //     skipPercent: 80,
+        //     metrics: ['bytes', 'functions', 'lines']
+        // }],
         ['cobertura']
     ],
 

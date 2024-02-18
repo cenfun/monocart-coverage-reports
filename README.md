@@ -72,6 +72,7 @@ console.log(coverageResults.summary);
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 - `codecov` (V8 data only)
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
+- `console-details` (V8 data only) Like `text`, but for V8.
 
 > Istanbul [build-in reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
 - `clover`

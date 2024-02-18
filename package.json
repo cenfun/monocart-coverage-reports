@@ -54,7 +54,7 @@
         "url": "git+https://github.com/cenfun/monocart-coverage-reports.git"
     },
     "dependencies": {
-        "console-grid": "~2.1.0",
+        "console-grid": "~2.2.1",
         "eight-colors": "~1.2.1",
         "istanbul-lib-coverage": "~3.2.2",
         "istanbul-lib-report": "~3.0.1",

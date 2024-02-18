@@ -10,8 +10,13 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
-        ['console-summary', {
-            // metrics: ['bytes', 'functions', 'lines']
+        // ['console-summary', {
+        //     // metrics: ['bytes', 'functions', 'lines']
+        // }],
+        ['console-details', {
+            // skipPercent: 100,
+            metrics: ['bytes', 'lines'],
+            maxCols: 30
         }],
         ['v8', {
             // metrics: ['bytes', 'functions', 'lines']
