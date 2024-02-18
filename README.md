@@ -68,6 +68,7 @@ console.log(coverageResults.summary);
 - `codecov`
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 - `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8.
+
 ![](test/console-details.png)
 
 > Istanbul build-in reports (both V8 and istanbul data):
@@ -92,7 +93,9 @@ console.log(coverageResults.summary);
 
 > Other reports:
 - `console-summary` shows coverage summary in the console
+
 ![](test/console-summary.png)
+
 - `raw` only keep all original data, which can be used for other reports input with `inputDir`
     - see [Merge Coverage Reports](#merge-coverage-reports)
 
