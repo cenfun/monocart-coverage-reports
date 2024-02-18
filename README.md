@@ -56,7 +56,8 @@ console.log(coverageResults.summary);
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
 
 ## Available Reports
-- `v8` (V8 data only)
+> V8 build-in reports:
+- `v8`
     - Test in browser
         - Build with webpack: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify)
         - Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild)
@@ -68,13 +69,13 @@ console.log(coverageResults.summary);
 
 ![](test/v8.gif)
 
-- `v8-json` (V8 data only)
+- `v8-json`
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
-- `codecov` (V8 data only)
+- `codecov`
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
-- `console-details` (V8 data only) Show file coverage and uncovered lines in the console. Like `text`, but for V8.
+- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8.
 
-> Istanbul [build-in reports](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)
+> Istanbul build-in reports:
 - `clover`
 - `cobertura`
 - `html`
@@ -94,7 +95,7 @@ console.log(coverageResults.summary);
 - `text-lcov`
 - `text-summary`
 
-> Other reports
+> Other reports:
 - `console-summary` shows coverage summary in the console
 ![](test/console-summary.png)
 - `raw` only keep all original data, which can be used for other reports input with `inputDir`
