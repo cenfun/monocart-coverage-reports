@@ -33,7 +33,14 @@
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
 * [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
-* [Integration](#integration) - Playwright, Jest, Vitest, Codecov, Coveralls, Sonar Cloud
+* [Integration](#integration)
+    - [Playwright](#playwright)
+    - [Jest](#jest)
+    - [Vitest](#vitest)
+    - [Codecov](#codecov)
+    - [Coveralls](#coveralls)
+    - [Sonar Cloud](#sonar-cloud)
+    - [Integration with Any Testing Framework](#integration-with-any-testing-framework)
 * [Thanks](#thanks)
 
 ## Usage
@@ -645,65 +652,69 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 ![](./test/debug-sourcemap.png)
 
 ## Integration
-- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - A [Playwright](https://github.com/microsoft/playwright) custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
-- [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - A [Jest](https://github.com/jestjs/jest/) custom reporter for coverage reports
-- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - A [Vitest](https://github.com/vitest-dev/vitest) custom provider module for coverage reports
-- [Codecov](https://codecov.com/) 
-    - [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
-    - Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
-    ```js
-    const coverageOptions = {
-        outputDir: "./coverage-reports",
-        reports: [
-            ['codecov']
-        ]
-    };
-    ```
-    - Github Actions example:
-    ```yml
-    - name: Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage-reports/codecov.json
-    ```
-- [Coveralls](https://coveralls.io/)
-    - [![Coverage Status](https://coveralls.io/repos/github/cenfun/monocart-coverage-reports/badge.svg?branch=main)](https://coveralls.io/github/cenfun/monocart-coverage-reports?branch=main)
-    ```js
-    const coverageOptions = {
-        outputDir: "./coverage-reports",
-        lcov: true
-    };
-    ```
-    - Github Actions example:
-    ```yml
-    - name: Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          files: ./coverage-reports/lcov.info
-    ```
- - [Sonar Cloud](https://sonarcloud.io/)
-    - [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=monocart-coverage-reports&metric=coverage)](https://sonarcloud.io/summary/new_code?id=monocart-coverage-reports)
-    - Github Actions example:
-    ```yml
-    - name: Analyze with SonarCloud
-        uses: sonarsource/sonarcloud-github-action@master
-        env: 
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          projectBaseDir: ./
-          args: >
-            -Dsonar.organization=cenfun
-            -Dsonar.projectKey=monocart-coverage-reports
-            -Dsonar.projectName=monocart-coverage-reports
-            -Dsonar.javascript.lcov.reportPaths=docs/mcr/lcov.info
-            -Dsonar.sources=lib
-            -Dsonar.tests=test
-            -Dsonar.exclusions=dist/*,packages/*
-    ```
-- Integration with any testing framework
-    - First, you need to collect coverage data when any stage of the test is completed. Then, add the coverage data to the coverage report.
-    - Upon the completion of all tests, generate the coverage report. 
-    - see [Multiprocessing Support](#multiprocessing-support)
+### [Playwright](https://github.com/microsoft/playwright)
+- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - A Playwright custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+### [Jest](https://github.com/jestjs/jest/)
+- [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - A Jest custom reporter for coverage reports
+### [Vitest](https://github.com/vitest-dev/vitest)
+- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - A Vitest custom provider module for coverage reports
+### [Codecov](https://codecov.com/)
+[![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
+- Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
+```js
+const coverageOptions = {
+    outputDir: "./coverage-reports",
+    reports: [
+        ['codecov']
+    ]
+};
+```
+- Github actions example:
+```yml
+- name: Codecov
+    uses: codecov/codecov-action@v3
+    with:
+        files: ./coverage-reports/codecov.json
+```
+### [Coveralls](https://coveralls.io/)
+[![Coverage Status](https://coveralls.io/repos/github/cenfun/monocart-coverage-reports/badge.svg?branch=main)](https://coveralls.io/github/cenfun/monocart-coverage-reports?branch=main)
+- Using `lcov` report:
+```js
+const coverageOptions = {
+    outputDir: "./coverage-reports",
+    lcov: true
+};
+```
+- Github actions example:
+```yml
+- name: Coveralls
+    uses: coverallsapp/github-action@v2
+    with:
+        files: ./coverage-reports/lcov.info
+```
+### [Sonar Cloud](https://sonarcloud.io/)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=monocart-coverage-reports&metric=coverage)](https://sonarcloud.io/summary/new_code?id=monocart-coverage-reports)
+- Using `lcov` report. Github actions example:
+```yml
+- name: Analyze with SonarCloud
+    uses: sonarsource/sonarcloud-github-action@master
+    env: 
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    with:
+        projectBaseDir: ./
+        args: >
+        -Dsonar.organization=cenfun
+        -Dsonar.projectKey=monocart-coverage-reports
+        -Dsonar.projectName=monocart-coverage-reports
+        -Dsonar.javascript.lcov.reportPaths=docs/mcr/lcov.info
+        -Dsonar.sources=lib
+        -Dsonar.tests=test
+        -Dsonar.exclusions=dist/*,packages/*
+```
+### Integration with Any Testing Framework
+- Collecting coverage data when any stage of the test is completed, and adding the coverage data to the coverage reporter.
+- Generating the coverage reports after the completion of all tests.
+- see [Multiprocessing Support](#multiprocessing-support)
 
 ## Thanks
 - Special thanks to [@edumserrano](https://github.com/edumserrano)
