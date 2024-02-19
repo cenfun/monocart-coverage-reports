@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.1
+    - added new option `clean`
+
 * 2.5.0
     - (New Feature) added new report `console-details`
 
