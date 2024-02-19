@@ -221,6 +221,8 @@ function useless() {
         scriptOffset
     };
 
+    const log = console.log;
+    console.log = () => {};
 
     const context = createContext({});
     const runScript = script.runInContext(context, {
@@ -244,6 +246,8 @@ function useless() {
     );
 
     // console.log(files);
+
+    console.log = log;
 
     await collectV8Coverage(postSession, files);
 
