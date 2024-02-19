@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.2
+    - removed URL.canParse to support node 14
+
 * 2.5.1
     - added new option `clean`
 
