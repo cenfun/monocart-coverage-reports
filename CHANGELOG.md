@@ -2,6 +2,7 @@
 
 * 2.5.3
     - fixed color issue for `console-details`
+    - fixed file url
 
 * 2.5.2
     - removed URL.canParse to support node 14
