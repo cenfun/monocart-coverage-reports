@@ -14,7 +14,7 @@ const generate = async () => {
     const coverageOptions = {
         // logging: 'debug',
         // watermarks: [60, 90],
-        reports: 'v8',
+        reports: ['v8', 'console-summary'],
 
         name: 'My V8 Node foreground-child Coverage Report',
         assetsPath: '../assets',
@@ -59,9 +59,8 @@ const generate = async () => {
         await coverageReport.add(coverageList);
     }
 
-    await coverageReport.generate();
-
-    EC.logGreen('done');
+    const coverageResults = await coverageReport.generate();
+    console.log('test-node-fgc coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
 

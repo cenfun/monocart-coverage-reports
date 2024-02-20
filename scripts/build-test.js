@@ -1,14 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const esbuild = require('esbuild');
-const webpack = require('webpack');
-
-const { rollup } = require('rollup');
-const rollupTypescript = require('@rollup/plugin-typescript');
-const rollupCommonJs = require('@rollup/plugin-commonjs');
-
 const EC = require('eight-colors');
-
+const webpack = require('webpack');
 const webpackConfIstanbul = require('../test/webpack.config-istanbul.js');
 const webpackConfV8 = require('../test/webpack.config-v8.js');
 
@@ -56,6 +49,7 @@ const runWebpackV8 = async () => {
 };
 
 const runEsbuild = async () => {
+    const esbuild = require('esbuild');
     const entry = path.resolve('test/mock/src/index.js');
     const outfile = path.resolve('test/mock/esbuild/dist/coverage-esbuild.js');
 
@@ -85,6 +79,9 @@ const runEsbuild = async () => {
 };
 
 const runRollup = async () => {
+    const { rollup } = require('rollup');
+    const rollupTypescript = require('@rollup/plugin-typescript');
+    const rollupCommonJs = require('@rollup/plugin-commonjs');
 
     const entry = path.resolve('test/mock/src/index.js');
 
@@ -164,7 +161,12 @@ const build = async () => {
     await runWebpackIstanbul();
     await runWebpackV8();
     await runEsbuild();
-    await runRollup();
+    try {
+        await runRollup();
+    } catch (e) {
+        // do not support node 14
+        console.log(e.message);
+    }
     await runNode();
 };
 

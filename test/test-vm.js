@@ -20,7 +20,11 @@ const coverageOptions = {
         // ['html', {
         //     subdir: 'html'
         // }],
-        'console-summary'
+        // 'console-summary',
+        ['console-details', {
+            // skipPercent: 80,
+            metrics: ['bytes', 'lines']
+        }]
     ],
 
     name: 'My V8 Node VM Coverage Report',
@@ -112,7 +116,6 @@ const collectV8Coverage = async (postSession, files) => {
 
     console.log('add node.js coverage ...');
     await MCR(coverageOptions).add(coverageList);
-
 
 };
 
@@ -254,10 +257,8 @@ function useless() {
     await stopV8Coverage(postSession);
     // =====================================================
 
-    console.log('generate v8-node coverage reports ...');
-
     const coverageResults = await MCR(coverageOptions).generate();
-    console.log('v8-node coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('test-vm coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
 

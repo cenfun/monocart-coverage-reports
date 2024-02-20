@@ -14,6 +14,8 @@ import parseCss from 'postcss/lib/parse';
 import { program } from 'commander';
 import { foregroundChild } from 'foreground-child';
 
+import supportsColor from 'supports-color';
+
 export {
 
     convertSourceMap,
@@ -30,5 +32,7 @@ export {
     parseCss,
 
     program,
-    foregroundChild
+    foregroundChild,
+
+    supportsColor
 };

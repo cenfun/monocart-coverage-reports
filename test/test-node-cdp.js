@@ -109,10 +109,8 @@ const generate = async () => {
 
     // =====================================================
 
-    console.log('generate v8-node cdp coverage reports ...');
-
     const coverageResults = await MCR(coverageOptions).generate();
-    console.log('v8-node cdp coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('test-node-cdp coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
 

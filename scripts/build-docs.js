@@ -12,7 +12,9 @@ const buildDocs = () => {
     // copy css
     const cssDir = path.resolve(__dirname, '../docs/assets');
     if (!fs.existsSync(cssDir)) {
-        fs.mkdirSync(cssDir);
+        fs.mkdirSync(cssDir, {
+            recursive: true
+        });
     }
     fs.copyFileSync(
         path.resolve(__dirname, '../node_modules/github-markdown-css/github-markdown.css'),

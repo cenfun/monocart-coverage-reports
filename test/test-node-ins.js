@@ -114,10 +114,8 @@ const generate = async () => {
     await stopV8Coverage(postSession);
     // =====================================================
 
-    console.log('generate v8-node coverage reports ...');
-
     const coverageResults = await MCR(coverageOptions).generate();
-    console.log('v8-node coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('test-node-ins coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
 

@@ -56,7 +56,8 @@ const generate = async () => {
         await coverageReport.add(coverageList);
     }
 
-    await coverageReport.generate();
+    const coverageResults = await coverageReport.generate();
+    console.log('test-node-api coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
 

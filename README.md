@@ -74,7 +74,7 @@ console.log(coverageResults.summary);
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 - `codecov`
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
-- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8.
+- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
 
 ![](test/console-details.png)
 

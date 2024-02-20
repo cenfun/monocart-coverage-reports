@@ -900,7 +900,7 @@ const init = async () => {
 
     // for export all data JSON able
     state.reportData = reportData;
-    state.title = reportData.name || reportData.title;
+    state.title = reportData.name || reportData.title || 'Coverage Report';
     Object.assign(state.watermarks, reportData.watermarks);
     state.version = reportData.version;
 

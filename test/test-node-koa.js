@@ -137,7 +137,7 @@ const generate = async () => {
             continue;
         }
 
-        console.log(coverageList.map((entry) => entry.url));
+        // console.log(coverageList.map((entry) => entry.url));
 
         // attached source content
         coverageList.forEach((entry) => {
@@ -148,7 +148,7 @@ const generate = async () => {
     }
 
     const coverageResults = await coverageReport.generate();
-    console.log('koa coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('test-node-koa coverage reportPath', EC.magenta(coverageResults.reportPath));
 
     console.log('kill koa server ...');
     killSubProcess(cp);

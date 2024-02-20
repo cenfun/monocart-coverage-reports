@@ -122,7 +122,11 @@ module.exports = {
 
                 const filename = path.basename(distPath);
                 const toJs = path.resolve(toPath, filename);
-                fs.cpSync(distPath, toJs);
+
+                // console.log(distPath, toJs);
+                // node 14 do not support cpSync
+                fs.writeFileSync(toJs, fs.readFileSync(distPath));
+
                 EC.logGreen(`copied ${toJs}`);
 
                 rows.push({
