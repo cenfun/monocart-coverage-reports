@@ -31,6 +31,17 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
+    // filter files if test with mcr CLI
+    entryFilter: (entry) => {
+        if (entry.url.includes('node_modules')) {
+            return false;
+        }
+        if (entry.url.includes('monocart-coverage-reports/lib')) {
+            return false;
+        }
+        return true;
+    },
+
     outputDir: './docs/vm'
 };
 
