@@ -1,0 +1,17 @@
+/* at rule should be uncovered */
+@charset "UTF-8";
+
+.red {
+    color: red;
+}
+
+/* comments */
+
+.next-unused {
+    color: none;
+
+    .uncovered-css {
+        /* comments in */
+        color: red; /* comments after */
+    }
+}

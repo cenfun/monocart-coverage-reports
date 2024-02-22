@@ -17,6 +17,7 @@ const addEmptyCoverage = (list, dir) => {
 
         const extname = path.extname(filename);
 
+        // remove packages
         if (filename.startsWith('monocart-')) {
             return;
         }
@@ -25,7 +26,8 @@ const addEmptyCoverage = (list, dir) => {
             return;
         }
 
-        if (['.css'].includes(extname)) {
+        // there is no css in lib
+        if (['.css', '.scss'].includes(extname)) {
 
             list.push({
                 empty: true,

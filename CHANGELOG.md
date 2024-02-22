@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.4
+    - fixed empty coverage
+
 * 2.5.3
     - fixed color issue for `console-details`
     - fixed file url

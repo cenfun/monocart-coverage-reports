@@ -16,7 +16,7 @@ const addEmptyCoverage = (list, dir) => {
         const url = pathToFileURL(sourcePath).toString();
 
         const extname = path.extname(filename);
-        if (['.css'].includes(extname)) {
+        if (['.css', '.scss'].includes(extname)) {
 
             list.push({
                 empty: true,
