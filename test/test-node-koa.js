@@ -12,7 +12,7 @@ const MCR = require('../');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    reports: 'v8',
+    reports: ['v8', 'v8-json'],
 
     name: 'My Koa Coverage Report',
     assetsPath: '../assets',
