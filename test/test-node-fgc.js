@@ -16,7 +16,7 @@ const generate = async () => {
         // watermarks: [60, 90],
         reports: ['v8', 'console-summary'],
 
-        name: 'My V8 Node foreground-child Coverage Report',
+        name: 'My V8 Node fgc Coverage Report',
         assetsPath: '../assets',
         // lcov: true,
 

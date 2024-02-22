@@ -1,8 +1,44 @@
-
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert');
 const { pathToFileURL } = require('url');
+const EC = require('eight-colors');
 const Util = require('../lib/utils/util.js');
+
+const getJson = (p) => {
+    return JSON.parse(fs.readFileSync(p));
+};
+
+const checkNodeResults = () => {
+    console.log('checking 4 node results should be same');
+
+    // fgc can not run in GA ci
+    const list = ['api', 'cdp', 'env', 'ins'];
+
+    list.reduce((p, c) => {
+
+        const pJson = getJson(path.resolve(`./docs/v8-node-${p}/coverage-report.json`));
+        const cJson = getJson(path.resolve(`./docs/v8-node-${c}/coverage-report.json`));
+
+        // should be same except name
+        pJson.name = null;
+        cJson.name = null;
+
+        assert.deepEqual(pJson, cJson);
+        console.log(`${p} ${EC.green('=')} ${c}`);
+
+        return c;
+    });
+
+};
+
+const checkTestResults = async () => {
+    console.log('checking test results ...');
+
+    await checkNodeResults();
+
+};
+
 
 const addEmptyCoverage = (list, dir) => {
     // add empty coverage
@@ -85,8 +121,9 @@ module.exports = {
 
     // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
-    onEnd: () => {
-        console.log('test mcr end');
+    onEnd: async () => {
+        console.log('test done.');
+        await checkTestResults();
     }
 
 };

@@ -10,9 +10,9 @@ const MCR = require('../');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    reports: 'v8',
+    reports: ['v8', 'v8-json'],
 
-    name: 'My V8 Node Inspector Coverage Report',
+    name: 'My V8 Node ins Coverage Report',
     assetsPath: '../assets',
     // lcov: true,
 

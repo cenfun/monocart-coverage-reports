@@ -11,9 +11,9 @@ const generate = async () => {
 
 
     const coverageOptions = {
-    // logging: 'debug',
-    // watermarks: [60, 90],
-        reports: 'v8',
+        // logging: 'debug',
+        // watermarks: [60, 90],
+        reports: ['v8', 'v8-json'],
 
         name: 'My V8 Node env Coverage Report',
         assetsPath: '../assets',
