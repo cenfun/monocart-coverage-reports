@@ -68,7 +68,7 @@ console.log(coverageResults.summary);
     - Browser: Build with webpack [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [V8 Minify](https://cenfun.github.io/monocart-coverage-reports/v8-minify); Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/v8-rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/v8-esbuild); Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/); [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
     - Node.js: Collect with [env](https://cenfun.github.io/monocart-coverage-reports/v8-node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/v8-node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/v8-node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/v8-node-cdp); Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/v8-node-koa/)
 
-![](test/v8.gif)
+![](./assets/v8.gif)
 
 - `v8-json`
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
@@ -76,7 +76,7 @@ console.log(coverageResults.summary);
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 - `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
 
-![](test/console-details.png)
+![](./assets/console-details.png)
 
 > Istanbul build-in reports (both V8 and istanbul data):
 - `clover`
@@ -101,7 +101,7 @@ console.log(coverageResults.summary);
 > Other reports:
 - `console-summary` shows coverage summary in the console
 
-![](test/console-summary.png)
+![](./assets/console-summary.png)
 
 - `raw` only keep all original data, which can be used for other reports input with `inputDir`
     - see [Merge Coverage Reports](#merge-coverage-reports)
@@ -625,11 +625,11 @@ const coverageOptions = {
 };
 ```
 When `logging` is `debug`, the raw report data will be preserved in `[outputDir]/.cache` or `[outputDir]/raw` if `raw` report is used. And the dist file will be preserved in the V8 list, and by opening the browser's devtool, it makes data verification visualization effortless.
-![](./test/debug-coverage.png)
+![](./assets/debug-coverage.png)
 
 - Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
 
-![](./test/debug-sourcemap.png)
+![](./assets/debug-sourcemap.png)
 
 ## Integration
 ### [Playwright](https://github.com/microsoft/playwright)

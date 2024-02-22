@@ -9,30 +9,26 @@ const buildDocs = () => {
 
     console.log('build docs ...');
 
-    // copy css
-    const cssDir = path.resolve(__dirname, '../docs/assets');
-    if (!fs.existsSync(cssDir)) {
-        fs.mkdirSync(cssDir, {
+    const assetsDir = path.resolve(__dirname, '../docs/assets');
+    if (!fs.existsSync(assetsDir)) {
+        fs.mkdirSync(assetsDir, {
             recursive: true
         });
     }
-    fs.copyFileSync(
-        path.resolve(__dirname, '../node_modules/github-markdown-css/github-markdown.css'),
-        path.resolve(cssDir, 'github-markdown.css')
-    );
 
-    // copy images
-    const imagesDir = path.resolve(__dirname, '../docs/test');
-    if (!fs.existsSync(imagesDir)) {
-        fs.mkdirSync(imagesDir);
-    }
-
-    Util.forEachFile('./test', ['.png', '.gif'], (filename, fileDir) => {
+    // copy assets
+    Util.forEachFile('./assets', [], (filename, fileDir) => {
         fs.copyFileSync(
             path.resolve(fileDir, filename),
-            path.resolve(imagesDir, filename)
+            path.resolve(assetsDir, filename)
         );
     });
+
+    // copy css
+    fs.copyFileSync(
+        path.resolve(__dirname, '../node_modules/github-markdown-css/github-markdown.css'),
+        path.resolve(assetsDir, 'github-markdown.css')
+    );
 
     const markdownTemplate = fs.readFileSync(path.resolve(__dirname, 'template/markdown.html'), {
         encoding: 'utf-8'
