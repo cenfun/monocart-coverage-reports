@@ -8,10 +8,7 @@ const Koa = require('koa');
 const testV8EsBuild = require('./test-v8-esbuild.js');
 const testV8Rollup = require('./test-v8-rollup.js');
 const testV8Minify = require('./test-v8-minify.js');
-
 const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
-
-const testPuppeteer = require('./test-puppeteer.js');
 
 const serverPort = 8130;
 const serverUrl = `http://localhost:${serverPort}`;
@@ -103,9 +100,8 @@ const test = async () => {
         testV8Minify(serverUrl),
 
         testV8EsBuild(serverUrl),
-        testV8Rollup(serverUrl),
+        testV8Rollup(serverUrl)
 
-        testPuppeteer(serverUrl)
     ]);
 
     console.log('close server ...');

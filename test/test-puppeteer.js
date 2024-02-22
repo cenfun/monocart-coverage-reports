@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const PCR = require('puppeteer-chromium-resolver');
 const EC = require('eight-colors');
 
@@ -16,20 +18,35 @@ const coverageOptions = {
         }],
         ['v8', {
             // metrics: ['bytes', 'functions', 'lines']
-        }]
+        }],
+        'v8-json'
     ],
 
-    name: 'My puppeteer Coverage Report',
+    name: 'My Puppeteer Coverage Report',
     assetsPath: '../assets',
     lcov: true,
 
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 || sourcePath.search(/minify\//) !== -1,
+
+    sourcePath: (filePath) => {
+        const map = {
+            'localhost-8130/': 'test/mock/',
+            'coverage-v8/': ''
+        };
+        for (const key in map) {
+            if (filePath.startsWith(key)) {
+                return map[key] + filePath.slice(key.length);
+            }
+        }
+        return filePath;
+    },
+
     outputDir: './docs/puppeteer'
 };
 
-const test1 = async (serverUrl) => {
+const test = async () => {
 
-    console.log('start puppeteer test1 ...');
+    console.log('start puppeteer test ...');
 
     const browser = await stats.puppeteer.launch({
         // headless: false,
@@ -57,11 +74,26 @@ const test1 = async (serverUrl) => {
         deviceScaleFactor: 1
     });
 
-    const url = `${serverUrl}/v8/`;
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    const fileList = [
+        './test/mock/v8/index.html',
+        './test/mock/v8/dist/coverage-v8.js',
+        './test/mock/css/style.css'
+    ];
+    for (const filePath of fileList) {
+        const content = fs.readFileSync(filePath).toString('utf-8');
+        const extname = path.extname(filePath);
+        if (extname === '.html') {
+            await page.setContent(content);
+        } else if (extname === '.css') {
+            await page.addStyleTag({
+                content: `${content}\n/*# sourceURL=${filePath} */`
+            });
+        } else {
+            await page.addScriptTag({
+                content: `${content}\n//# sourceURL=${filePath}`
+            });
+        }
+    }
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -93,71 +125,7 @@ const test1 = async (serverUrl) => {
     // v8
     const report = await MCR(coverageOptions).add(coverageList);
 
-    console.log('puppeteer coverage1 added', report.type);
-
-    await browser.close();
-};
-
-
-const test2 = async (serverUrl) => {
-
-    console.log('start puppeteer test2 ...');
-
-    const browser = await stats.puppeteer.launch({
-        // headless: false,
-        args: ['--no-sandbox'],
-        executablePath: stats.executablePath
-    });
-
-    const page = await browser.newPage();
-
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false,
-            includeRawScriptCoverage: true
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
-
-    await page.setViewport({
-        width: 1280,
-        height: 720,
-        deviceScaleFactor: 1
-    });
-
-    const url = `${serverUrl}/v8/`;
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-    });
-
-    await page.evaluate(() => {
-        const { start } = window['coverage-v8'];
-        start();
-    });
-
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
-
-    // to raw V8 script coverage
-    const coverageList = [... jsCoverage.map((it) => {
-        return {
-            source: it.text,
-            ... it.rawScriptCoverage
-        };
-    }), ... cssCoverage];
-
-    const report = await MCR(coverageOptions).add(coverageList);
-
-    console.log('puppeteer coverage2 added', report.type);
+    console.log('puppeteer coverage added', report.type);
 
     await browser.close();
 };
@@ -172,14 +140,13 @@ const generate = async () => {
 };
 
 
-module.exports = async (serverUrl) => {
+const main = async () => {
     // clean cache first
     await MCR(coverageOptions).cleanCache();
 
-    await Promise.all([
-        test1(serverUrl),
-        test2(serverUrl)
-    ]);
+    await test();
 
     await generate();
 };
+
+main();

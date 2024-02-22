@@ -30,9 +30,28 @@ const checkNodeResults = () => {
 
 };
 
+const checkV8PuppeteerResults = () => {
+    console.log('checking V8 and Puppeteer results should be same');
+
+    const p = 'v8';
+    const c = 'puppeteer';
+
+    const pJson = getJson(path.resolve(`./docs/${p}/coverage-report.json`));
+    const cJson = getJson(path.resolve(`./docs/${c}/coverage-report.json`));
+
+    // should be same except name
+    pJson.name = null;
+    cJson.name = null;
+
+    assert.deepEqual(pJson, cJson);
+    console.log(`${p} ${EC.green('=')} ${c}`);
+
+};
+
 module.exports = async () => {
     console.log('checking test results ...');
 
     await checkNodeResults();
 
+    await checkV8PuppeteerResults();
 };

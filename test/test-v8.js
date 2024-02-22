@@ -21,7 +21,7 @@ const coverageOptions = {
         ['v8', {
             // metrics: ['bytes', 'functions', 'lines']
         }],
-        ['json'],
+        'v8-json',
         [path.resolve('./test/custom-istanbul-reporter.js'), {
             type: 'istanbul',
             file: 'custom-istanbul-coverage.text'
