@@ -59,10 +59,14 @@ const checkV8PuppeteerResults = () => {
 const checkKoaResults = () => {
     console.log('checking koa results');
     const json = getJson('v8-node-koa');
-
     const summary = '{"bytes":{"total":472,"covered":398,"uncovered":74,"pct":84.32,"status":"high"},"statements":{"total":13,"covered":11,"uncovered":2,"pct":84.62,"status":"high"},"branches":{"total":2,"covered":1,"uncovered":1,"pct":50,"status":"medium"},"functions":{"total":3,"covered":2,"uncovered":1,"pct":66.67,"status":"medium"},"lines":{"total":17,"covered":11,"blank":6,"comment":0,"uncovered":6,"pct":64.71,"status":"medium"}}';
+    const jsonSummary = JSON.parse(summary);
 
-    assert.deepStrictEqual(json.summary, JSON.parse(summary), 'failed to check koa summary');
+    // do not check bytes, the EOL is different: /r/n or only /n between windows and linux
+    delete json.summary.bytes;
+    delete jsonSummary.bytes;
+
+    assert.deepStrictEqual(json.summary, jsonSummary, 'failed to check koa summary');
 };
 
 module.exports = async () => {
