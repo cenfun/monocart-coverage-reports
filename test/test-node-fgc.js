@@ -20,7 +20,7 @@ const generate = async () => {
         assetsPath: '../assets',
         // lcov: true,
 
-        outputDir: './docs/v8-node-fgc'
+        outputDir: './docs/node-fgc'
     };
 
 

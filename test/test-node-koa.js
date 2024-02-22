@@ -18,7 +18,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/v8-node-koa'
+    outputDir: './docs/node-koa'
 };
 
 // ==================================================================

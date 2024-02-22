@@ -12,7 +12,7 @@ const checkNodeResults = () => {
 
     // fgc can not run in GA ci
     const list = ['api', 'cdp', 'env', 'ins'].map((it) => {
-        const json = getJson(`v8-node-${it}`);
+        const json = getJson(`node-${it}`);
         // should be same except name
         const name = json.name;
         delete json.name;
@@ -58,7 +58,7 @@ const checkV8PuppeteerResults = () => {
 
 const checkKoaResults = () => {
     console.log('checking koa results');
-    const json = getJson('v8-node-koa');
+    const json = getJson('node-koa');
     const summary = '{"bytes":{"total":472,"covered":398,"uncovered":74,"pct":84.32,"status":"high"},"statements":{"total":13,"covered":11,"uncovered":2,"pct":84.62,"status":"high"},"branches":{"total":2,"covered":1,"uncovered":1,"pct":50,"status":"medium"},"functions":{"total":3,"covered":2,"uncovered":1,"pct":66.67,"status":"medium"},"lines":{"total":17,"covered":11,"blank":6,"comment":0,"uncovered":6,"pct":64.71,"status":"medium"}}';
     const jsonSummary = JSON.parse(summary);
 

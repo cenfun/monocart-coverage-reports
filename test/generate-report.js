@@ -19,7 +19,7 @@ const generate = async () => {
         assetsPath: '../assets',
         // lcov: true,
 
-        outputDir: './docs/v8-node-env'
+        outputDir: './docs/node-env'
     };
 
     const coverageReport = MCR(coverageOptions);

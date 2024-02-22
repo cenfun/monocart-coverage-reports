@@ -19,7 +19,7 @@ const coverageOptions = {
     ],
 
     // merge from exists raw dirs
-    inputDir: './docs/vm/raw, ./docs/cli/raw, ./wrong-raw-dir',
+    inputDir: './docs/node-vm/raw, ./docs/cli/raw, ./wrong-raw-dir',
 
     name: 'My Merge Coverage Report',
     assetsPath: '../assets',

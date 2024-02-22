@@ -5,9 +5,9 @@ const EC = require('eight-colors');
 const KSR = require('koa-static-resolver');
 const Koa = require('koa');
 
-const testV8EsBuild = require('./test-v8-esbuild.js');
-const testV8Rollup = require('./test-v8-rollup.js');
-const testV8Minify = require('./test-v8-minify.js');
+const testEsBuild = require('./test-esbuild.js');
+const testRollup = require('./test-rollup.js');
+const testMinify = require('./test-minify.js');
 const testV8AndIstanbul = require('./test-v8-and-istanbul.js');
 
 const serverPort = 8130;
@@ -97,10 +97,10 @@ const test = async () => {
 
         testV8AndIstanbul(serverUrl),
 
-        testV8Minify(serverUrl),
+        testMinify(serverUrl),
 
-        testV8EsBuild(serverUrl),
-        testV8Rollup(serverUrl)
+        testEsBuild(serverUrl),
+        testRollup(serverUrl)
 
     ]);
 

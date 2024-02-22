@@ -16,7 +16,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/v8-node-ins'
+    outputDir: './docs/node-ins'
 };
 
 

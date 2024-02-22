@@ -13,12 +13,12 @@ const coverageOptions = {
 
     name: 'My V8 Rollup Coverage Report',
 
-    outputDir: './docs/v8-rollup'
+    outputDir: './docs/rollup'
 };
 
 const test1 = async (serverUrl) => {
 
-    console.log('start v8-rollup test1 ...');
+    console.log('start rollup test1 ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -51,7 +51,7 @@ const test1 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await MCR(coverageOptions).add(coverageList);
-    console.log('v8-rollup coverage1 added', results.type);
+    console.log('rollup coverage1 added', results.type);
 
     await browser.close();
 };
@@ -59,7 +59,7 @@ const test1 = async (serverUrl) => {
 
 const test2 = async (serverUrl) => {
 
-    console.log('start v8-rollup test2 ...');
+    console.log('start rollup test2 ...');
     const browser = await chromium.launch({
         // headless: false
     });
@@ -92,7 +92,7 @@ const test2 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await MCR(coverageOptions).add(coverageList);
-    console.log('v8-rollup coverage2 added', results.type);
+    console.log('rollup coverage2 added', results.type);
 
     await browser.close();
 };
@@ -100,10 +100,10 @@ const test2 = async (serverUrl) => {
 
 const generate = async () => {
 
-    console.log('generate v8-rollup coverage reports ...');
+    console.log('generate rollup coverage reports ...');
 
     const coverageResults = await MCR(coverageOptions).generate();
-    console.log('v8-rollup coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('rollup coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 

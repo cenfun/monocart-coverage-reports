@@ -17,7 +17,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/v8-node-api'
+    outputDir: './docs/node-api'
 };
 
 const generate = async () => {

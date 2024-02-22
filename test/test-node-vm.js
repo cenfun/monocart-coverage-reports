@@ -42,7 +42,7 @@ const coverageOptions = {
         return true;
     },
 
-    outputDir: './docs/vm'
+    outputDir: './docs/node-vm'
 };
 
 
@@ -86,7 +86,7 @@ const collectV8Coverage = async (postSession, files) => {
     // filter node internal files
     coverageList = coverageList.filter((entry) => entry.url && entry.url.startsWith('file:'));
 
-    coverageList = coverageList.filter((entry) => !entry.url.includes('test-vm.js'));
+    coverageList = coverageList.filter((entry) => !entry.url.includes('test-node-vm.js'));
 
     // attach source content
     coverageList.forEach((item) => {
@@ -269,7 +269,7 @@ function useless() {
     // =====================================================
 
     const coverageResults = await MCR(coverageOptions).generate();
-    console.log('test-vm coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('test-node-vm coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };
 

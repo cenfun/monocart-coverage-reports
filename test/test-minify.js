@@ -21,12 +21,12 @@ const coverageOptions = {
         return filePath.replace(/&/g, '&amp;');
     },
 
-    outputDir: './docs/v8-minify'
+    outputDir: './docs/minify'
 };
 
 const test = async (serverUrl) => {
 
-    console.log('start v8-minify test ...');
+    console.log('start minify test ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -59,7 +59,7 @@ const test = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await MCR(coverageOptions).add(coverageList);
-    console.log('v8-minify coverage added', results.type);
+    console.log('minify coverage added', results.type);
 
     await browser.close();
 };
@@ -67,10 +67,10 @@ const test = async (serverUrl) => {
 
 const generate = async () => {
 
-    console.log('generate v8-minify coverage reports ...');
+    console.log('generate minify coverage reports ...');
 
     const coverageResults = await MCR(coverageOptions).generate();
-    console.log('v8-minify coverage reportPath', EC.magenta(coverageResults.reportPath));
+    console.log('minify coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 

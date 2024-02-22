@@ -14,7 +14,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/v8-node-cdp'
+    outputDir: './docs/node-cdp'
 };
 
 const collectV8Coverage = async (client) => {
