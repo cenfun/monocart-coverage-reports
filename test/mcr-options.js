@@ -87,7 +87,6 @@ module.exports = {
     // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
     onEnd: async () => {
-        console.log('test done.');
         await checkTest();
     }
 
