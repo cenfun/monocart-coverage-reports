@@ -24,6 +24,7 @@ const {
 const state = inject('state');
 
 const data = shallowReactive({
+    countVisible: true,
     indexes: {}
 });
 
@@ -269,16 +270,32 @@ const showGotoPopover = (e) => {
     data.popoverVisible = true;
 };
 
-const updateTopExecutions = (executionCounts) => {
+const updateExecutionCounts = (coverage) => {
 
-    if (!executionCounts) {
-        data.topExecutions = null;
+    if (!coverage.originalExecutionCounts) {
+        coverage.originalExecutionCounts = coverage.executionCounts;
+    }
+
+    const { originalExecutionCounts } = coverage;
+
+    const allCounts = Object.keys(originalExecutionCounts);
+    if (!allCounts.length) {
+        data.showCount = false;
+        data.topCounts = null;
         return;
     }
 
+    data.showCount = true;
+
+    if (state.count) {
+        coverage.executionCounts = originalExecutionCounts;
+    } else {
+        coverage.executionCounts = {};
+    }
+
     const list = [];
-    Object.keys(executionCounts).forEach((lineIndex) => {
-        const arr = executionCounts[lineIndex];
+    allCounts.forEach((lineIndex) => {
+        const arr = originalExecutionCounts[lineIndex];
         arr.forEach((item) => {
             list.push({
                 ... item,
@@ -287,11 +304,6 @@ const updateTopExecutions = (executionCounts) => {
             });
         });
     });
-
-    if (list.length < 2) {
-        data.topExecutions = null;
-        return;
-    }
 
     list.sort((a, b) => {
         return b.value - a.value;
@@ -302,7 +314,7 @@ const updateTopExecutions = (executionCounts) => {
         list.length = maxNumber;
     }
 
-    data.topExecutions = list;
+    data.topCounts = list;
 };
 
 const autoDetectType = (item) => {
@@ -450,11 +462,10 @@ const renderReport = async () => {
     data.mapping = report.mapping;
     data.maxContentLength = report.content.length;
 
-    const { executionCounts, linesSummary } = report.coverage;
-
     // console.log('showReport executionCounts', executionCounts);
-    updateTopExecutions(executionCounts);
+    updateExecutionCounts(report.coverage);
 
+    const { linesSummary } = report.coverage;
     // update lines summary after formatted
     const lines = data.summaryList.find((it) => it.id === 'lines');
     // lines could NOT be in metrics
@@ -512,7 +523,10 @@ watch(() => state.flyoverData, (v) => {
     showReport();
 });
 
-watch(() => state.formatted, (v) => {
+watch([
+    () => state.formatted,
+    () => state.count
+], (v) => {
     if (!state.flyoverData) {
         return;
     }
@@ -604,15 +618,15 @@ onMounted(() => {
     </VuiFlex>
 
     <VuiFlex
-      v-if="data.topExecutions"
+      v-if="data.topCounts"
       padding="5px"
       class="mcr-report-head"
       wrap
       gap="10px"
     >
-      <div><b>Top Executions</b></div>
+      <div><b>Top Counts</b></div>
       <VuiFlex
-        v-for="(item, i) in data.topExecutions"
+        v-for="(item, i) in data.topCounts"
         :key="i"
         class="mcr-top-item"
         wrap
@@ -639,10 +653,23 @@ onMounted(() => {
         v-model="state.formatted"
         width="30px"
         height="18px"
+        tooltip="Format Document"
         :label-clickable="true"
         label-position="right"
       >
         Format
+      </VuiSwitch>
+
+      <VuiSwitch
+        v-if="data.showCount"
+        v-model="state.count"
+        width="30px"
+        height="18px"
+        tooltip="Show Execution Count"
+        :label-clickable="true"
+        label-position="right"
+      >
+        Count
       </VuiSwitch>
 
       <IconLabel

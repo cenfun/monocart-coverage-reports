@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.5
+    - added switch button for count
+
 * 2.5.4
     - fixed empty coverage
 

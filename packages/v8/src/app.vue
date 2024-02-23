@@ -70,6 +70,7 @@ const state = shallowReactive({
 
     group: true,
     formatted: false,
+    count: true,
     locate: 'Uncovered',
 
     keywords: '',
@@ -855,7 +856,7 @@ const initStore = () => {
         'true': true,
         'false': false
     };
-    ['group', 'formatted', 'locate'].forEach((item) => {
+    ['group', 'formatted', 'count', 'locate'].forEach((item) => {
         // default empty string
         const v = store.get(item);
         // console.log(item, v);
@@ -951,6 +952,10 @@ watch(() => state.group, (v) => {
 
 watch(() => state.formatted, (v) => {
     store.set('formatted', v);
+});
+
+watch(() => state.count, (v) => {
+    store.set('count', v);
 });
 
 watch(() => state.locate, (v) => {
