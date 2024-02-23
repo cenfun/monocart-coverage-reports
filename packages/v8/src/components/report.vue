@@ -24,7 +24,6 @@ const {
 const state = inject('state');
 
 const data = shallowReactive({
-    countVisible: true,
     indexes: {}
 });
 
@@ -291,6 +290,8 @@ const updateExecutionCounts = (coverage) => {
         coverage.executionCounts = originalExecutionCounts;
     } else {
         coverage.executionCounts = {};
+        data.topCounts = null;
+        return;
     }
 
     const list = [];
