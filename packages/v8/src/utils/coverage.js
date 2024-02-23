@@ -358,7 +358,7 @@ class CoverageParser {
             // number
             count,
             // formatted number
-            value: Util.KNF(count),
+            value: Util.CF(count),
             // for end position
             end: endPos
         };
