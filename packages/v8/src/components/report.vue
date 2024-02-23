@@ -84,6 +84,16 @@ const enableLocate = (item) => {
     return true;
 };
 
+const formatTooltip = (item, key) => {
+    const v = item[key];
+    let value = Util.NF(v);
+    if (item.id === 'bytes') {
+        value = Util.BSF(v);
+    }
+    const label = Util.capitalizeFirstLetter(key);
+    return `${label} ${item.id} ${value}`;
+};
+
 const switchLocate = () => {
     state.locate = state.locate === 'Uncovered' ? 'All' : 'Uncovered';
 };
@@ -269,36 +279,31 @@ const showGotoPopover = (e) => {
     data.popoverVisible = true;
 };
 
+
 const updateExecutionCounts = (coverage) => {
 
-    if (!coverage.originalExecutionCounts) {
-        coverage.originalExecutionCounts = coverage.executionCounts;
-    }
+    // init
+    coverage.executionCounts = {};
+    data.topCounts = null;
 
-    const { originalExecutionCounts } = coverage;
-
-    const allCounts = Object.keys(originalExecutionCounts);
+    const { allExecutionCounts } = coverage;
+    const allCounts = Object.keys(allExecutionCounts);
     if (!allCounts.length) {
         data.showCount = false;
-        data.topCounts = null;
         return;
     }
 
     data.showCount = true;
-
-    if (state.count) {
-        coverage.executionCounts = originalExecutionCounts;
-    } else {
-        coverage.executionCounts = {};
-        data.topCounts = null;
+    if (!state.count) {
         return;
     }
 
-    const list = [];
+    coverage.executionCounts = allExecutionCounts;
+    const topCounts = [];
     allCounts.forEach((lineIndex) => {
-        const arr = originalExecutionCounts[lineIndex];
+        const arr = allExecutionCounts[lineIndex];
         arr.forEach((item) => {
-            list.push({
+            topCounts.push({
                 ... item,
                 // line index to line number
                 line: parseInt(lineIndex) + 1
@@ -306,16 +311,16 @@ const updateExecutionCounts = (coverage) => {
         });
     });
 
-    list.sort((a, b) => {
-        return b.value - a.value;
+    topCounts.sort((a, b) => {
+        return b.count - a.count;
     });
 
     const maxNumber = 5;
-    if (list.length > maxNumber) {
-        list.length = maxNumber;
+    if (topCounts.length > maxNumber) {
+        topCounts.length = maxNumber;
     }
 
-    data.topCounts = list;
+    data.topCounts = topCounts;
 };
 
 const autoDetectType = (item) => {
@@ -577,18 +582,20 @@ onMounted(() => {
           gap="5px"
           class="mcr-report-values"
         >
-          <div :tooltip="'Covered ' + item.id + ' / Total ' + item.id">
-            <span :class="item.covered?'mcr-covered':''">{{ Util.NF(item.covered) }}</span> / {{ Util.NF(item.total) }}
+          <div :tooltip="formatTooltip(item, 'covered')">
+            <span :class="item.covered?'mcr-covered':''">{{ Util.NF(item.covered) }}</span>
           </div>
 
-          <VuiFlex gap="5px">
-            <div
-              :class="item.uncovered?'mcr-uncovered':''"
-              :tooltip="'Uncovered ' + item.id"
-            >
-              {{ Util.NF(item.uncovered) }}
-            </div>
-          </VuiFlex>
+          <div
+            :class="item.uncovered?'mcr-uncovered':''"
+            :tooltip="formatTooltip(item, 'uncovered')"
+          >
+            {{ Util.NF(item.uncovered) }}
+          </div>
+
+          <div :tooltip="formatTooltip(item, 'total')">
+            {{ Util.NF(item.total) }}
+          </div>
 
           <IconLabel
             v-if="enableLocate(item)"
@@ -605,13 +612,13 @@ onMounted(() => {
         >
           <div
             v-if="item.blank"
-            tooltip="Blank lines"
+            :tooltip="formatTooltip(item, 'blank')"
           >
             Blank {{ item.blank }}
           </div>
           <div
             v-if="item.comment"
-            tooltip="Comment lines"
+            :tooltip="formatTooltip(item, 'comment')"
           >
             Comment {{ item.comment }}
           </div>

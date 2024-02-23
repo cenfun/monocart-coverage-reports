@@ -6,7 +6,7 @@ class CoverageParser {
 
         this.uncoveredLines = {};
         this.uncoveredPieces = {};
-        this.executionCounts = {};
+        this.allExecutionCounts = {};
 
         // parse comment and blank lines, include vue html for now
         this.mappingParser = mappingParser;
@@ -101,7 +101,7 @@ class CoverageParser {
             // required for code viewer
             uncoveredLines: this.uncoveredLines,
             uncoveredPieces: this.uncoveredPieces,
-            executionCounts: this.executionCounts,
+            allExecutionCounts: this.allExecutionCounts,
             decorations,
             // updated lines summary after formatted
             linesSummary: this.linesSummary
@@ -349,19 +349,22 @@ class CoverageParser {
         const execution = {
         // for start position
             column,
-            value: count,
+            // number
+            count,
+            // formatted number
+            value: Util.KNF(count),
             // for end position
             end: endPos
         };
 
         // console.log(formattedStart, formattedEnd, sLoc);
 
-        const prevList = this.executionCounts[index];
+        const prevList = this.allExecutionCounts[index];
         if (prevList) {
             prevList.push(execution);
             return;
         }
-        this.executionCounts[index] = [execution];
+        this.allExecutionCounts[index] = [execution];
     }
 
     getDecorations(branches) {
