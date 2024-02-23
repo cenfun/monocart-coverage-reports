@@ -324,6 +324,12 @@ class CoverageParser {
 
         const locator = this.formattedLocator;
 
+        // start in a comment, it does not make sense
+        // all comments range should be ignored, resolve it later
+        if (locator.lineParser.commentParser.isComment(start, start)) {
+            return;
+        }
+
         // 1-base
         const sLoc = locator.offsetToLocation(formattedStart);
 

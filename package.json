@@ -62,7 +62,7 @@
         "istanbul-reports": "~3.1.7",
         "lz-utils": "~2.0.2",
         "monocart-code-viewer": "~1.1.1",
-        "monocart-formatter": "~2.3.1",
+        "monocart-formatter": "~2.3.2",
         "turbogrid": "~3.0.13"
     },
     "devDependencies": {
