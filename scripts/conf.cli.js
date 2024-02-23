@@ -11,6 +11,10 @@ const beforeV8 = (item, Util) => {
     // using global coverage data
     const dataFile = 'coverage-data.js';
     const jsDataPath = path.resolve(__dirname, `../docs/v8/${dataFile}`);
+
+    // typescript repo huge data example 8M
+    // const jsDataPath = path.resolve(__dirname, `../../github/TypeScript/coverage/${dataFile}`);
+
     if (!fs.existsSync(jsDataPath)) {
         EC.logRed(`ERROR: Not found: ${jsDataPath}`);
         return 0;

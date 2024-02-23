@@ -134,6 +134,16 @@ const branch = (a) => {
         functionNeverMind(a);
     }
 
+    // multiple lines and operator after
+    /* eslint-disable operator-linebreak */
+    if (
+        i ||
+        a ||
+        a + i
+    ) {
+        console.log('known issue: second line should be uncovered not partial');
+    }
+
     AssignmentPattern();
     ConditionalExpression();
     IfStatement();
