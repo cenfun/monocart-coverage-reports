@@ -2,6 +2,7 @@
 
 * 2.5.5
     - added switch button for count
+    - fixed UI performance issue
 
 * 2.5.4
     - fixed empty coverage

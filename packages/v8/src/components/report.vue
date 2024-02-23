@@ -427,6 +427,13 @@ const onCursorChange = (loc) => {
 const renderReport = async () => {
     state.loading = true;
 
+    // fixing UI performance issue
+    // waiting for the flyover end, after the container size is ready
+    if (state.flyoverEndPromise) {
+        await state.flyoverEndPromise;
+        state.flyoverEndPromise = null;
+    }
+
     const item = data.item;
 
     const summary = item.summary;

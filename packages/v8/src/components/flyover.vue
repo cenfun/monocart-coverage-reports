@@ -14,6 +14,10 @@ const onFlyoverEnd = () => {
     if (!state.flyoverVisible) {
         hash.remove('page');
     }
+    if (state.flyoverEndResolve) {
+        state.flyoverEndResolve();
+        state.flyoverEndResolve = null;
+    }
 };
 
 const onFlyoverResize = (width) => {

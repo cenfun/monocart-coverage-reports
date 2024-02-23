@@ -202,6 +202,13 @@ const hideFlyover = () => {
 };
 
 const showFlyover = (rowItem) => {
+
+    if (!state.flyoverVisible) {
+        state.flyoverEndPromise = new Promise((resolve) => {
+            state.flyoverEndResolve = resolve;
+        });
+    }
+
     state.flyoverData = rowItem.id;
 
     let ft = rowItem.sourcePath;
