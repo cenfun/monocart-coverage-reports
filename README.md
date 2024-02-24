@@ -252,19 +252,29 @@ Arguments:
 
 Options:
   -V, --version                output the version number
-  -c, --config <path>          config path for options
+  -c, --config <path>          custom config path
   -o, --outputDir <dir>        output dir for reports
   -r, --reports <name[,name]>  coverage reports to use
   -n, --name <name>            report name for title
+  -i, --inputDir <dir>         input dir for merging raw files
+  --entryFilter <pattern>      entry url filter
+  --sourceFilter <pattern>     source path filter
   --outputFile <path>          output file for v8 report
   --inline                     inline html for v8 report
   --assetsPath <path>          assets path if not inline
   --lcov                       generate lcov.info file
+  --logging <logging>          off, error, info, debug
   -h, --help                   display help for command
 ```
-- Using configuration file for more [options](#default-options)
+- Supports loading default configuration file
+    - `.mcrrc`
+    - `mcr.config.json`
+    - `mcr.config.mjs`
+    - `mcr.config.cjs`
+    - `mcr.config.js`
+- Specify custom configuration file
 ```sh
-mcr "node ./test/test-node-env.js" -c test/cli-options.js
+mcr "node ./test.js" -c path-to/my-custom-config.js
 ```
 
 ## Compare Reports

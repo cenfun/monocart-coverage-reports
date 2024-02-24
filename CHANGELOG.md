@@ -2,6 +2,7 @@
 
 * 2.5.6
     - added `minimatch` support for entryFilter and sourceFilter
+    - added supports for loading default configuration file
 
 * 2.5.5
     - added switch button for count
