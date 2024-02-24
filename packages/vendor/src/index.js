@@ -1,5 +1,4 @@
 import * as convertSourceMap from 'convert-source-map';
-import axios from 'axios';
 
 import { decode } from '@jridgewell/sourcemap-codec';
 
@@ -21,7 +20,6 @@ import supportsColor from 'supports-color';
 export {
 
     convertSourceMap,
-    axios,
 
     decode,
 
