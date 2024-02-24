@@ -125,7 +125,7 @@ console.log(coverageResults.summary);
     }
     ```
     - istanbul custom reporter
-    > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference, 
+    > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
     - v8 custom reporter
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
