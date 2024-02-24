@@ -68,11 +68,13 @@ module.exports = {
         return filePath;
     },
 
-    entryFilter: (entry) => {
-        return entry.url.includes('mock/node') || entry.url.search(/src\/.+/) !== -1;
-    },
+    // entryFilter: (entry) => {
+    //     return entry.url.includes('mock/node') || entry.url.search(/src\/.+/) !== -1;
+    // },
+    // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
-    sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
+    entryFilter: '{**/mock/node/**,**/src/**}',
+    sourceFilter: '**/src/**',
 
     onEnd: () => {
         console.log('test cli end');

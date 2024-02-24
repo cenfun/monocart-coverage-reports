@@ -198,9 +198,14 @@ declare namespace MCR {
         /** {string|string[]} input raw dir(s) */
         inputDir?: string | string[];
 
-        /** {string} v8 or html for istanbul by default
-        * {array} multiple reports with options
-        * v8 report or istanbul supported reports */
+        /** 
+         * 
+         * {string} 'v8', 'v8,console-details'
+         * 
+         * {array} ['v8'], ['v8', ['console-details', { skipPercent: 80 }]]
+         * 
+         * By default, `v8` for V8 data, `html` for Istanbul data
+        */
         reports?: string | ReportDescription[];
 
         /** {string} Report name. Defaults to "Coverage Report". */
@@ -213,11 +218,21 @@ declare namespace MCR {
         /** (V8 only) {string} Assets path if not inline. Defaults to "./assets" */
         assetsPath?: string;
 
-        /** (V8 only) {function} A filter function to execute for each element in the V8 list. */
-        entryFilter?: (entry: V8CoverageEntry) => boolean;
+        /** (V8 only) 
+         * 
+         * {string} `minimatch` pattern for entry url; multiple patterns: "{pattern1,pattern2}";
+         * 
+         * {function} A filter function for each entry file in the V8 list.
+         * */
+        entryFilter?: string | ((entry: V8CoverageEntry) => boolean);
 
-        /** (V8 only) {function} A filter function to execute for each element in the sources which unpacked from the source map. */
-        sourceFilter?: (sourcePath: string) => boolean;
+        /** (V8 only) 
+         * 
+         * {string} `minimatch` pattern for source path; multiple patterns: "{pattern1,pattern2}";
+         * 
+         * {function} A filter function for each source path when the source is unpacked from the source map. 
+         * */
+        sourceFilter?: string | ((sourcePath: string) => boolean);
 
         /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
         v8Ignore?: boolean;

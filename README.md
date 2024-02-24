@@ -183,11 +183,18 @@ We can use `sourceFilter` to filter the source files. For example, we should rem
 > src/index.js
 > src/components/app.js
 ```
-Example:
+For example:
 ```js
 const coverageOptions = {
     entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
+};
+```
+Or `minimatch` pattern:
+```js
+const coverageOptions = {
+    entryFilter: "**/main.js",
+    sourceFilter: "**/src/**"
 };
 ```
 

@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.6
+    - added `minimatch` support for entryFilter and sourceFilter
+
 * 2.5.5
     - added switch button for count
     - fixed UI performance issue

@@ -14,6 +14,8 @@ import parseCss from 'postcss/lib/parse';
 import { program } from 'commander';
 import { foregroundChild } from 'foreground-child';
 
+import { minimatch } from 'minimatch';
+
 import supportsColor from 'supports-color';
 
 export {
@@ -33,6 +35,8 @@ export {
 
     program,
     foregroundChild,
+
+    minimatch,
 
     supportsColor
 };
