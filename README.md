@@ -492,7 +492,15 @@ const coverageOptions = {
     }
 };
 ```
-see example: [./test/test-merge.js](./test/test-merge.js)
+It also supports simple key/value replacement:
+```js
+const coverageOptions = {
+    sourcePath: {
+        'my-dist-file1/': '', 
+        'my-dist-file2/': ''
+    }
+};
+```
 
 ## Adding Empty Coverage for Untested Files
 By default the untested files will not be included in the coverage report, we can first add empty coverage data for all files, so the files with coverage data will be merged, and untested files will retain 0% coverage.
