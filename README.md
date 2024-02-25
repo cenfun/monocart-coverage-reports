@@ -649,12 +649,23 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 ![](./assets/debug-sourcemap.png)
 
 ## Integration
+
 ### [Playwright](https://github.com/microsoft/playwright)
 - [monocart-reporter](https://github.com/cenfun/monocart-reporter) - A Playwright custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+- Coverage for Playwright [component testing](https://playwright.dev/docs/test-components):
+    - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
+    - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
+    - [playwright-ct-svelte](https://github.com/cenfun/playwright-ct-svelte)
+- Coverage for [Next.js](https://github.com/vercel/next.js) (both server side and client side)
+    - [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
+    - [nextjs-with-playwright-istanbul](https://github.com/cenfun/nextjs-with-playwright-istanbul)
+
 ### [Jest](https://github.com/jestjs/jest/)
 - [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - A Jest custom reporter for coverage reports
+
 ### [Vitest](https://github.com/vitest-dev/vitest)
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - A Vitest custom provider module for coverage reports
+
 ### [Codecov](https://codecov.com/)
 [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
 - Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
