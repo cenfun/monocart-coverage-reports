@@ -38,6 +38,7 @@
     - [Jest](#jest)
     - [Vitest](#vitest)
     - [CodeceptJS](#codeceptjs)
+    - [WebdriverIO](#webdriverio)
     - [Codecov](#codecov)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
@@ -678,6 +679,9 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
 - [codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage) - A CodeceptJS plugin for coverage reports
+
+### [WebdriverIO](https://github.com/webdriverio/webdriverio)
+- [wdio-monocart-service](https://github.com/cenfun/wdio-monocart-service) - A WebdriverIO service for coverage reports
 
 ### [Codecov](https://codecov.com/)
 [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
