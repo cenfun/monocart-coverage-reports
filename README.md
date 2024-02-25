@@ -37,6 +37,7 @@
     - [Playwright](#playwright)
     - [Jest](#jest)
     - [Vitest](#vitest)
+    - [CodeceptJS](#codeceptjs)
     - [Codecov](#codecov)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
