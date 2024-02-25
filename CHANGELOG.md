@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.7
+    - added object key/value replacement support for `sourcePath`
+
 * 2.5.6
     - added `minimatch` support for entryFilter and sourceFilter
     - added supports for loading default configuration file

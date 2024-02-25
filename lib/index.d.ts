@@ -242,8 +242,14 @@ declare namespace MCR {
         /** {boolean} Generate lcov.info file, same as lcovonly report. Defaults to false.  */
         lcov?: boolean;
 
-        /** {function} Source path handler. */
-        sourcePath?: (filePath: string) => string;
+        /** 
+         * {function} Source path handler. 
+         * 
+         * {object} Replace key with value.
+         * */
+        sourcePath?: ((filePath: string) => string) | {
+            [key: string]: string;
+        };
 
         /** {string|function} Specify the report path, especially when there are multiple reports. Defaults to outputDir/index.html. */
         reportPath?: string | (() => string);

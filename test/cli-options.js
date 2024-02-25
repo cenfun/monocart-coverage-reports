@@ -60,12 +60,15 @@ module.exports = {
 
     },
 
-    sourcePath: (filePath) => {
-        const pre = 'monocart-coverage-reports/';
-        if (filePath.startsWith(pre)) {
-            return filePath.slice(pre.length);
-        }
-        return filePath;
+    // sourcePath: (filePath) => {
+    //     const pre = 'monocart-coverage-reports/';
+    //     if (filePath.startsWith(pre)) {
+    //         return filePath.slice(pre.length);
+    //     }
+    //     return filePath;
+    // },
+    sourcePath: {
+        'monocart-coverage-reports/': ''
     },
 
     // entryFilter: (entry) => {
