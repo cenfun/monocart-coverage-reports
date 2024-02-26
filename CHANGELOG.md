@@ -1,6 +1,6 @@
 ## Changelog
 
-* 2.6.0
+* 2.5.8
     - added new option `all` for adding empty coverage for all files
     - added multiple patterns support for entryFilter and sourceFilter
 
