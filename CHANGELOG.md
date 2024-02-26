@@ -3,6 +3,9 @@
 * 2.5.8
     - added new option `all` for adding empty coverage for all files
     - added multiple patterns support for entryFilter and sourceFilter
+    - fixed ast parser for empty coverage file
+    - fixed percentage for empty css
+    - fixed UI selection range error
 
 * 2.5.7
     - added object key/value replacement support for `sourcePath`

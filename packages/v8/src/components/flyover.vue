@@ -13,6 +13,7 @@ const state = inject('state');
 const onFlyoverEnd = () => {
     if (!state.flyoverVisible) {
         hash.remove('page');
+        state.globalError = false;
     }
     if (state.flyoverEndResolve) {
         state.flyoverEndResolve();

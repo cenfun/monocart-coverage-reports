@@ -37,7 +37,7 @@ const focusExecution = (item) => {
     const cm = codeViewer.viewer;
     const lineInfo = cm.state.doc.line(item.line);
     const start = lineInfo.from + item.column;
-    codeViewer.setSelection(start, item.end);
+    codeViewer.setSelection(start, Math.min(item.end, data.maxContentLength));
 };
 
 const getIndexByPosition = (list) => {
@@ -140,13 +140,14 @@ const renderRange = (range) => {
     const start = mappingParser.originalToFormatted(range.start);
     const end = mappingParser.originalToFormatted(range.end);
 
+
     if (Util.hasOwn(range, 'generatedStart')) {
         range.showGenerated = true;
     }
 
     new Promise((resolve) => {
         data.resolve = resolve;
-        codeViewer.setSelection(start, end);
+        codeViewer.setSelection(start, Math.min(end, data.maxContentLength));
     }).then(() => {
         data.range = range;
     });
@@ -739,6 +740,13 @@ onMounted(() => {
         </VuiFlex>
       </VuiFlex>
 
+      <IconLabel
+        v-if="state.globalError"
+        class="mcr-icon-error"
+        tooltip="Unknown error"
+        icon="error"
+      />
+
       <div class="mcr-about">
         <a
           href="https://github.com/cenfun/monocart-coverage-reports"
@@ -881,6 +889,10 @@ onMounted(() => {
 
 .mcr-generated-range:hover {
     opacity: 1;
+}
+
+.mcr-icon-error {
+    color: red;
 }
 
 </style>

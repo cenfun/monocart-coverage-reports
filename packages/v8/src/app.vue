@@ -1009,6 +1009,13 @@ window.addEventListener('message', (e) => {
     }
 });
 
+window.addEventListener('error', (e) => {
+    state.globalError = true;
+});
+window.addEventListener('unhandledrejection', function(e) {
+    state.globalError = true;
+});
+
 </script>
 
 <template>
