@@ -2,7 +2,7 @@ const checkTest = require('./check-test.js');
 
 module.exports = {
 
-    logging: 'debug',
+    // logging: 'debug',
 
     name: 'My MCR Coverage Report',
 

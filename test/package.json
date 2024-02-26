@@ -21,7 +21,7 @@
         "koa": "^2.15.0",
         "koa-static-resolver": "^1.0.5",
         "marked": "^12.0.0",
-        "open": "^10.0.3",
+        "open": "^10.0.4",
         "playwright": "^1.41.2",
         "puppeteer-chromium-resolver": "^22.0.0",
         "rollup": "^4.12.0",
