@@ -21,6 +21,11 @@ const coverageOptions = {
     ],
     lcov: true,
     name: 'My Istanbul Report',
+
+    all: {
+        dir: ['test/mock/src']
+    },
+
     outputDir: './docs/istanbul'
 };
 

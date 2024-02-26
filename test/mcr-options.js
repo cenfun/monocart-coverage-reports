@@ -34,6 +34,7 @@ module.exports = {
     all: {
         dir: 'lib',
         filter: {
+            // '**/monocart-*.js': false,
             '**/*.html': false,
             '**/*.ts': false,
             '**/*': true
