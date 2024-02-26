@@ -220,19 +220,41 @@ declare namespace MCR {
 
         /** (V8 only) 
          * 
-         * {string} `minimatch` pattern for entry url; multiple patterns: "{pattern1,pattern2}";
+         * {string} `minimatch` pattern for entry url; {object} multiple patterns;
          * 
          * {function} A filter function for each entry file in the V8 list.
          * */
-        entryFilter?: string | ((entry: V8CoverageEntry) => boolean);
+        entryFilter?: string | {
+            [pattern: string]: boolean;
+        } | ((entry: V8CoverageEntry) => boolean);
 
         /** (V8 only) 
          * 
-         * {string} `minimatch` pattern for source path; multiple patterns: "{pattern1,pattern2}";
+         * {string} `minimatch` pattern for source path; {object} multiple patterns;
          * 
          * {function} A filter function for each source path when the source is unpacked from the source map. 
          * */
-        sourceFilter?: string | ((sourcePath: string) => boolean);
+        sourceFilter?: string | {
+            [pattern: string]: boolean;
+        } | ((sourcePath: string) => boolean);
+
+        /**
+         * options for adding empty coverage for all files
+         */
+        all?: string | string[] | {
+            /** the dir(s) of all files */
+            dir: string | string[];
+            /** the coverage data type, v8 or istanbul */
+            type?: "v8" | "istanbul";
+            /** 
+             * the file filter, return the file type, if true, defaults to css if ".css" otherwise is js 
+             * 
+             * {string} `minimatch` pattern for file path; {object} multiple patterns; {function} A filter function for file path;
+            */
+            filter?: string | {
+                [pattern: string]: "js" | "css" | boolean;
+            } | ((filePath: string) => "js" | "css" | boolean)
+        };
 
         /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
         v8Ignore?: boolean;
