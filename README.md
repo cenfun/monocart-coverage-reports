@@ -192,21 +192,19 @@ const coverageOptions = {
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
-Or `minimatch` pattern:
+Or using `minimatch` pattern:
 ```js
 const coverageOptions = {
     entryFilter: "**/main.js",
     sourceFilter: "**/src/**"
 };
-// or multiple patterns:
+// supports multiple patterns:
 const coverageOptions = {
     entryFilter: {
-        // '**/node/lib/*': false,
-        '**/mock/node/**': true,
-        '**/src/**': true
+        '**/vendor.js': false,
+        '**/main.js': true
     },
     sourceFilter: {
-        // '**/ignore/**': false,
         '**/src/**': true
     }
 };
@@ -357,21 +355,31 @@ await MCR(coverageOptions).add(jsCoverage);
 ## Collecting Raw V8 Coverage Data with Puppeteer
 > Puppeteer does not provide raw v8 coverage data by default. A simple conversion is required, see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 ```js
-await page.coverage.startJSCoverage({
-    // provide raw v8 coverage data
-    includeRawScriptCoverage: true
-});
+await Promise.all([
+    page.coverage.startJSCoverage({
+        resetOnNavigation: false,
+        // provide raw v8 coverage data
+        includeRawScriptCoverage: true
+    }),
+    page.coverage.startCSSCoverage({
+        resetOnNavigation: false
+    })
+]);
 
 await page.goto(url);
 
-const jsCoverage = await page.coverage.stopJSCoverage();
-const rawV8CoverageData = jsCoverage.map((it) => {
-    // Convert to raw v8 coverage format
+const [jsCoverage, cssCoverage] = await Promise.all([
+    page.coverage.stopJSCoverage(),
+    page.coverage.stopCSSCoverage()
+]);
+
+// to raw V8 script coverage
+const coverageData = [... jsCoverage.map((it) => {
     return {
         source: it.text,
         ... it.rawScriptCoverage
     };
-}
+}), ... cssCoverage];
 ```
 
 ## Node.js V8 Coverage Report for Server Side
