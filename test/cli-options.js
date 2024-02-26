@@ -76,8 +76,20 @@ module.exports = {
     // },
     // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
-    entryFilter: '{**/mock/node/**,**/src/**}',
-    sourceFilter: '**/src/**',
+    // entryFilter: '{**/mock/node/**,**/src/**}',
+    // sourceFilter: '**/src/**',
+
+
+    entryFilter: {
+        // '**/node/lib/*': false,
+        '**/mock/node/**': true,
+        '**/src/**': true
+    },
+
+    sourceFilter: {
+        // '**/ignore/**': false,
+        '**/src/**': true
+    },
 
     onEnd: () => {
         console.log('test cli end');
