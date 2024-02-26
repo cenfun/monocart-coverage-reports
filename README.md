@@ -198,6 +198,18 @@ const coverageOptions = {
     entryFilter: "**/main.js",
     sourceFilter: "**/src/**"
 };
+// or multiple patterns:
+const coverageOptions = {
+    entryFilter: {
+        // '**/node/lib/*': false,
+        '**/mock/node/**': true,
+        '**/src/**': true
+    },
+    sourceFilter: {
+        // '**/ignore/**': false,
+        '**/src/**': true
+    }
+};
 ```
 
 ## onEnd Hook
@@ -505,42 +517,41 @@ const coverageOptions = {
 ```
 
 ## Adding Empty Coverage for Untested Files
-By default the untested files will not be included in the coverage report, we can first add empty coverage data for all files, so the files with coverage data will be merged, and untested files will retain 0% coverage.
+By default the untested files will not be included in the coverage report, we can add empty coverage data for all files with option `all`, the untested files will show 0% coverage.
 ```js
-const fs = require('fs');
-const path = require('path');
-const { pathToFileURL } = require('url');
-const MCR = require('monocart-coverage-reports');
-
-const dir = "./src";
-const coverageData = [];
-const fileList = fs.readdirSync(dir);
-for (const filename of fileList) {
-    const filePath = path.resolve(dir, filename);
-    const source = fs.readFileSync(filePath).toString('utf-8');
-    const sourcePath = path.relative(process.cwd(), filePath);
-    const url = pathToFileURL(sourcePath).toString();
-    const extname = path.extname(filename);
-    if (['.css'].includes(extname)) {
-        coverageData.push({
-            empty: true,
-            type: 'css',
-            url,
-            text: source
-        });
-    } else {
-        coverageData.push({
-            empty: true,
-            type: 'js',
-            url,
-            source
-        });
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        filter: (filePath) => {
+            return true;
+        }
     }
-}
-const options = require('path-to/same-options.js');
-await MCR(options).add(coverageData);
+};
 ```
-see example: [./test/cli-options.js](./test/cli-options.js)
+The filter also supports `minimatch` pattern:
+```js
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        filter: '**/*.js'
+    }
+};
+// or multiple patterns
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        filter: {
+            // exclude files
+            '**/ignored-*.js': false,
+            '**/*.html': false,
+            '**/*.ts': false,
+            // empty css coverage
+            '**/*.scss': "css",
+            '**/*': true
+        }
+    }
+};
+```
 
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
