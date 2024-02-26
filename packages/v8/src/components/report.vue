@@ -86,6 +86,11 @@ const enableLocate = (item) => {
 
 const formatTooltip = (item, key) => {
     const v = item[key];
+
+    if (item.total === 0 && item.empty) {
+        return `Unparsable ${item.id}`;
+    }
+
     let value = Util.NF(v);
     if (item.id === 'bytes') {
         value = Util.BSF(v);
@@ -442,7 +447,7 @@ const renderReport = async () => {
 
     const item = data.item;
 
-    const summary = item.summary;
+    const { empty, summary } = item;
     // summary list
     data.summaryList = state.metrics.filter((it) => {
         // no functions,branches for css
@@ -455,6 +460,7 @@ const renderReport = async () => {
         const info = {
             id,
             name,
+            empty,
             ... summary[id]
         };
         if (id === 'lines') {
