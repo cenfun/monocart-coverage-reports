@@ -1,5 +1,9 @@
 ## Changelog
 
+* 2.6.0
+    - added new option `all` for adding empty coverage for all files
+    - added multiple patterns support for entryFilter and sourceFilter
+
 * 2.5.7
     - added object key/value replacement support for `sourcePath`
 
