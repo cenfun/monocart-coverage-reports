@@ -36,6 +36,7 @@
         "test-css": "node ./test/test-css.js",
         "test-cli": "npx mcr \"node ./test/test-node-env.js\" -o docs/cli -c test/cli-options.js",
         "test-merge": "node ./test/test-merge.js",
+        "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
         "test-all": "npm run test-browser && npm run test-node && npm run test-cli && npm run test-merge && npm run build-docs",
         "test": "npx mcr \"npm run test-all\" -c test/mcr-options.js",
         "dev": "sf d v8",

@@ -12,6 +12,7 @@ const coverageOptions = {
         }],
         // v8 will be ignored if input data istanbul
         'v8',
+        'raw',
         ['html'],
         // ['text'],
         ['json'],

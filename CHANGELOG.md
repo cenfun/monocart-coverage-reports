@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.5.9
+    - fixed issue for istanbul source and source path replacement
+
 * 2.5.8
     - added new option `all` for adding empty coverage for all files
     - added multiple patterns support for entryFilter and sourceFilter
