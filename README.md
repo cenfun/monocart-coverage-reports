@@ -142,7 +142,7 @@ console.log(coverageResults.summary);
 ### Multiple Reports:
 ```js
 const MCR = require('monocart-coverage-reports');
-const options = {
+const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
         // build-in reports
@@ -161,14 +161,14 @@ const options = {
         ["custom-reporter-1"],
         ["custom-reporter-2", {
             type: "istanbul",
-            option: "value"
+            key: "value"
         }],
         // Specify reporter name with local path
         ['/absolute/path/to/custom-reporter.js']
 
     ]
 }
-const coverageReport = MCR(options);
+const coverageReport = MCR(coverageOptions);
 coverageReport.cleanCache();
 ```
 
@@ -428,32 +428,39 @@ Possible solutions:
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 - Main process, before the start of testing
 ```js
-// clean previous cache before the start of testing (option)
 const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-MCR(options).cleanCache();
+const coverageOptions = require('path-to/same-options.js');
+const coverageReport = MCR(coverageOptions);
+// clean previous cache before the start of testing
+// unless the running environment is new and no cache
+coverageReport.cleanCache();
 ```
 
 - Sub process 1, testing stage 1
 ```js
 const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-await MCR(options).add(coverageData1);
+const coverageOptions = require('path-to/same-options.js');
+const coverageReport = MCR(coverageOptions);
+// do not clean cache in the stage
+await coverageReport.add(coverageData1);
 ```
 
 - Sub process 2, testing stage 2
 ```js
 const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-await MCR(options).add(coverageData2);
+const coverageOptions = require('path-to/same-options.js');
+const coverageReport = MCR(coverageOptions);
+// do not clean cache in the stage
+await coverageReport.add(coverageData2);
 ```
 
 - Main process, after the completion of testing
 ```js
 // generate coverage reports after the completion of testing
 const MCR = require('monocart-coverage-reports');
-const options = require('path-to/same-options.js');
-const coverageReport = MCR(options);
+const coverageOptions = require('path-to/same-options.js');
+const coverageReport = MCR(coverageOptions);
+// do not clean cache before generating reports
 const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 ```
