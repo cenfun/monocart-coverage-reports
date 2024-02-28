@@ -3,6 +3,7 @@
 * 2.5.9
     - fixed issue for istanbul source and source path replacement
     - fixed issue for original file when fully uncovered
+    - added new option `cleanCache`
 
 * 2.5.8
     - added new option `all` for adding empty coverage for all files

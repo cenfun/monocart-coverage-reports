@@ -280,8 +280,15 @@ declare namespace MCR {
         * {object} { bytes:[50,80], statements:[50,80], branches:[50,80], functions:[50,80], lines:[50,80] } */
         watermarks?: Watermarks;
 
-        /** {boolean} clean previous files in output dir before generating report. Defaults to true. */
+        /** {boolean} Indicates whether to clean previous files in output dir before generating report. Defaults to true. */
         clean?: boolean;
+
+        /**
+         * {boolean} Indicates whether to clean previous cache in output dir before generating report. Defaults to false. 
+         * 
+         * If true, the API `cleanCache()` will execute automatically.
+        */
+        cleanCache?: boolean;
 
         /** {function} onEnd hook */
         onEnd?: (reportData: CoverageResults) => Promise<void>;
