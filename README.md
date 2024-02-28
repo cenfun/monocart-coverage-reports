@@ -53,6 +53,7 @@ const options = {
     reports: "v8"
 }
 const coverageReport = MCR(options);
+coverageReport.cleanCache();
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 const coverageResults = await coverageReport.generate();
@@ -161,6 +162,7 @@ const options = {
     ]
 }
 const coverageReport = MCR(options);
+coverageReport.cleanCache();
 ```
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report

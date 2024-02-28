@@ -58,6 +58,8 @@ const coverageOptions = {
         return filePath;
     },
 
+    all: 'test/mock/src',
+
     onEnd: (coverageResults) => {
         const thresholds = {
             bytes: 80,
