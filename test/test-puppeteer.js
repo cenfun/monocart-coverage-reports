@@ -41,6 +41,8 @@ const coverageOptions = {
         return filePath;
     },
 
+    all: 'test/mock/src',
+
     outputDir: './docs/puppeteer'
 };
 
