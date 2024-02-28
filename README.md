@@ -49,13 +49,16 @@
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = {
+    name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: "v8"
+    reports: ["v8", "console-details"]
 }
 const coverageReport = MCR(coverageOptions);
 coverageReport.cleanCache();
+
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
+
 const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
 
