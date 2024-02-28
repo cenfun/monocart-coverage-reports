@@ -48,16 +48,20 @@
 ## Usage
 ```js
 const MCR = require('monocart-coverage-reports');
-const options = {
+const coverageOptions = {
     outputDir: './coverage-reports',
     reports: "v8"
 }
-const coverageReport = MCR(options);
+const coverageReport = MCR(coverageOptions);
 coverageReport.cleanCache();
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 const coverageResults = await coverageReport.generate();
 console.log(coverageResults.summary);
+
+// Or 
+// const { CoverageReport } = require('monocart-coverage-reports');
+// const coverageReport = new CoverageReport(coverageOptions);
 ```
 - [example v8](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js)
 - [example istanbul](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
@@ -475,6 +479,7 @@ const coverageOptions = {
 ```
 Then, after all the tests are completed, generate a merged report with option `inputDir`:
 ```js
+// esm syntax
 import fs from "fs";
 import { CoverageReport } from 'monocart-coverage-reports';
 const coverageOptions = {
