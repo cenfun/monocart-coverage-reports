@@ -59,8 +59,7 @@ coverageReport.cleanCache();
 await coverageReport.add(coverageData1);
 await coverageReport.add(coverageData2);
 
-const coverageResults = await coverageReport.generate();
-console.log(coverageResults.summary);
+await coverageReport.generate();
 
 // Or 
 // const { CoverageReport } = require('monocart-coverage-reports');
@@ -461,8 +460,7 @@ const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
 const coverageReport = MCR(coverageOptions);
 // do not clean cache before generating reports
-const coverageResults = await coverageReport.generate();
-console.log(coverageResults.summary);
+await coverageReport.generate();
 ```
 
 ## Merge Coverage Reports
