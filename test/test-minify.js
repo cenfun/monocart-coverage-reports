@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
     reports: [
@@ -21,7 +21,10 @@ const coverageOptions = {
         return filePath.replace(/&/g, '&amp;');
     },
 
-    outputDir: './docs/minify'
+    outputDir: './docs/minify',
+    onEnd: function(coverageResults) {
+        checkSnapshot(coverageResults);
+    }
 };
 
 const test = async (serverUrl) => {
