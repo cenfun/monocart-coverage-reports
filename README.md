@@ -72,7 +72,9 @@ await coverageReport.generate();
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
 
 ## Available Reports
+
 > V8 build-in reports (V8 data only):
+
 - `v8`
     - Browser: Build with webpack [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [Minify](https://cenfun.github.io/monocart-coverage-reports/minify); Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/esbuild); Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/); [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
     - Node.js: Collect with [env](https://cenfun.github.io/monocart-coverage-reports/node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/node-cdp); Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/node-koa/)
@@ -81,13 +83,9 @@ await coverageReport.generate();
 
 - `v8-json`
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
-- `codecov`
-    - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
-- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
-
-![](./assets/console-details.png)
 
 > Istanbul build-in reports (both V8 and istanbul data):
+
 - `clover`
 - `cobertura`
 - `html`
@@ -107,10 +105,18 @@ await coverageReport.generate();
 - `text-lcov`
 - `text-summary`
 
-> Other reports:
+> Other build-in reports (both V8 and istanbul data):
+
+- `codecov`
+    - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
+
 - `console-summary` shows coverage summary in the console
 
 ![](./assets/console-summary.png)
+
+- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
+
+![](./assets/console-details.png)
 
 - `raw` only keep all original data, which can be used for other reports input with `inputDir`
     - see [Merge Coverage Reports](#merge-coverage-reports)

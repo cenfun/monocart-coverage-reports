@@ -33,14 +33,6 @@ declare namespace MCR {
         ['v8-json'] | ["v8-json", {
             outputFile?: string;
         }] |
-        ['codecov'] | ["codecov", {
-            outputFile?: string;
-        }] |
-        ['console-details'] | ['console-details', {
-            maxCols?: number;
-            skipPercent?: number;
-            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
-        }] |
         ['clover'] | ['clover', {
             file?: string;
         }] |
@@ -93,7 +85,15 @@ declare namespace MCR {
         ['text-summary'] | ['text-summary', {
             file?: string;
         }] |
+        ['codecov'] | ["codecov", {
+            outputFile?: string;
+        }] |
         ['console-summary'] | ['console-summary', {
+            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+        }] |
+        ['console-details'] | ['console-details', {
+            maxCols?: number;
+            skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
         }] |
         ['raw'] | ['raw', {
