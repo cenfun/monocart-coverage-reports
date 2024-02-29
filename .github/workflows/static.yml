@@ -29,9 +29,6 @@ jobs:
       matrix:
         node: [14]
     steps:
-      - name: Set git line endings
-        run: git config --global core.autocrlf false
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -57,8 +54,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Set git line endings
-        run: git config --global core.autocrlf false
       - name: Checkout
         uses: actions/checkout@v4
       

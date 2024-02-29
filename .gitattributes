@@ -1,3 +1,4 @@
+# https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
 # V8 coverage will check bytes range, so we need to fix the eol
 * text eol=lf
 
