@@ -5,7 +5,7 @@ const { fileURLToPath } = require('url');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 const dir = process.env.NODE_V8_COVERAGE;
 
 const coverageOptions = {
@@ -19,7 +19,7 @@ const coverageOptions = {
 
     outputDir: './docs/node-api',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

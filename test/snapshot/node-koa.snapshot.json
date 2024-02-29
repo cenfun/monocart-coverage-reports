@@ -1,0 +1,20 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "84.44 %",
+        "statements": "84.62 %",
+        "branches": "50.00 %",
+        "functions": "66.67 %",
+        "lines": "64.71 %"
+    },
+    "files": {
+        "test/koa.js": {
+            "functions": "66.67 %",
+            "branches": "50.00 %",
+            "statements": "84.62 %",
+            "lines": "64.71 %",
+            "bytes": "84.44 %",
+            "uncoveredLines": "7-9,16-18"
+        }
+    }
+}

@@ -1,4 +1,4 @@
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 module.exports = {
 
     // logging: 'debug',
@@ -49,7 +49,7 @@ module.exports = {
     all: ['test/mock/src', 'test/mock/node/lib'],
 
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 
 };

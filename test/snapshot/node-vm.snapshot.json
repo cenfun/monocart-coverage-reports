@@ -1,0 +1,36 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "65.36 %",
+        "statements": "66.07 %",
+        "branches": "60.00 %",
+        "functions": "58.82 %",
+        "lines": "50.00 %"
+    },
+    "files": {
+        "my-vm-filename.js": {
+            "functions": "16.67 %",
+            "branches": "50.00 %",
+            "statements": "56.52 %",
+            "lines": "30.00 %",
+            "bytes": "58.87 %",
+            "uncoveredLines": "7-25,32,35-37,42-44"
+        },
+        "test/mock/node/lib/app.js": {
+            "functions": "80.00 %",
+            "branches": "60.00 %",
+            "statements": "80.00 %",
+            "lines": "59.38 %",
+            "bytes": "70.64 %",
+            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
+        },
+        "test/mock/node/lib/app.js.fake.js": {
+            "functions": "83.33 %",
+            "branches": "66.67 %",
+            "statements": "61.54 %",
+            "lines": "59.38 %",
+            "bytes": "70.64 %",
+            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
+        }
+    }
+}

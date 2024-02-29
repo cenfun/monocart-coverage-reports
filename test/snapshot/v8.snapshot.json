@@ -1,0 +1,188 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "73.68 %",
+        "statements": "82.10 %",
+        "branches": "59.92 %",
+        "functions": "78.46 %",
+        "lines": "63.22 %"
+    },
+    "files": {
+        "test/mock/src/async.js": {
+            "functions": "33.33 %",
+            "branches": "62.50 %",
+            "statements": "84.62 %",
+            "lines": "72.22 %",
+            "bytes": "82.62 %",
+            "uncoveredLines": "9,14-20"
+        },
+        "test/mock/src/comments.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/component.js": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "81.82 %",
+            "lines": "62.50 %",
+            "bytes": "81.63 %",
+            "uncoveredLines": "16-22"
+        },
+        "test/mock/src/index.js": {
+            "functions": "53.85 %",
+            "branches": "57.14 %",
+            "statements": "69.84 %",
+            "lines": "55.42 %",
+            "bytes": "65.61 %",
+            "uncoveredLines": "23-25,34-59,65-68,72-74,84-86,92-95,106"
+        },
+        "test/mock/src/statement.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/typescript.ts": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/branch/assignment.js": {
+            "functions": "80.00 %",
+            "branches": "54.55 %",
+            "statements": "76.47 %",
+            "lines": "75.00 %",
+            "bytes": "78.10 %",
+            "uncoveredLines": "9-11,22-24"
+        },
+        "test/mock/src/branch/branch.js": {
+            "functions": "70.00 %",
+            "branches": "65.85 %",
+            "statements": "84.72 %",
+            "lines": "73.87 %",
+            "bytes": "80.32 %",
+            "uncoveredLines": "9-19,27,53-56,70,77-79,104,115-120,132-135,140-142"
+        },
+        "test/mock/src/branch/conditional.js": {
+            "functions": "100.00 %",
+            "branches": "60.00 %",
+            "statements": "100.00 %",
+            "lines": "80.00 %",
+            "bytes": "94.35 %",
+            "uncoveredLines": "10,12,17,19,24,26,31,33"
+        },
+        "test/mock/src/branch/if.js": {
+            "functions": "100.00 %",
+            "branches": "52.00 %",
+            "statements": "71.43 %",
+            "lines": "54.64 %",
+            "bytes": "67.31 %",
+            "uncoveredLines": "28-30,34-36,40-44,57-59,63-67,74-80,84-86,88-90,97-111"
+        },
+        "test/mock/src/branch/logical.js": {
+            "functions": "100.00 %",
+            "branches": "74.07 %",
+            "statements": "100.00 %",
+            "lines": "82.14 %",
+            "bytes": "95.25 %",
+            "uncoveredLines": "22-23,33-34,38,45,48-49,59-60"
+        },
+        "test/mock/src/branch/switch.js": {
+            "functions": "100.00 %",
+            "branches": "40.91 %",
+            "statements": "70.00 %",
+            "lines": "67.06 %",
+            "bytes": "72.92 %",
+            "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78"
+        },
+        "test/mock/src/ignore/ignore.js": {
+            "functions": "100.00 %",
+            "branches": "60.00 %",
+            "statements": "83.33 %",
+            "lines": "80.00 %",
+            "bytes": "88.89 %",
+            "uncoveredLines": "9,33-35"
+        },
+        "test/mock/src/ignore/v8-ignore-next.js": {
+            "functions": "",
+            "branches": "75.00 %",
+            "statements": "100.00 %",
+            "lines": "75.00 %",
+            "bytes": "84.38 %",
+            "uncoveredLines": "20-22"
+        },
+        "test/mock/src/ignore/v8-ignore-return.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/ignore/v8-ignore-start-stop.js": {
+            "functions": "",
+            "branches": "60.00 %",
+            "statements": "100.00 %",
+            "lines": "71.43 %",
+            "bytes": "85.30 %",
+            "uncoveredLines": "2,19"
+        },
+        "test/mock/src/untest/empty.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "",
+            "bytes": "",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/untest/untest.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "6-18"
+        },
+        "test/mock/src/untest/untest.scss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "2-17"
+        },
+        "test/mock/src/untest/untest.ts": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "2-31"
+        },
+        "test/mock/src/untest/untest.vue": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-15"
+        },
+        "test/mock/css/style.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "27.45 %",
+            "bytes": "45.14 %",
+            "uncoveredLines": "12-18,22-25,33-53,69-85"
+        }
+    }
+}

@@ -6,7 +6,7 @@ const EC = require('eight-colors');
 const { foregroundChild } = require('foreground-child');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 const dir = '.temp/v8-coverage-fgc';
 
 const generate = async () => {
@@ -22,7 +22,7 @@ const generate = async () => {
 
         outputDir: './docs/node-fgc',
         onEnd: function(coverageResults) {
-            checkSnap(coverageResults);
+            checkSnapshot(coverageResults);
         }
     };
 

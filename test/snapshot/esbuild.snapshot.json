@@ -1,0 +1,140 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "81.30 %",
+        "statements": "84.16 %",
+        "branches": "60.00 %",
+        "functions": "86.84 %",
+        "lines": "71.73 %"
+    },
+    "files": {
+        "src/comments.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "src/async.js": {
+            "functions": "100.00 %",
+            "branches": "62.50 %",
+            "statements": "100.00 %",
+            "lines": "94.44 %",
+            "bytes": "98.58 %",
+            "uncoveredLines": "9"
+        },
+        "src/ignore/v8-ignore-next.js": {
+            "functions": "100.00 %",
+            "branches": "66.67 %",
+            "statements": "100.00 %",
+            "lines": "75.00 %",
+            "bytes": "63.01 %",
+            "uncoveredLines": "20-22"
+        },
+        "src/ignore/v8-ignore-return.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "src/ignore/v8-ignore-start-stop.js": {
+            "functions": "100.00 %",
+            "branches": "60.00 %",
+            "statements": "100.00 %",
+            "lines": "71.43 %",
+            "bytes": "85.30 %",
+            "uncoveredLines": "2,19"
+        },
+        "src/ignore/ignore.js": {
+            "functions": "100.00 %",
+            "branches": "60.00 %",
+            "statements": "92.31 %",
+            "lines": "80.00 %",
+            "bytes": "88.89 %",
+            "uncoveredLines": "9,33-35"
+        },
+        "src/branch/assignment.js": {
+            "functions": "100.00 %",
+            "branches": "66.67 %",
+            "statements": "87.50 %",
+            "lines": "87.50 %",
+            "bytes": "91.30 %",
+            "uncoveredLines": "9-11"
+        },
+        "src/branch/conditional.js": {
+            "functions": "100.00 %",
+            "branches": "60.00 %",
+            "statements": "100.00 %",
+            "lines": "80.00 %",
+            "bytes": "94.35 %",
+            "uncoveredLines": "10,12,17,19,24,26,31,33"
+        },
+        "src/branch/if.js": {
+            "functions": "100.00 %",
+            "branches": "52.00 %",
+            "statements": "71.83 %",
+            "lines": "54.64 %",
+            "bytes": "67.31 %",
+            "uncoveredLines": "28-30,34-36,40-44,57-59,63-67,74-80,84-86,88-90,97-111"
+        },
+        "src/branch/logical.js": {
+            "functions": "100.00 %",
+            "branches": "74.07 %",
+            "statements": "100.00 %",
+            "lines": "82.14 %",
+            "bytes": "95.25 %",
+            "uncoveredLines": "22-23,33-34,38,45,48-49,59-60"
+        },
+        "src/branch/switch.js": {
+            "functions": "100.00 %",
+            "branches": "40.91 %",
+            "statements": "70.59 %",
+            "lines": "67.06 %",
+            "bytes": "72.92 %",
+            "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78"
+        },
+        "src/branch/branch.js": {
+            "functions": "72.73 %",
+            "branches": "65.85 %",
+            "statements": "86.08 %",
+            "lines": "73.87 %",
+            "bytes": "80.28 %",
+            "uncoveredLines": "9-19,27,53-56,70,77-79,104,115-120,132-135,140-142"
+        },
+        "src/statement.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "src/typescript.ts": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "src/component.js": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "83.33 %",
+            "lines": "62.50 %",
+            "bytes": "81.63 %",
+            "uncoveredLines": "16-22"
+        },
+        "src/index.js": {
+            "functions": "50.00 %",
+            "branches": "42.86 %",
+            "statements": "65.08 %",
+            "lines": "51.81 %",
+            "bytes": "61.62 %",
+            "uncoveredLines": "20-26,34-59,65-68,72-74,84-86,92-95,106"
+        }
+    }
+}

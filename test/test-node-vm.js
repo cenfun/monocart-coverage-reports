@@ -8,7 +8,7 @@ const { Script, createContext } = require('vm');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 
 const coverageOptions = {
     // logging: 'debug',
@@ -44,7 +44,7 @@ const coverageOptions = {
 
     outputDir: './docs/node-vm',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -37,7 +37,7 @@ const coverageOptions = {
 
     outputDir: './docs/merge',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

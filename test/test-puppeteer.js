@@ -4,7 +4,7 @@ const PCR = require('puppeteer-chromium-resolver');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 
 const options = {};
 const stats = PCR.getStats(options);
@@ -46,7 +46,7 @@ const coverageOptions = {
 
     outputDir: './docs/puppeteer',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

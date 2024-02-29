@@ -2,15 +2,18 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
-        'console-details',
-        ['console-summary', {
-            // metrics: ['lines']
+        ['console-details', {
+            metrics: ['lines']
         }],
+        // ['console-summary', {
+        // metrics: ['lines']
+        // }],
+        'codecov',
         // v8 will be ignored if input data istanbul
         'v8',
         'raw',
@@ -30,7 +33,7 @@ const coverageOptions = {
 
     outputDir: './docs/istanbul',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

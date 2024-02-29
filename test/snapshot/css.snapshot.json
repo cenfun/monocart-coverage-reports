@@ -1,0 +1,52 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "2.12 %",
+        "statements": "",
+        "branches": "",
+        "functions": "",
+        "lines": "39.44 %"
+    },
+    "files": {
+        "anonymous/style2.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "71.12 %",
+            "uncoveredLines": "7-9"
+        },
+        "anonymous/style1.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "70.81 %",
+            "uncoveredLines": "7-9"
+        },
+        "anonymous/style3.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "72.66 %",
+            "uncoveredLines": "6-8"
+        },
+        "test/mock/minify/with-map/bootstrap.min.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "1.57 %",
+            "uncoveredLines": "6"
+        },
+        "test/mock/css/style.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "35.29 %",
+            "bytes": "48.28 %",
+            "uncoveredLines": "12-18,33-53,69-85"
+        }
+    }
+}

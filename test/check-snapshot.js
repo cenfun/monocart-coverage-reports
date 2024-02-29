@@ -5,7 +5,7 @@ const { getSnapshot, diffSnapshot } = require('../lib/');
 
 module.exports = function(coverageResults) {
 
-    const snapDir = path.resolve(__dirname, 'snap');
+    const snapDir = path.resolve(__dirname, 'snapshot');
     if (!fs.existsSync(snapDir)) {
         fs.mkdirSync(snapDir, {
             recursive: true

@@ -4,7 +4,7 @@ const CDP = require('chrome-remote-interface');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -16,7 +16,7 @@ const coverageOptions = {
 
     outputDir: './docs/node-cdp',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

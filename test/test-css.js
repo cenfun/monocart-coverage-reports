@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const checkSnap = require('./check-snap.js');
+const checkSnapshot = require('./check-snapshot.js');
 // v8 and lcov
 const coverageOptions = {
     // logging: 'debug',
@@ -15,7 +15,7 @@ const coverageOptions = {
     lcov: true,
     outputDir: './docs/css',
     onEnd: function(coverageResults) {
-        checkSnap(coverageResults);
+        checkSnapshot(coverageResults);
     }
 };
 

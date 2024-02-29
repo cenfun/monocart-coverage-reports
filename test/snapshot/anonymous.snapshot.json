@@ -1,0 +1,36 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "34.23 %",
+        "statements": "29.27 %",
+        "branches": "15.33 %",
+        "functions": "52.00 %",
+        "lines": "27.97 %"
+    },
+    "files": {
+        "anonymous-1.js": {
+            "functions": "47.83 %",
+            "branches": "15.33 %",
+            "statements": "27.14 %",
+            "lines": "25.10 %",
+            "bytes": "32.12 %",
+            "uncoveredLines": "5-19,21,34-62,65,68-83,85,87,89,91-98,106-107,111-205,225,229-235,240,246-248,250-255"
+        },
+        "anonymous-2.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "anonymous-3.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        }
+    }
+}
