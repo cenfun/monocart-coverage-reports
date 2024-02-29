@@ -30,10 +30,13 @@ module.exports = function(coverageResults) {
         metrics: []
     });
 
+    const snapName = path.basename(snapPath);
     if (diff.change) {
-        EC.logRed(`ERROR: Snapshot does not match reference: ${path.relative(process.cwd(), snapPath)}`);
+        EC.logRed(`ERROR: Snapshot does not match reference: ${snapName}`);
         console.log(diff.message);
         process.exit(1);
+    } else {
+        EC.logGreen(`Snapshot matched: ${snapName}`);
     }
 
 };
