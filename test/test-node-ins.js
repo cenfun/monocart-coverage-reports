@@ -6,7 +6,7 @@ const { fileURLToPath } = require('url');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -16,7 +16,10 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/node-ins'
+    outputDir: './docs/node-ins',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 

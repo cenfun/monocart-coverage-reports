@@ -6,7 +6,7 @@ const EC = require('eight-colors');
 const { foregroundChild } = require('foreground-child');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const dir = '.temp/v8-coverage-fgc';
 
 const generate = async () => {
@@ -20,7 +20,10 @@ const generate = async () => {
         assetsPath: '../assets',
         // lcov: true,
 
-        outputDir: './docs/node-fgc'
+        outputDir: './docs/node-fgc',
+        onEnd: function(coverageResults) {
+            checkSnap(coverageResults);
+        }
     };
 
 

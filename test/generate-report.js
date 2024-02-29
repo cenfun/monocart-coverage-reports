@@ -4,7 +4,7 @@ const { fileURLToPath } = require('url');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const generate = async () => {
 
     const dir = '.temp/v8-coverage-env';
@@ -19,7 +19,10 @@ const generate = async () => {
         assetsPath: '../assets',
         // lcov: true,
 
-        outputDir: './docs/node-env'
+        outputDir: './docs/node-env',
+        onEnd: function(coverageResults) {
+            checkSnap(coverageResults);
+        }
     };
 
     const coverageReport = MCR(coverageOptions);

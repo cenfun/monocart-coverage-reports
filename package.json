@@ -39,6 +39,7 @@
         "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
         "test-all": "npm run test-browser && npm run test-node && npm run test-cli && npm run test-merge && npm run build-docs",
         "test": "npx mcr \"npm run test-all\" -c test/mcr-options.js",
+        "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
         "patch": "npm run build && sf publish patch -r"
@@ -56,7 +57,7 @@
         "url": "git+https://github.com/cenfun/monocart-coverage-reports.git"
     },
     "dependencies": {
-        "console-grid": "~2.2.1",
+        "console-grid": "~2.2.2",
         "eight-colors": "~1.3.0",
         "istanbul-lib-coverage": "~3.2.2",
         "istanbul-lib-report": "~3.0.1",

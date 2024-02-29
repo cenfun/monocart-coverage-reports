@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const coverageOptions = {
     // logging: 'debug',
     reports: [
@@ -12,7 +12,10 @@ const coverageOptions = {
     ],
     name: 'My V8 Esbuild Coverage Report',
 
-    outputDir: './docs/esbuild'
+    outputDir: './docs/esbuild',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 const test = async (serverUrl) => {

@@ -17,7 +17,7 @@ declare namespace MCR {
     export type Watermarks = [number, number] | {
         /** V8 only */
         bytes?: [number, number];
-        statements?: [number, number];
+        statements: [number, number];
         branches?: [number, number];
         functions?: [number, number];
         lines?: [number, number];
@@ -127,7 +127,7 @@ declare namespace MCR {
     export interface CoverageSummary {
         /** V8 only */
         bytes?: MetricsSummary;
-        statements?: MetricsSummary;
+        statements: MetricsSummary;
         branches: MetricsSummary;
         functions: MetricsSummary;
         lines: MetricsSummary;
@@ -316,12 +316,41 @@ declare namespace MCR {
         cleanCache: () => boolean;
     }
 
-    /** get snapshot from console-details report */
-    export function getSnapshot(coverageResults: CoverageResults, reportOptions: {
+    export interface CoverageSnapshot {
+        type: "v8" | "istanbul";
+        summary: {
+            bytes?: string;
+            statements: string;
+            branches: string;
+            functions: string;
+            lines: string;
+        },
+        files: {
+            [sourcePath: string]: {
+                bytes?: string;
+                statements: string;
+                branches: string;
+                functions: string;
+                lines: string;
+                uncoveredLines: string;
+            }
+        }
+    }
+
+    /** get snapshot from coverage report data */
+    export function getSnapshot(coverageResults: CoverageResults): CoverageSnapshot;
+
+    /** diff two snapshots  */
+    export function diffSnapshot(oldData: CoverageSnapshot, newData: CoverageSnapshot, diffOptions: {
+        skipEqual?: boolean;
+        showSummary?: boolean;
         maxCols?: number;
-        skipPercent?: number;
         metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
-    }): string;
+    }): {
+        change: boolean;
+        results: any[];
+        message: string;
+    };
 
 }
 

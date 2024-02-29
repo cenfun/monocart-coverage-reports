@@ -1,3 +1,4 @@
+const checkSnap = require('./check-snap.js');
 module.exports = {
 
     // logging: 'debug',
@@ -47,8 +48,8 @@ module.exports = {
 
     all: ['test/mock/src', 'test/mock/node/lib'],
 
-    onEnd: () => {
-        console.log('test cli end');
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
     }
 
 };

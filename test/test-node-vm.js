@@ -1,5 +1,5 @@
 const fs = require('fs');
-// const path = require('path');
+const path = require('path');
 const { Session } = require('inspector');
 const { promisify } = require('util');
 const { fileURLToPath } = require('url');
@@ -8,7 +8,7 @@ const { Script, createContext } = require('vm');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-const path = require('path');
+const checkSnap = require('./check-snap.js');
 
 const coverageOptions = {
     // logging: 'debug',
@@ -42,7 +42,10 @@ const coverageOptions = {
         return true;
     },
 
-    outputDir: './docs/node-vm'
+    outputDir: './docs/node-vm',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 

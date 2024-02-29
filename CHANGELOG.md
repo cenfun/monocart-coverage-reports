@@ -1,9 +1,9 @@
 ## Changelog
 
-* 2.5.10
+* 2.6.0
     - fixed coverage for invalid original code
     - fixed coverage for empty bytes
-    - added `getSnapshot` API for snapshot testing
+    - added `getSnapshot` and `diffSnapshot` API for snapshot testing
 
 * 2.5.9
     - fixed issue for istanbul source and source path replacement

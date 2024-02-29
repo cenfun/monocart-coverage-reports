@@ -2,13 +2,16 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 // v8 and lcov
 const coverageOptions = {
     // logging: 'debug',
     name: 'My Anonymous Coverage Report',
     assetsPath: '../assets',
-    outputDir: './docs/anonymous'
+    outputDir: './docs/anonymous',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 const test = async () => {

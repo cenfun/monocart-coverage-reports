@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const coverageOptions = {
     // logging: 'debug',
     reports: [
@@ -13,7 +13,10 @@ const coverageOptions = {
 
     name: 'My V8 Rollup Coverage Report',
 
-    outputDir: './docs/rollup'
+    outputDir: './docs/rollup',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 const test1 = async (serverUrl) => {

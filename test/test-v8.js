@@ -4,6 +4,7 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
+const checkSnap = require('./check-snap.js');
 
 // v8 and lcov
 const coverageOptions = {
@@ -61,6 +62,7 @@ const coverageOptions = {
     all: 'test/mock/src',
 
     onEnd: (coverageResults) => {
+        checkSnap(coverageResults);
         const thresholds = {
             bytes: 80,
             lines: 60

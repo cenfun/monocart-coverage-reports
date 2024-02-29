@@ -8,7 +8,7 @@ const axios = require('axios');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -18,7 +18,10 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/node-koa'
+    outputDir: './docs/node-koa',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 // ==================================================================

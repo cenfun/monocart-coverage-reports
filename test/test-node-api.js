@@ -5,7 +5,7 @@ const { fileURLToPath } = require('url');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const dir = process.env.NODE_V8_COVERAGE;
 
 const coverageOptions = {
@@ -17,7 +17,10 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/node-api'
+    outputDir: './docs/node-api',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 const generate = async () => {

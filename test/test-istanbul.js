@@ -2,11 +2,12 @@ const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
 const MCR = require('../');
-
+const checkSnap = require('./check-snap.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
+        'console-details',
         ['console-summary', {
             // metrics: ['lines']
         }],
@@ -27,7 +28,10 @@ const coverageOptions = {
         dir: ['test/mock/src']
     },
 
-    outputDir: './docs/istanbul'
+    outputDir: './docs/istanbul',
+    onEnd: function(coverageResults) {
+        checkSnap(coverageResults);
+    }
 };
 
 const test = async () => {
