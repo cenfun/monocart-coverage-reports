@@ -31,8 +31,12 @@ jobs:
     steps:
       - name: Set git line endings
         run: git config --global core.autocrlf false
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: ''
@@ -53,6 +57,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Set git line endings
+        run: git config --global core.autocrlf false
       - name: Checkout
         uses: actions/checkout@v4
       
