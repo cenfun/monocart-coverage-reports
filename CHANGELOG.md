@@ -4,6 +4,7 @@
     - fixed coverage for invalid original code
     - fixed coverage for empty bytes
     - added `getSnapshot` and `diffSnapshot` API for snapshot testing
+    - added istanbul support for `codecov` and `console-details`
 
 * 2.5.9
     - fixed issue for istanbul source and source path replacement
