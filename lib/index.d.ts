@@ -291,7 +291,12 @@ declare namespace MCR {
         cleanCache?: boolean;
 
         /** {function} onEnd hook */
-        onEnd?: (reportData: CoverageResults) => Promise<void>;
+        onEnd?: (coverageResults: CoverageResults) => Promise<void>;
+    }
+
+    export interface McrCliOptions extends CoverageReportOptions {
+        /** {function} onStart hook */
+        onStart?: (coverageReport: CoverageReport) => Promise<void>;
     }
 
     export class CoverageReport {
@@ -311,10 +316,12 @@ declare namespace MCR {
         cleanCache: () => boolean;
     }
 
-    export interface McrCliOptions extends CoverageReportOptions {
-        /** {function} onStart hook */
-        onStart?: (coverageReport: CoverageReport) => Promise<void>;
-    }
+    /** get snapshot from console-details report */
+    export function getSnapshot(coverageResults: CoverageResults, reportOptions: {
+        maxCols?: number;
+        skipPercent?: number;
+        metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+    }): string;
 
 }
 
