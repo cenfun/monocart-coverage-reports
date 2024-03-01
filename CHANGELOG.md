@@ -2,6 +2,7 @@
 
 * 2.6.2
     - fixed cli sub arguments
+    - fixed report data for single `codecov` report
 
 * 2.6.1
     - fixed ts source issue
