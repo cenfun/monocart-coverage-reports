@@ -56,14 +56,6 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "localhost-8130/minify/with-map/bootstrap.min.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "50.00 %",
-            "bytes": "1.55 %",
-            "uncoveredLines": "6"
-        },
         "localhost-8130/css/style.css": {
             "functions": "",
             "branches": "",
@@ -79,6 +71,14 @@
             "lines": "",
             "bytes": "",
             "uncoveredLines": ""
+        },
+        "localhost-8130/minify/with-map/bootstrap.min.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "1.55 %",
+            "uncoveredLines": "6"
         },
         "fps-detector/webpack/universalModuleDefinition": {
             "functions": "",
@@ -216,7 +216,7 @@
             "bytes": "54.10 %",
             "uncoveredLines": "14-20"
         },
-        "monocart-v8/packages/v8/src/images/icons/sync-.svg$": {
+        "monocart-v8/packages/v8/src/images/icons/sync/.svg$": {
             "functions": "100.00 %",
             "branches": "50.00 %",
             "statements": "80.00 %",
