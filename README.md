@@ -258,15 +258,15 @@ const coverageOptions = {
 
 ## `mcr` CLI
 > The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
-- Global mode
+- Installing globally
 ```sh
 npm i monocart-coverage-reports -g
-mcr "node ./test/test-node-env.js" -r v8,console-summary --lcov
+mcr node ./test/test-node-env.js -r v8,console-summary --lcov
 ```
-- Current working directory mode
+- Locally in your project
 ```sh
 npm i monocart-coverage-reports
-npx mcr "node ./test/test-node-env.js" -r v8,console-summary --lcov
+npx mcr node ./test/test-node-env.js -r v8,console-summary --lcov
 ```
 - CLI Options
 ```sh
@@ -293,15 +293,15 @@ Options:
   --logging <logging>          off, error, info, debug
   -h, --help                   display help for command
 ```
-- Supports loading default configuration file
+- Loading default configuration file
     - `.mcrrc`
     - `mcr.config.json`
     - `mcr.config.mjs`
     - `mcr.config.cjs`
     - `mcr.config.js`
-- Specify custom configuration file
+- Or loading custom configuration file with `-c` or `--config`
 ```sh
-mcr "node ./test.js" -c path-to/my-custom-config.js
+mcr node ./test.js -c path-to/my-custom-config.js
 ```
 
 ## Compare Reports

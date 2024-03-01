@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.6.2
+    - fixed cli sub arguments
+
 * 2.6.1
     - fixed ts source issue
     - added `getEntryFilter` API
