@@ -1,5 +1,9 @@
 ## Changelog
 
+* 2.6.1
+    - fixed ts source issue
+    - added `getEntryFilter` API
+
 * 2.6.0
     - fixed coverage for invalid original code
     - fixed coverage for empty bytes
