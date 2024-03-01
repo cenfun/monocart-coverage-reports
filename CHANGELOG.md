@@ -2,7 +2,8 @@
 
 * 2.6.3
     - fixed the path of sourcemap sources
-    - fixed the deletion for node v8 coverage dir  
+    - fixed the deletion for node v8 coverage dir
+    - fixed tbe end offset do not > source.length
     - added `delay` for CLI options
 
 * 2.6.2
