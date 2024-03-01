@@ -1,5 +1,10 @@
 ## Changelog
 
+* 2.6.3
+    - fixed the path of sourcemap sources
+    - fixed the deletion for node v8 coverage dir  
+    - added `delay` for CLI options
+
 * 2.6.2
     - fixed cli sub arguments
     - fixed report data for single `codecov` report

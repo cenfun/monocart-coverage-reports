@@ -297,6 +297,8 @@ declare namespace MCR {
     export interface McrCliOptions extends CoverageReportOptions {
         /** {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => Promise<void>;
+        /** {number} delay ms before reading coverage dir  */
+        delay?: number;
     }
 
     export class CoverageReport {
