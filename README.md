@@ -291,6 +291,7 @@ Options:
   --assetsPath <path>          assets path if not inline
   --lcov                       generate lcov.info file
   --logging <logging>          off, error, info, debug
+  --delay <ms>                 delay before reading coverage
   -h, --help                   display help for command
 ```
 - Loading default configuration file
