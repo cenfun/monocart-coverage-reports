@@ -303,6 +303,15 @@ Options:
 ```sh
 mcr "node ./test.js" -c path-to/my-custom-config.js
 ```
+- Integration Examples
+    - mcr + ts-node
+    ```sh
+    mcr "ts-node ./src/script.ts"
+    ```
+    - mcr + mocha + ts-node
+    ```sh
+    mcr "mocha -r ts-node/register ./src/example.test.ts"
+    ```
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
