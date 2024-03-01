@@ -39,6 +39,7 @@
     - [Vitest](#vitest)
     - [CodeceptJS](#codeceptjs)
     - [WebdriverIO](#webdriverio)
+    - [Storybook Test Runner](#storybook-test-runner)
     - [Codecov](#codecov)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
@@ -722,6 +723,9 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ### [WebdriverIO](https://github.com/webdriverio/webdriverio)
 - [wdio-monocart-service](https://github.com/cenfun/wdio-monocart-service) - A WebdriverIO service for coverage reports
+
+### [Storybook Test Runner](https://github.com/storybookjs/test-runner)
+- [storybook-monocart-coverage](https://github.com/cenfun/storybook-monocart-coverage) - Storybook V8 Coverage Example
 
 ### [Codecov](https://codecov.com/)
 [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
