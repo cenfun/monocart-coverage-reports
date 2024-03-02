@@ -91,8 +91,7 @@ const generate = async () => {
     const postSession = await startV8Coverage();
 
     // =====================================================
-    const testDemo = require('./specs/node.test.js');
-    testDemo();
+    require('./specs/node.test.js');
     // =====================================================
 
     await collectV8Coverage(postSession);

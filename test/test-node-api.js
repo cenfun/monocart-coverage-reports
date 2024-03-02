@@ -77,8 +77,7 @@ const main = async () => {
     }
 
     // =====================================================
-    const testDemo = require('./specs/node.test.js');
-    testDemo();
+    require('./specs/node.test.js');
     // =====================================================
 
     v8.takeCoverage();

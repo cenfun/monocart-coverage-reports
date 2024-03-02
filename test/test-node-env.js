@@ -10,6 +10,5 @@ if (fs.existsSync(dir)) {
 }
 
 // =====================================================
-const testDemo = require('./specs/node.test.js');
-testDemo();
+require('./specs/node.test.js');
 // =====================================================

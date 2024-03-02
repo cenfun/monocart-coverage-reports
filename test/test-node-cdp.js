@@ -82,8 +82,7 @@ const generate = async () => {
     });
 
     // =====================================================
-    const testDemo = require('./specs/node.test.js');
-    testDemo();
+    require('./specs/node.test.js');
     // =====================================================
 
     await collectV8Coverage(client);

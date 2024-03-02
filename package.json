@@ -35,7 +35,7 @@
         "test-browser": "node ./test/test-browser.js && npm run test-istanbul && npm run test-v8 && npm run test-puppeteer && npm run test-anonymous && npm run test-css",
         "test-anonymous": "node ./test/test-anonymous.js",
         "test-css": "node ./test/test-css.js",
-        "test-cli": "npx mcr node ./test/test-node-env.js -o docs/cli -c test/mcr.config.cli.js",
+        "test-cli": "npx mcr node ./test/specs/node.test.js -o docs/cli -c test/mcr.config.cli.js",
         "test-merge": "node ./test/test-merge.js",
         "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
         "test-all": "npm run test-browser && npm run test-node && npm run test-cli && npm run test-merge && npm run build-docs",

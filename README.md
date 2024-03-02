@@ -261,12 +261,12 @@ const coverageOptions = {
 - Installing globally
 ```sh
 npm i monocart-coverage-reports -g
-mcr node ./test/test-node-env.js -r v8,console-summary --lcov
+mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
 ```
 - Locally in your project
 ```sh
 npm i monocart-coverage-reports
-npx mcr node ./test/test-node-env.js -r v8,console-summary --lcov
+npx mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
 ```
 - CLI Options
 ```sh
