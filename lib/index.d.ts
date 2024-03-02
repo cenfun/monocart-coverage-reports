@@ -322,8 +322,11 @@ declare namespace MCR {
         /** (cli only) {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => Promise<void>;
 
-        /** (cli only) {number} delay ms before reading coverage dir  */
-        delay?: number;
+        /** (cli only) {function} onReady hook before adding coverage data.
+         * 
+         * Sometimes, the child process has not yet finished writing the coverage data, and it needs to wait here.
+        */
+        onReady?: (coverageReport: CoverageReport, nodeV8CoverageDir: string, subprocess: any) => Promise<void>;
 
     }
 

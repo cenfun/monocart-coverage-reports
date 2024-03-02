@@ -4,7 +4,7 @@
     - fixed the path of sourcemap sources
     - fixed the deletion for node v8 coverage dir
     - fixed tbe end offset do not > source.length
-    - added `delay` for CLI options
+    - added `onReady` hook for CLI
     - added `onEntry` hook
 
 * 2.6.2
