@@ -2,16 +2,35 @@ declare namespace MCR {
 
     export interface V8CoverageEntry {
         url: string;
+
+        /** entry type */
+        type?: "js" | "css";
+
         /** css only */
         text?: string;
         /** css only */
         ranges?: any[];
-        /** js only */
-        scriptId?: string;
+
         /** js only */
         source?: string;
         /** js only */
+        scriptId?: string;
+        /** js only */
         functions?: any[];
+
+        /** js only */
+        sourceMap?: any;
+        /** js only */
+        scriptOffset?: number;
+        /** js only */
+        distFile?: string;
+
+        /** empty coverage */
+        empty?: boolean;
+        /** fake source */
+        fake?: boolean;
+
+        [key: string]: any;
     }
 
     export type Watermarks = [number, number] | {
@@ -290,15 +309,22 @@ declare namespace MCR {
         */
         cleanCache?: boolean;
 
+        /** (V8 only) {function} onEntry hook */
+        onEntry?: (entry: V8CoverageEntry) => Promise<void>;
+
         /** {function} onEnd hook */
         onEnd?: (coverageResults: CoverageResults) => Promise<void>;
+
     }
 
     export interface McrCliOptions extends CoverageReportOptions {
-        /** {function} onStart hook */
+
+        /** (cli only) {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => Promise<void>;
-        /** {number} delay ms before reading coverage dir  */
+
+        /** (cli only) {number} delay ms before reading coverage dir  */
         delay?: number;
+
     }
 
     export class CoverageReport {

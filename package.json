@@ -42,7 +42,7 @@
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "dev": "sf d v8",
         "open": "node ./scripts/open.js",
-        "patch": "npm run build && sf publish patch -r"
+        "patch": "npm run build && npm run test && sf publish patch -r"
     },
     "workspaces": [
         "packages/*",

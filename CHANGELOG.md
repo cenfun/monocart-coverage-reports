@@ -5,6 +5,7 @@
     - fixed the deletion for node v8 coverage dir
     - fixed tbe end offset do not > source.length
     - added `delay` for CLI options
+    - added `onEntry` hook
 
 * 2.6.2
     - fixed cli sub arguments
