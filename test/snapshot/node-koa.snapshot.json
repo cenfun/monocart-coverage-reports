@@ -8,7 +8,7 @@
         "lines": "64.71 %"
     },
     "files": {
-        "test/koa.js": {
+        "test/mock/node/lib/koa.js": {
             "functions": "66.67 %",
             "branches": "50.00 %",
             "statements": "84.62 %",

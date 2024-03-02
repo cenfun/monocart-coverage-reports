@@ -82,35 +82,14 @@ const generate = async () => {
     });
 
     // =====================================================
+    const testDemo = require('./specs/node.test.js');
+    testDemo();
+    // =====================================================
 
-    // silent
-    const log = console.log;
-    console.log = () => {};
-
-    // import lib after v8 coverage started
-    // test lib app
-    const {
-        foo, bar, app
-    } = require('./mock/node/lib/app.js');
-    // test dist with sourcemap
-    const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
-    foo();
-    bar();
-    app();
     await collectV8Coverage(client);
-
-
-    component();
-    branch();
-    await collectV8Coverage(client);
-
-    console.log = log;
 
     await client.Profiler.disable();
     await client.close();
-
-    // =====================================================
 
     const coverageResults = await MCR(coverageOptions).generate();
     console.log('test-node-cdp coverage reportPath', EC.magenta(coverageResults.reportPath));

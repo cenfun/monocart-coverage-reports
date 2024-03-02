@@ -28,7 +28,7 @@ const coverageOptions = {
 
 // mock start koa server
 const startSubProcess = (dir) => {
-    const cp = spawn('node --inspect=9229 ./test/koa.js', {
+    const cp = spawn('node --inspect=9229 ./test/mock/node/lib/koa.js', {
         stdio: 'inherit',
         shell: true
     });

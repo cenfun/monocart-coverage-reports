@@ -1,17 +1,5 @@
 const fs = require('fs');
 
-
-// silent
-const log = console.log;
-console.log = () => {};
-
-// test lib app
-const {
-    foo, bar, app
-} = require('./mock/node/lib/app.js');
-// test dist with sourcemap
-const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
 // remove previous coverage files
 const dir = process.env.NODE_V8_COVERAGE;
 if (fs.existsSync(dir)) {
@@ -21,13 +9,7 @@ if (fs.existsSync(dir)) {
     });
 }
 
-foo();
-bar();
-app();
-
-// console.log(component, branch);
-
-component();
-branch();
-
-console.log = log;
+// =====================================================
+const testDemo = require('./specs/node.test.js');
+testDemo();
+// =====================================================

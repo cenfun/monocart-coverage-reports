@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "75.14 %",
-        "statements": "79.40 %",
-        "branches": "60.14 %",
-        "functions": "73.26 %",
-        "lines": "64.57 %"
+        "bytes": "73.58 %",
+        "statements": "77.49 %",
+        "branches": "59.72 %",
+        "functions": "70.79 %",
+        "lines": "63.24 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -175,6 +175,14 @@
             "lines": "0.00 %",
             "bytes": "0.00 %",
             "uncoveredLines": "1-15"
+        },
+        "test/mock/node/lib/koa.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-22"
         },
         "test/mock/node/lib/util.js": {
             "functions": "0.00 %",

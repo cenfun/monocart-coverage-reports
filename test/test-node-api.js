@@ -64,35 +64,6 @@ const generate = async () => {
 
 };
 
-const test = () => {
-
-    // silent
-    const log = console.log;
-    console.log = () => {};
-
-    // test lib app
-    const {
-        foo, bar, app
-    } = require('./mock/node/lib/app.js');
-    // test dist with sourcemap
-    const { component, branch } = require('./mock/node/dist/coverage-node.js');
-
-    foo();
-    bar();
-    app();
-
-    component();
-    branch();
-
-    console.log = log;
-
-    v8.takeCoverage();
-
-    // stop will cased ''result' from coverage profile response is not an object'
-    // v8.stopCoverage();
-
-};
-
 
 const main = async () => {
 
@@ -105,7 +76,15 @@ const main = async () => {
         console.log(`removed previous: ${dir}`);
     }
 
-    test();
+    // =====================================================
+    const testDemo = require('./specs/node.test.js');
+    testDemo();
+    // =====================================================
+
+    v8.takeCoverage();
+
+    // stop will cased ''result' from coverage profile response is not an object'
+    // v8.stopCoverage();
 
     await generate();
 };
