@@ -299,6 +299,7 @@ Options:
     - `mcr.config.mjs`
     - `mcr.config.cjs`
     - `mcr.config.js`
+    - `mcr.config.ts`
 - Or loading custom configuration file with `-c` or `--config`
 ```sh
 mcr node ./test.js -c path-to/my-custom-config.js
