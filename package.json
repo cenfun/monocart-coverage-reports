@@ -28,7 +28,6 @@
         "test-node-cdp": "node --inspect=9229 ./test/test-node-cdp.js",
         "test-node-koa": "node ./test/test-node-koa.js",
         "test-node-vm": "node ./test/test-node-vm.js",
-        "test-ts-node": "mcr ts-node ",
         "test-istanbul": "node ./test/test-istanbul.js",
         "test-v8": "node ./test/test-v8.js",
         "test-puppeteer": "node ./test/test-puppeteer.js",
