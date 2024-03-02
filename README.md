@@ -258,16 +258,19 @@ const coverageOptions = {
 
 ## `mcr` CLI
 > The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
+
 - Installing globally
 ```sh
 npm i monocart-coverage-reports -g
 mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
 ```
+
 - Locally in your project
 ```sh
 npm i monocart-coverage-reports
 npx mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
 ```
+
 - CLI Options
 ```sh
 Usage: mcr [options] <command>
@@ -293,6 +296,7 @@ Options:
   --logging <logging>          off, error, info, debug
   -h, --help                   display help for command
 ```
+
 - Loading default configuration file
     - `.mcrrc`
     - `mcr.config.json`
@@ -300,10 +304,13 @@ Options:
     - `mcr.config.cjs`
     - `mcr.config.js`
     - `mcr.config.ts`
+
 - Or loading custom configuration file with `-c` or `--config`
 ```sh
 mcr node ./test.js -c path-to/my-custom-config.js
 ```
+
+- Work with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
