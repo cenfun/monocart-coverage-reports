@@ -6,6 +6,7 @@
     - fixed tbe end offset do not > source.length
     - added `onReady` hook for CLI
     - added `onEntry` hook
+    - added default config file `mcr.config.ts` and better supports for `ts-node`
 
 * 2.6.2
     - fixed cli sub arguments
