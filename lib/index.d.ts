@@ -222,7 +222,7 @@ declare namespace MCR {
          * 
          * By default, `v8` for V8 data, `html` for Istanbul data
          */
-        reports?: string | ReportDescription[];
+        reports?: string | string[] | ReportDescription[];
 
         /** {string} output dir */
         outputDir?: string;
