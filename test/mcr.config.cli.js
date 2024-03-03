@@ -7,6 +7,8 @@ module.exports = {
 
     reports: 'v8,console-summary,raw,codecov',
 
+    outputDir: 'docs/cli',
+
     assetsPath: '../assets',
 
     lcov: true,

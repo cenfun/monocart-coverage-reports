@@ -21,13 +21,11 @@
         "koa": "^2.15.0",
         "koa-static-resolver": "^1.0.5",
         "marked": "^12.0.0",
-        "mocha": "^10.3.0",
         "open": "^10.0.4",
         "playwright": "^1.42.1",
         "puppeteer-chromium-resolver": "^22.0.0",
         "rollup": "^4.12.0",
         "ts-loader": "^9.5.1",
-        "ts-node": "^10.9.2",
         "typescript": "^5.3.3",
         "webpack": "^5.90.3"
     }
