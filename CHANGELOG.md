@@ -1,6 +1,7 @@
 ## Changelog
 
 * 2.6.4
+    - fixed summary name color for `console-details`
     - added `loadConfig` API
 
 * 2.6.3
