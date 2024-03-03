@@ -2,6 +2,7 @@
 
 * 2.6.4
     - fixed summary name color for `console-details`
+    - fixed uncaughtException for CLI
     - added `loadConfig` API
 
 * 2.6.3
