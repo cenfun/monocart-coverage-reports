@@ -337,9 +337,14 @@ declare namespace MCR {
 
     export class CoverageReport {
 
+        /**
+         * @param options coverage report options
+         */
         constructor(options?: CoverageReportOptions);
 
-        /** add coverage data: {array} V8 format, {object} Istanbul format */
+        /** add coverage data
+         * 
+         * @param coverageData {array} V8 format, {object} Istanbul format */
         add: (coverageData: any[] | any) => Promise<AddedResults>;
 
         /** generate report */
@@ -356,6 +361,21 @@ declare namespace MCR {
 
         /** get entry filter handler, it can be used to filter the coverage data list before adding it. */
         getEntryFilter: () => ((entry: V8CoverageEntry) => boolean);
+
+        /** load config file. 
+         * 
+         * @param configFile custom config file path
+         * 
+         * Supports loading default config file if no custom config specified: 
+            'mcr.config.js',
+            'mcr.config.cjs',
+            'mcr.config.mjs',
+            'mcr.config.json',
+            '.mcrrc.js',
+            '.mcrrc',
+            'mcr.config.ts'
+         */
+        loadConfig: (configFile?: string) => Promise<void>;
     }
 
     export interface CoverageSnapshot {

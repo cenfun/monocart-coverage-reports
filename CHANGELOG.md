@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.6.4
+    - added `loadConfig` API
+
 * 2.6.3
     - fixed the path of sourcemap sources
     - fixed the deletion for node v8 coverage dir

@@ -297,18 +297,15 @@ Options:
   -h, --help                   display help for command
 ```
 
-- Loading default configuration file
-    - `.mcrrc`
-    - `mcr.config.json`
-    - `mcr.config.mjs`
-    - `mcr.config.cjs`
+- Loading config file by priority:
+    - custom config file
     - `mcr.config.js`
-    - `mcr.config.ts` it requires `NODE_OPTIONS="--loader ts-node/esm"`
-
-- Or loading custom configuration file with `-c` or `--config`
-```sh
-mcr node ./test.js -c path-to/my-custom-config.js
-```
+    - `mcr.config.cjs`
+    - `mcr.config.mjs`
+    - `mcr.config.json` - json format
+    - `.mcrrc.js`
+    - `.mcrrc` - json format
+    - `mcr.config.ts` - it requires `NODE_OPTIONS="--loader ts-node/esm"`
 
 - Work with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
