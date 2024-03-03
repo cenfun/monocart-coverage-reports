@@ -299,11 +299,15 @@ declare namespace MCR {
         * {object} { bytes:[50,80], statements:[50,80], branches:[50,80], functions:[50,80], lines:[50,80] } */
         watermarks?: Watermarks;
 
-        /** {boolean} Indicates whether to clean previous files in output dir before generating report. Defaults to true. */
+        /** 
+         * {boolean} Indicates whether to clean previous reports in output dir before generating new reports. Defaults to true. 
+         * 
+         * If true, the API `clean()` will execute automatically.
+         * */
         clean?: boolean;
 
         /**
-         * {boolean} Indicates whether to clean previous cache in output dir before generating report. Defaults to false. 
+         * {boolean} Indicates whether to clean previous cache in output dir on start. Defaults to false. 
          * 
          * If true, the API `cleanCache()` will execute automatically.
         */
@@ -345,6 +349,12 @@ declare namespace MCR {
 
         /** clean previous cache, return `false` if no cache */
         cleanCache: () => boolean;
+
+        /** clean previous reports except cache dir and v8 coverage dir */
+        clean: () => void;
+
+        /** get entry filter handler, it can be used to filter the coverage data list before adding it. */
+        getEntryFilter: () => ((entry: V8CoverageEntry) => boolean);
     }
 
     export interface CoverageSnapshot {
