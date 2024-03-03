@@ -282,10 +282,11 @@ Arguments:
 
 Options:
   -V, --version                output the version number
-  -c, --config <path>          custom config path
-  -o, --outputDir <dir>        output dir for reports
-  -r, --reports <name[,name]>  coverage reports to use
+  -c, --config <path>          custom config file path
+  --logging <logging>          off, error, info, debug
   -n, --name <name>            report name for title
+  -r, --reports <name[,name]>  coverage reports to use
+  -o, --outputDir <dir>        output dir for reports
   -i, --inputDir <dir>         input dir for merging raw files
   --entryFilter <pattern>      entry url filter
   --sourceFilter <pattern>     source path filter
@@ -293,7 +294,6 @@ Options:
   --inline                     inline html for v8 report
   --assetsPath <path>          assets path if not inline
   --lcov                       generate lcov.info file
-  --logging <logging>          off, error, info, debug
   -h, --help                   display help for command
 ```
 
@@ -303,7 +303,7 @@ Options:
     - `mcr.config.mjs`
     - `mcr.config.cjs`
     - `mcr.config.js`
-    - `mcr.config.ts`
+    - `mcr.config.ts` it requires `NODE_OPTIONS="--loader ts-node/esm"`
 
 - Or loading custom configuration file with `-c` or `--config`
 ```sh
