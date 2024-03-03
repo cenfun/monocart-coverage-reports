@@ -33,6 +33,7 @@
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
 * [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
+* [Common issues](#common-issues)
 * [Integration](#integration)
     - [Playwright](#playwright)
     - [Jest](#jest)
@@ -298,7 +299,7 @@ Options:
 ```
 
 - Loading config file by priority:
-    - custom config file
+    - custom config file with `-c` or `--config`
     - `mcr.config.js`
     - `mcr.config.cjs`
     - `mcr.config.mjs`
@@ -703,6 +704,27 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 - Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
 
 ![](./assets/debug-sourcemap.png)
+
+## Common issues
+- `Unparsable source`
+It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example ts, jsx and so on. There is a option to fix it, which is to manually compile the source code for these files.
+```js
+import * as fs from "fs";
+import * as path from "path";
+import { fileURLToPath } from "url";
+import * as TsNode from 'ts-node';
+const coverageOptions = {
+    onEntry: async (entry) => {
+        const filePath = fileURLToPath(entry.url)
+        const originalSource = fs.readFileSync(filePath).toString("utf-8");
+        const fileName = path.basename(filePath);
+        const tn = TsNode.create({});
+        const source = tn.compile(originalSource, fileName);
+        entry.fake = false;
+        entry.source = source;
+    }
+}
+```
 
 ## Integration
 
