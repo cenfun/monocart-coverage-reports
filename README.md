@@ -307,7 +307,7 @@ Options:
     - `.mcrrc` - json format
     - `mcr.config.ts` - it requires `NODE_OPTIONS="--loader ts-node/esm"`
 
-- Work with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
+- Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
