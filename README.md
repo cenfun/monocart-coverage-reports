@@ -707,7 +707,8 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ## Common issues
 - `Unparsable source`
-It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example ts, jsx and so on. There is a option to fix it, which is to manually compile the source code for these files.
+
+It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example `ts`, `jsx` and so on. There is a option to fix it, which is to manually compile the source code for these files.
 ```js
 import * as fs from "fs";
 import * as path from "path";
