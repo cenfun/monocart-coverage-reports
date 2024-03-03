@@ -185,10 +185,10 @@ declare namespace MCR {
         js?: boolean;
         /** V8 only */
         data?: {
-            bytes: CoverageRange[];
-            statements: CoverageRange[];
-            branches: CoverageRange[];
-            functions: CoverageRange[];
+            bytes?: CoverageRange[];
+            statements?: CoverageRange[];
+            branches?: CoverageRange[];
+            functions?: CoverageRange[];
             ignores?: IgnoredRange[];
             /** codecov json format */
             lines: {
@@ -211,11 +211,8 @@ declare namespace MCR {
         /** {string} logging levels: off, error, info, debug */
         logging?: string;
 
-        /** {string} output dir */
-        outputDir?: string;
-
-        /** {string|string[]} input raw dir(s) */
-        inputDir?: string | string[];
+        /** {string} Report name. Defaults to "Coverage Report". */
+        name?: string;
 
         /** 
          * 
@@ -224,25 +221,21 @@ declare namespace MCR {
          * {array} ['v8'], ['v8', ['console-details', { skipPercent: 80 }]]
          * 
          * By default, `v8` for V8 data, `html` for Istanbul data
-        */
+         */
         reports?: string | ReportDescription[];
 
-        /** {string} Report name. Defaults to "Coverage Report". */
-        name?: string;
+        /** {string} output dir */
+        outputDir?: string;
 
-        /** (V8 only) {string} Output [sub dir/]filename. Defaults to "index.html" */
-        outputFile?: string;
-        /** (V8 only) {boolean} Inline all scripts to the single HTML file. Defaults to false. */
-        inline?: boolean;
-        /** (V8 only) {string} Assets path if not inline. Defaults to "./assets" */
-        assetsPath?: string;
+        /** {string|string[]} input raw dir(s) */
+        inputDir?: string | string[];
 
         /** (V8 only) 
          * 
          * {string} `minimatch` pattern for entry url; {object} multiple patterns;
          * 
          * {function} A filter function for each entry file in the V8 list.
-         * */
+         */
         entryFilter?: string | {
             [pattern: string]: boolean;
         } | ((entry: V8CoverageEntry) => boolean);
@@ -252,10 +245,32 @@ declare namespace MCR {
          * {string} `minimatch` pattern for source path; {object} multiple patterns;
          * 
          * {function} A filter function for each source path when the source is unpacked from the source map. 
-         * */
+         */
         sourceFilter?: string | {
             [pattern: string]: boolean;
         } | ((sourcePath: string) => boolean);
+
+        /** 
+         * {function} Source path handler. 
+         * 
+         * {object} Replace key with value.
+         * */
+        sourcePath?: ((filePath: string) => string) | {
+            [key: string]: string;
+        };
+
+
+        /** (V8 only) {string} Output [sub dir/]filename. Defaults to "index.html" */
+        outputFile?: string;
+        /** (V8 only) {boolean} Inline all scripts to the single HTML file. Defaults to false. */
+        inline?: boolean;
+        /** (V8 only) {string} Assets path if not inline. Defaults to "./assets" */
+        assetsPath?: string;
+
+        /** (Istanbul only) defaultSummarizer, sourceFinder  */
+
+        /** {boolean} Generate lcov.info file, same as lcovonly report. Defaults to false.  */
+        lcov?: boolean;
 
         /**
          * options for adding empty coverage for all files
@@ -277,20 +292,6 @@ declare namespace MCR {
 
         /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
         v8Ignore?: boolean;
-
-        /** (Istanbul only) defaultSummarizer, sourceFinder  */
-
-        /** {boolean} Generate lcov.info file, same as lcovonly report. Defaults to false.  */
-        lcov?: boolean;
-
-        /** 
-         * {function} Source path handler. 
-         * 
-         * {object} Replace key with value.
-         * */
-        sourcePath?: ((filePath: string) => string) | {
-            [key: string]: string;
-        };
 
         /** {string|function} Specify the report path, especially when there are multiple reports. Defaults to outputDir/index.html. */
         reportPath?: string | (() => string);
@@ -323,10 +324,10 @@ declare namespace MCR {
 
     export interface McrCliOptions extends CoverageReportOptions {
 
-        /** (cli only) {function} onStart hook */
+        /** (CLI only) {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => Promise<void>;
 
-        /** (cli only) {function} onReady hook before adding coverage data.
+        /** (CLI only) {function} onReady hook before adding coverage data.
          * 
          * Sometimes, the child process has not yet finished writing the coverage data, and it needs to wait here.
         */
