@@ -51,9 +51,22 @@ const getIndexByPosition = (list) => {
 
     const originalPosition = data.cursor.originalPosition;
 
+    const range = data.range;
+
     let index;
     const item = list.find((it, i) => {
         index = i;
+
+        if (range) {
+            if (it.start > range.start) {
+                return true;
+            }
+            if (it.start === range.start && it.end > range.end) {
+                return true;
+            }
+            return false;
+        }
+
         return it.start > originalPosition;
     });
 
@@ -133,7 +146,6 @@ const getLocateIndex = (key, dataList) => {
     // if same range will be skip to next
     const posIndex = getIndexByPosition(dataList);
     if (typeof posIndex === 'number') {
-        // console.log('index', posIndex);
         index = posIndex;
     }
 
@@ -144,7 +156,6 @@ const renderRange = (range) => {
     const mappingParser = new MappingParser(data.mapping);
     const start = mappingParser.originalToFormatted(range.start);
     const end = mappingParser.originalToFormatted(range.end);
-
 
     if (Util.hasOwn(range, 'generatedStart')) {
         range.showGenerated = true;
@@ -174,7 +185,6 @@ const showNextRange = (id) => {
     }
 
     // console.log(index);
-
     // update next index
     const len = dataList.length;
     index += 1;
