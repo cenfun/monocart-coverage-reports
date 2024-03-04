@@ -1,9 +1,9 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "81.30 %",
-        "statements": "84.16 %",
-        "branches": "60.00 %",
+        "bytes": "81.79 %",
+        "statements": "84.06 %",
+        "branches": "60.08 %",
         "functions": "86.84 %",
         "lines": "71.73 %"
     },
@@ -26,10 +26,10 @@
         },
         "src/ignore/v8-ignore-next.js": {
             "functions": "100.00 %",
-            "branches": "66.67 %",
+            "branches": "75.00 %",
             "statements": "100.00 %",
             "lines": "75.00 %",
-            "bytes": "63.01 %",
+            "bytes": "84.38 %",
             "uncoveredLines": "20-22"
         },
         "src/ignore/v8-ignore-return.js": {
@@ -99,7 +99,7 @@
         "src/branch/branch.js": {
             "functions": "72.73 %",
             "branches": "65.85 %",
-            "statements": "86.08 %",
+            "statements": "85.90 %",
             "lines": "73.87 %",
             "bytes": "80.28 %",
             "uncoveredLines": "9-19,27,53-56,70,77-79,104,115-120,132-135,140-142"

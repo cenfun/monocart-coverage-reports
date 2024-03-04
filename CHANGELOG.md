@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.6.5
+    - fixed sourcemap issue for multiple lines of original text
+
 * 2.6.4
     - fixed summary name color for `console-details`
     - fixed uncaughtException for CLI

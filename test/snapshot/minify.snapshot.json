@@ -181,7 +181,7 @@
             "branches": "0.00 %",
             "statements": "4.17 %",
             "lines": "5.00 %",
-            "bytes": "5.50 %",
+            "bytes": "5.83 %",
             "uncoveredLines": "4-49"
         },
         "monocart-v8/node_modules/lz-utils/dist/inflate.js": {
