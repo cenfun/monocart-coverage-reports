@@ -672,17 +672,6 @@ onMounted(() => {
       gap="10px"
     >
       <VuiSwitch
-        v-model="state.formatted"
-        width="30px"
-        height="18px"
-        tooltip="Format Document"
-        :label-clickable="true"
-        label-position="right"
-      >
-        Format
-      </VuiSwitch>
-
-      <VuiSwitch
         v-if="data.showCount"
         v-model="state.count"
         width="30px"
@@ -692,6 +681,17 @@ onMounted(() => {
         label-position="right"
       >
         Count
+      </VuiSwitch>
+
+      <VuiSwitch
+        v-model="state.formatted"
+        width="30px"
+        height="18px"
+        tooltip="Format Document"
+        :label-clickable="true"
+        label-position="right"
+      >
+        Format
       </VuiSwitch>
 
       <IconLabel
