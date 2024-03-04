@@ -2,6 +2,7 @@
 
 * 2.6.5
     - fixed sourcemap issue for multiple lines of original text
+    - fixed UI issues, next selection
 
 * 2.6.4
     - fixed summary name color for `console-details`
