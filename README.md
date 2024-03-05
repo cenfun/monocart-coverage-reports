@@ -7,7 +7,7 @@
 ![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/static.yml)
 
 
-> A code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports. As early as 2017, V8 started offering native support for coverage data. However, we have essentially only been able to see coverage reports from Istanbul. Nowadays, we can directly use native V8 coverage data to generate V8 coverage reports.
+> A code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports. As early as 2017, V8 started offering native support for coverage data. However, we have essentially only been able to see coverage reports from Istanbul. Nowadays, we can directly generate V8 coverage reports with `monocart-coverage-reports`.
 
 * [Usage](#usage)
 * [Default Options](#default-options)
