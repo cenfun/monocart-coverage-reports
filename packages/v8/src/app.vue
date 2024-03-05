@@ -635,7 +635,7 @@ const getGridData = () => {
         id: 'type',
         name: 'Type',
         align: 'center',
-        width: 60,
+        width: 70,
         classMap: 'mcr-column-separator',
         headerClassMap: 'mcr-column-separator',
         formatter: 'type'
