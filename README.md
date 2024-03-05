@@ -7,7 +7,7 @@
 ![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/static.yml)
 
 
-> Code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
+> A code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports. As early as 2017, V8 started offering native support for coverage data. However, we have essentially only been able to see coverage reports from Istanbul. Nowadays, we can directly use native V8 coverage data to generate V8 coverage reports.
 
 * [Usage](#usage)
 * [Default Options](#default-options)
@@ -72,14 +72,22 @@ await coverageReport.generate();
 
 ## Default Options
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
+- Declaration [lib/index.d.ts](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/index.d.ts)
 
 ## Available Reports
 
 > V8 build-in reports (V8 data only):
 
 - `v8`
-    - Browser: Build with webpack [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [Minify](https://cenfun.github.io/monocart-coverage-reports/minify); Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/esbuild); Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/); [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
-    - Node.js: Collect with [env](https://cenfun.github.io/monocart-coverage-reports/node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/node-cdp); Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/node-koa/)
+    - Features: 
+        - A Brand-New V8 Coverage Report User Interface
+        - Support for Native Byte Statistics
+        - Coverage for Any Runtime Code
+        - CSS Coverage Support
+        - Better Support for Sourcemap Conversion
+    - Demos:
+        - Browser: Build with webpack [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [Minify](https://cenfun.github.io/monocart-coverage-reports/minify); Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/esbuild); Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/); [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
+        - Node.js: Collect with [env](https://cenfun.github.io/monocart-coverage-reports/node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/node-cdp); Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/node-koa/)
 
 ![](./assets/v8.gif)
 
