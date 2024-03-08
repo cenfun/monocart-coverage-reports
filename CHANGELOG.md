@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.6.6
+    - added debug message for invalid coverage
+
 * 2.6.5
     - fixed sourcemap issue for multiple lines of original text
     - fixed UI issues, next selection
