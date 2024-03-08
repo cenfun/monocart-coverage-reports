@@ -38,6 +38,7 @@
     - [Playwright](#playwright)
     - [Jest](#jest)
     - [Vitest](#vitest)
+    - [Cypress](#cypress)
     - [CodeceptJS](#codeceptjs)
     - [WebdriverIO](#webdriverio)
     - [Storybook Test Runner](#storybook-test-runner)
@@ -753,6 +754,9 @@ const coverageOptions = {
 
 ### [Vitest](https://github.com/vitest-dev/vitest)
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - A Vitest custom provider module for coverage reports
+
+### [Cypress](https://github.com/cypress-io/cypress)
+- [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - A Cypress plugin for coverage reports
 
 ### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
 - [codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage) - A CodeceptJS plugin for coverage reports
