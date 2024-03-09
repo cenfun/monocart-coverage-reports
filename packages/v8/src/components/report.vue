@@ -22,6 +22,7 @@ const {
 } = components;
 
 const state = inject('state');
+const tooltip = inject('tooltip');
 
 const data = shallowReactive({
     indexes: {}
@@ -152,20 +153,59 @@ const getLocateIndex = (key, dataList) => {
     return index;
 };
 
+const getRangeMapping = (range) => {
+
+    const currentFile = data.item;
+
+    // original file to generated file
+    const distFile = currentFile.distFile;
+    if (distFile) {
+        if (Util.hasOwn(range, 'generatedStart')) {
+            return {
+                sourcePath: distFile,
+                start: range.generatedStart,
+                end: range.generatedEnd
+            };
+        }
+        return;
+    }
+
+    // generated file to original file
+    const currentPath = currentFile.sourcePath;
+    let originalRange;
+    const { files } = state.reportData;
+    const originalFile = files.find((file) => {
+        if (file.distFile === currentPath) {
+            originalRange = file.data.bytes.find((it) => it.generatedStart === range.start && it.generatedEnd === range.end);
+            if (originalRange) {
+                return true;
+            }
+        }
+    });
+
+    if (originalRange) {
+        return {
+            sourcePath: originalFile.sourcePath,
+            start: originalRange.start,
+            end: originalRange.end,
+            generatedStart: originalRange.generatedStart,
+            generatedEnd: originalRange.generatedEnd
+        };
+    }
+
+};
+
 const renderRange = (range) => {
     const mappingParser = new MappingParser(data.mapping);
     const start = mappingParser.originalToFormatted(range.start);
     const end = mappingParser.originalToFormatted(range.end);
-
-    if (Util.hasOwn(range, 'generatedStart')) {
-        range.showGenerated = true;
-    }
 
     new Promise((resolve) => {
         data.resolve = resolve;
         codeViewer.setSelection(start, Math.min(end, data.maxContentLength));
     }).then(() => {
         data.range = range;
+        data.rangeMapping = getRangeMapping(range);
     });
 };
 
@@ -199,28 +239,18 @@ const showNextRange = (id) => {
 
 };
 
-const jumpToGeneratedRange = () => {
-    // console.log(data.range);
-
-    const distFile = data.item.distFile;
-    if (!distFile) {
-        return;
-    }
-
+const jumpToRangeMapping = (rangeMapping) => {
+    const sourcePath = rangeMapping.sourcePath;
     const { files } = state.reportData;
-
-    const item = files.find((it) => it.sourcePath === distFile);
+    const item = files.find((it) => it.sourcePath === sourcePath);
     if (!item) {
         return;
     }
 
     // show jump data range
-    console.log(data.range);
-
-    data.autoSelectedRange = {
-        start: data.range.generatedStart,
-        end: data.range.generatedEnd
-    };
+    // console.log(rangeMapping);
+    tooltip.visible = false;
+    data.autoSelectedRange = rangeMapping;
 
     // state.flyoverData = item.id;
     emit('jump', item);
@@ -720,13 +750,13 @@ onMounted(() => {
       >
         <span>{{ Util.NF(data.range.start) }}~{{ Util.NF(data.range.end) }}</span>
         <IconLabel
-          v-if="data.range.showGenerated"
-          icon="debug"
+          v-if="data.rangeMapping"
+          icon="link"
           class="mcr-generated-range"
-          tooltip="Jump to Generated Range"
-          @click="jumpToGeneratedRange()"
+          :tooltip="'Mapping to '+data.rangeMapping.sourcePath"
+          @click="jumpToRangeMapping(data.rangeMapping)"
         >
-          {{ Util.NF(data.range.generatedStart) }}~{{ Util.NF(data.range.generatedEnd) }}
+          {{ Util.NF(data.rangeMapping.start) }}~{{ Util.NF(data.rangeMapping.end) }}
         </IconLabel>
       </VuiFlex>
 

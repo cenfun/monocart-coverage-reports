@@ -119,6 +119,8 @@ const tooltip = reactive({
     html: false
 });
 
+provide('tooltip', tooltip);
+
 watchEffect(() => {
     let t = state.title;
     if (state.flyoverVisible) {

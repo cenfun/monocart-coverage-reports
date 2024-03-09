@@ -3,6 +3,7 @@
 * 2.6.6
     - added debug message for invalid coverage
     - fixed snapshot without debug file
+    - fixed range mapping for debug
 
 * 2.6.5
     - fixed sourcemap issue for multiple lines of original text
