@@ -73,6 +73,14 @@ await coverageReport.generate();
 
 ## Default Options
 - [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
+    - `reports` [Available Reports](#available-reports)
+    - `entryFilter` and `sourceFilter` [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
+    - `sourcePath` [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
+    - `all` [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
+    - `inputDir` [Merge Coverage Reports](#merge-coverage-reports)
+    - `logging` [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
+    - `onEnd` [onEnd Hook](#onend-hook)
+
 - Declaration [lib/index.d.ts](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/index.d.ts)
 
 ## Available Reports
