@@ -414,6 +414,16 @@ declare namespace MCR {
         message: string;
     };
 
+    export class CoverageClient {
+
+    }
+
+    export interface CDPOptions {
+
+    }
+
+    export function CDPClient(cdpOptions: CDPOptions): Promise<[Error, CoverageClient]>;
+
 }
 
 /** create coverage report */

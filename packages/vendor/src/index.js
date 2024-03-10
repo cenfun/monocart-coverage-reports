@@ -15,6 +15,8 @@ import { foregroundChild } from 'foreground-child';
 
 import { minimatch } from 'minimatch';
 
+import WebSocket from 'ws';
+
 import supportsColor from 'supports-color';
 
 export {
@@ -35,6 +37,7 @@ export {
     foregroundChild,
 
     minimatch,
+    WebSocket,
 
     supportsColor
 };

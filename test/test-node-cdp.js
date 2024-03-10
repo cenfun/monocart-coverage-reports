@@ -1,9 +1,8 @@
-const fs = require('fs');
-const { fileURLToPath } = require('url');
-const CDP = require('chrome-remote-interface');
 const EC = require('eight-colors');
 
 const MCR = require('../');
+const CDPClient = MCR.CDPClient;
+
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
@@ -20,10 +19,7 @@ const coverageOptions = {
     }
 };
 
-const collectV8Coverage = async (client) => {
-
-    const data = await client.Profiler.takePreciseCoverage();
-    let coverageList = data.result;
+const addV8Coverage = async (coverageReport, coverageList) => {
 
     if (!coverageList) {
         console.log('failed to take coverage data');
@@ -40,57 +36,40 @@ const collectV8Coverage = async (client) => {
         return;
     }
 
-    // attach source content
-    coverageList.forEach((item) => {
-        const filePath = fileURLToPath(item.url);
-        if (fs.existsSync(filePath)) {
-            item.source = fs.readFileSync(filePath).toString('utf8');
-        } else {
-            EC.logRed('not found file', filePath);
-        }
-    });
-
-    // console.log(coverageList);
-
-    console.log('add node.js cdp coverage ...');
-    await MCR(coverageOptions).add(coverageList);
-
+    console.log('add node.js cdp coverage ...', coverageList.length);
+    await coverageReport.add(coverageList);
 };
 
 
 const generate = async () => {
     // clean cache first
-    await MCR(coverageOptions).cleanCache();
+    const coverageReport = MCR(coverageOptions);
+    coverageReport.cleanCache();
 
     // =====================================================
     // after webServer is debugging on ws://127.0.0.1:9229
     // connect to the server with Chrome Devtools Protocol
 
-    const client = await CDP({
+    const client = await CDPClient({
         port: 9229
     });
 
-    client.on('error', (err) => {
-        console.log(err);
-    });
-
-    await client.Profiler.enable();
-
-    await client.Profiler.startPreciseCoverage({
-        callCount: true,
-        detailed: true
-    });
+    await client.startJSCoverage();
 
     // =====================================================
     require('./specs/node.test.js');
     // =====================================================
 
-    await collectV8Coverage(client);
+    const coverageList = await client.stopJSCoverage();
+    // console.log('check source', coverageList.filter((it) => !it.source).map((it) => [it.scriptId, it.url]));
+    // console.log(coverageList.map((it) => it.url));
 
-    await client.Profiler.disable();
+    await addV8Coverage(coverageReport, coverageList);
+
+    // await client.Profiler.disable();
     await client.close();
 
-    const coverageResults = await MCR(coverageOptions).generate();
+    const coverageResults = await coverageReport.generate();
     console.log('test-node-cdp coverage reportPath', EC.magenta(coverageResults.reportPath));
 
 };

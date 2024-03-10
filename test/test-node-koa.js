@@ -3,11 +3,12 @@ const path = require('path');
 const { fileURLToPath } = require('url');
 const { execSync, spawn } = require('child_process');
 const assert = require('assert');
-const CDP = require('chrome-remote-interface');
 const axios = require('axios');
 const EC = require('eight-colors');
 
 const MCR = require('../');
+const CDPClient = MCR.CDPClient;
+
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
@@ -28,6 +29,7 @@ const coverageOptions = {
 
 // mock start koa server
 const startSubProcess = (dir) => {
+    console.log('start koa server ...');
     const cp = spawn('node --inspect=9229 ./test/mock/node/lib/koa.js', {
         stdio: 'inherit',
         shell: true
@@ -47,6 +49,7 @@ const startSubProcess = (dir) => {
 };
 
 const killSubProcess = (cp) => {
+    console.log('kill koa server ...');
 
     // On Windows, we always call `taskkill` no matter signal.
     if (process.platform === 'win32') {
@@ -97,29 +100,18 @@ const generate = async () => {
 
     // after webServer is debugging on ws://127.0.0.1:9229
     // connect to the server with Chrome Devtools Protocol
-    const client = await CDP({
+    const client = await CDPClient({
         port: 9229
     });
 
-
-    // enable and start v8 coverage
-    await client.Runtime.enable();
-
-    //  write the coverage started by NODE_V8_COVERAGE to disk on demand
-    const data = await client.Runtime.evaluate({
-        expression: 'new Promise(resolve=>{ require("v8").takeCoverage(); resolve(process.env.NODE_V8_COVERAGE); })',
-        includeCommandLineAPI: true,
-        returnByValue: true,
-        awaitPromise: true
-    });
-
-    await client.Runtime.disable();
+    const v8Dir = await client.writeCoverage();
+    // console.log('v8 dir', v8Dir);
 
     // close debugger
     await client.close();
 
     // check coverage dir
-    assert(path.resolve(dir) === data.result.value);
+    assert(path.resolve(dir) === v8Dir);
 
     const coverageReport = MCR(coverageOptions);
     // clean previous cache first
@@ -153,10 +145,7 @@ const generate = async () => {
     const coverageResults = await coverageReport.generate();
     console.log('test-node-koa coverage reportPath', EC.magenta(coverageResults.reportPath));
 
-    console.log('kill koa server ...');
     killSubProcess(cp);
-
-    // console.log(cp.killed);
 
 };
 
