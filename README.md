@@ -22,6 +22,7 @@
 * [Manually Resolve the Sourcemap](#manually-resolve-the-sourcemap)
 * [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 * [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+* [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Merge Coverage Reports](#merge-coverage-reports)
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
