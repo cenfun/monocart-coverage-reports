@@ -378,6 +378,8 @@ declare namespace MCR {
         loadConfig: (configFile?: string) => Promise<void>;
     }
 
+    //=====================================================================================================
+
     export interface CoverageSnapshot {
         type: "v8" | "istanbul";
         summary: {
@@ -414,15 +416,56 @@ declare namespace MCR {
         message: string;
     };
 
-    export class CoverageClient {
+    //=====================================================================================================
 
+    export class CoverageClient {
+        /** start js coverage */
+        startJSCoverage: () => Promise<void>;
+        /** stop and return js coverage */
+        stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+
+        /** start css coverage */
+        startCSSCoverage: () => Promise<void>;
+        /** stop and return css coverage */
+        stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+
+        /** start both js and css coverage */
+        startCoverage: () => Promise<void>;
+        /** stop and return both js and css coverage */
+        stopCoverage: () => Promise<V8CoverageEntry[]>;
+
+        /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
+        writeCoverage: () => Promise<string>
+
+    }
+
+    /** Adapt to the CDPSession of Playwright or Puppeteer */
+    export interface CDPSession {
+        send: (method: string, params?: any) => Promise<any>;
+        on: (type: string, handler: (e: any) => void) => void;
+        detach: () => Promise<void>
     }
 
     export interface CDPOptions {
-
+        /** Adapt to the CDPSession of Playwright or Puppeteer */
+        session?: CDPSession;
+        /** websocket debugger url */
+        url?: string;
+        /** debugger port, defaults to 9222 */
+        port?: number;
+        /** debugger host, defaults to localhost */
+        host?: string;
+        /** enable https, defaults to false (http) */
+        secure?: boolean;
+        /** target filter, defaults to first page */
+        target?: (targets) => any;
+        /** websocket options */
+        ws?: any;
+        /** timeout, defaults to 10 * 1000 */
+        timeout?: number;
     }
 
-    export function CDPClient(cdpOptions: CDPOptions): Promise<CoverageClient?>;
+    export function CDPClient(cdpOptions: CDPOptions): Promise<CoverageClient | undefined>;
 
 }
 
