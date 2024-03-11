@@ -375,6 +375,8 @@ Options:
     - see [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 - Node.js
     - see [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+- CDP
+    - see [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
 ## Manually Resolve the Sourcemap
 > Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
