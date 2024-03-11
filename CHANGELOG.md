@@ -1,6 +1,7 @@
 ## Changelog
 
-* 2.6.6
+* 2.7.0
+    - added new API `CDPClient` for collecting v8 coverage more easily
     - added debug message for invalid coverage
     - fixed snapshot without debug file
     - fixed range mapping for debug

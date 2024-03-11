@@ -60,11 +60,11 @@ const generate = async () => {
     require('./specs/node.test.js');
     // =====================================================
 
-    const coverageList = await client.stopJSCoverage();
+    const coverageData = await client.stopJSCoverage();
     // console.log('check source', coverageList.filter((it) => !it.source).map((it) => [it.scriptId, it.url]));
     // console.log(coverageList.map((it) => it.url));
 
-    await addV8Coverage(coverageReport, coverageList);
+    await addV8Coverage(coverageReport, coverageData);
 
     // await client.Profiler.disable();
     await client.close();

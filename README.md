@@ -453,6 +453,50 @@ Possible solutions:
 - [Child Process](https://nodejs.org/docs/latest/api/child_process.html) + NODE_V8_COVERAGE
     - see [`mcr` CLI](#mcr-cli)
 
+## Collecting V8 Coverage Data with `CDPClient` API
+- Work with node debugger `--inspect=9229`
+```js
+const MCR = require('monocart-coverage-reports');
+const client = await MCR.CDPClient({
+    port: 9229
+});
+await client.startJSCoverage();
+// run your test here
+const coverageData = await client.stopJSCoverage();
+```
+- Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
+```js
+const { chromium } = require('playwright');
+const MCR = require('monocart-coverage-reports');
+const browser = await chromium.launch();
+const page = await browser.newPage();
+const session = await page.context().newCDPSession(page);
+const client = await MCR.CDPClient({
+    session
+});
+// both js and css coverage
+await client.startCoverage();
+// run your test page here
+await page.goto("your page url");
+const coverageData = await client.stopCoverage();
+```
+- Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
+```js
+const puppeteer = require('puppeteer');
+const MCR = require('monocart-coverage-reports');
+const browser = await puppeteer.launch({});
+const page = await browser.newPage();
+const session = await page.target().createCDPSession();
+const client = await MCR.CDPClient({
+    session
+});
+// both js and css coverage
+await client.startCoverage();
+// run your test page here
+await page.goto("your page url");
+const coverageData = await client.stopCoverage();
+```
+
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 - Main process, before the start of testing

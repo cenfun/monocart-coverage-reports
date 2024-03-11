@@ -3,7 +3,6 @@ const { chromium } = require('playwright');
 const PCR = require('puppeteer-chromium-resolver');
 
 const MCR = require('../');
-const CDPClient = MCR.CDPClient;
 
 const coverageOptions = {
     // logging: 'debug',
@@ -30,7 +29,7 @@ const testPlaywright = async (coverageReport) => {
     const page = await browser.newPage();
 
     const session = await page.context().newCDPSession(page);
-    const client = await CDPClient({
+    const client = await MCR.CDPClient({
         session
     });
 
@@ -92,7 +91,7 @@ const testPuppeteer = async (coverageReport) => {
     });
 
     const session = await page.target().createCDPSession();
-    const client = await CDPClient({
+    const client = await MCR.CDPClient({
         session
     });
 
