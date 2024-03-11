@@ -422,7 +422,7 @@ declare namespace MCR {
 
     }
 
-    export function CDPClient(cdpOptions: CDPOptions): Promise<[Error, CoverageClient]>;
+    export function CDPClient(cdpOptions: CDPOptions): Promise<CoverageClient?>;
 
 }
 

@@ -6,15 +6,15 @@ const CDPClient = MCR.CDPClient;
 
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
-    logging: 'debug',
+    // logging: 'debug',
     // watermarks: [60, 90],
     reports: ['v8'],
 
-    name: 'My V8 CDP Coverage Report',
+    name: 'My V8 Client Coverage Report',
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/cdp',
+    outputDir: './docs/client',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }
@@ -34,8 +34,7 @@ const generate = async () => {
         session
     });
 
-    await client.startJSCoverage();
-    await client.startCSSCoverage();
+    await client.startCoverage();
 
     await page.setContent(`<html>
     <head>
@@ -54,20 +53,17 @@ const generate = async () => {
     </body>
     </html>`);
 
-    const jsCoverage = await client.stopJSCoverage();
-    const cssCoverage = await client.stopCSSCoverage();
+    const coverageData = await client.stopCoverage();
 
     await client.close();
     await browser.close();
 
     const coverageReport = MCR(coverageOptions);
-
-    const coverageList = [... jsCoverage, ... cssCoverage];
-    await coverageReport.add(coverageList);
+    await coverageReport.add(coverageData);
 
     if (coverageReport.hasCache()) {
         const coverageResults = await coverageReport.generate();
-        console.log('test-node-cdp coverage reportPath', EC.magenta(coverageResults.reportPath));
+        console.log('test client coverage reportPath', EC.magenta(coverageResults.reportPath));
     }
 
 };
