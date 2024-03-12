@@ -2,6 +2,7 @@
 
 * 2.7.1
     - fixed invalid `sourcesContent`
+    - added new argument `info` for `sourcePath`
 
 * 2.7.0
     - added new API `CDPClient` for collecting v8 coverage more easily

@@ -46,7 +46,7 @@ const coverageOptions = {
 
     // v8Ignore: false,
 
-    sourcePath: (filePath) => {
+    sourcePath: (filePath, info) => {
         const map = {
             'localhost-8130/': 'test/mock/',
             'coverage-v8/': ''

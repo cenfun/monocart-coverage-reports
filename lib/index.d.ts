@@ -255,7 +255,7 @@ declare namespace MCR {
          * 
          * {object} Replace key with value.
          * */
-        sourcePath?: ((filePath: string) => string) | {
+        sourcePath?: ((filePath: string, info: any) => string) | {
             [key: string]: string;
         };
 
