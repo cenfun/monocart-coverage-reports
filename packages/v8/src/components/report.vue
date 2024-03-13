@@ -156,16 +156,23 @@ const getLocateIndex = (key, dataList) => {
 const getRangeMapping = (range) => {
 
     const currentFile = data.item;
+    const { files } = state.reportData;
 
     // original file to generated file
     const distFile = currentFile.distFile;
     if (distFile) {
         if (Util.hasOwn(range, 'generatedStart')) {
-            return {
-                sourcePath: distFile,
-                start: range.generatedStart,
-                end: range.generatedEnd
-            };
+            const generatedFile = files.find((file) => {
+                return !file.distFile && file.sourcePath === distFile;
+            });
+            if (generatedFile) {
+                return {
+                    id: generatedFile.id,
+                    sourcePath: distFile,
+                    start: range.generatedStart,
+                    end: range.generatedEnd
+                };
+            }
         }
         return;
     }
@@ -173,7 +180,6 @@ const getRangeMapping = (range) => {
     // generated file to original file
     const currentPath = currentFile.sourcePath;
     let originalRange;
-    const { files } = state.reportData;
     const originalFile = files.find((file) => {
         if (file.distFile === currentPath) {
             originalRange = file.data.bytes.find((it) => it.generatedStart === range.start && it.generatedEnd === range.end);
@@ -185,6 +191,7 @@ const getRangeMapping = (range) => {
 
     if (originalRange) {
         return {
+            id: originalFile.id,
             sourcePath: originalFile.sourcePath,
             start: originalRange.start,
             end: originalRange.end,
@@ -240,9 +247,8 @@ const showNextRange = (id) => {
 };
 
 const jumpToRangeMapping = (rangeMapping) => {
-    const sourcePath = rangeMapping.sourcePath;
     const { files } = state.reportData;
-    const item = files.find((it) => it.sourcePath === sourcePath);
+    const item = files.find((it) => it.id === rangeMapping.id);
     if (!item) {
         return;
     }

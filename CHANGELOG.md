@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.7.2
+    - fixed the switch between original and generated
+
 * 2.7.1
     - fixed invalid `sourcesContent`
     - added new argument `info` for `sourcePath`
