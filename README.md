@@ -324,9 +324,10 @@ Options:
     - `mcr.config.json` - json format
     - `.mcrrc.js`
     - `.mcrrc` - json format
-    - `mcr.config.ts` - it requires `NODE_OPTIONS="--loader ts-node/esm"`
+    - `mcr.config.ts`
 
 - Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
+- Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
