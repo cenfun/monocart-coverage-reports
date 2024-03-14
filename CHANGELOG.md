@@ -2,6 +2,7 @@
 
 * 2.7.2
     - fixed the switch between original and generated
+    - supported reading source from v8 coverage dir
 
 * 2.7.1
     - fixed invalid `sourcesContent`
