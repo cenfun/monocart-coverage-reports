@@ -13,7 +13,7 @@
 * [Available Reports](#available-reports)
 * [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
 * [onEnd Hook](#onend-hook)
-* [`mcr` CLI](#mcr-cli)
+* [Command Line](#command-line)
 * [Compare Reports](#compare-reports)
 * [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
@@ -274,7 +274,7 @@ const coverageOptions = {
 }
 ```
 
-## `mcr` CLI
+## Command Line
 > The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
 
 - Installing globally
@@ -323,10 +323,10 @@ Options:
     - `mcr.config.json` - json format
     - `.mcrrc.js`
     - `.mcrrc` - json format
-    - `mcr.config.ts`
+    - `mcr.config.ts` (requires preloading the typescript module)
 
-- Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 - Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
+- Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
