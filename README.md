@@ -814,6 +814,7 @@ const coverageOptions = {
 - [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - A Cypress plugin for coverage reports
 
 ### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
+- CodeceptJS has integrated MCR from version [3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15)
 - [codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage) - A CodeceptJS plugin for coverage reports
 
 ### [WebdriverIO](https://github.com/webdriverio/webdriverio)
