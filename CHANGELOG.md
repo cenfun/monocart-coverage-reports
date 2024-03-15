@@ -2,6 +2,7 @@
 
 * 2.7.2
     - fixed the switch between original and generated
+    - fixed source url
     - added register to export source for v8 coverage
     - added support to read source from v8 coverage dir 
     - added new API `addFromDir`
