@@ -454,7 +454,7 @@ Possible solutions:
     > node [./test/test-node-koa.js](./test/test-node-koa.js)
 
 - [Child Process](https://nodejs.org/docs/latest/api/child_process.html) + NODE_V8_COVERAGE
-    - see [`mcr` CLI](#mcr-cli)
+    - see [Command Line](#command-line)
 
 ## Collecting V8 Coverage Data with `CDPClient` API
 - Work with node debugger `--inspect=9229`
