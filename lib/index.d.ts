@@ -347,6 +347,12 @@ declare namespace MCR {
          * @param coverageData {array} V8 format, {object} Istanbul format */
         add: (coverageData: any[] | any) => Promise<AddedResults>;
 
+        /**
+         * add V8 coverage from a dir
+         * @param dir node v8 coverage dir
+         */
+        addFromDir: (dir: string) => Promise<void>;
+
         /** generate report */
         generate: () => Promise<CoverageResults>;
 

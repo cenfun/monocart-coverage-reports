@@ -4,6 +4,7 @@
     - fixed the switch between original and generated
     - added register to export source for v8 coverage
     - added support to read source from v8 coverage dir 
+    - added new API `addFromDir`
 
 * 2.7.1
     - fixed invalid `sourcesContent`
