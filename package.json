@@ -13,6 +13,13 @@
             "require": "./lib/index.js",
             "default": "./lib/index.js"
         },
+        "./register": {
+            "import": "./lib/register/register.mjs",
+            "require": "./lib/register/register.js",
+            "default": "./lib/register/register.js"
+        },
+        "./converter": "./lib/converter/converter.js",
+        "./util": "./lib/utils/util.js",
         "./package.json": "./package.json"
     },
     "types": "./lib/index.d.ts",
@@ -78,6 +85,7 @@
         "stylelint": "^16.2.1",
         "stylelint-config-plus": "^1.1.0",
         "supports-color": "^9.4.0",
+        "tsx": "^4.7.1",
         "ws": "^8.16.0"
     }
 }
