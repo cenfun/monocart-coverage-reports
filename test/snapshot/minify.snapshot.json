@@ -216,7 +216,7 @@
             "bytes": "54.10 %",
             "uncoveredLines": "14-20"
         },
-        "monocart-v8/packages/v8/src/images/icons/sync/.svg$": {
+        "monocart-v8/packages/v8/src/images/icons/sync-.svg$": {
             "functions": "100.00 %",
             "branches": "50.00 %",
             "statements": "80.00 %",

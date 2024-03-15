@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { fileURLToPath } = require('url');
 const { execSync, spawn } = require('child_process');
 const assert = require('assert');
 const axios = require('axios');
@@ -18,6 +17,10 @@ const coverageOptions = {
     name: 'My Koa Coverage Report',
     assetsPath: '../assets',
     // lcov: true,
+
+    entryFilter: {
+        '**/test/**': true
+    },
 
     outputDir: './docs/node-koa',
     onEnd: function(coverageResults) {
@@ -117,31 +120,7 @@ const generate = async () => {
     // clean previous cache first
     coverageReport.cleanCache();
 
-    const files = fs.readdirSync(dir);
-    for (const filename of files) {
-        const content = fs.readFileSync(path.resolve(dir, filename)).toString('utf-8');
-        const json = JSON.parse(content);
-        let coverageList = json.result;
-
-        // filter node internal files
-        coverageList = coverageList.filter((entry) => entry.url && entry.url.startsWith('file:'));
-
-        coverageList = coverageList.filter((entry) => entry.url.includes('test/'));
-
-        if (!coverageList.length) {
-            continue;
-        }
-
-        // console.log(coverageList.map((entry) => entry.url));
-
-        // attached source content
-        coverageList.forEach((entry) => {
-            entry.source = fs.readFileSync(fileURLToPath(entry.url)).toString('utf8');
-        });
-
-        await coverageReport.add(coverageList);
-    }
-
+    await coverageReport.addFromDir(dir);
     const coverageResults = await coverageReport.generate();
     console.log('test-node-koa coverage reportPath', EC.magenta(coverageResults.reportPath));
 
