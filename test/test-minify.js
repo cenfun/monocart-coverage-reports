@@ -1,6 +1,8 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
+const serve = require('./serve.js');
+
 const MCR = require('../');
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
@@ -44,11 +46,9 @@ const test = async (serverUrl) => {
         })
     ]);
 
-    const url = `${serverUrl}/minify/`;
+    console.log(`goto ${serverUrl}`);
 
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    await page.goto(serverUrl);
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -77,9 +77,18 @@ const generate = async () => {
 };
 
 
-module.exports = async (serverUrl) => {
+const main = async () => {
+
+    const { server, serverUrl } = await serve(8130, 'minify');
+
     // clean cache first
     await MCR(coverageOptions).cleanCache();
+
     await test(serverUrl);
+
+    server.close();
+
     await generate();
 };
+
+main();

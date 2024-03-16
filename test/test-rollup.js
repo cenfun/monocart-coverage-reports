@@ -1,6 +1,8 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
+const serve = require('./serve.js');
+
 const MCR = require('../');
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
@@ -19,9 +21,9 @@ const coverageOptions = {
     }
 };
 
-const test1 = async (serverUrl) => {
+const test = async (serverUrl) => {
 
-    console.log('start rollup test1 ...');
+    console.log('start rollup test ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -36,11 +38,9 @@ const test1 = async (serverUrl) => {
         })
     ]);
 
-    const url = `${serverUrl}/rollup/`;
+    console.log(`goto ${serverUrl}`);
 
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    await page.goto(serverUrl);
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -54,48 +54,7 @@ const test1 = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await MCR(coverageOptions).add(coverageList);
-    console.log('rollup coverage1 added', results.type);
-
-    await browser.close();
-};
-
-
-const test2 = async (serverUrl) => {
-
-    console.log('start rollup test2 ...');
-    const browser = await chromium.launch({
-        // headless: false
-    });
-    const page = await browser.newPage();
-
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
-
-    const url = `${serverUrl}/rollup/`;
-
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
-    });
-
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
-
-    const coverageList = [... jsCoverage, ... cssCoverage];
-
-    const results = await MCR(coverageOptions).add(coverageList);
-    console.log('rollup coverage2 added', results.type);
+    console.log('rollup coverage added', results.type);
 
     await browser.close();
 };
@@ -110,14 +69,18 @@ const generate = async () => {
 };
 
 
-module.exports = async (serverUrl) => {
+const main = async () => {
+
+    const { server, serverUrl } = await serve(8150, 'rollup');
+
     // clean cache first
     await MCR(coverageOptions).cleanCache();
 
-    await Promise.all([
-        test1(serverUrl),
-        test2(serverUrl)
-    ]);
+    await test(serverUrl);
+
+    server.close();
 
     await generate();
 };
+
+main();

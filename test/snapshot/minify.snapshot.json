@@ -1,14 +1,14 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "41.46 %",
+        "bytes": "41.47 %",
         "statements": "39.27 %",
-        "branches": "25.31 %",
+        "branches": "25.32 %",
         "functions": "42.69 %",
-        "lines": "36.14 %"
+        "lines": "36.17 %"
     },
     "files": {
-        "localhost-8130/minify/demo.js": {
+        "localhost-8130/demo.js": {
             "functions": "80.00 %",
             "branches": "73.33 %",
             "statements": "89.29 %",
@@ -16,7 +16,7 @@
             "bytes": "87.26 %",
             "uncoveredLines": "28-30,39-41,48-50"
         },
-        "localhost-8130/minify/browser.js": {
+        "localhost-8130/browser.js": {
             "functions": "55.26 %",
             "branches": "54.55 %",
             "statements": "53.25 %",
@@ -24,7 +24,7 @@
             "bytes": "69.67 %",
             "uncoveredLines": "1-2"
         },
-        "localhost-8130/minify/ie-polyfill.js": {
+        "localhost-8130/ie-polyfill.js": {
             "functions": "46.23 %",
             "branches": "19.99 %",
             "statements": "38.10 %",
@@ -32,15 +32,15 @@
             "bytes": "51.16 %",
             "uncoveredLines": "1"
         },
-        "localhost-8130/minify/redirection.js/one&amp;two": {
+        "localhost-8130/redirection.js/one&amp;two": {
             "functions": "55.56 %",
-            "branches": "31.11 %",
+            "branches": "33.33 %",
             "statements": "49.30 %",
             "lines": "60.31 %",
-            "bytes": "70.31 %",
-            "uncoveredLines": "6-7,14-18,69-72,77-78,80-87,97,107-136,140,143-145"
+            "bytes": "71.91 %",
+            "uncoveredLines": "6-7,14-18,69-72,77-78,80-87,97,107-136,140,142,144-145"
         },
-        "localhost-8130/minify/with-map/coverage-data.js": {
+        "localhost-8130/with-map/coverage-data.js": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -48,7 +48,7 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "localhost-8130/minify": {
+        "localhost-8130": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -60,19 +60,11 @@
             "functions": "",
             "branches": "",
             "statements": "",
-            "lines": "27.45 %",
-            "bytes": "43.35 %",
-            "uncoveredLines": "12-18,22-25,33-53,69-85"
-        },
-        "localhost-8130/minify/css/style.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
             "lines": "",
             "bytes": "",
             "uncoveredLines": ""
         },
-        "localhost-8130/minify/with-map/bootstrap.min.css": {
+        "localhost-8130/with-map/bootstrap.min.css": {
             "functions": "",
             "branches": "",
             "statements": "",

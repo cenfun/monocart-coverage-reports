@@ -1,6 +1,8 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
+const serve = require('./serve.js');
+
 const MCR = require('../');
 
 // v8 and istanbul reports
@@ -32,10 +34,6 @@ const multipleReportsOptions = {
     // reportPath: 'lcov.info',
     reportPath: () => {
         return 'my-json-file.json';
-    },
-
-    entryFilter: (entry) => {
-        return entry.url.includes('v8/');
     },
 
     sourceFilter: (filePath) => {
@@ -77,11 +75,9 @@ const test = async (serverUrl) => {
         })
     ]);
 
-    const url = `${serverUrl}/v8/`;
+    console.log(`goto ${serverUrl}`);
 
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    await page.goto(serverUrl);
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -116,16 +112,23 @@ const generate = async () => {
 
     console.log('generate v8-and-istanbul coverage reports ...');
     // to istanbul
-    const coverageResults2 = await MCR(multipleReportsOptions).generate();
-    console.log('reportPath', EC.magenta(coverageResults2.reportPath));
+    const coverageResults = await MCR(multipleReportsOptions).generate();
+    console.log('reportPath', EC.magenta(coverageResults.reportPath));
 };
 
 
-module.exports = async (serverUrl) => {
+const main = async () => {
+
+    const { server, serverUrl } = await serve(8160, 'v8');
+
     // clean cache first
     await MCR(multipleReportsOptions).cleanCache();
 
     await test(serverUrl);
 
+    server.close();
+
     await generate();
 };
+
+main();

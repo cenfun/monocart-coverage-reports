@@ -1,6 +1,8 @@
 const { chromium } = require('playwright');
 const EC = require('eight-colors');
 
+const serve = require('./serve.js');
+
 const MCR = require('../');
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
@@ -20,7 +22,7 @@ const coverageOptions = {
 
 const test = async (serverUrl) => {
 
-    console.log('start esbuild test1 ...');
+    console.log('start esbuild test ...');
     const browser = await chromium.launch({
         //  headless: false
     });
@@ -35,11 +37,9 @@ const test = async (serverUrl) => {
         })
     ]);
 
-    const url = `${serverUrl}/esbuild/`;
+    console.log(`goto ${serverUrl}`);
 
-    console.log(`goto ${url}`);
-
-    await page.goto(url);
+    await page.goto(serverUrl);
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
@@ -53,7 +53,7 @@ const test = async (serverUrl) => {
     const coverageList = [... jsCoverage, ... cssCoverage];
 
     const results = await MCR(coverageOptions).add(coverageList);
-    console.log('esbuild coverage1 added', results.type);
+    console.log('esbuild coverage added', results.type);
 
     await browser.close();
 };
@@ -67,11 +67,18 @@ const generate = async () => {
 };
 
 
-module.exports = async (serverUrl) => {
+const main = async () => {
+
+    const { server, serverUrl } = await serve(8140, 'esbuild');
+
     // clean cache first
     await MCR(coverageOptions).cleanCache();
 
     await test(serverUrl);
 
+    server.close();
+
     await generate();
 };
+
+main();
