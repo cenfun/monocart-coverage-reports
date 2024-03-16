@@ -12,10 +12,7 @@ const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
     reports: [
-        'v8',
-        ['html', {
-            subdir: 'html'
-        }]
+        'v8'
     ],
 
     // merge from exists raw dirs

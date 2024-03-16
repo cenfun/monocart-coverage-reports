@@ -19,10 +19,10 @@ const coverageOptions = {
         'raw',
         ['html'],
         // ['text'],
-        ['json'],
-        ['html-spa', {
-            subdir: 'html-spa'
-        }]
+        ['json']
+        // ['html-spa', {
+        //     subdir: 'html-spa'
+        // }]
     ],
     lcov: true,
     name: 'My Istanbul Report',

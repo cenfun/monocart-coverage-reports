@@ -49,7 +49,7 @@
         "test-merge": "node ./test/test-merge.js",
         "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
         "test-client": "node ./test/test-client.js",
-        "test-all": "run-p test-node test-browser test-cli test-merge build-docs",
+        "test-all": "run-p test-node test-browser test-cli && npm run test-merge && npm run build-docs",
         "test": "npx mcr npm run test-all -c test/mcr.config.mcr.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "dev": "sf d v8",

@@ -10,12 +10,12 @@ const coverageOptions = {
     reports: [
         ['v8', {
             assetsPath: '../assets'
-        }],
+        }]
         // ['console-details', {
         //     skipPercent: 80,
         //     metrics: ['bytes', 'functions', 'lines']
         // }],
-        ['cobertura']
+        // ['cobertura']
     ],
 
     name: 'My V8 Minify Coverage Report',
