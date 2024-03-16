@@ -312,6 +312,8 @@ Options:
   --inline                     inline html for v8 report
   --assetsPath <path>          assets path if not inline
   --lcov                       generate lcov.info file
+  --import <module>            preload module at startup
+  --require <module>           preload module at startup
   -h, --help                   display help for command
 ```
 
@@ -323,9 +325,13 @@ Options:
     - `mcr.config.json` - json format
     - `.mcrrc.js`
     - `.mcrrc` - json format
-    - `mcr.config.ts` (requires preloading the typescript module)
+    - `mcr.config.ts` (requires preloading the ts execution module)
 
 - Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
+    ```sh
+    npx mcr --import tsx tsx ./src/example.ts
+    ```
+
 - Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ## Compare Reports
