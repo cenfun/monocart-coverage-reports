@@ -318,14 +318,14 @@ Options:
 ```
 
 - Loading config file by priority:
-    - custom config file with `-c` or `--config`
+    - Custom config file with `-c` or `--config`
     - `mcr.config.js`
     - `mcr.config.cjs`
     - `mcr.config.mjs`
     - `mcr.config.json` - json format
+    - `mcr.config.ts` (requires preloading the ts execution module)
     - `.mcrrc.js`
     - `.mcrrc` - json format
-    - `mcr.config.ts` (requires preloading the ts execution module)
 
 - Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
     ```sh
