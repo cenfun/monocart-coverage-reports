@@ -21,9 +21,9 @@ module.exports = {
             return false;
         }
 
-        // if (entry.url.includes('packages/')) {
-        //     return false;
-        // }
+        if (entry.url.includes('packages/')) {
+            return false;
+        }
 
         return true;
     },
