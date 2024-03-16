@@ -2,6 +2,7 @@
 
 * 2.7.3
     - fixed a parser error for inline sourcemap
+    - fixed error for loading config default
 
 * 2.7.2
     - fixed the switch between original and generated
