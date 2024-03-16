@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.7.3
+    - fixed a parser error for inline sourcemap
+
 * 2.7.2
     - fixed the switch between original and generated
     - fixed source url
