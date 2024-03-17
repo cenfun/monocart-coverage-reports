@@ -30,15 +30,15 @@ module.exports = {
 
     // sourceFilter: (sourcePath) => sourcePath.search(/src\/.+/) !== -1,
 
-    // all: {
-    //     dir: 'lib',
-    //     filter: {
-    //         // '**/monocart-*.js': false,
-    //         '**/*.html': false,
-    //         '**/*.ts': false,
-    //         '**/*': true
-    //     }
-    // },
+    all: {
+        dir: 'lib',
+        filter: {
+            // '**/monocart-*.js': false,
+            '**/*.html': false,
+            '**/*.ts': false,
+            '**/*': true
+        }
+    },
 
     onEnd: async (coverageResults) => {
         await checkTest();
