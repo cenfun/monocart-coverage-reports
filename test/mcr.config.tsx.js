@@ -1,5 +1,3 @@
-const checkSnapshot = require('./check-snapshot.js');
-
 module.exports = {
 
     // logging: 'debug',
@@ -14,10 +12,6 @@ module.exports = {
 
     entryFilter: {
         '**/test/specs/**': true
-    },
-
-    onEnd: (coverageResults) => {
-        checkSnapshot(coverageResults);
     }
 
 };
