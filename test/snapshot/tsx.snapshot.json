@@ -1,0 +1,20 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "55.19 %",
+        "statements": "75.00 %",
+        "branches": "",
+        "functions": "33.33 %",
+        "lines": "42.86 %"
+    },
+    "files": {
+        "test/specs/tsx.test.ts": {
+            "functions": "33.33 %",
+            "branches": "",
+            "statements": "75.00 %",
+            "lines": "42.86 %",
+            "bytes": "55.19 %",
+            "uncoveredLines": "1,5-7"
+        }
+    }
+}
