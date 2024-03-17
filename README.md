@@ -42,6 +42,7 @@
     - [CodeceptJS](#codeceptjs)
     - [WebdriverIO](#webdriverio)
     - [Storybook Test Runner](#storybook-test-runner)
+    - [TestCafe](#testcafe)
     - [Codecov](#codecov)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
@@ -828,6 +829,9 @@ const coverageOptions = {
 
 ### [Storybook Test Runner](https://github.com/storybookjs/test-runner)
 - [storybook-monocart-coverage](https://github.com/cenfun/storybook-monocart-coverage) - Storybook V8 Coverage Example
+
+### [TestCafe](https://github.com/DevExpress/testcafe)
+- [testcafe-reporter-coverage](https://github.com/cenfun/testcafe-reporter-coverage) - A TestCafe custom reporter for coverage reports
 
 ### [Codecov](https://codecov.com/)
 [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
