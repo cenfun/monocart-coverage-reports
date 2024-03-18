@@ -17,6 +17,8 @@ import { minimatch } from 'minimatch';
 
 import WebSocket from 'ws';
 
+import diff from 'diff-sequences';
+
 import supportsColor from 'supports-color';
 
 export {
@@ -38,6 +40,8 @@ export {
 
     minimatch,
     WebSocket,
+
+    diff,
 
     supportsColor
 };

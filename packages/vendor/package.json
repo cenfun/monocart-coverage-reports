@@ -14,8 +14,9 @@
         "acorn-loose": "^8.4.0",
         "acorn-walk": "^8.3.2",
         "convert-source-map": "^2.0.0",
+        "diff-sequences": "^29.6.3",
         "foreground-child": "^3.1.1",
-        "postcss": "^8.4.35"
+        "postcss": "^8.4.36"
     },
     "platform": "node"
 }

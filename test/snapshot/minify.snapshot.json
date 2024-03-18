@@ -2,7 +2,7 @@
     "type": "v8",
     "summary": {
         "bytes": "41.49 %",
-        "statements": "39.28 %",
+        "statements": "39.26 %",
         "branches": "25.32 %",
         "functions": "42.70 %",
         "lines": "36.17 %"
@@ -74,11 +74,11 @@
         },
         "fps-detector/webpack/universalModuleDefinition": {
             "functions": "100.00 %",
-            "branches": "42.86 %",
+            "branches": "44.44 %",
             "statements": "100.00 %",
-            "lines": "45.45 %",
-            "bytes": "50.26 %",
-            "uncoveredLines": "2-7"
+            "lines": "54.55 %",
+            "bytes": "61.60 %",
+            "uncoveredLines": "2-5,7"
         },
         "fps-detector/webpack/bootstrap": {
             "functions": "",
@@ -117,7 +117,7 @@
             "branches": "22.22 %",
             "statements": "33.93 %",
             "lines": "50.24 %",
-            "bytes": "65.48 %",
+            "bytes": "65.60 %",
             "uncoveredLines": "3-4,28-30,76-178,187-188,202-207,235-249,254-256"
         },
         "monocart-v8/webpack/universalModuleDefinition": {
@@ -267,7 +267,7 @@
         "monocart-v8/packages/v8/src/app.vue": {
             "functions": "65.79 %",
             "branches": "36.29 %",
-            "statements": "60.41 %",
+            "statements": "60.27 %",
             "lines": "73.17 %",
             "bytes": "76.53 %",
             "uncoveredLines": "68-70,79-99,102-144,152-156,165-170,175-186,196-230,242-251,261-263,270-272,293-305,319-321,335-337,367-369,433-435,444,450-452,458-467,477-479,538,544,558-569,584-588,620-627,635-661,692,699,714,731,748"
@@ -275,7 +275,7 @@
         "monocart-v8/packages/v8/src/components/flyover.vue": {
             "functions": "50.00 %",
             "branches": "66.67 %",
-            "statements": "76.92 %",
+            "statements": "75.00 %",
             "lines": "87.34 %",
             "bytes": "90.04 %",
             "uncoveredLines": "20,28,50-58"
@@ -291,10 +291,10 @@
         "monocart-v8/packages/v8/src/components/report.vue": {
             "functions": "27.78 %",
             "branches": "7.14 %",
-            "statements": "22.86 %",
-            "lines": "31.37 %",
-            "bytes": "26.55 %",
-            "uncoveredLines": "31-250,254-290,309-347,360,365-366,370-398"
+            "statements": "22.30 %",
+            "lines": "31.10 %",
+            "bytes": "26.28 %",
+            "uncoveredLines": "31-250,254-290,309-347,360,365-367,370-398"
         },
         "monocart-v8/packages/v8/src/app.vue/5edf": {
             "functions": "",

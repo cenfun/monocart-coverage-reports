@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.7.4
+    - fixed sourcemap matching
+
 * 2.7.3
     - fixed a parser error for inline sourcemap
     - fixed error for loading config default
