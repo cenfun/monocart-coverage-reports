@@ -1,7 +1,7 @@
 ## Changelog
 
 * 2.7.4
-    - fixed sourcemap matching
+    - fixed sourcemap matching (diff algorithm)
 
 * 2.7.3
     - fixed a parser error for inline sourcemap
