@@ -56,14 +56,6 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "localhost-8130/css/style.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "",
-            "bytes": "",
-            "uncoveredLines": ""
-        },
         "localhost-8130/with-map/bootstrap.min.css": {
             "functions": "",
             "branches": "",
@@ -72,9 +64,17 @@
             "bytes": "1.55 %",
             "uncoveredLines": "6"
         },
+        "localhost-8130/css/style.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "",
+            "bytes": "",
+            "uncoveredLines": ""
+        },
         "fps-detector/webpack/universalModuleDefinition": {
             "functions": "100.00 %",
-            "branches": "44.44 %",
+            "branches": "42.86 %",
             "statements": "100.00 %",
             "lines": "54.55 %",
             "bytes": "61.60 %",
@@ -277,7 +277,7 @@
             "branches": "66.67 %",
             "statements": "75.00 %",
             "lines": "87.34 %",
-            "bytes": "90.04 %",
+            "bytes": "90.14 %",
             "uncoveredLines": "20,28,50-58"
         },
         "monocart-v8/packages/v8/src/components/icon-label.vue": {
