@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.7.5
+    - fixed special generated codes for original coverage
+
 * 2.7.4
     - fixed sourcemap matching (diff algorithm)
 
