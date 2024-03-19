@@ -47,6 +47,7 @@
         "test-browser": "npm run test-istanbul && npm run test-v8 && npm run test-puppeteer && npm run test-anonymous && npm run test-css && npm run test-minify && npm run test-esbuild && npm run test-rollup && npm run test-v8-and-istanbul",
         "test-cli": "npx mcr node ./test/specs/node.test.js -c test/mcr.config.cli.js",
         "test-tsx": "npx mcr tsx ./test/specs/tsx.test.ts -c test/mcr.config.tsx.js",
+        "test-demo": "node ./test/test-demo.js",
         "test-merge": "node ./test/test-merge.js",
         "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
         "test-client": "node ./test/test-client.js",

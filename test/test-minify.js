@@ -33,7 +33,7 @@ const test = async (serverUrl) => {
 
     console.log('start minify test ...');
     const browser = await chromium.launch({
-        //  headless: false
+        // headless: false
     });
     const page = await browser.newPage();
 
@@ -63,6 +63,13 @@ const test = async (serverUrl) => {
 
     const results = await MCR(coverageOptions).add(coverageList);
     console.log('minify coverage added', results.type);
+
+    // await new Promise((resolve) => {
+    //     page.on('close', () => {
+    //         resolve();
+    //     });
+    //     setTimeout(resolve, 10 * 60 * 1000);
+    // });
 
     await browser.close();
 };
