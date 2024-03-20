@@ -2,6 +2,7 @@
 
 * 2.7.6
     - fixed CLI arguments for `--` separator 
+    - fixed sourcemap if range in a comment
 
 * 2.7.5
     - fixed special generated codes for original coverage
