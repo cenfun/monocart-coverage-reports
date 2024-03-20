@@ -15,11 +15,6 @@ const beforeV8 = (item, Util) => {
     // typescript repo huge data example 8M
     // const jsDataPath = path.resolve(__dirname, `../../github/TypeScript/coverage/${dataFile}`);
 
-    if (!fs.existsSync(jsDataPath)) {
-        EC.logRed(`ERROR: Not found: ${jsDataPath}`);
-        return 0;
-    }
-
     const jsPath = path.resolve(item.buildPath, dataFile);
     const distDir = path.dirname(jsPath);
     if (!fs.existsSync(distDir)) {
@@ -28,8 +23,13 @@ const beforeV8 = (item, Util) => {
         });
     }
 
-    fs.copyFileSync(jsDataPath, jsPath);
-    EC.logGreen(`coverage data file copied: ${dataFile}`);
+    if (fs.existsSync(jsDataPath)) {
+        fs.copyFileSync(jsDataPath, jsPath);
+        EC.logGreen(`copied a coverage data file: ${dataFile}`);
+    } else {
+        fs.writeFileSync(jsPath, '');
+        EC.logYellow(`created a empty coverage data file: ${dataFile}`);
+    }
 
     if (!item.dependencies.files.includes(jsPath)) {
         item.dependencies.files.unshift(jsPath);
