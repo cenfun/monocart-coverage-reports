@@ -761,17 +761,18 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ## Common issues
 ### Unexpected coverage
-In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the build tools configuration. However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution. Let's take a look at an example:
+In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the build tools configuration. Let's take a look at an example:
 ```js
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
 ```
-`m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position.
+`m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position. You can try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 
-How Monocart Works:
-- 1, Trying to fix the middle position if not found the exact mapping for the position.
+How `MCR` Works:
+- 1, Trying to fix the middle position if not found the exact mapping for the position. However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
 - 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). However, there's a small issue, which is the V8 cannot provide effective branch coverage information for `AssignmentPattern`.
+
 
 ### Unparsable source
 It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example `ts`, `jsx` and so on. There is a option to fix it, which is to manually compile the source code for these files.
