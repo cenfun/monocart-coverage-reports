@@ -630,13 +630,13 @@ await mcr.generate();
 - Installing globally
 ```sh
 npm i monocart-coverage-reports -g
-mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
+mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
 - Locally in your project
 ```sh
 npm i monocart-coverage-reports
-npx mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
+npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
 - CLI Options
@@ -693,6 +693,7 @@ The following usage scenarios may require merging coverage reports:
 
 If the reports cannot be merged automatically, then here is how to manually merge the reports.
 First, using the `raw` report to export the original coverage data to the specified directory.
+For example, we have coverage data from unit tests:
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
@@ -700,14 +701,16 @@ const coverageOptions = {
     reports: [
         ['raw', {
             // relative path will be "./coverage-reports/unit/raw"
+            // defaults to raw
             outputDir: "raw"
         }],
         ['v8'],
-        ['console-summary']
+        ['console-details']
     ]
 };
 ```
-Then, after all the tests are completed, generate a merged report with option `inputDir`:
+We also have coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`.
+After all the tests are completed, generate a merged report with option `inputDir`:
 ```js
 const fs = require('fs');
 const { CoverageReport } = require('monocart-coverage-reports');
@@ -742,12 +745,12 @@ const coverageOptions = {
     
     onEnd: () => {
         // remove the raw files if it useless
-        inputDir.forEach((p) => {
-            fs.rmSync(p, {
-                recursive: true,
-                force: true
-            });
-        });
+        // inputDir.forEach((p) => {
+        //     fs.rmSync(p, {
+        //         recursive: true,
+        //         force: true
+        //     });
+        // });
     }
 };
 await new CoverageReport(coverageOptions).generate();
@@ -796,7 +799,7 @@ const coverageOptions = {
     logging: 'debug',
     reports: [
         ['v8'],
-        ['console-summary']
+        ['console-details']
     ]
 };
 ```
