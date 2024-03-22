@@ -42,6 +42,9 @@
     - [WebdriverIO](#webdriverio)
     - [Storybook Test Runner](#storybook-test-runner)
     - [TestCafe](#testcafe)
+    - [Mocha](#mocha)
+    - [tsx](#tsx)
+    - [ts-node](#ts-node)
     - [Codecov](#codecov)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
@@ -733,13 +736,6 @@ Options:
     - `.mcrrc.js`
     - `.mcrrc` - json format
 
-- Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
-    ```sh
-    npx mcr --import tsx tsx ./src/example.ts
-    ```
-
-- Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
-
 ## Debug for Coverage and Sourcemap
 > Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
 - Start debugging for v8 report with option `logging: 'debug'`
@@ -837,6 +833,24 @@ const coverageOptions = {
 
 ### [TestCafe](https://github.com/DevExpress/testcafe)
 - [testcafe-reporter-coverage](https://github.com/cenfun/testcafe-reporter-coverage) - A TestCafe custom reporter for coverage reports
+
+### [Mocha](https://github.com/mochajs/mocha)
+```sh
+mcr mocha ./test/**/*.js
+```
+```sh
+mcr --import tsx mocha ./test/**/*.ts
+```
+- see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
+
+### [tsx](https://github.com/privatenumber/tsx)
+```sh
+mcr --import tsx tsx ./src/example.ts
+```
+- see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
+
+### [ts-node](https://github.com/TypeStrong/ts-node)
+- see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ### [Codecov](https://codecov.com/)
 [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
