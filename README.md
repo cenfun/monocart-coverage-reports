@@ -18,17 +18,17 @@
 * [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
 * [Collecting V8 Coverage Data](#collecting-v8-coverage-data)
-* [Manually Resolve the Sourcemap](#manually-resolve-the-sourcemap)
-* [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
-* [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
-* [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
-* [Multiprocessing Support](#multiprocessing-support)
-* [Merge Coverage Reports](#merge-coverage-reports)
+    - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
+    - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
+    - [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+    - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
+    - [V8 Coverage Data API](#v8-coverage-data-api)
+* [Resolve the Sourcemap Manually](#resolve-the-sourcemap-manually)
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
-* [Chromium Coverage API](#chromium-coverage-api)
-* [V8 Coverage Data Format](#v8-coverage-data-format)
+* [Multiprocessing Support](#multiprocessing-support)
+* [Merge Coverage Reports](#merge-coverage-reports)
 * [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
     - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
     - [How Monocart Works](#how-monocart-works)
@@ -377,31 +377,37 @@ Options:
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
     - [Manually Resolve the Sourcemap](#manually-resolve-the-sourcemap)
 - Browser (Chromium Only)
-    > Collecting coverage data with [Chromium Coverage API](#chromium-coverage-api):
-    - [Playwright example](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js), and [anonymous](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-anonymous.js), [css](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-css.js)
-    - see [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
+    - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
+    - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 - Node.js
-    - see [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+    - [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
 - CDP
-    - see [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
+    - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
-## Manually Resolve the Sourcemap
-> Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
+### Collecting V8 Coverage Data with Playwright
 ```js
-const jsCoverage = await page.coverage.stopJSCoverage();
-jsCoverage.forEach((entry) => {
-    // read sourcemap for the my-dist.js manually
-    if (entry.url.endsWith('my-dist.js')) {
-        entry.sourceMap = JSON.parse(fs.readFileSync('dist/my-dist.js.map').toString('utf-8'));
-    }
-});
+await Promise.all([
+    page.coverage.startJSCoverage({
+        resetOnNavigation: false
+    }),
+    page.coverage.startCSSCoverage({
+        resetOnNavigation: false
+    })
+]);
 
-await MCR(coverageOptions).add(jsCoverage);
+await page.goto("your page url");
+
+const [jsCoverage, cssCoverage] = await Promise.all([
+    page.coverage.stopJSCoverage(),
+    page.coverage.stopCSSCoverage()
+]);
+
+const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
+see [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
 
-## Collecting Raw V8 Coverage Data with Puppeteer
-> Puppeteer does not provide raw v8 coverage data by default. A simple conversion is required, see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
+### Collecting Raw V8 Coverage Data with Puppeteer
 ```js
 await Promise.all([
     page.coverage.startJSCoverage({
@@ -414,7 +420,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto(url);
+await page.goto("your page url");
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -429,8 +435,9 @@ const coverageData = [... jsCoverage.map((it) => {
     };
 }), ... cssCoverage];
 ```
+see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 
-## Node.js V8 Coverage Report for Server Side
+### Node.js V8 Coverage Report for Server Side
 Possible solutions:
 - [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
     - Sets Node.js env `NODE_V8_COVERAGE`=`dir` before the program running, the coverage data will be saved to the `dir` after the program exits gracefully.
@@ -463,7 +470,7 @@ Possible solutions:
 - [Child Process](https://nodejs.org/docs/latest/api/child_process.html) + NODE_V8_COVERAGE
     - see [Command Line](#command-line)
 
-## Collecting V8 Coverage Data with `CDPClient` API
+### Collecting V8 Coverage Data with `CDPClient` API
 - Work with node debugger `--inspect=9229`
 ```js
 const MCR = require('monocart-coverage-reports');
@@ -506,6 +513,155 @@ await client.startCoverage();
 await page.goto("your page url");
 const coverageData = await client.stopCoverage();
 ```
+
+### V8 Coverage Data API
+- [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
+- [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
+- [Puppeteer Coverage class](https://pptr.dev/api/puppeteer.coverage)
+- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
+```js
+// Coverage data for a source range.
+export interface CoverageRange {
+    // JavaScript script source offset for the range start.
+    startOffset: integer;
+    // JavaScript script source offset for the range end.
+    endOffset: integer;
+    // Collected execution count of the source range.
+    count: integer;
+}
+
+// Coverage data for a JavaScript function.
+/**
+ * @functionName can be an empty string.
+ * @ranges is always non-empty. The first range is called the "root range".
+ * @isBlockCoverage indicates if the function has block coverage information.
+    If this is false, it usually means that the functions was never called.
+    It seems to be equivalent to ranges.length === 1 && ranges[0].count === 0.
+*/
+export interface FunctionCoverage {
+    // JavaScript function name.
+    functionName: string;
+    // Source ranges inside the function with coverage data.
+    ranges: CoverageRange[];
+    // Whether coverage data for this function has block granularity.
+    isBlockCoverage: boolean;
+}
+
+// Coverage data for a JavaScript script.
+export interface ScriptCoverage {
+    // JavaScript script id.
+    scriptId: Runtime.ScriptId;
+    // JavaScript script name or url.
+    url: string;
+    // Functions contained in the script that has coverage data.
+    functions: FunctionCoverage[];
+}
+
+export type V8CoverageData = ScriptCoverage[];
+```
+see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
+
+## Resolve the Sourcemap Manually
+> Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
+```js
+const jsCoverage = await page.coverage.stopJSCoverage();
+jsCoverage.forEach((entry) => {
+    // read sourcemap for the my-dist.js manually
+    if (entry.url.endsWith('my-dist.js')) {
+        entry.sourceMap = JSON.parse(fs.readFileSync('dist/my-dist.js.map').toString('utf-8'));
+    }
+});
+
+await MCR(coverageOptions).add(jsCoverage);
+
+```
+
+## Resolve `sourcePath` for the Source Files
+If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
+For example, we have tested multiple dist files, which contain some common files. We hope to merge the coverage of the same files, so we need to unify the `sourcePath` in order to be able to merge the coverage data.
+```js
+const coverageOptions = {
+    sourcePath: (filePath) => {
+        // Remove the virtual prefix
+        const list = ['my-dist-file1/', 'my-dist-file2/'];
+        for (const str of list) {
+            if (filePath.startsWith(str)) {
+                return filePath.slice(str.length);
+            }
+        }
+        return filePath;
+    }
+};
+```
+It also supports simple key/value replacement:
+```js
+const coverageOptions = {
+    sourcePath: {
+        'my-dist-file1/': '', 
+        'my-dist-file2/': ''
+    }
+};
+```
+
+## Adding Empty Coverage for Untested Files
+By default the untested files will not be included in the coverage report, we can add empty coverage data for all files with option `all`, the untested files will show 0% coverage.
+```js
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        filter: (filePath) => {
+            return true;
+        }
+    }
+};
+```
+The filter also supports `minimatch` pattern:
+```js
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        filter: '**/*.js'
+    }
+};
+// or multiple patterns
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        filter: {
+            // exclude files
+            '**/ignored-*.js': false,
+            '**/*.html': false,
+            '**/*.ts': false,
+            // empty css coverage
+            '**/*.scss': "css",
+            '**/*': true
+        }
+    }
+};
+```
+
+## Ignoring Uncovered Codes
+To ignore codes, use the special comment which starts with `v8 ignore `:
+- Ignoring all until stop
+```js
+/* v8 ignore start */
+function uncovered() {
+}
+/* v8 ignore stop */
+```
+- Ignoring the next line or next N lines
+```js
+/* v8 ignore next */
+const os = platform === 'wind32' ? 'Windows' : 'Other';
+
+const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
+
+// v8 ignore next 3
+if (platform === 'linux') {
+    console.log('hello linux');
+}
+```
+
 
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
@@ -595,141 +751,6 @@ const coverageOptions = {
 };
 await new CoverageReport(coverageOptions).generate();
 ```
-
-## Resolve `sourcePath` for the Source Files
-If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
-For example, we have tested multiple dist files, which contain some common files. We hope to merge the coverage of the same files, so we need to unify the `sourcePath` in order to be able to merge the coverage data.
-```js
-const coverageOptions = {
-    sourcePath: (filePath) => {
-        // Remove the virtual prefix
-        const list = ['my-dist-file1/', 'my-dist-file2/'];
-        for (const str of list) {
-            if (filePath.startsWith(str)) {
-                return filePath.slice(str.length);
-            }
-        }
-        return filePath;
-    }
-};
-```
-It also supports simple key/value replacement:
-```js
-const coverageOptions = {
-    sourcePath: {
-        'my-dist-file1/': '', 
-        'my-dist-file2/': ''
-    }
-};
-```
-
-## Adding Empty Coverage for Untested Files
-By default the untested files will not be included in the coverage report, we can add empty coverage data for all files with option `all`, the untested files will show 0% coverage.
-```js
-const coverageOptions = {
-    all: {
-        dir: ['./src'],
-        filter: (filePath) => {
-            return true;
-        }
-    }
-};
-```
-The filter also supports `minimatch` pattern:
-```js
-const coverageOptions = {
-    all: {
-        dir: ['./src'],
-        filter: '**/*.js'
-    }
-};
-// or multiple patterns
-const coverageOptions = {
-    all: {
-        dir: ['./src'],
-        filter: {
-            // exclude files
-            '**/ignored-*.js': false,
-            '**/*.html': false,
-            '**/*.ts': false,
-            // empty css coverage
-            '**/*.scss': "css",
-            '**/*': true
-        }
-    }
-};
-```
-
-## Ignoring Uncovered Codes
-To ignore codes, use the special comment which starts with `v8 ignore `:
-- Ignoring all until stop
-```js
-/* v8 ignore start */
-function uncovered() {
-}
-/* v8 ignore stop */
-```
-- Ignoring the next line or next N lines
-```js
-/* v8 ignore next */
-const os = platform === 'wind32' ? 'Windows' : 'Other';
-
-const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
-
-// v8 ignore next 3
-if (platform === 'linux') {
-    console.log('hello linux');
-}
-```
-
-## Chromium Coverage API
-- [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
-- [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
-- [Puppeteer Coverage class](https://pptr.dev/api/puppeteer.coverage)
-- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
-
-## V8 Coverage Data Format
-```js
-// Coverage data for a source range.
-export interface CoverageRange {
-    // JavaScript script source offset for the range start.
-    startOffset: integer;
-    // JavaScript script source offset for the range end.
-    endOffset: integer;
-    // Collected execution count of the source range.
-    count: integer;
-}
-
-// Coverage data for a JavaScript function.
-/**
- * @functionName can be an empty string.
- * @ranges is always non-empty. The first range is called the "root range".
- * @isBlockCoverage indicates if the function has block coverage information.
-    If this is false, it usually means that the functions was never called.
-    It seems to be equivalent to ranges.length === 1 && ranges[0].count === 0.
-*/
-export interface FunctionCoverage {
-    // JavaScript function name.
-    functionName: string;
-    // Source ranges inside the function with coverage data.
-    ranges: CoverageRange[];
-    // Whether coverage data for this function has block granularity.
-    isBlockCoverage: boolean;
-}
-
-// Coverage data for a JavaScript script.
-export interface ScriptCoverage {
-    // JavaScript script id.
-    scriptId: Runtime.ScriptId;
-    // JavaScript script name or url.
-    url: string;
-    // Functions contained in the script that has coverage data.
-    functions: FunctionCoverage[];
-}
-
-export type V8CoverageData = ScriptCoverage[];
-```
-see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 
 ## How to convert V8 to Istanbul
 ### Using [v8-to-istanbul](https://github.com/istanbuljs/v8-to-istanbul)
