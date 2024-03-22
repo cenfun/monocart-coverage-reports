@@ -45,6 +45,7 @@
     - [Mocha](#mocha)
     - [tsx](#tsx)
     - [ts-node](#ts-node)
+    - [AVA](#ava)
     - [Codecov](#codecov)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
@@ -664,6 +665,11 @@ Options:
   -h, --help                   display help for command
 ```
 
+- Use `--` to separate sub CLI args
+```sh
+mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
+```
+
 ## Config File
 Loading config file by priority:
 - Custom config file:
@@ -841,6 +847,11 @@ mcr --import tsx tsx ./src/example.ts
 
 ### [ts-node](https://github.com/TypeStrong/ts-node)
 - see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
+
+### [AVA](https://github.com/avajs/ava)
+```sh
+mcr ava
+```
 
 ### [Codecov](https://codecov.com/)
 [![codecov](https://codecov.io/gh/cenfun/monocart-coverage-reports/graph/badge.svg?token=H0LW7UKYU3)](https://codecov.io/gh/cenfun/monocart-coverage-reports)
