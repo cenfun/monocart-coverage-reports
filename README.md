@@ -711,7 +711,7 @@ Arguments:
 Options:
   -V, --version                output the version number
   -c, --config <path>          custom config file path
-  --logging <logging>          off, error, info, debug
+  -l, --logging <logging>      off, error, info, debug
   -n, --name <name>            report name for title
   -r, --reports <name[,name]>  coverage reports to use
   -o, --outputDir <dir>        output dir for reports
