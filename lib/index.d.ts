@@ -472,7 +472,7 @@ declare namespace MCR {
         /** enable https, defaults to false (http) */
         secure?: boolean;
         /** target filter, defaults to first page */
-        target?: (targets) => any;
+        target?: (targets: any) => any;
         /** websocket options */
         ws?: any;
         /** timeout, defaults to 10 * 1000 */
