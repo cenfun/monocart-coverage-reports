@@ -693,7 +693,7 @@ The following usage scenarios may require merging coverage reports:
 
 If the reports cannot be merged automatically, then here is how to manually merge the reports.
 First, using the `raw` report to export the original coverage data to the specified directory.
-For example, we have coverage data from unit tests:
+For example, we have `raw` coverage data from unit tests:
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
@@ -709,7 +709,7 @@ const coverageOptions = {
     ]
 };
 ```
-We also have coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`.
+We also have `raw` coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`.
 After all the tests are completed, generate a merged report with option `inputDir`:
 ```js
 const fs = require('fs');
@@ -735,6 +735,10 @@ const coverageOptions = {
     
     sourcePath: (filePath, info) => {
         // Unify the file path for the same files
+        // For example, the file index.js has different paths:
+        // unit: unit-dist/src/index.js
+        // e2e: e2e-dist/src/index.js
+        // return filePath.replace("unit-dist/", "").replace("e2e-dist/", "")
         return filePath;
     },
 
