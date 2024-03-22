@@ -25,13 +25,13 @@
 * [onEnd Hook](#onend-hook)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Multiprocessing Support](#multiprocessing-support)
-* [Merge Coverage Reports](#merge-coverage-reports)
 * [Command Line](#command-line)
 * [Config File](#config-file)
-* [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
+* [Merge Coverage Reports](#merge-coverage-reports)
 * [Common issues](#common-issues)
     - [Unexpected coverage](#unexpected-coverage)
     - [Unparsable source](#unparsable-source)
+* [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 * [Integration with Any Testing Framework](#integration-with-any-testing-framework)
 * [Integration Examples](#integration-examples)
     - [Playwright](#playwright)
@@ -620,55 +620,6 @@ const mcr = MCR(coverageOptions);
 await mcr.generate();
 ```
 
-## Merge Coverage Reports
-The following usage scenarios may require merging coverage reports:
-- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage. see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright) for automatic report merging.
-- When the code is subjected to different kinds of testing. For example, unit tests with Jest might cover certain parts of the code, while end-to-end tests with Playwright might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
-- When tests are run on different machines or different shards, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
-
-If the reports cannot be merged automatically, then here is how to manually merge the reports.
-First, using the `raw` report to export the original coverage data to the specified directory.
-```js
-const coverageOptions = {
-    name: 'My Unit Test Coverage Report',
-    outputDir: "./coverage-reports/unit",
-    reports: [
-        ['raw', {
-            // relative path will be "./coverage-reports/unit/raw"
-            outputDir: "raw"
-        }],
-        ['v8'],
-        ['console-summary']
-    ]
-};
-```
-Then, after all the tests are completed, generate a merged report with option `inputDir`:
-```js
-// esm syntax
-import fs from "fs";
-import { CoverageReport } from 'monocart-coverage-reports';
-const coverageOptions = {
-    name: 'My Merged Coverage Report',
-    inputDir: [
-        './coverage-reports/unit/raw',
-        './coverage-reports/e2e/raw'
-    ],
-    outputDir: './coverage-reports/merged',
-    reports: [
-        ['v8'],
-        ['console-summary']
-    ],
-    onEnd: () => {
-        // remove the raw files if it useless
-        fs.rmSync('./coverage-reports/unit/raw', {
-            recursive: true,
-            force: true
-        })
-    }
-};
-await new CoverageReport(coverageOptions).generate();
-```
-
 ## Command Line
 > The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
 
@@ -725,24 +676,54 @@ Loading config file by priority:
 - `.mcrrc.js`
 - `.mcrrc` - json format
 
-## Debug for Coverage and Sourcemap
-> Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
-- Start debugging for v8 report with option `logging: 'debug'`
+## Merge Coverage Reports
+The following usage scenarios may require merging coverage reports:
+- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage. see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright) for automatic report merging.
+- When the code is subjected to different kinds of testing. For example, unit tests with Jest might cover certain parts of the code, while end-to-end tests with Playwright might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
+- When tests are run on different machines or different shards, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
+
+If the reports cannot be merged automatically, then here is how to manually merge the reports.
+First, using the `raw` report to export the original coverage data to the specified directory.
 ```js
 const coverageOptions = {
-    logging: 'debug',
+    name: 'My Unit Test Coverage Report',
+    outputDir: "./coverage-reports/unit",
     reports: [
+        ['raw', {
+            // relative path will be "./coverage-reports/unit/raw"
+            outputDir: "raw"
+        }],
         ['v8'],
         ['console-summary']
     ]
 };
 ```
-When `logging` is `debug`, the raw report data will be preserved in `[outputDir]/.cache` or `[outputDir]/raw` if `raw` report is used. And the dist file will be preserved in the V8 list, and by opening the browser's devtool, it makes data verification visualization effortless.
-![](./assets/debug-coverage.png)
-
-- Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
-
-![](./assets/debug-sourcemap.png)
+Then, after all the tests are completed, generate a merged report with option `inputDir`:
+```js
+// esm syntax
+import fs from "fs";
+import { CoverageReport } from 'monocart-coverage-reports';
+const coverageOptions = {
+    name: 'My Merged Coverage Report',
+    inputDir: [
+        './coverage-reports/unit/raw',
+        './coverage-reports/e2e/raw'
+    ],
+    outputDir: './coverage-reports/merged',
+    reports: [
+        ['v8'],
+        ['console-summary']
+    ],
+    onEnd: () => {
+        // remove the raw files if it useless
+        fs.rmSync('./coverage-reports/unit/raw', {
+            recursive: true,
+            force: true
+        })
+    }
+};
+await new CoverageReport(coverageOptions).generate();
+```
 
 ## Common issues
 ### Unexpected coverage
@@ -778,6 +759,25 @@ const coverageOptions = {
     }
 }
 ```
+
+## Debug for Coverage and Sourcemap
+> Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
+- Start debugging for v8 report with option `logging: 'debug'`
+```js
+const coverageOptions = {
+    logging: 'debug',
+    reports: [
+        ['v8'],
+        ['console-summary']
+    ]
+};
+```
+When `logging` is `debug`, the raw report data will be preserved in `[outputDir]/.cache` or `[outputDir]/raw` if `raw` report is used. And the dist file will be preserved in the V8 list, and by opening the browser's devtool, it makes data verification visualization effortless.
+![](./assets/debug-coverage.png)
+
+- Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
+
+![](./assets/debug-sourcemap.png)
 
 ## Integration with Any Testing Framework
 - API
