@@ -42,6 +42,7 @@
     - [WebdriverIO](#webdriverio)
     - [Storybook Test Runner](#storybook-test-runner)
     - [TestCafe](#testcafe)
+    - [Selenium Webdriver](#selenium-webdriver)
     - [Mocha](#mocha)
     - [tsx](#tsx)
     - [ts-node](#ts-node)
@@ -849,6 +850,9 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ### [TestCafe](https://github.com/DevExpress/testcafe)
 - [testcafe-reporter-coverage](https://github.com/cenfun/testcafe-reporter-coverage) - A TestCafe custom reporter for coverage reports
+
+### [Selenium Webdriver](https://github.com/seleniumhq/selenium)
+- [selenium-webdriver-coverage](https://github.com/cenfun/selenium-webdriver-coverage) - Selenium Webdriver V8 Coverage Example
 
 ### [Mocha](https://github.com/mochajs/mocha)
 ```sh
