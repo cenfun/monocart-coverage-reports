@@ -51,6 +51,7 @@
 * [Thanks](#thanks)
 
 ## Usage
+- API
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = {
@@ -58,20 +59,22 @@ const coverageOptions = {
     outputDir: './coverage-reports',
     reports: ["v8", "console-details"]
 }
-const coverageReport = MCR(coverageOptions);
-coverageReport.cleanCache();
+const mcr = MCR(coverageOptions);
+mcr.cleanCache();
 
-await coverageReport.add(coverageData1);
-await coverageReport.add(coverageData2);
+await mcr.add(coverageData1);
+await mcr.add(coverageData2);
 
-await coverageReport.generate();
+await mcr.generate();
 
 // Or 
 // const { CoverageReport } = require('monocart-coverage-reports');
-// const coverageReport = new CoverageReport(coverageOptions);
+// const mcr = new CoverageReport(coverageOptions);
 ```
-- [example v8](./test/test-v8.js)
-- [example istanbul](./test/test-istanbul.js)
+- CLI
+```sh
+mcr node my-app.js -r v8,console-details
+```
 
 ## Default Options
 - [lib/default/options.js](./lib/default/options.js)
@@ -192,8 +195,8 @@ const coverageOptions = {
 
     ]
 }
-const coverageReport = MCR(coverageOptions);
-coverageReport.cleanCache();
+const mcr = MCR(coverageOptions);
+mcr.cleanCache();
 ```
 
 ## Compare Reports
@@ -583,28 +586,28 @@ if (platform === 'linux') {
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
-const coverageReport = MCR(coverageOptions);
+const mcr = MCR(coverageOptions);
 // clean previous cache before the start of testing
 // unless the running environment is new and no cache
-coverageReport.cleanCache();
+mcr.cleanCache();
 ```
 
 - Sub process 1, testing stage 1
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
-const coverageReport = MCR(coverageOptions);
+const mcr = MCR(coverageOptions);
 // do not clean cache in the stage
-await coverageReport.add(coverageData1);
+await mcr.add(coverageData1);
 ```
 
 - Sub process 2, testing stage 2
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
-const coverageReport = MCR(coverageOptions);
+const mcr = MCR(coverageOptions);
 // do not clean cache in the stage
-await coverageReport.add(coverageData2);
+await mcr.add(coverageData2);
 ```
 
 - Main process, after the completion of testing
@@ -612,9 +615,9 @@ await coverageReport.add(coverageData2);
 // generate coverage reports after the completion of testing
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
-const coverageReport = MCR(coverageOptions);
+const mcr = MCR(coverageOptions);
 // do not clean cache before generating reports
-await coverageReport.generate();
+await mcr.generate();
 ```
 
 ## Merge Coverage Reports
