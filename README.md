@@ -71,11 +71,11 @@ await coverageReport.generate();
 // const { CoverageReport } = require('monocart-coverage-reports');
 // const coverageReport = new CoverageReport(coverageOptions);
 ```
-- [example v8](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js)
-- [example istanbul](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
+- [example v8](./test/test-v8.js)
+- [example istanbul](./test/test-istanbul.js)
 
 ## Default Options
-- [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
+- [lib/default/options.js](./lib/default/options.js)
     - `reports` [Available Reports](#available-reports)
     - `entryFilter` and `sourceFilter` [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
     - `sourcePath` [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
@@ -84,7 +84,7 @@ await coverageReport.generate();
     - `logging` [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
     - `onEnd` [onEnd Hook](#onend-hook)
 
-- Declaration [lib/index.d.ts](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/index.d.ts)
+- Declaration [lib/index.d.ts](./lib/index.d.ts)
 
 ## Available Reports
 
@@ -216,17 +216,17 @@ coverageReport.cleanCache();
 ## Collecting Istanbul Coverage Data
 - Instrumenting source code
     > Before collecting Istanbul coverage data, It requires your source code is instrumented with Istanbul
-    - webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-istanbul.js)
+    - webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](./test/webpack.config-istanbul.js)
     - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
 - Browser
-    - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)
+    - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](./test/test-istanbul.js)
 - Node.js
     - Collecting coverage data from `global.__coverage__`
 
 ## Collecting V8 Coverage Data
 - For source code: enable `sourcemap` and do not compress/minify:
-    - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/webpack.config-v8.js)
+    - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](./test/webpack.config-v8.js)
     - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true`
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
