@@ -452,6 +452,14 @@ declare namespace MCR {
         detach: () => Promise<void>
     }
 
+    /** custom websocket CDPSession */
+    export class WSSession implements CDPSession {
+        constructor(ws: any);
+        send: (method: string, params?: any) => Promise<any>;
+        on: (type: string, handler: (e: any) => void) => void;
+        detach: () => Promise<void>
+    }
+
     export interface CDPOptions {
         /** Adapt to the CDPSession of Playwright or Puppeteer */
         session?: CDPSession;

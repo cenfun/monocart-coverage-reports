@@ -5,6 +5,7 @@
     - fixed sourcemap if range in a comment
     - added cache for sourcemap conversion
     - fixed ECONNREFUSED on NodeJS 18
+    - added new API `WSSession` for custom CDPSession
 
 * 2.7.5
     - fixed special generated codes for original coverage
