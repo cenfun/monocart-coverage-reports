@@ -719,6 +719,7 @@ const coverageOptions = {
     inputDir,
     outputDir: './coverage-reports/merged',
 
+    // filter for both unit and e2e
     entryFilter: {
         '**/node_modules/**': false,
         '**/*': true
@@ -727,6 +728,7 @@ const coverageOptions = {
         '**/node_modules/**': false,
         '**/src/**': true
     },
+    
     sourcePath: (filePath, info) => {
         // Unify the file path for the same files
         return filePath;
