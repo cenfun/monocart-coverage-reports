@@ -639,7 +639,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
 
 - CLI Options
 ```sh
-Usage: mcr [options] <command>
+Usage: mcr [options] [command]
 
 CLI to generate coverage reports
 
