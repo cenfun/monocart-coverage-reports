@@ -21,7 +21,6 @@
     - [V8 Coverage Data API](#v8-coverage-data-api)
 * [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
-* [Resolve the Sourcemap Manually](#resolve-the-sourcemap-manually)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
 * [onEnd Hook](#onend-hook)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
@@ -486,21 +485,6 @@ const coverageOptions = {
         'my-dist-file2/': ''
     }
 };
-```
-
-## Resolve the Sourcemap Manually
-> Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
-```js
-const jsCoverage = await page.coverage.stopJSCoverage();
-jsCoverage.forEach((entry) => {
-    // read sourcemap for the my-dist.js manually
-    if (entry.url.endsWith('my-dist.js')) {
-        entry.sourceMap = JSON.parse(fs.readFileSync('dist/my-dist.js.map').toString('utf-8'));
-    }
-});
-
-await MCR(coverageOptions).add(jsCoverage);
-
 ```
 
 ## Adding Empty Coverage for Untested Files
