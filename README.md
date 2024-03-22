@@ -97,9 +97,7 @@ await coverageReport.generate();
         - Coverage for Any Runtime Code
         - CSS Coverage Support
         - Better Support for Sourcemap Conversion
-    - Demos:
-        - Browser: Build with webpack [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [Minify](https://cenfun.github.io/monocart-coverage-reports/minify); Build with [Rollup](https://cenfun.github.io/monocart-coverage-reports/rollup) and [Esbuild](https://cenfun.github.io/monocart-coverage-reports/esbuild); Collect with [puppeteer](https://cenfun.github.io/monocart-coverage-reports/puppeteer/); [anonymous](https://cenfun.github.io/monocart-coverage-reports/anonymous/) and [css](https://cenfun.github.io/monocart-coverage-reports/css/)
-        - Node.js: Collect with [env](https://cenfun.github.io/monocart-coverage-reports/node-env), and also V8 [API](https://cenfun.github.io/monocart-coverage-reports/node-api), [Inspector](https://cenfun.github.io/monocart-coverage-reports/node-ins) and [CDP](https://cenfun.github.io/monocart-coverage-reports/node-cdp); Web server example: [koa](https://cenfun.github.io/monocart-coverage-reports/node-koa/)
+    - Demos: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [more](https://cenfun.github.io/monocart-coverage-reports/)
 
 ![](./assets/v8.gif)
 
