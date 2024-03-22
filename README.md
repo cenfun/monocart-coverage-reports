@@ -708,26 +708,43 @@ const coverageOptions = {
 ```
 Then, after all the tests are completed, generate a merged report with option `inputDir`:
 ```js
-// esm syntax
-import fs from "fs";
-import { CoverageReport } from 'monocart-coverage-reports';
+const fs = require('fs');
+const { CoverageReport } = require('monocart-coverage-reports');
+const inputDir = [
+    './coverage-reports/unit/raw',
+    './coverage-reports/e2e/raw'
+];
 const coverageOptions = {
     name: 'My Merged Coverage Report',
-    inputDir: [
-        './coverage-reports/unit/raw',
-        './coverage-reports/e2e/raw'
-    ],
+    inputDir,
     outputDir: './coverage-reports/merged',
+
+    entryFilter: {
+        '**/node_modules/**': false,
+        '**/*': true
+    },
+    sourceFilter: {
+        '**/node_modules/**': false,
+        '**/src/**': true
+    },
+    sourcePath: (filePath, info) => {
+        // Unify the file path for the same files
+        return filePath;
+    },
+
     reports: [
         ['v8'],
-        ['console-summary']
+        ['console-details']
     ],
+    
     onEnd: () => {
         // remove the raw files if it useless
-        fs.rmSync('./coverage-reports/unit/raw', {
-            recursive: true,
-            force: true
-        })
+        inputDir.forEach((p) => {
+            fs.rmSync(p, {
+                recursive: true,
+                force: true
+            });
+        });
     }
 };
 await new CoverageReport(coverageOptions).generate();
