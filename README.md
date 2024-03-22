@@ -11,11 +11,7 @@
 * [Usage](#usage)
 * [Default Options](#default-options)
 * [Available Reports](#available-reports)
-* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
-* [onEnd Hook](#onend-hook)
-* [Command Line](#command-line)
 * [Compare Reports](#compare-reports)
-* [Compare Workflows](#compare-workflows)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
 * [Collecting V8 Coverage Data](#collecting-v8-coverage-data)
     - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
@@ -23,17 +19,19 @@
     - [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
     - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
     - [V8 Coverage Data API](#v8-coverage-data-api)
-* [Resolve the Sourcemap Manually](#resolve-the-sourcemap-manually)
+* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
+* [Resolve the Sourcemap Manually](#resolve-the-sourcemap-manually)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
+* [onEnd Hook](#onend-hook)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Merge Coverage Reports](#merge-coverage-reports)
-* [How to convert V8 to Istanbul](#how-to-convert-v8-to-istanbul)
-    - [Using `v8-to-istanbul`](#using-v8-to-istanbul)
-    - [How Monocart Works](#how-monocart-works)
+* [Command Line](#command-line)
 * [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 * [Common issues](#common-issues)
+    - [Unexpected coverage](#unexpected-coverage)
+    - [Unparsable source](#unparsable-source)
 * [Integration](#integration)
     - [Playwright](#playwright)
     - [Jest](#jest)
@@ -197,144 +195,6 @@ const coverageReport = MCR(coverageOptions);
 coverageReport.cleanCache();
 ```
 
-## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
-When V8 coverage data collected, it actually contains the data of all entry files, for example:
-```
-dist/main.js
-dist/vendor.js
-dist/something-else.js
-```
-We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
-```
-dist/main.js
-```
-When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
-```
-> src/index.js
-> src/components/app.js
-> node_modules/dependency/dist/dependency.js
-```
-We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
-```
-> src/index.js
-> src/components/app.js
-```
-For example:
-```js
-const coverageOptions = {
-    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
-    sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
-};
-```
-Or using `minimatch` pattern:
-```js
-const coverageOptions = {
-    entryFilter: "**/main.js",
-    sourceFilter: "**/src/**"
-};
-// supports multiple patterns:
-const coverageOptions = {
-    entryFilter: {
-        '**/vendor.js': false,
-        '**/main.js': true
-    },
-    sourceFilter: {
-        '**/src/**': true
-    }
-};
-```
-
-## onEnd Hook
-For example, checking thresholds:
-```js
-const EC = require('eight-colors');
-const coverageOptions = {
-    name: 'My Coverage Report',
-    outputDir: './coverage-reports',
-    onEnd: (coverageResults) => {
-        const thresholds = {
-            bytes: 80,
-            lines: 60
-        };
-        console.log('check thresholds ...', thresholds);
-        const errors = [];
-        const { summary } = coverageResults;
-        Object.keys(thresholds).forEach((k) => {
-            const pct = summary[k].pct;
-            if (pct < thresholds[k]) {
-                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
-            }
-        });
-        if (errors.length) {
-            const errMsg = errors.join('\n');
-            console.log(EC.red(errMsg));
-            // throw new Error(errMsg);
-            // process.exit(1);
-        }
-    }
-}
-```
-
-## Command Line
-> The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
-
-- Installing globally
-```sh
-npm i monocart-coverage-reports -g
-mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
-```
-
-- Locally in your project
-```sh
-npm i monocart-coverage-reports
-npx mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
-```
-
-- CLI Options
-```sh
-Usage: mcr [options] <command>
-
-CLI to generate coverage reports
-
-Arguments:
-  command                      command to execute
-
-Options:
-  -V, --version                output the version number
-  -c, --config <path>          custom config file path
-  --logging <logging>          off, error, info, debug
-  -n, --name <name>            report name for title
-  -r, --reports <name[,name]>  coverage reports to use
-  -o, --outputDir <dir>        output dir for reports
-  -i, --inputDir <dir>         input dir for merging raw files
-  --entryFilter <pattern>      entry url filter
-  --sourceFilter <pattern>     source path filter
-  --outputFile <path>          output file for v8 report
-  --inline                     inline html for v8 report
-  --assetsPath <path>          assets path if not inline
-  --lcov                       generate lcov.info file
-  --import <module>            preload module at startup
-  --require <module>           preload module at startup
-  -h, --help                   display help for command
-```
-
-- Loading config file by priority:
-    - Custom config file with `-c` or `--config`
-    - `mcr.config.js`
-    - `mcr.config.cjs`
-    - `mcr.config.mjs`
-    - `mcr.config.json` - json format
-    - `mcr.config.ts` (requires preloading the ts execution module)
-    - `.mcrrc.js`
-    - `.mcrrc` - json format
-
-- Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
-    ```sh
-    npx mcr --import tsx tsx ./src/example.ts
-    ```
-
-- Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
-
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
@@ -348,15 +208,6 @@ Options:
 | - Execution counts | ✅ | ✅ | ✅ |
 | CSS coverage | ❌ | ✅ | ✅ |
 | Minified code | ❌ | ✅ | ❌ |
-
-## Compare Workflows
-- Istanbul Workflows
-    - 1, [Collecting Istanbul coverage data](#collecting-istanbul-coverage-data)
-    - 2, Adding coverage data and generating coverage report
-
-- V8 Workflows
-    - 1, [Collecting V8 coverage data](#collecting-v8-coverage-data)
-    - 3, Adding coverage data and generating coverage report
 
 ## Collecting Istanbul Coverage Data
 - Instrumenting source code
@@ -561,19 +412,51 @@ export type V8CoverageData = ScriptCoverage[];
 ```
 see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 
-## Resolve the Sourcemap Manually
-> Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
+## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
+When V8 coverage data collected, it actually contains the data of all entry files, for example:
+```
+dist/main.js
+dist/vendor.js
+dist/something-else.js
+```
+We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
+```
+dist/main.js
+```
+When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
+```
+> src/index.js
+> src/components/app.js
+> node_modules/dependency/dist/dependency.js
+```
+We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
+```
+> src/index.js
+> src/components/app.js
+```
+For example:
 ```js
-const jsCoverage = await page.coverage.stopJSCoverage();
-jsCoverage.forEach((entry) => {
-    // read sourcemap for the my-dist.js manually
-    if (entry.url.endsWith('my-dist.js')) {
-        entry.sourceMap = JSON.parse(fs.readFileSync('dist/my-dist.js.map').toString('utf-8'));
+const coverageOptions = {
+    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
+};
+```
+Or using `minimatch` pattern:
+```js
+const coverageOptions = {
+    entryFilter: "**/main.js",
+    sourceFilter: "**/src/**"
+};
+// supports multiple patterns:
+const coverageOptions = {
+    entryFilter: {
+        '**/vendor.js': false,
+        '**/main.js': true
+    },
+    sourceFilter: {
+        '**/src/**': true
     }
-});
-
-await MCR(coverageOptions).add(jsCoverage);
-
+};
 ```
 
 ## Resolve `sourcePath` for the Source Files
@@ -601,6 +484,21 @@ const coverageOptions = {
         'my-dist-file2/': ''
     }
 };
+```
+
+## Resolve the Sourcemap Manually
+> Sometimes, the sourcemap file cannot be successfully loaded with the `sourceMappingURL`, you can try to manually read the sourcemap file before the coverage data is added to the report.
+```js
+const jsCoverage = await page.coverage.stopJSCoverage();
+jsCoverage.forEach((entry) => {
+    // read sourcemap for the my-dist.js manually
+    if (entry.url.endsWith('my-dist.js')) {
+        entry.sourceMap = JSON.parse(fs.readFileSync('dist/my-dist.js.map').toString('utf-8'));
+    }
+});
+
+await MCR(coverageOptions).add(jsCoverage);
+
 ```
 
 ## Adding Empty Coverage for Untested Files
@@ -640,6 +538,37 @@ const coverageOptions = {
 };
 ```
 
+## onEnd Hook
+For example, checking thresholds:
+```js
+const EC = require('eight-colors');
+const coverageOptions = {
+    name: 'My Coverage Report',
+    outputDir: './coverage-reports',
+    onEnd: (coverageResults) => {
+        const thresholds = {
+            bytes: 80,
+            lines: 60
+        };
+        console.log('check thresholds ...', thresholds);
+        const errors = [];
+        const { summary } = coverageResults;
+        Object.keys(thresholds).forEach((k) => {
+            const pct = summary[k].pct;
+            if (pct < thresholds[k]) {
+                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
+            }
+        });
+        if (errors.length) {
+            const errMsg = errors.join('\n');
+            console.log(EC.red(errMsg));
+            // throw new Error(errMsg);
+            // process.exit(1);
+        }
+    }
+}
+```
+
 ## Ignoring Uncovered Codes
 To ignore codes, use the special comment which starts with `v8 ignore `:
 - Ignoring all until stop
@@ -661,7 +590,6 @@ if (platform === 'linux') {
     console.log('hello linux');
 }
 ```
-
 
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
@@ -752,31 +680,65 @@ const coverageOptions = {
 await new CoverageReport(coverageOptions).generate();
 ```
 
-## How to convert V8 to Istanbul
-### Using [v8-to-istanbul](https://github.com/istanbuljs/v8-to-istanbul)
-It is a popular library which is used to convert V8 coverage format to istanbul's coverage format. Most test frameworks are using it, such as [Jest](https://github.com/jestjs/jest/), [Vitest](https://github.com/vitest-dev/vitest), but it has two major problems:
-- 1, The source mapping does not work well if the position is between the two consecutive mappings. for example: 
-```js
-const a = tf ? 'true' : 'false';
-               ^     ^  ^
-              m1     p  m2
+## Command Line
+> The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
+
+- Installing globally
+```sh
+npm i monocart-coverage-reports -g
+mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
 ```
-> `m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position.
 
-- 2, The coverage of functions and branches is incorrect. V8 only provided coverage at functions and it's blocks. But if a function is uncovered (count = 0), there is no information for it's blocks and sub-level functions. And also there are some problems about counting the functions and branches.
+- Locally in your project
+```sh
+npm i monocart-coverage-reports
+npx mcr node ./test/specs/node.test.js -r v8,console-summary --lcov
+```
 
-### How Monocart Works
-We implemented new converter:
-- 1, Trying to fix the middle position if not found the exact mapping for the position.
-- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). However, there's a small issue, which is the V8 cannot provide effective branch coverage information for `AssignmentPattern`.
+- CLI Options
+```sh
+Usage: mcr [options] <command>
 
-| AST                   | V8             | 
-| :---------------------| :------------- | 
-| AssignmentPattern     | 🛇 Not Support | 
-| ConditionalExpression | ✔  | 
-| IfStatement           | ✔  | 
-| LogicalExpression     | ✔  | 
-| SwitchStatement       | ✔  | 
+CLI to generate coverage reports
+
+Arguments:
+  command                      command to execute
+
+Options:
+  -V, --version                output the version number
+  -c, --config <path>          custom config file path
+  --logging <logging>          off, error, info, debug
+  -n, --name <name>            report name for title
+  -r, --reports <name[,name]>  coverage reports to use
+  -o, --outputDir <dir>        output dir for reports
+  -i, --inputDir <dir>         input dir for merging raw files
+  --entryFilter <pattern>      entry url filter
+  --sourceFilter <pattern>     source path filter
+  --outputFile <path>          output file for v8 report
+  --inline                     inline html for v8 report
+  --assetsPath <path>          assets path if not inline
+  --lcov                       generate lcov.info file
+  --import <module>            preload module at startup
+  --require <module>           preload module at startup
+  -h, --help                   display help for command
+```
+
+- Loading config file by priority:
+    - Custom config file with `-c` or `--config`
+    - `mcr.config.js`
+    - `mcr.config.cjs`
+    - `mcr.config.mjs`
+    - `mcr.config.json` - json format
+    - `mcr.config.ts` (requires preloading the ts execution module)
+    - `.mcrrc.js`
+    - `.mcrrc` - json format
+
+- Working with `tsx`, see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
+    ```sh
+    npx mcr --import tsx tsx ./src/example.ts
+    ```
+
+- Working with `ts-node`, see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ## Debug for Coverage and Sourcemap
 > Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
@@ -798,8 +760,20 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 ![](./assets/debug-sourcemap.png)
 
 ## Common issues
-- `Unparsable source`
+### Unexpected coverage
+In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the build tools configuration. However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution. Let's take a look at an example:
+```js
+const a = tf ? 'true' : 'false';
+               ^     ^  ^
+              m1     p  m2
+```
+`m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position.
 
+How Monocart Works:
+- 1, Trying to fix the middle position if not found the exact mapping for the position.
+- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). However, there's a small issue, which is the V8 cannot provide effective branch coverage information for `AssignmentPattern`.
+
+### Unparsable source
 It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example `ts`, `jsx` and so on. There is a option to fix it, which is to manually compile the source code for these files.
 ```js
 import * as fs from "fs";
