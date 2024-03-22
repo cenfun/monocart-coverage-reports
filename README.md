@@ -9,7 +9,7 @@
 > A code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
 * [Usage](#usage)
-* [Default Options](#default-options)
+* [Options](#options)
 * [Available Reports](#available-reports)
 * [Compare Reports](#compare-reports)
 * [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
@@ -51,7 +51,7 @@
 * [Thanks](#thanks)
 
 ## Usage
-- API
+- [API](#multiprocessing-support)
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = {
@@ -71,13 +71,13 @@ await mcr.generate();
 // const { CoverageReport } = require('monocart-coverage-reports');
 // const mcr = new CoverageReport(coverageOptions);
 ```
-- CLI
+- [CLI](#command-line)
 ```sh
 mcr node my-app.js -r v8,console-details
 ```
 
-## Default Options
-- [lib/default/options.js](./lib/default/options.js)
+## Options
+- Default Options: [lib/default/options.js](./lib/default/options.js)
     - `reports` [Available Reports](#available-reports)
     - `entryFilter` and `sourceFilter` [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
     - `sourcePath` [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
@@ -86,7 +86,8 @@ mcr node my-app.js -r v8,console-details
     - `logging` [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
     - `onEnd` [onEnd Hook](#onend-hook)
 
-- Declaration [lib/index.d.ts](./lib/index.d.ts)
+- Declaration: [lib/index.d.ts](./lib/index.d.ts)
+- [Config file](#config-file)
 
 ## Available Reports
 
