@@ -115,7 +115,6 @@ mcr node my-app.js -r v8,console-details
     - [Istanbul html](https://cenfun.github.io/monocart-coverage-reports/istanbul/) 
     - [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/istanbul)
 - `html-spa`
-    - [Istanbul html-spa](https://cenfun.github.io/monocart-coverage-reports/istanbul/html-spa/)
 - `json`
 - `json-summary`
 - `lcov`
@@ -226,17 +225,19 @@ mcr.cleanCache();
     - Collecting coverage data from `global.__coverage__`
 
 ## Collecting V8 Coverage Data
-- For source code: enable `sourcemap` and do not compress/minify:
+- Sourcemap for source code: enable `sourcemap` and do not compress/minify:
     - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](./test/webpack.config-v8.js)
     - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true`
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
-    - [Manually Resolve the Sourcemap](#manually-resolve-the-sourcemap)
+
 - Browser (Chromium Only)
     - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
     - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
+
 - Node.js
     - [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+
 - CDP
     - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
@@ -374,7 +375,7 @@ const coverageData = await client.stopCoverage();
 - [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
 - [Puppeteer Coverage class](https://pptr.dev/api/puppeteer.coverage)
-- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage)
+- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 ```js
 // Coverage data for a source range.
 export interface CoverageRange {
@@ -415,7 +416,6 @@ export interface ScriptCoverage {
 
 export type V8CoverageData = ScriptCoverage[];
 ```
-see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
