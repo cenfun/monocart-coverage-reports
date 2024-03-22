@@ -51,7 +51,7 @@
         "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
         "test-client": "node ./test/test-client.js",
         "test-all": "npm run test-node && npm run test-browser && npm run test-cli && npm run test-tsx && npm run test-merge && node ./scripts/docs.js",
-        "test-node-14": "npm run test-node && npm run test-v8 && npm run test-anonymous && npm run test-css && npm run test-minify && npm run test-esbuild && npm run test-rollup && npm run test-v8-and-istanbul && npm run test-cli",
+        "test-node-14": "npm run test-node && npm run test-v8 && npm run test-anonymous && npm run test-css && npm run test-minify && npm run test-esbuild && npm run test-v8-and-istanbul && npm run test-cli",
         "test": "npx mcr npm run test-all -c test/mcr.config.mcr.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "dev": "sf d v8",

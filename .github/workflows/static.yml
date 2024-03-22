@@ -38,13 +38,14 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: ''
       # node 14 is npm 6, install npm 9 for workspaces
+      # remove npm and npx cmd first
       - run: npm i npm@^9 -g
       - run: npm i starfall-cli -g
       # ignore scripts for node 14
       - run: npm i --ignore-scripts
       - run: npx playwright install --with-deps
       - run: npm run build
-      # puppeteer does not support node 14
+      # node 14 does not support: puppeteer, rollup 
       - run: npm run test-node-14
         env:
           FORCE_COLOR: true

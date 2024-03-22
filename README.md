@@ -52,6 +52,7 @@
 * [Thanks](#thanks)
 
 ## Usage
+> It's recommended to use [Node.js 20+](https://nodejs.org/).
 - [API](#multiprocessing-support)
 ```js
 const MCR = require('monocart-coverage-reports');
