@@ -28,6 +28,7 @@
 * [Multiprocessing Support](#multiprocessing-support)
 * [Merge Coverage Reports](#merge-coverage-reports)
 * [Command Line](#command-line)
+* [Config File](#config-file)
 * [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 * [Common issues](#common-issues)
     - [Unexpected coverage](#unexpected-coverage)
@@ -726,15 +727,18 @@ Options:
   -h, --help                   display help for command
 ```
 
-- Loading config file by priority:
-    - Custom config file with `-c` or `--config`
-    - `mcr.config.js`
-    - `mcr.config.cjs`
-    - `mcr.config.mjs`
-    - `mcr.config.json` - json format
-    - `mcr.config.ts` (requires preloading the ts execution module)
-    - `.mcrrc.js`
-    - `.mcrrc` - json format
+## Config File
+Loading config file by priority:
+- Custom config file:
+    - CLI: `mcr --config <my-config-file-path>`
+    - API: `await mcr.loadConfig("my-config-file-path")`
+- `mcr.config.js`
+- `mcr.config.cjs`
+- `mcr.config.mjs`
+- `mcr.config.json` - json format
+- `mcr.config.ts` (requires preloading the ts execution module)
+- `.mcrrc.js`
+- `.mcrrc` - json format
 
 ## Debug for Coverage and Sourcemap
 > Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
