@@ -1,4 +1,3 @@
-const path = require('path');
 const EC = require('eight-colors');
 
 const { foregroundChild } = require('foreground-child');
@@ -6,12 +5,13 @@ const { foregroundChild } = require('foreground-child');
 const MCR = require('../');
 const dir = '.temp/v8-coverage-fgc';
 
+const checkSnapshot = require('./check-snapshot.js');
 const generate = async () => {
 
     const coverageOptions = {
         // logging: 'debug',
         // watermarks: [60, 90],
-        reports: ['v8', 'console-summary'],
+        reports: ['v8'],
 
         name: 'My V8 Node fgc Coverage Report',
         assetsPath: '../assets',
@@ -21,8 +21,10 @@ const generate = async () => {
             '**/test/mock/node/**': true
         },
 
-        outputDir: './docs/node-fgc'
-
+        outputDir: './docs/node-fgc',
+        onEnd: function(coverageResults) {
+            checkSnapshot(coverageResults);
+        }
     };
 
 
@@ -41,12 +43,12 @@ const test = () => {
     process.env.NODE_V8_COVERAGE = dir;
 
     // NOT work in github actions
-    const testPath = path.resolve('./test/test-node-env.js');
-    foregroundChild(`node ${testPath}`, async () => {
+    foregroundChild('node ./test/test-node-env.js', {
+        shell: true
+    }, async () => {
         await generate();
 
-        // exit code for foregroundChild
-        return 0;
+        return process.exitCode;
     });
 };
 
