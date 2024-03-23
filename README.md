@@ -57,22 +57,20 @@
 - [API](#multiprocessing-support)
 ```js
 const MCR = require('monocart-coverage-reports');
-const coverageOptions = {
+const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ["v8", "console-details"]
-}
-const mcr = MCR(coverageOptions);
-mcr.cleanCache();
-
-await mcr.add(coverageData1);
-await mcr.add(coverageData2);
-
+    reports: ["v8", "console-details"],
+    cleanCache: true
+});
+await mcr.add(coverageData);
 await mcr.generate();
-
-// Or 
-// const { CoverageReport } = require('monocart-coverage-reports');
-// const mcr = new CoverageReport(coverageOptions);
+```
+Using `import` and load options from [config file](#config-file)
+```js
+import { CoverageReport } from 'monocart-coverage-reports';
+const mcr = new CoverageReport();
+await mcr.loadConfig();
 ```
 - [CLI](#command-line)
 ```sh
