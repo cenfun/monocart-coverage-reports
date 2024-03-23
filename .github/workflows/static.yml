@@ -22,12 +22,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test:
+  test-node-14:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [14, 18]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +31,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 14.x
           cache: ''
       # node 14 is npm 6, install npm 9 for workspaces
       # remove npm and npx cmd first
@@ -49,7 +45,26 @@ jobs:
         env:
           FORCE_COLOR: true
 
-  deploy:
+  test-node-18:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: ''
+      - run: npm i starfall-cli -g
+      - run: npm i
+      - run: npx playwright install --with-deps
+      - run: npm run build
+      - run: npm run test
+        env:
+          FORCE_COLOR: true
+
+  deploy-node-20:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
