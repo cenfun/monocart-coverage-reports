@@ -9,13 +9,13 @@ const executeNpmRun = (item) => {
 
         // puppeteer drop support for node16
         if (item.includes('puppeteer')) {
-            EC.logYellow('Ignore test puppeteer - node < 18');
+            EC.logYellow(`Ignore test puppeteer - node ${nv} < 18`);
             return 0;
         }
 
         // The minimal required Node version is now 18.0.0
         if (item.includes('rollup')) {
-            EC.logYellow('Ignore test rollup - node < 18');
+            EC.logYellow(`Ignore test rollup - node ${nv} < 18`);
             return 0;
         }
 
@@ -25,7 +25,7 @@ const executeNpmRun = (item) => {
 
         // module register added in Node.js: v20.6.0
         if (item.includes('tsx')) {
-            EC.logYellow('Ignore test tsx - node < 20.6');
+            EC.logYellow(`Ignore test tsx - node ${nv} < 20.6`);
             return 0;
         }
 

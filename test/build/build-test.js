@@ -99,7 +99,10 @@ const build = async () => {
     await runEsbuild();
 
     // rollup: The minimal required Node version is now 18.0.0
-    if (Util.cmpVersion(process.versions.node, '18') >= 0) {
+    const nv = process.versions.node;
+    if (Util.cmpVersion(nv, '18') < 0) {
+        EC.logYellow(`Ignore build rollup - node ${nv} < 18`);
+    } else {
         await runRollup();
     }
 

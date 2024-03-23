@@ -36,7 +36,7 @@ const addV8Coverage = async (coverageReport, coverageList) => {
         return;
     }
 
-    console.log('add node.js cdp coverage ...', coverageList.length);
+    console.log('add node.js cdp coverage ...');
     await coverageReport.add(coverageList);
 };
 
