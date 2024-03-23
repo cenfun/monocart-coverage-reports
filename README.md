@@ -16,7 +16,7 @@
 * [Collecting V8 Coverage Data](#collecting-v8-coverage-data)
     - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
     - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
-    - [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+    - [Collecting V8 Coverage Data from Node.js](#collecting-v8-coverage-data-from-nodejs)
     - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
     - [V8 Coverage Data API](#v8-coverage-data-api)
 * [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
@@ -238,7 +238,7 @@ const mcr = MCR(coverageOptions);
     - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 
 - Node.js
-    - [Node.js V8 Coverage Report for Server Side](#nodejs-v8-coverage-report-for-server-side)
+    - [Collecting V8 Coverage Data from Node.js](#collecting-v8-coverage-data-from-nodejs)
 
 - CDP
     - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
@@ -296,7 +296,7 @@ const coverageData = [... jsCoverage.map((it) => {
 ```
 Example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 
-### Node.js V8 Coverage Report for Server Side
+### Collecting V8 Coverage Data from Node.js
 Possible solutions:
 - [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
     - Sets Node.js env `NODE_V8_COVERAGE`=`dir` before the program running, the coverage data will be saved to the `dir` after the program exits gracefully.
