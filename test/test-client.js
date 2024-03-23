@@ -4,8 +4,13 @@ const PCR = require('puppeteer-chromium-resolver');
 
 const MCR = require('../');
 
+const checkSnapshot = require('./check-snapshot.js');
+
 const coverageOptions = {
     // logging: 'debug',
+
+    name: 'My V8 Client Coverage Report',
+
     // watermarks: [60, 90],
     reports: [
 
@@ -16,11 +21,52 @@ const coverageOptions = {
         'v8'
     ],
 
-    name: 'My V8 Client Coverage Report',
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/client'
+    entryFilter: (entry) => {
+        if (entry.url && entry.url.includes('src')) {
+            return true;
+        }
+    },
+
+    outputDir: './docs/client',
+    onEnd: function(coverageResults) {
+        checkSnapshot(coverageResults);
+    }
+};
+
+const getPageHtml = (key) => {
+    return `<html>
+<head>
+<title>mock ${key} anonymous</title>
+<style>
+body { font-size: 16px; }
+h3 { display: block; }
+.unused {
+    border: 1px solid #ccc;
+}
+.uncovered {
+    color: red;
+}
+.${key} {
+    color: green;
+}
+/*# sourceURL=src/${key}.css*/
+</style>
+</head>
+<body>
+<h3>mock page anonymous</h3>
+<div class="${key}">${key}<div>
+<script>
+const sourceURL = "${key}";
+const uncovered = () => {
+    console.log("uncovered");
+};
+//# sourceURL=src/${key}.js
+</script>
+</body>
+</html>`;
 };
 
 const testPlaywright = async (coverageReport) => {
@@ -35,35 +81,7 @@ const testPlaywright = async (coverageReport) => {
 
     await client.startCoverage();
 
-    await page.setContent(`<html>
-    <head>
-        <title>mock playwright anonymous</title>
-        <style>
-            body { font-size: 16px; }
-            h3 { display: block; }
-            .unused {
-                border: 1px solid #ccc;
-            }
-        </style>
-        <style>
-            .playwright {
-                color: green;
-            }
-            /*# sourceURL=playwright.css*/
-        </style>
-    </head>
-    <body>
-        mock page anonymous
-        <div class="playwright">playwright<div>
-        <script>
-            const name = "playwright";
-        </script>
-        <script>
-            const sourceURL = "playwright";
-            //# sourceURL=playwright.js
-        </script>
-    </body>
-    </html>`);
+    await page.setContent(getPageHtml('playwright'));
 
     const coverageData = await client.stopCoverage();
 
@@ -97,35 +115,7 @@ const testPuppeteer = async (coverageReport) => {
 
     await client.startCoverage();
 
-    await page.setContent(`<html>
-    <head>
-        <title>mock puppeteer anonymous</title>
-        <style>
-            body { font-size: 16px; }
-            h3 { display: block; }
-            .unused {
-                border: 1px solid #ccc;
-            }
-        </style>
-        <style>
-            .puppeteer {
-                color: green;
-            }
-            /*# sourceURL=puppeteer.css*/
-        </style>
-    </head>
-    <body>
-        mock page anonymous
-        <div class="puppeteer">puppeteer<div>
-        <script>
-            const name = "puppeteer";
-        </script>
-        <script>
-            const sourceURL = "puppeteer";
-            //# sourceURL=puppeteer.js
-        </script>
-    </body>
-    </html>`);
+    await page.setContent(getPageHtml('puppeteer'));
 
     const coverageData = await client.stopCoverage();
 

@@ -1,5 +1,8 @@
 ## Changelog
 
+* 2.7.7
+    - fixed coverage undefined for `CDPClient`
+
 * 2.7.6
     - fixed CLI arguments for `--` separator 
     - fixed sourcemap if range in a comment
