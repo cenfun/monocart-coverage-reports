@@ -776,7 +776,7 @@ const a = tf ? 'true' : 'false';
 `m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position. You can try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 
 How `MCR` Works:
-- 1, Trying to fix the middle position if not found the exact mapping for the position. However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
+- 1, Trying to fix the middle original position with string comparison and [`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences). However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
 - 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). However, there's a small issue, which is the V8 cannot provide effective branch coverage information for `AssignmentPattern`.
 
 
