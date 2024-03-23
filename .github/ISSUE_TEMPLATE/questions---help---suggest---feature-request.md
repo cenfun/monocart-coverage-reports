@@ -1,5 +1,5 @@
 ---
-name: Questions / Help
+name: Questions / Help / Suggest / Feature Request
 about: Describe this issue purpose here.
 title: "[Question] "
 labels: ''
@@ -7,4 +7,4 @@ assignees: ''
 
 ---
 
-Questions and Help
+Clear and concise description of the issue

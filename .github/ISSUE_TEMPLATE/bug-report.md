@@ -14,22 +14,21 @@ A clear and concise description of what the bug is.
 - MCR Version: 
 - Node Version: 
 - OS and Version: 
-Steps to reproduce the actual behavior:
+- Steps to reproduce the actual behavior:
 1. 
 2. 
 3. 
-4. 
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Errors or Screenshots**
+Any captured error messages, or add screenshots to help explain your problem.
 
 **Make a minimal reproduction**
-- Provide the minimal, reproducible codes or options of the bug.
+- Provide the minimal, reproducible code or options of the bug.
 ```js
-// your code here
+
 ```
 - Or provide a GitHub repository with a minimal (but complete) example and simple/clear steps on how to reproduce the bug. 
 
