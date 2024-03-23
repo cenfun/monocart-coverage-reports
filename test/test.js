@@ -4,11 +4,20 @@ const { spawn } = require('node:child_process');
 const executeNpmRun = (item) => {
 
     const [major, minor] = process.versions.node.split('.').map((s) => parseInt(s));
-    if (item.includes('puppeteer') && major <= 16) {
-        EC.logYellow('Ignore test puppeteer - node <= 16');
+
+    // puppeteer drop support for node16
+    if (item.includes('puppeteer') && major < 18) {
+        EC.logYellow('Ignore test puppeteer - node < 18');
         return 0;
     }
 
+    // The minimal required Node version is now 18.0.0
+    if (item.includes('rollup') && major < 18) {
+        EC.logYellow('Ignore test rollup - node < 18');
+        return 0;
+    }
+
+    // module register added in Node.js: v20.6.0
     if (item.includes('tsx') && parseFloat(`${major}.${minor}`) < 20.6) {
         EC.logYellow('Ignore test tsx - node < 20.6');
         return 0;

@@ -96,11 +96,10 @@ const build = async () => {
 
     await runEsbuild();
 
-    try {
+    // rollup: The minimal required Node version is now 18.0.0
+    const [major] = process.versions.node.split('.').map((s) => parseInt(s));
+    if (major >= 18) {
         await runRollup();
-    } catch (e) {
-        // do not support node 14
-        console.log(e.message);
     }
 
 };
