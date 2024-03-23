@@ -375,10 +375,10 @@ const coverageData = await client.stopCoverage();
 ```
 
 ### V8 Coverage Data API
-- [V8 coverage report](https://v8.dev/blog/javascript-code-coverage) - Native support for JavaScript code coverage to V8. (Chromium only)
+- [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
-- [Puppeteer Coverage class](https://pptr.dev/api/puppeteer.coverage)
-- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see devtools-protocol [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
+- [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
+- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
 ```js
 // Coverage data for a source range.
 export interface CoverageRange {
