@@ -54,7 +54,7 @@
 
 ## Usage
 > It's recommended to use [Node.js 20+](https://nodejs.org/).
-- [API](#multiprocessing-support)
+- API
 ```js
 const MCR = require('monocart-coverage-reports');
 const mcr = MCR({
@@ -72,10 +72,13 @@ import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
 await mcr.loadConfig();
 ```
-- [CLI](#command-line)
+For more information, see [Multiprocessing Support](#multiprocessing-support)
+
+- CLI
 ```sh
 mcr node my-app.js -r v8,console-details
 ```
+For more information, see [Command Line](#command-line)
 
 ## Options
 - Default Options: [lib/default/options.js](./lib/default/options.js)
@@ -162,9 +165,9 @@ mcr node my-app.js -r v8,console-details
         ]
     }
     ```
-    - istanbul custom reporter
+    - Istanbul custom reporter
     > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
-    - v8 custom reporter
+    - V8 custom reporter
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
 ### Multiple Reports:
@@ -193,11 +196,9 @@ const coverageOptions = {
         }],
         // Specify reporter name with local path
         ['/absolute/path/to/custom-reporter.js']
-
     ]
 }
 const mcr = MCR(coverageOptions);
-mcr.cleanCache();
 ```
 
 ## Compare Reports
@@ -263,7 +264,7 @@ const [jsCoverage, cssCoverage] = await Promise.all([
 const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
-see [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
+For more examples, see [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
 
 ### Collecting Raw V8 Coverage Data with Puppeteer
 ```js
@@ -293,7 +294,7 @@ const coverageData = [... jsCoverage.map((it) => {
     };
 }), ... cssCoverage];
 ```
-see example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
+Example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 
 ### Node.js V8 Coverage Report for Server Side
 Possible solutions:
@@ -329,7 +330,7 @@ Possible solutions:
     - see [Command Line](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
-- Work with node debugger `--inspect=9229`
+- Work with node debugger port `--inspect=9229`
 ```js
 const MCR = require('monocart-coverage-reports');
 const client = await MCR.CDPClient({
@@ -371,6 +372,17 @@ await client.startCoverage();
 await page.goto("your page url");
 const coverageData = await client.stopCoverage();
 ```
+- Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
+```js
+const { Builder, Browser } = require('selenium-webdriver');
+const MCR = require('monocart-coverage-reports');
+const driver = await new Builder().forBrowser(Browser.CHROME).build();
+const pageCdpConnection = await driver.createCDPConnection('page');
+const session = new MCR.WSSession(pageCdpConnection._wsConnection);
+const client = await MCR.CDPClient({
+    session
+})
+```
 
 ### V8 Coverage Data API
 - [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
@@ -387,7 +399,6 @@ export interface CoverageRange {
     // Collected execution count of the source range.
     count: integer;
 }
-
 // Coverage data for a JavaScript function.
 /**
  * @functionName can be an empty string.
@@ -404,7 +415,6 @@ export interface FunctionCoverage {
     // Whether coverage data for this function has block granularity.
     isBlockCoverage: boolean;
 }
-
 // Coverage data for a JavaScript script.
 export interface ScriptCoverage {
     // JavaScript script id.
@@ -414,32 +424,31 @@ export interface ScriptCoverage {
     // Functions contained in the script that has coverage data.
     functions: FunctionCoverage[];
 }
-
 export type V8CoverageData = ScriptCoverage[];
 ```
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
-```
-dist/main.js
-dist/vendor.js
-dist/something-else.js
-```
+
+- *dist/main.js*
+- *dist/vendor.js*
+- *dist/something-else.js*
+
 We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
-```
-dist/main.js
-```
+
+- *dist/main.js*
+
 When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
-```
-> src/index.js
-> src/components/app.js
-> node_modules/dependency/dist/dependency.js
-```
+
+- *src/index.js*
+- *src/components/app.js*
+- *node_modules/dependency/dist/dependency.js*
+
 We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
-```
-> src/index.js
-> src/components/app.js
-```
+
+- *src/index.js*
+- *src/components/app.js*
+
 For example:
 ```js
 const coverageOptions = {
@@ -599,7 +608,6 @@ mcr.cleanCache();
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
 const mcr = MCR(coverageOptions);
-// do not clean cache in the stage
 await mcr.add(coverageData1);
 ```
 
@@ -608,7 +616,6 @@ await mcr.add(coverageData1);
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
 const mcr = MCR(coverageOptions);
-// do not clean cache in the stage
 await mcr.add(coverageData2);
 ```
 
@@ -618,7 +625,6 @@ await mcr.add(coverageData2);
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
 const mcr = MCR(coverageOptions);
-// do not clean cache before generating reports
 await mcr.generate();
 ```
 
@@ -710,6 +716,7 @@ const coverageOptions = {
 We also have `raw` coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`.
 After all the tests are completed, generate a merged report with option `inputDir`:
 ```js
+// merge-coverage.js
 const fs = require('fs');
 const { CoverageReport } = require('monocart-coverage-reports');
 const inputDir = [
