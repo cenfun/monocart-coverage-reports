@@ -64,6 +64,7 @@ const test = async (type) => {
             'test-puppeteer',
             'test-anonymous',
             'test-css',
+            'test-client',
             'test-minify',
             'test-esbuild',
             'test-rollup',
