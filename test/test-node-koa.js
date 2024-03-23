@@ -31,9 +31,9 @@ const coverageOptions = {
 // ==================================================================
 
 // mock start koa server
-const startSubProcess = (dir) => {
+const startKoaProcess = (port) => {
     console.log('start koa server ...');
-    const cp = spawn('node --inspect=9229 ./test/mock/node/lib/koa.js', {
+    const cp = spawn(`node --inspect=${port} ./test/mock/node/lib/koa.js`, {
         stdio: 'inherit',
         shell: true
     });
@@ -92,19 +92,21 @@ const generate = async () => {
         });
     }
 
-    const cp = await startSubProcess(dir);
+    const port = 9280;
+
+    const cp = await startKoaProcess(port);
     if (!cp) {
         return;
     }
 
     // request koa server
-    const response = await axios.get('http://localhost:3000');
+    const response = await axios.get('http://localhost:3080');
     assert(response.data === 'Hello World');
 
     // after webServer is debugging on ws://127.0.0.1:9229
     // connect to the server with Chrome Devtools Protocol
     const client = await CDPClient({
-        port: 9229
+        port
     });
 
     const v8Dir = await client.writeCoverage();
@@ -112,6 +114,7 @@ const generate = async () => {
 
     // close debugger
     await client.close();
+    killSubProcess(cp);
 
     // check coverage dir
     assert(path.resolve(dir) === v8Dir);
@@ -123,8 +126,6 @@ const generate = async () => {
     await coverageReport.addFromDir(dir);
     const coverageResults = await coverageReport.generate();
     console.log('test-node-koa coverage reportPath', EC.magenta(coverageResults.reportPath));
-
-    killSubProcess(cp);
 
 };
 

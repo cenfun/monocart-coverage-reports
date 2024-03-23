@@ -45,8 +45,7 @@ jobs:
       - run: npm i --ignore-scripts
       - run: npx playwright install --with-deps
       - run: npm run build
-      # node 14 does not support: puppeteer, rollup 
-      - run: npm run test-node-14
+      - run: npm run test
         env:
           FORCE_COLOR: true
 

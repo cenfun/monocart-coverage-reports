@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "57.31 %",
-        "statements": "61.76 %",
+        "bytes": "57.25 %",
+        "statements": "61.63 %",
         "branches": "53.52 %",
         "functions": "58.67 %",
-        "lines": "49.59 %"
+        "lines": "49.53 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -182,7 +182,7 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "1-22"
+            "uncoveredLines": "1-23"
         },
         "test/mock/node/lib/util.js": {
             "functions": "0.00 %",

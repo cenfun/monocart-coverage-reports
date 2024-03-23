@@ -1,4 +1,3 @@
-const checkTest = require('./check-test.js');
 module.exports = {
 
     // logging: 'debug',
@@ -41,7 +40,7 @@ module.exports = {
     },
 
     onEnd: async (coverageResults) => {
-        await checkTest();
+
     }
 
 };

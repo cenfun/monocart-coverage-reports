@@ -56,14 +56,6 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "localhost-8130/with-map/bootstrap.min.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "50.00 %",
-            "bytes": "1.55 %",
-            "uncoveredLines": "6"
-        },
         "localhost-8130/css/style.css": {
             "functions": "",
             "branches": "",
@@ -71,6 +63,14 @@
             "lines": "",
             "bytes": "",
             "uncoveredLines": ""
+        },
+        "localhost-8130/with-map/bootstrap.min.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "1.55 %",
+            "uncoveredLines": "6"
         },
         "fps-detector/webpack/universalModuleDefinition": {
             "functions": "100.00 %",

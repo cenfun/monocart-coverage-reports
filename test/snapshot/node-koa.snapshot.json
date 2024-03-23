@@ -1,19 +1,19 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "84.44 %",
-        "statements": "84.62 %",
+        "bytes": "85.17 %",
+        "statements": "85.71 %",
         "branches": "50.00 %",
         "functions": "66.67 %",
-        "lines": "64.71 %"
+        "lines": "66.67 %"
     },
     "files": {
         "test/mock/node/lib/koa.js": {
             "functions": "66.67 %",
             "branches": "50.00 %",
-            "statements": "84.62 %",
-            "lines": "64.71 %",
-            "bytes": "84.44 %",
+            "statements": "85.71 %",
+            "lines": "66.67 %",
+            "bytes": "85.17 %",
             "uncoveredLines": "7-9,16-18"
         }
     }
