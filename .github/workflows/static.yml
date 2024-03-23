@@ -64,7 +64,7 @@ jobs:
         env:
           FORCE_COLOR: true
 
-  deploy-node-20:
+  test-node-20-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

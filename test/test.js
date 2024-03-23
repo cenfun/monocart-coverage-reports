@@ -45,6 +45,7 @@ const test = async (type) => {
             'test-node-api',
             'test-node-ins',
             'test-node-cdp',
+            'test-node-fgc',
             'test-node-vm',
             'test-node-koa'
         ],
