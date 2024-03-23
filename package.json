@@ -24,7 +24,7 @@
     },
     "types": "./lib/index.d.ts",
     "scripts": {
-        "build-test": "node ./scripts/build-test.js",
+        "build-test": "node ./test/build/build-test.js",
         "build": "sf lint && sf b -p && npm run build-test",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",

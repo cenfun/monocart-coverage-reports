@@ -219,7 +219,7 @@ mcr.cleanCache();
 ## Collecting Istanbul Coverage Data
 - Instrumenting source code
     > Before collecting Istanbul coverage data, It requires your source code is instrumented with Istanbul
-    - webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](./test/webpack.config-istanbul.js)
+    - webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](./test/build/webpack.config-istanbul.js)
     - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
 - Browser
@@ -229,7 +229,7 @@ mcr.cleanCache();
 
 ## Collecting V8 Coverage Data
 - Sourcemap for source code: enable `sourcemap` and do not compress/minify:
-    - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](./test/webpack.config-v8.js)
+    - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](./test/build/webpack.config-v8.js)
     - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true`
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
