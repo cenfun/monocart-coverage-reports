@@ -6,12 +6,12 @@ const executeNpmRun = (item) => {
     const [major, minor] = process.versions.node.split('.').map((s) => parseInt(s));
     if (item.includes('puppeteer') && major <= 16) {
         EC.logYellow('Ignore test puppeteer - node <= 16');
-        return;
+        return 0;
     }
 
     if (item.includes('tsx') && parseFloat(`${major}.${minor}`) < 20.6) {
         EC.logYellow('Ignore test tsx - node < 20.6');
-        return;
+        return 0;
     }
 
     return new Promise((resolve) => {
@@ -21,7 +21,7 @@ const executeNpmRun = (item) => {
         });
 
         worker.on('close', (code) => {
-            resolve();
+            resolve(code);
         });
 
     });
@@ -55,19 +55,29 @@ const test = async (type) => {
 
     const list = groups[type];
     if (list) {
-        Promise.all(list.map((item) => executeNpmRun(item)));
+        const codes = await Promise.all(list.map((item) => executeNpmRun(item)));
+        if (codes.find((c) => c !== 0)) {
+            process.exit(1);
+        }
         return;
     }
 
     // test all
-    const keys = Object.keys(groups);
-    for (const k of keys) {
-        await Promise.all(groups[k].map((item) => executeNpmRun(item)));
+    const all = [
+        'test-node',
+        'test-browser',
+        'test-cli',
+        'test-tsx',
+        'test-merge'
+    ];
+
+    for (const item of all) {
+        const code = await executeNpmRun(item);
+        if (code !== 0) {
+            process.exit(1);
+        }
     }
 
-    await executeNpmRun('test-cli');
-    await executeNpmRun('test-tsx');
-    await executeNpmRun('test-merge');
 
 };
 
