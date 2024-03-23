@@ -1,26 +1,34 @@
 const EC = require('eight-colors');
 const { spawn } = require('node:child_process');
+const Util = require('../lib/utils/util.js');
 
 const executeNpmRun = (item) => {
+    const nv = process.versions.node;
 
-    const [major, minor] = process.versions.node.split('.').map((s) => parseInt(s));
+    if (Util.cmpVersion(nv, '18') < 0) {
 
-    // puppeteer drop support for node16
-    if (item.includes('puppeteer') && major < 18) {
-        EC.logYellow('Ignore test puppeteer - node < 18');
-        return 0;
+        // puppeteer drop support for node16
+        if (item.includes('puppeteer')) {
+            EC.logYellow('Ignore test puppeteer - node < 18');
+            return 0;
+        }
+
+        // The minimal required Node version is now 18.0.0
+        if (item.includes('rollup')) {
+            EC.logYellow('Ignore test rollup - node < 18');
+            return 0;
+        }
+
     }
 
-    // The minimal required Node version is now 18.0.0
-    if (item.includes('rollup') && major < 18) {
-        EC.logYellow('Ignore test rollup - node < 18');
-        return 0;
-    }
+    if (Util.cmpVersion(nv, '20.6.0') < 0) {
 
-    // module register added in Node.js: v20.6.0
-    if (item.includes('tsx') && parseFloat(`${major}.${minor}`) < 20.6) {
-        EC.logYellow('Ignore test tsx - node < 20.6');
-        return 0;
+        // module register added in Node.js: v20.6.0
+        if (item.includes('tsx')) {
+            EC.logYellow('Ignore test tsx - node < 20.6');
+            return 0;
+        }
+
     }
 
     return new Promise((resolve) => {

@@ -1,6 +1,8 @@
 const EC = require('eight-colors');
 const webpack = require('webpack');
 
+const Util = require('../../lib/utils/util.js');
+
 // istanbul requires building on server for right file path (relative)
 const webpackConfIstanbul = require('./webpack.config-istanbul.js');
 
@@ -97,8 +99,7 @@ const build = async () => {
     await runEsbuild();
 
     // rollup: The minimal required Node version is now 18.0.0
-    const [major] = process.versions.node.split('.').map((s) => parseInt(s));
-    if (major >= 18) {
+    if (Util.cmpVersion(process.versions.node, '18') >= 0) {
         await runRollup();
     }
 
