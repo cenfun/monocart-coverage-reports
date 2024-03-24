@@ -8,7 +8,8 @@ const executeNpmRun = (item) => {
     if (Util.cmpVersion(nv, '18') < 0) {
 
         // puppeteer drop support for node16
-        if (item.includes('puppeteer')) {
+        // client includes puppeteer
+        if (item.includes('puppeteer') || item.includes('client')) {
             EC.logYellow(`Ignore test puppeteer - node ${nv} < 18`);
             return 0;
         }
