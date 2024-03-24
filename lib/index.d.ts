@@ -119,7 +119,7 @@ declare namespace MCR {
             outputDir?: string;
         }] |
         [string] | [string, {
-            type?: "v8" | "istanbul" | "both";
+            type?: "v8" | "istanbul" | "both" | string;
             [key: string]: any;
         }];
 
@@ -192,7 +192,7 @@ declare namespace MCR {
             ignores?: IgnoredRange[];
             /** codecov json format */
             lines: {
-                [key: string]: number | string
+                [key: string]: number | string;
             };
         }
     }
@@ -287,7 +287,7 @@ declare namespace MCR {
             */
             filter?: string | {
                 [pattern: string]: "js" | "css" | boolean;
-            } | ((filePath: string) => "js" | "css" | boolean)
+            } | ((filePath: string) => "js" | "css" | boolean);
         };
 
         /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
@@ -320,6 +320,7 @@ declare namespace MCR {
         /** {function} onEnd hook */
         onEnd?: (coverageResults: CoverageResults) => Promise<void>;
 
+        [key: string]: any;
     }
 
     export interface McrCliOptions extends CoverageReportOptions {
@@ -441,7 +442,7 @@ declare namespace MCR {
         stopCoverage: () => Promise<V8CoverageEntry[]>;
 
         /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
-        writeCoverage: () => Promise<string>
+        writeCoverage: () => Promise<string>;
 
     }
 
@@ -449,7 +450,7 @@ declare namespace MCR {
     export interface CDPSession {
         send: (method: string, params?: any) => Promise<any>;
         on: (type: string, handler: (e: any) => void) => void;
-        detach: () => Promise<void>
+        detach: () => Promise<void>;
     }
 
     /** custom websocket CDPSession */
@@ -457,7 +458,7 @@ declare namespace MCR {
         constructor(ws: any);
         send: (method: string, params?: any) => Promise<any>;
         on: (type: string, handler: (e: any) => void) => void;
-        detach: () => Promise<void>
+        detach: () => Promise<void>;
     }
 
     export interface CDPOptions {

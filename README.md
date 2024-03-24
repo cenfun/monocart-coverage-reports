@@ -384,6 +384,26 @@ const client = await MCR.CDPClient({
     session
 })
 ```
+ - `CDPClient` available APIs
+ ```js
+/** start js coverage */
+startJSCoverage: () => Promise<void>;
+/** stop and return js coverage */
+stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+
+/** start css coverage */
+startCSSCoverage: () => Promise<void>;
+/** stop and return css coverage */
+stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+
+/** start both js and css coverage */
+startCoverage: () => Promise<void>;
+/** stop and return both js and css coverage */
+stopCoverage: () => Promise<V8CoverageEntry[]>;
+
+/** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
+writeCoverage: () => Promise<string>;
+ ```
 
 ### V8 Coverage Data API
 - [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
