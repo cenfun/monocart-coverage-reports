@@ -403,6 +403,9 @@ stopCoverage: () => Promise<V8CoverageEntry[]>;
 
 /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
 writeCoverage: () => Promise<string>;
+
+/** get istanbul coverage data */
+getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
  ```
 
 ### V8 Coverage Data API

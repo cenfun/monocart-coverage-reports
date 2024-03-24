@@ -444,6 +444,10 @@ declare namespace MCR {
         /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
         writeCoverage: () => Promise<string>;
 
+        /** get istanbul coverage data
+         * @param coverageKey defaults to `__coverage__`
+         */
+        getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
     }
 
     /** Adapt to the CDPSession of Playwright or Puppeteer */

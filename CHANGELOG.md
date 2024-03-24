@@ -2,6 +2,7 @@
 
 * 2.7.7
     - fixed coverage undefined for `CDPClient`
+    - added API `getIstanbulCoverage` for `CDPClient`
 
 * 2.7.6
     - fixed CLI arguments for `--` separator 
