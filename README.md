@@ -111,7 +111,7 @@ For more information, see [Command Line](#command-line)
 - `v8-json`
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 
-> Istanbul build-in reports (both V8 and istanbul data):
+> Istanbul build-in reports (both V8 and Istanbul data):
 
 - `clover`
 - `cobertura`
@@ -131,7 +131,7 @@ For more information, see [Command Line](#command-line)
 - `text-lcov`
 - `text-summary`
 
-> Other build-in reports (both V8 and istanbul data):
+> Other build-in reports (both V8 and Istanbul data):
 
 - `codecov`
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
@@ -217,9 +217,11 @@ const mcr = MCR(coverageOptions);
 
 ## Collecting Istanbul Coverage Data
 - Before coverage collection: Instrumenting source code with Istanbul
-    - webpack: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), example: [webpack.config-istanbul.js](./test/build/webpack.config-istanbul.js)
-    - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
+    - webpack with babel loader: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), see example: [webpack.config-istanbul.js](./test/build/webpack.config-istanbul.js)
+    - CLI: [nyc instrument](https://github.com/istanbuljs/nyc/blob/master/docs/instrument.md) or API: [istanbul-lib-instrument](https://github.com/istanbuljs/istanbuljs/blob/main/packages/istanbul-lib-instrument/api.md)
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
+    - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
+    - swc: [swc-plugin-coverage-instrument](https://github.com/kwonoj/swc-plugin-coverage-instrument)
 - Browser
     - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](./test/test-istanbul.js)
 - Node.js
