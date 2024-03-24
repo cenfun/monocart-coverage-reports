@@ -855,6 +855,7 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 ## Integration Examples
 
 ### [Playwright](https://github.com/microsoft/playwright)
+- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - A Example for Playwright Coverage Reports
 - [monocart-reporter](https://github.com/cenfun/monocart-reporter) - A Playwright custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
 - Coverage for component testing:
     - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
@@ -866,6 +867,7 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ### [Jest](https://github.com/jestjs/jest/)
 - [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - A Jest custom reporter for coverage reports
+- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - A Jest Puppeteer Coverage Example
 - Example for Jest (unit) + Puppeteer (e2e) + Codecov: [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js)
 
 ### [Vitest](https://github.com/vitest-dev/vitest)
