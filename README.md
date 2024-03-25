@@ -239,7 +239,7 @@ const mcr = MCR(coverageOptions);
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
 
-- Browser (Chromium Only)
+- Browser (Chromium-based Only)
     - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
     - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 
@@ -338,14 +338,10 @@ Possible solutions:
 ### Collecting V8 Coverage Data with `CDPClient` API
 - `CDPClient` available APIs
 ```js
-/** start js coverage */
 startJSCoverage: () => Promise<void>;
-/** stop and return js coverage */
 stopJSCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** start css coverage */
 startCSSCoverage: () => Promise<void>;
-/** stop and return css coverage */
 stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
 
 /** start both js and css coverage */
@@ -360,7 +356,7 @@ writeCoverage: () => Promise<string>;
 getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
 ```
 
-- Work with node debugger port `--inspect=9229`
+- Work with node debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`
 ```js
 const MCR = require('monocart-coverage-reports');
 const client = await MCR.CDPClient({
