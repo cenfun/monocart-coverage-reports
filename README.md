@@ -222,10 +222,15 @@ const mcr = MCR(coverageOptions);
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
     - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
     - swc: [swc-plugin-coverage-instrument](https://github.com/kwonoj/swc-plugin-coverage-instrument)
+
 - Browser
     - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](./test/test-istanbul.js)
+
 - Node.js
     - Collecting coverage data from `global.__coverage__`
+
+- CDP
+    - `getIstanbulCoverage()` see [CDPClient API]((#collecting-v8-coverage-data-with-cdpclient-api))
 
 ## Collecting V8 Coverage Data
 - Before coverage collection: Enabling `sourcemap` for source code
