@@ -230,7 +230,7 @@ const mcr = MCR(coverageOptions);
     - Collecting coverage data from `global.__coverage__`
 
 - CDP
-    - `getIstanbulCoverage()` see [CDPClient API]((#collecting-v8-coverage-data-with-cdpclient-api))
+    - `getIstanbulCoverage()` see [`CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
 ## Collecting V8 Coverage Data
 - Before coverage collection: Enabling `sourcemap` for source code
