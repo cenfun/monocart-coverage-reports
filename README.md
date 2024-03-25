@@ -336,61 +336,8 @@ Possible solutions:
     - see [Command Line](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
-- Work with node debugger port `--inspect=9229`
+- `CDPClient` available APIs
 ```js
-const MCR = require('monocart-coverage-reports');
-const client = await MCR.CDPClient({
-    port: 9229
-});
-await client.startJSCoverage();
-// run your test here
-const coverageData = await client.stopJSCoverage();
-```
-- Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
-```js
-const { chromium } = require('playwright');
-const MCR = require('monocart-coverage-reports');
-const browser = await chromium.launch();
-const page = await browser.newPage();
-const session = await page.context().newCDPSession(page);
-const client = await MCR.CDPClient({
-    session
-});
-// both js and css coverage
-await client.startCoverage();
-// run your test page here
-await page.goto("your page url");
-const coverageData = await client.stopCoverage();
-```
-- Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
-```js
-const puppeteer = require('puppeteer');
-const MCR = require('monocart-coverage-reports');
-const browser = await puppeteer.launch({});
-const page = await browser.newPage();
-const session = await page.target().createCDPSession();
-const client = await MCR.CDPClient({
-    session
-});
-// both js and css coverage
-await client.startCoverage();
-// run your test page here
-await page.goto("your page url");
-const coverageData = await client.stopCoverage();
-```
-- Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
-```js
-const { Builder, Browser } = require('selenium-webdriver');
-const MCR = require('monocart-coverage-reports');
-const driver = await new Builder().forBrowser(Browser.CHROME).build();
-const pageCdpConnection = await driver.createCDPConnection('page');
-const session = new MCR.WSSession(pageCdpConnection._wsConnection);
-const client = await MCR.CDPClient({
-    session
-})
-```
- - `CDPClient` available APIs
- ```js
 /** start js coverage */
 startJSCoverage: () => Promise<void>;
 /** stop and return js coverage */
@@ -411,7 +358,64 @@ writeCoverage: () => Promise<string>;
 
 /** get istanbul coverage data */
 getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
- ```
+```
+
+- Work with node debugger port `--inspect=9229`
+```js
+const MCR = require('monocart-coverage-reports');
+const client = await MCR.CDPClient({
+    port: 9229
+});
+await client.startJSCoverage();
+// run your test here
+const coverageData = await client.stopJSCoverage();
+```
+
+- Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
+```js
+const { chromium } = require('playwright');
+const MCR = require('monocart-coverage-reports');
+const browser = await chromium.launch();
+const page = await browser.newPage();
+const session = await page.context().newCDPSession(page);
+const client = await MCR.CDPClient({
+    session
+});
+// both js and css coverage
+await client.startCoverage();
+// run your test page here
+await page.goto("your page url");
+const coverageData = await client.stopCoverage();
+```
+
+- Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
+```js
+const puppeteer = require('puppeteer');
+const MCR = require('monocart-coverage-reports');
+const browser = await puppeteer.launch({});
+const page = await browser.newPage();
+const session = await page.target().createCDPSession();
+const client = await MCR.CDPClient({
+    session
+});
+// both js and css coverage
+await client.startCoverage();
+// run your test page here
+await page.goto("your page url");
+const coverageData = await client.stopCoverage();
+```
+
+- Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
+```js
+const { Builder, Browser } = require('selenium-webdriver');
+const MCR = require('monocart-coverage-reports');
+const driver = await new Builder().forBrowser(Browser.CHROME).build();
+const pageCdpConnection = await driver.createCDPConnection('page');
+const session = new MCR.WSSession(pageCdpConnection._wsConnection);
+const client = await MCR.CDPClient({
+    session
+})
+```
 
 ### V8 Coverage Data API
 - [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
