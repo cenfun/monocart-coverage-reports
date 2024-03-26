@@ -51,6 +51,7 @@
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
 * [Contributing](#contributing)
+* [Changelog](CHANGELOG.md)
 * [Thanks](#thanks)
 
 ## Usage
