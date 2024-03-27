@@ -707,6 +707,12 @@ Options:
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
+- Examples
+    - [Mocha](#mocha)
+    - [tsx](#tsx)
+    - [ts-node](#ts-node)
+    - [AVA](#ava)
+
 ## Config File
 Loading config file by priority:
 - Custom config file:
