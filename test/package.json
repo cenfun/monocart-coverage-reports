@@ -20,7 +20,7 @@
         "open": "^10.1.0",
         "playwright": "^1.42.1",
         "puppeteer-chromium-resolver": "^22.0.0",
-        "rollup": "^4.13.0",
+        "rollup": "^4.13.1",
         "ts-loader": "^9.5.1",
         "typescript": "^5.4.3",
         "webpack": "^5.91.0"
