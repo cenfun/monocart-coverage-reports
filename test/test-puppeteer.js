@@ -1,13 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const PCR = require('puppeteer-chromium-resolver');
+const puppeteer = require('puppeteer');
 const EC = require('eight-colors');
 
 const MCR = require('../');
 const checkSnapshot = require('./check-snapshot.js');
-
-const options = {};
-const stats = PCR.getStats(options);
 
 // v8 and lcov
 const coverageOptions = {
@@ -54,10 +51,9 @@ const test = async () => {
 
     console.log('start puppeteer test ...');
 
-    const browser = await stats.puppeteer.launch({
+    const browser = await puppeteer.launch({
         // headless: false,
-        args: ['--no-sandbox'],
-        executablePath: stats.executablePath
+        args: ['--no-sandbox']
     });
 
     const page = await browser.newPage();

@@ -20,7 +20,7 @@
         "mocha": "^10.4.0",
         "open": "^10.1.0",
         "playwright": "^1.42.1",
-        "puppeteer-chromium-resolver": "^22.0.0",
+        "puppeteer": "^22.6.1",
         "rollup": "^4.13.2",
         "ts-loader": "^9.5.1",
         "typescript": "^5.4.3",
