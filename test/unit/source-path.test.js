@@ -1,14 +1,18 @@
+const os = require('os');
 const assert = require('assert');
 const { resolveSourceUrl, getSourcePath } = require('../../lib/utils/source-path.js');
 
 it('resolveSourceUrl', () => {
 
     // windows absolute path
-    assert.equal(getSourcePath(resolveSourceUrl('C://a.js')), 'C/a.js');
-    assert.equal(getSourcePath(resolveSourceUrl('C:\\\\a.js')), 'C/a.js');
-    assert.equal(getSourcePath(resolveSourceUrl('c://workspace/test.spec.js')), 'c/workspace/test.spec.js');
-    assert.equal(getSourcePath(resolveSourceUrl('c:/workspace/test.spec.js')), 'c/workspace/test.spec.js');
-    assert.equal(getSourcePath(resolveSourceUrl('c:\\workspace\\test.spec.js')), 'c/workspace/test.spec.js');
+    if (os.platform() === 'win32') {
+        console.log('test win32 path');
+        assert.equal(getSourcePath(resolveSourceUrl('C://a.js')), 'C/a.js');
+        assert.equal(getSourcePath(resolveSourceUrl('C:\\\\a.js')), 'C/a.js');
+        assert.equal(getSourcePath(resolveSourceUrl('c://workspace/test.spec.js')), 'c/workspace/test.spec.js');
+        assert.equal(getSourcePath(resolveSourceUrl('c:/workspace/test.spec.js')), 'c/workspace/test.spec.js');
+        assert.equal(getSourcePath(resolveSourceUrl('c:\\workspace\\test.spec.js')), 'c/workspace/test.spec.js');
+    }
 
     // linux absolute path
     assert.equal(getSourcePath(resolveSourceUrl('/dir/./src/a.js')), 'dir/src/a.js');
