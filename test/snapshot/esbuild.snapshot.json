@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "81.79 %",
-        "statements": "84.03 %",
-        "branches": "60.08 %",
-        "functions": "86.84 %",
-        "lines": "71.73 %"
+        "bytes": "80.99 %",
+        "statements": "83.30 %",
+        "branches": "59.58 %",
+        "functions": "83.54 %",
+        "lines": "70.61 %"
     },
     "files": {
         "src/comments.js": {
@@ -17,12 +17,12 @@
             "uncoveredLines": ""
         },
         "src/async.js": {
-            "functions": "100.00 %",
+            "functions": "50.00 %",
             "branches": "62.50 %",
-            "statements": "100.00 %",
-            "lines": "94.44 %",
-            "bytes": "98.58 %",
-            "uncoveredLines": "9"
+            "statements": "85.71 %",
+            "lines": "72.22 %",
+            "bytes": "82.62 %",
+            "uncoveredLines": "9,14-20"
         },
         "src/ignore/v8-ignore-next.js": {
             "functions": "100.00 %",
@@ -57,12 +57,12 @@
             "uncoveredLines": "9,33-35"
         },
         "src/branch/assignment.js": {
-            "functions": "100.00 %",
-            "branches": "66.67 %",
-            "statements": "87.50 %",
-            "lines": "87.50 %",
-            "bytes": "91.30 %",
-            "uncoveredLines": "9-11"
+            "functions": "83.33 %",
+            "branches": "54.55 %",
+            "statements": "77.78 %",
+            "lines": "75.00 %",
+            "bytes": "78.10 %",
+            "uncoveredLines": "9-11,22-24"
         },
         "src/branch/conditional.js": {
             "functions": "100.00 %",
