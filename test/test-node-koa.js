@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync, spawn } = require('child_process');
+const {
+    execSync, spawn, spawnSync
+} = require('child_process');
 const assert = require('assert');
 const axios = require('axios');
 const EC = require('eight-colors');
@@ -66,12 +68,41 @@ const killSubProcess = (cp) => {
         return;
     }
 
+    // On Linux
+    const ps = spawnSync('ps', ['-A', '-o', 'ppid,pid']);
+    const out = ps.stdout.toString();
+    // console.log(out);
+    const list = out.trim().split(/\n/).map((line) => line.trim().split(/\s+/).map((s) => parseInt(s)));
+    // console.log(list)
+    const getSubs = (ls, id) => {
+        const subs = [];
+        ls.forEach((arr) => {
+            if (arr[0] === id) {
+                subs.push(arr[1]);
+            }
+        });
+        if (subs.length) {
+            [].concat(subs).forEach((sid) => {
+                subs.push(getSubs(ls, sid));
+            });
+        }
+        return subs.flat();
+    };
+
     // In case of POSIX and `SIGINT` signal, send it to the main process group only.
+    // console.log("pid", cp.pid)
+    const subs = getSubs(list, cp.pid);
+    const ids = subs.concat(cp.pid);
+    // console.log("ids", ids);
+
     try {
-        process.kill(cp.pid, 'SIGKILL');
+        ids.forEach((id) => {
+            process.kill(id, 'SIGKILL');
+        });
     } catch (e) {
         // the process might have already stopped
     }
+
 };
 
 const generate = async () => {
