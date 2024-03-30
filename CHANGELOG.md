@@ -1,5 +1,10 @@
 ## Changelog
 
+* 2.7.8
+    - fixed node import issue
+    - fixed sourceRoot issue
+    - fixed debug message
+
 * 2.7.7
     - fixed coverage undefined for `CDPClient`
     - added API `getIstanbulCoverage` for `CDPClient`
