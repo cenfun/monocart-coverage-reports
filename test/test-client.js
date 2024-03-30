@@ -1,6 +1,6 @@
 const EC = require('eight-colors');
 const { chromium } = require('playwright');
-const PCR = require('puppeteer-chromium-resolver');
+const puppeteer = require('puppeteer');
 
 const MCR = require('../');
 
@@ -92,11 +92,9 @@ const testPlaywright = async (coverageReport) => {
 };
 
 const testPuppeteer = async (coverageReport) => {
-    const stats = PCR.getStats({});
-    const browser = await stats.puppeteer.launch({
+    const browser = await puppeteer.launch({
         // headless: false,
-        args: ['--no-sandbox'],
-        executablePath: stats.executablePath
+        args: ['--no-sandbox']
     });
 
     const page = await browser.newPage();
