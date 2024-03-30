@@ -4,6 +4,7 @@
     - fixed node import issue
     - fixed sourceRoot issue
     - fixed debug message
+    - fixed Maximum call stack issue for cleanCache
 
 * 2.7.7
     - fixed coverage undefined for `CDPClient`
