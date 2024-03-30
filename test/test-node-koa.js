@@ -4,8 +4,9 @@ const {
     execSync, spawn, spawnSync
 } = require('child_process');
 const assert = require('assert');
-const axios = require('axios');
 const EC = require('eight-colors');
+
+const Util = require('../lib/utils/util.js');
 
 const MCR = require('../');
 const CDPClient = MCR.CDPClient;
@@ -131,8 +132,11 @@ const generate = async () => {
     }
 
     // request koa server
-    const response = await axios.get('http://localhost:3080');
-    assert(response.data === 'Hello World');
+    const [err, res] = await Util.request('http://localhost:3080');
+    if (err) {
+        return;
+    }
+    assert(res.data === 'Hello World');
 
     // after webServer is debugging on ws://127.0.0.1:9229
     // connect to the server with Chrome Devtools Protocol
