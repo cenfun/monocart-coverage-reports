@@ -43,6 +43,7 @@
         "test-minify": "node ./test/test-minify.js",
         "test-esbuild": "node ./test/test-esbuild.js",
         "test-rollup": "node ./test/test-rollup.js",
+        "test-swc": "node ./test/test-swc.js",
         "test-v8-and-istanbul": "node ./test/test-v8-and-istanbul.js",
         "test-browser": "node ./test/test.js --browser",
         "test-cli": "npx mcr node ./test/specs/node.test.js -c test/mcr.config.cli.js",

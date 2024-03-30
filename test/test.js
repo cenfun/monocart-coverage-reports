@@ -69,6 +69,7 @@ const test = async (type) => {
             'test-minify',
             'test-esbuild',
             'test-rollup',
+            'test-swc',
             'test-v8-and-istanbul'
         ]
     };

@@ -5,12 +5,11 @@ const Util = require('../../lib/utils/util.js');
 
 // istanbul requires building on server for right file path (relative)
 const webpackConfIstanbul = require('./webpack.config-istanbul.js');
-
 const webpackConfV8 = require('./webpack.config-v8.js');
 const webpackConfNode = require('./webpack.config-node.js');
+const webpackConfSwc = require('./webpack.config-swc.js');
 
 const esbuildConf = require('./esbuild.config.js');
-
 const rollupConf = require('./rollup.config.js');
 
 const startWebpack = function(conf) {
@@ -91,6 +90,11 @@ const runRollup = async () => {
 
 };
 
+const runSwc = async () => {
+    await startWebpack(webpackConfSwc);
+    console.log(EC.green('finish webpack swc'));
+};
+
 const build = async () => {
     await runWebpackIstanbul();
     await runWebpackV8();
@@ -105,6 +109,8 @@ const build = async () => {
     } else {
         await runRollup();
     }
+
+    await runSwc();
 
 };
 

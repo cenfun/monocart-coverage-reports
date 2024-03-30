@@ -119,7 +119,7 @@ const generate = async () => {
 
 const main = async () => {
 
-    const { server, serverUrl } = await serve(8160, 'v8');
+    const { server, serverUrl } = await serve(8190, 'v8');
 
     // clean cache first
     await MCR(multipleReportsOptions).cleanCache();
