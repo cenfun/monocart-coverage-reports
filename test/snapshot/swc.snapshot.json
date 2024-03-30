@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "80.96 %",
-        "statements": "82.83 %",
-        "branches": "57.14 %",
-        "functions": "79.69 %",
-        "lines": "70.45 %"
+        "bytes": "80.99 %",
+        "statements": "82.51 %",
+        "branches": "59.58 %",
+        "functions": "79.37 %",
+        "lines": "70.61 %"
     },
     "files": {
         "src/async.js": {
@@ -18,16 +18,16 @@
         },
         "src/branch/assignment.js": {
             "functions": "80.00 %",
-            "branches": "34.62 %",
-            "statements": "76.19 %",
-            "lines": "70.83 %",
-            "bytes": "77.13 %",
-            "uncoveredLines": "9-11,14,22-24"
+            "branches": "54.55 %",
+            "statements": "76.47 %",
+            "lines": "75.00 %",
+            "bytes": "78.10 %",
+            "uncoveredLines": "9-11,22-24"
         },
         "src/branch/branch.js": {
-            "functions": "72.73 %",
-            "branches": "65.12 %",
-            "statements": "86.75 %",
+            "functions": "70.00 %",
+            "branches": "65.85 %",
+            "statements": "85.53 %",
             "lines": "73.87 %",
             "bytes": "80.28 %",
             "uncoveredLines": "9-19,27,53-56,70,77-79,104,115-120,132-135,140-142"
@@ -122,7 +122,7 @@
         },
         "src/statement.js": {
             "functions": "100.00 %",
-            "branches": "50.00 %",
+            "branches": "",
             "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",

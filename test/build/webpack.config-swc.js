@@ -15,16 +15,31 @@ module.exports = {
         libraryTarget: 'umd'
     },
 
+    // https://github.com/swc-project/pkgs/tree/main/packages/swc-loader
     module: {
         rules: [{
             test: /\.m?js$/,
-            exclude: /(node_modules)/,
             use: {
-                loader: 'swc-loader'
+                loader: 'swc-loader',
+                options: {
+                    jsc: {
+                        target: 'es6'
+                    }
+                }
             }
         }, {
-            test: /\.tsx?$/,
-            use: 'ts-loader'
+            test: /\.ts$/,
+            use: {
+                loader: 'swc-loader',
+                options: {
+                    jsc: {
+                        parser: {
+                            syntax: 'typescript'
+                        },
+                        target: 'es6'
+                    }
+                }
+            }
         }]
     }
 };
