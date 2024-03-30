@@ -7,6 +7,7 @@ module.exports = {
     outfile: outfile,
     sourcemap: true,
     minify: false,
+    treeShaking: false,
     bundle: true,
 
     // this is only for legal comments (copyright,license), not code comments

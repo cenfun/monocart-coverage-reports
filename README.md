@@ -237,9 +237,9 @@ const mcr = MCR(coverageOptions);
 ## Collecting V8 Coverage Data
 - Before coverage collection: Enabling `sourcemap` for source code
     - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](./test/build/webpack.config-v8.js)
-    - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true`
+    - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true` and `treeshake: false`
+    - [esbuild](https://esbuild.github.io/api/): `sourcemap: true`, `treeShaking: false` and `minify: false`
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
-    - [esbuild](https://esbuild.github.io/api/): `sourcemap: true` and `minify: false`
 
 - Browser (Chromium-based Only)
     - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
