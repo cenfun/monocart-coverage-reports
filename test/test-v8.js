@@ -40,6 +40,8 @@ const coverageOptions = {
     assetsPath: '../assets',
     lcov: true,
 
+    // inline: true,
+
     outputDir: './docs/v8',
 
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 || sourcePath.search(/minify\//) !== -1,

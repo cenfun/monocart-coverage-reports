@@ -5,6 +5,7 @@
     - fixed sourceRoot issue
     - fixed debug message
     - fixed Maximum call stack issue for cleanCache
+    - updated formatter and locator
 
 * 2.7.7
     - fixed coverage undefined for `CDPClient`

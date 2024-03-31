@@ -8,8 +8,10 @@ import { microtask } from 'async-tick';
 
 import { createCodeViewer } from 'monocart-code-viewer';
 import {
-    format, Locator, MappingParser, generateMapping
+    format, MappingParser, generateMapping
 } from 'monocart-formatter';
+
+import { Locator } from 'monocart-locator';
 
 import IconLabel from './icon-label.vue';
 
