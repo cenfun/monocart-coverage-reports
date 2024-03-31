@@ -134,7 +134,7 @@ const generate = async () => {
 
     // request koa server
     const url = 'http://localhost:3080';
-    const [err, res] = await Util.request();
+    const [err, res] = await Util.request(url);
     if (err) {
         EC.logRed(`failed to request koa url: ${url}`);
         return;
