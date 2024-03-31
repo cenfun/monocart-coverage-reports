@@ -128,12 +128,15 @@ const generate = async () => {
 
     const cp = await startKoaProcess(port);
     if (!cp) {
+        EC.logRed('can not start koa process');
         return;
     }
 
     // request koa server
-    const [err, res] = await Util.request('http://localhost:3080');
+    const url = 'http://localhost:3080';
+    const [err, res] = await Util.request();
     if (err) {
+        EC.logRed(`failed to request koa url: ${url}`);
         return;
     }
     assert(res.data === 'Hello World');
