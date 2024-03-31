@@ -129,6 +129,7 @@ const generate = async () => {
     const cp = await startKoaProcess(port);
     if (!cp) {
         EC.logRed('can not start koa process');
+        process.exit(1);
         return;
     }
 
@@ -137,8 +138,12 @@ const generate = async () => {
     const [err, res] = await Util.request(url);
     if (err) {
         EC.logRed(`failed to request koa url: ${url}`);
+        console.log(err);
+        killSubProcess(cp);
+        process.exit(1);
         return;
     }
+
     assert(res.data === 'Hello World');
 
     // after webServer is debugging on ws://127.0.0.1:9229
