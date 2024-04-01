@@ -49,7 +49,7 @@ const startKoaProcess = (port) => {
             // wait for sub process ready
             setTimeout(() => {
                 resolve(cp);
-            }, 500);
+            }, 1000);
         });
     });
 };
