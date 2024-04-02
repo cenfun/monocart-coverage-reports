@@ -487,7 +487,7 @@ const coverageOptions = {
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
-Supports using `minimatch` pattern:
+Supports using [`minimatch`](https://github.com/isaacs/minimatch) pattern:
 ```js
 const coverageOptions = {
     entryFilter: "**/main.js",
@@ -556,7 +556,7 @@ const coverageOptions = {
     }
 };
 ```
-The filter also supports `minimatch` pattern:
+The filter also supports [`minimatch`](https://github.com/isaacs/minimatch) pattern:
 ```js
 const coverageOptions = {
     all: {
