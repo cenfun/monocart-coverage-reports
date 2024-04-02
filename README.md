@@ -487,23 +487,35 @@ const coverageOptions = {
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
-Or using `minimatch` pattern:
+Supports using `minimatch` pattern:
 ```js
 const coverageOptions = {
     entryFilter: "**/main.js",
     sourceFilter: "**/src/**"
 };
-// supports multiple patterns:
+```
+Multiple patterns:
+```js
 const coverageOptions = {
     entryFilter: {
+        '**/node_modules/**': false,
         '**/vendor.js': false,
-        '**/main.js': true
+        '**/src/**': true
     },
     sourceFilter: {
-        '**/src/**': true
+        '**/node_modules/**': false,
+        '**/**': true
     }
 };
+// The execution logic is similar to following:
+entryFilter: (entry) => {
+    if (entry_url_matched('**/node_modules/**')) { return false; }
+    if (entry_url_matched('**/vendor.js')) { return false; }
+    if (entry_url_matched('**/src/**')) { return true; }
+    return false; // else unmatched
+}
 ```
+
 
 ## Resolve `sourcePath` for the Source Files
 If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
