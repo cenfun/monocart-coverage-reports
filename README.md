@@ -816,13 +816,13 @@ await new CoverageReport(coverageOptions).generate();
 
 ## Common issues
 ### Unexpected coverage
-In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the build tools configuration. Let's take a look at an example:
+In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the configuration of build tools. Let's take a look at an example:
 ```js
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
 ```
-In the generated code, there is a position `p`, and we need to find out its corresponding position in the original code. However, there is no direct mapping for the position `p`. Instead, it has two adjacent upstream and downstream mappings `m1` and `m2`, so, the original position of `p` that we are looking for, might not be able to be precisely located. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact original position without direct mapping. 
+In the generated code, there is a position `p`, and we need to find out its corresponding position in the original code. However, there is no matched mapping for the position `p`. Instead, it has two adjacent upstream and downstream mappings `m1` and `m2`, so, the original position of `p` that we are looking for, might not be able to be precisely located. Especially, the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact original position without matched mapping. 
 - Further understanding of sourcemap, try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 
 How `MCR` Works:
