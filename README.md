@@ -696,7 +696,7 @@ Arguments:
   command                      command to execute
 
 Options:
-  -V, --version                output the version number
+  -v, --version                output the current version
   -c, --config <path>          custom config file path
   -l, --logging <logging>      off, error, info, debug
   -n, --name <name>            report name for title
@@ -822,7 +822,7 @@ const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
 ```
-In the generated code, there is a position `p`, and we need to find out its corresponding position in the original code. However, there is no matched mapping for the position `p`. Instead, it has two adjacent upstream and downstream mappings `m1` and `m2`, so, the original position of `p` that we are looking for, might not be able to be precisely located. Especially, the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact original position without matched mapping. 
+In the generated code, there is a position `p`, and we need to find out its corresponding position in the original code. Unfortunately, there is no matched mapping for the position `p`. Instead, it has two adjacent upstream and downstream mappings `m1` and `m2`, so, the original position of `p` that we are looking for, might not be able to be precisely located. Especially, the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact original position without matched mapping. 
 - Further understanding of sourcemap, try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 
 How `MCR` Works:
