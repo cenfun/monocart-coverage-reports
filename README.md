@@ -822,11 +822,12 @@ const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
 ```
-`m1` and `m2` are two consecutive mappings, `p` is the position we looking for. However, we can only get the position of the `m1` or `m2` if we don't fix it to `p`. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact position. You can try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
+In the generated code, there is a position `p`, and we need to find out its corresponding position in the original code. However, there is no direct mapping for the position `p`. Instead, it has two adjacent upstream and downstream mappings `m1` and `m2`, so, the original position of `p` that we are looking for, might not be able to be precisely located. Especially the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact original position without direct mapping. 
+- Further understanding of sourcemap, try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 
 How `MCR` Works:
-- 1, Trying to fix the middle original position with string comparison and [`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences). However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
-- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). However, there's a small issue, which is the V8 cannot provide effective branch coverage information for `AssignmentPattern`.
+- 1, Trying to fix the original position with string comparison and [`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences). However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
+- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). (There is a small issue is the V8 cannot provide effective branch coverage information for `AssignmentPattern`)
 
 
 ### Unparsable source
