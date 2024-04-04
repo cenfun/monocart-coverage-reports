@@ -255,9 +255,11 @@ const mcr = MCR(coverageOptions);
 ```js
 await Promise.all([
     page.coverage.startJSCoverage({
+        // reportAnonymousScripts: true,
         resetOnNavigation: false
     }),
     page.coverage.startCSSCoverage({
+        // Note, anonymous styles (without sourceURLs) are not supported, alternatively, you can use CDPClient
         resetOnNavigation: false
     })
 ]);
@@ -274,10 +276,12 @@ const coverageData = [... jsCoverage, ... cssCoverage];
 ```
 For more examples, see [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
 
+
 ### Collecting Raw V8 Coverage Data with Puppeteer
 ```js
 await Promise.all([
     page.coverage.startJSCoverage({
+        // reportAnonymousScripts: true,
         resetOnNavigation: false,
         // provide raw v8 coverage data
         includeRawScriptCoverage: true
