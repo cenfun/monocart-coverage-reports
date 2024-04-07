@@ -28,6 +28,8 @@
 * [Command Line](#command-line)
 * [Config File](#config-file)
 * [Merge Coverage Reports](#merge-coverage-reports)
+    - [Automatic Merging](#automatic-merging)
+    - [Manual Merging](#manual-merging)
 * [Common issues](#common-issues)
     - [Unexpected coverage](#unexpected-coverage)
     - [Unparsable source](#unparsable-source)
@@ -744,10 +746,16 @@ Loading config file by priority:
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:
-- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage. see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright) for automatic report merging.
+- When the code is executed in different environments, like Node.js Server Side and browser Client Side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
 - When the code is subjected to different kinds of testing. For example, unit tests with Jest might cover certain parts of the code, while end-to-end tests with Playwright might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
-- When tests are run on different machines or different shards, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
+- When tests are run on different machines or containers, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
 
+### Automatic Merging
+- `MCR` will automatically merge all the added coverage data before executing `generate()`. And it supports adding coverage data asynchronously across processes, see [Multiprocessing Support](#multiprocessing-support)
+- For Next.js, it can actually collect coverage data including both front-end and back-end before executing `generate()`, see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
+- Use Codecov, a popular online code coverage service, which supports automatic merging of reports. Please use report `codecov`, it will generate report file `codecov.json`. If multiple `codecov.json` files are generated, upload all these files, they will be automatically merged. see [Codecov](#codecov) and [merging reports](https://docs.codecov.com/docs/merging-reports)
+
+### Manual Merging
 If the reports cannot be merged automatically, then here is how to manually merge the reports.
 First, using the `raw` report to export the original coverage data to the specified directory.
 For example, we have `raw` coverage data from unit tests:
@@ -817,6 +825,7 @@ const coverageOptions = {
 };
 await new CoverageReport(coverageOptions).generate();
 ```
+
 
 ## Common issues
 ### Unexpected coverage
