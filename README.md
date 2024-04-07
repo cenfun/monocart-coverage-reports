@@ -758,7 +758,7 @@ The following usage scenarios may require merging coverage reports:
 ### Manual Merging
 If the reports cannot be merged automatically, then here is how to manually merge the reports.
 First, using the `raw` report to export the original coverage data to the specified directory.
-For example, we have `raw` coverage data from unit tests:
+- For example, we have `raw` coverage data from unit tests, which is output to `./coverage-reports/unit/raw`
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
@@ -774,8 +774,8 @@ const coverageOptions = {
     ]
 };
 ```
-We also have `raw` coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`.
-After all the tests are completed, generate a merged report with option `inputDir`:
+- We also have `raw` coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`
+- Create a script `merge-coverage.js` to generate a merged report with option `inputDir`. After all the tests are completed, running script `node path/to/merge-coverage.js`
 ```js
 // merge-coverage.js
 const fs = require('fs');
@@ -825,7 +825,18 @@ const coverageOptions = {
 };
 await new CoverageReport(coverageOptions).generate();
 ```
-
+- All the command scripts are probably like following:
+```json
+// package.json
+{
+    "scripts": {
+        "test:unit": "jest",
+        "test:e2e": "playwright test",
+        "test:merge-coverage": "node path/to/merge-coverage.js",
+        "test": "npm run test:unit && npm run test:e2e && npm run test:merge-coverage"
+    }
+}
+```
 
 ## Common issues
 ### Unexpected coverage
