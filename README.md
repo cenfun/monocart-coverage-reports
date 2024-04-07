@@ -827,13 +827,12 @@ await new CoverageReport(coverageOptions).generate();
 ```
 - All the command scripts are probably like following:
 ```json
-// package.json
 {
     "scripts": {
         "test:unit": "jest",
         "test:e2e": "playwright test",
-        "test:merge-coverage": "node path/to/merge-coverage.js",
-        "test": "npm run test:unit && npm run test:e2e && npm run test:merge-coverage"
+        "merge-coverage": "node path/to/merge-coverage.js",
+        "test": "npm run test:unit && npm run test:e2e && npm run merge-coverage"
     }
 }
 ```
