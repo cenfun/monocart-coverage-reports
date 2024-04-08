@@ -493,14 +493,14 @@ const coverageOptions = {
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
-Supports using [`minimatch`](https://github.com/isaacs/minimatch) pattern:
+Or using [`minimatch`](https://github.com/isaacs/minimatch) pattern:
 ```js
 const coverageOptions = {
     entryFilter: "**/main.js",
     sourceFilter: "**/src/**"
 };
 ```
-Multiple patterns:
+Supports multiple patterns:
 ```js
 const coverageOptions = {
     entryFilter: {
@@ -513,15 +513,22 @@ const coverageOptions = {
         '**/**': true
     }
 };
-// The execution logic is similar to following:
-entryFilter: (entry) => {
-    if (entry_url_matched('**/node_modules/**')) { return false; }
-    if (entry_url_matched('**/vendor.js')) { return false; }
-    if (entry_url_matched('**/src/**')) { return true; }
-    return false; // else unmatched
-}
 ```
-
+In fact, the `minimatch` patterns will be transformed to a function like:
+```js
+const coverageOptions = {
+    // '**/node_modules/**': false,
+    // '**/vendor.js': false,
+    // '**/src/**': true
+    entryFilter: (entry) => {
+        if (minimatch(entry.url, '**/node_modules/**')) { return false; }
+        if (minimatch(entry.url, '**/vendor.js')) { return false; }
+        if (minimatch(entry.url, '**/src/**')) { return true; }
+        return false; // else unmatched
+    }
+    // Note, the order of the patterns will impact the results
+};
+```
 
 ## Resolve `sourcePath` for the Source Files
 If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
