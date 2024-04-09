@@ -58,6 +58,10 @@
 
 ## Usage
 > It's recommended to use [Node.js 20+](https://nodejs.org/).
+- Install
+```sh
+npm install monocart-coverage-reports
+```
 - API
 ```js
 const MCR = require('monocart-coverage-reports');
@@ -85,16 +89,8 @@ mcr node my-app.js -r v8,console-details
 For more information, see [Command Line](#command-line)
 
 ## Options
-- Default Options: [lib/default/options.js](./lib/default/options.js)
-    - `reports` [Available Reports](#available-reports)
-    - `entryFilter` and `sourceFilter` [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
-    - `sourcePath` [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
-    - `all` [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
-    - `inputDir` [Merge Coverage Reports](#merge-coverage-reports)
-    - `logging` [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
-    - `onEnd` [onEnd Hook](#onend-hook)
-
-- Declaration: [lib/index.d.ts](./lib/index.d.ts)
+- Default options: [lib/default/options.js](./lib/default/options.js)
+- Options declaration see `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
 - [Config file](#config-file)
 
 ## Available Reports
