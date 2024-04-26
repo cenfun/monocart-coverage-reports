@@ -324,6 +324,8 @@ Possible solutions:
    - Taking coverage data and adding it to the report.
    - Example: 
    > node [./test/test-node-ins.js](./test/test-node-ins.js)
+   - vm Example (scriptOffset):
+   > node [./test/test-node-vm.js](./test/test-node-vm.js)
    
 - [CDP](https://chromedevtools.github.io/devtools-protocol/) API
     - Enabling [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started/).
