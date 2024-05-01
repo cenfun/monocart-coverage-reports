@@ -22,28 +22,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test-node-14:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 14.x
-          cache: ''
-      # node 14 is npm 6, install npm 9 for workspaces
-      # remove npm and npx cmd first
-      - run: npm i npm@^9 -g
-      - run: npm i starfall-cli -g
-      # ignore scripts for node 14
-      - run: npm i --ignore-scripts
-      - run: npx playwright install --with-deps
-      - run: npm run build
-      - run: npm run test
-        env:
-          FORCE_COLOR: true
 
   test-node-18:
     runs-on: ubuntu-latest

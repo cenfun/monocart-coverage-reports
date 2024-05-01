@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.7.10
+  - fixed undefined error when reading mappings
+
 - 2.7.9
   - fixed UI assets path
 
