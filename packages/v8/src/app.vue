@@ -13,8 +13,8 @@ import store from './core/store.js';
 
 import Util from './utils/util.js';
 
-import Flyover from './components/flyover.vue';
-import Report from './components/report.vue';
+import PageFlyover from './components/page-flyover.vue';
+import PageReport from './components/page-report.vue';
 import IconLabel from './components/icon-label.vue';
 
 import faviconIcon from './images/icons/monocart.svg';
@@ -1137,9 +1137,9 @@ window.addEventListener('unhandledrejection', function(e) {
 
     <div class="mcr-coverage-grid vui-flex-auto" />
 
-    <Flyover>
-      <Report @jump="showFlyover" />
-    </Flyover>
+    <PageFlyover>
+      <PageReport @jump="showFlyover" />
+    </PageFlyover>
 
     <VuiTooltip
       :class="tooltip.classMap"
