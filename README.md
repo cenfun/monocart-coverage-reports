@@ -909,8 +909,9 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 ## Integration Examples
 
 ### [Playwright](https://github.com/microsoft/playwright)
-- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - A Example for Playwright Coverage Reports
-- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - A Playwright custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright Coverage Reports
+- [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD Coverage Reports
+- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
 - Coverage for component testing:
     - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
     - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
@@ -920,28 +921,28 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
     - [nextjs-with-playwright-istanbul](https://github.com/cenfun/nextjs-with-playwright-istanbul)
 
 ### [Jest](https://github.com/jestjs/jest/)
-- [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - A Jest custom reporter for coverage reports
-- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - A Jest Puppeteer Coverage Example
+- [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - Jest custom reporter for coverage reports
+- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
 - Example for Jest (unit) + Puppeteer (e2e) + Codecov: [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js)
 
 ### [Vitest](https://github.com/vitest-dev/vitest)
-- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - A Vitest custom provider module for coverage reports
+- [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Vitest custom provider module for coverage reports
 
 ### [Cypress](https://github.com/cypress-io/cypress)
-- [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - A Cypress plugin for coverage reports
+- [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - Cypress plugin for coverage reports
 
 ### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
-- CodeceptJS has integrated MCR from version [3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15)
-- [codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage) - A CodeceptJS plugin for coverage reports
+- CodeceptJS has integrated `MCR` since [v3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15)
+- [codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage) - CodeceptJS plugin for coverage reports
 
 ### [WebdriverIO](https://github.com/webdriverio/webdriverio)
-- [wdio-monocart-service](https://github.com/cenfun/wdio-monocart-service) - A WebdriverIO service for coverage reports
+- [wdio-monocart-service](https://github.com/cenfun/wdio-monocart-service) - WebdriverIO service for coverage reports
 
 ### [Storybook Test Runner](https://github.com/storybookjs/test-runner)
 - [storybook-monocart-coverage](https://github.com/cenfun/storybook-monocart-coverage) - Storybook V8 Coverage Example
 
 ### [TestCafe](https://github.com/DevExpress/testcafe)
-- [testcafe-reporter-coverage](https://github.com/cenfun/testcafe-reporter-coverage) - A TestCafe custom reporter for coverage reports
+- [testcafe-reporter-coverage](https://github.com/cenfun/testcafe-reporter-coverage) - TestCafe custom reporter for coverage reports
 
 ### [Selenium Webdriver](https://github.com/seleniumhq/selenium)
 - [selenium-webdriver-coverage](https://github.com/cenfun/selenium-webdriver-coverage) - Selenium Webdriver V8 Coverage Example
