@@ -37,10 +37,11 @@
 * [Integration with Any Testing Framework](#integration-with-any-testing-framework)
 * [Integration Examples](#integration-examples)
     - [Playwright](#playwright)
+    - [CodeceptJS](#codeceptjs)
     - [Jest](#jest)
     - [Vitest](#vitest)
+    - [Puppeteer](#puppeteer)
     - [Cypress](#cypress)
-    - [CodeceptJS](#codeceptjs)
     - [WebdriverIO](#webdriverio)
     - [Storybook Test Runner](#storybook-test-runner)
     - [TestCafe](#testcafe)
@@ -751,19 +752,21 @@ Loading config file by priority:
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:
-- When the code is executed in different environments, like Node.js server side and browser client side (Next.js for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
-- When the code is subjected to different kinds of testing. For example, unit tests with Jest might cover certain parts of the code, while end-to-end tests with Playwright might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
+- When the code is executed in different environments, like Node.js `server side` and browser `client side` (`Next.js` for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
+- When the code is subjected to different kinds of testing. For example, `unit tests` with `Jest` might cover certain parts of the code, while `end-to-end tests` with `Playwright` might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
 - When tests are run on different machines or containers, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
 
 ### Automatic Merging
-- `MCR` will automatically merge all the added coverage data when executing `generate()`. And it supports adding coverage data asynchronously across processes, see [Multiprocessing Support](#multiprocessing-support)
-- For Next.js, it can actually add coverage data including both server side and client side before executing `generate()`, see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
-- Use Codecov, a popular online code coverage service, which supports automatic merging of reports. Please use report `codecov`, it will generate report file `codecov.json`. If multiple `codecov.json` files are generated, upload all these files, they will be automatically merged. see [Codecov](#codecov) and [merging reports](https://docs.codecov.com/docs/merging-reports)
+- The `MCR` will automatically merge all the added coverage data when executing `generate()`. And it supports adding coverage data asynchronously across processes, see [Multiprocessing Support](#multiprocessing-support)
+- For `Next.js`, it can actually add coverage data including both server side and client side before executing `generate()`, see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
+- Using `Codecov`, a popular online code coverage service, which supports automatic merging of reports. Please use report `codecov`, it will generate report file `codecov.json`. If multiple `codecov.json` files are generated, upload all these files, they will be automatically merged. see [Codecov](#codecov) and [merging reports](https://docs.codecov.com/docs/merging-reports)
 
 ### Manual Merging
-If the reports cannot be merged automatically, then here is how to manually merge the reports.
+If the reports cannot be merged automatically, then here is how to manually merge the reports.  
 First, using the `raw` report to export the original coverage data to the specified directory.
-- For example, we have `raw` coverage data from unit tests, which is output to `./coverage-reports/unit/raw`
+- For example, we have `raw` coverage data from `unit test`, which is output to `./coverage-reports/unit/raw`. Unit test examples:
+    - `Jest` + [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage)
+    - `Vitest` + [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage)
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
@@ -779,8 +782,13 @@ const coverageOptions = {
     ]
 };
 ```
-- We also have `raw` coverage data from e2e tests, which is output to `./coverage-reports/e2e/raw`
-- Create a script `merge-coverage.js` to generate a merged report with option `inputDir`. After all the tests are completed, running script `node path/to/merge-coverage.js`
+
+- We also have `raw` coverage data from `e2e test`, which is output to `./coverage-reports/e2e/raw`. E2E test examples:
+    - `Playwright` + [monocart-reporter](https://github.com/cenfun/monocart-reporter) with coverage API
+    - `Playwright` + `MCR`, see [playwright-coverage](https://github.com/cenfun/playwright-coverage)
+    - see more [Integration Examples](#integration-examples)
+
+- Then create a script `merge-coverage.js` to generate a merged report with option `inputDir`.
 ```js
 // merge-coverage.js
 const fs = require('fs');
@@ -830,7 +838,7 @@ const coverageOptions = {
 };
 await new CoverageReport(coverageOptions).generate();
 ```
-- All the command scripts are probably like following:
+- Running script `node path/to/merge-coverage.js` after all the tests are completed. All the command scripts are probably like following:
 ```json
 {
     "scripts": {
@@ -909,43 +917,46 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 ## Integration Examples
 
 ### [Playwright](https://github.com/microsoft/playwright)
-- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright Coverage Reports
-- [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD Coverage Reports
-- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code Coverage Report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
-- Coverage for component testing:
+- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright coverage reports
+- [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD coverage reports
+- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code coverage report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+- Coverage for component testing with `monocart-reporter`:
     - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
     - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
     - [playwright-ct-svelte](https://github.com/cenfun/playwright-ct-svelte)
 - Coverage for Next.js, both server side and client side:
     - [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
     - [nextjs-with-playwright-istanbul](https://github.com/cenfun/nextjs-with-playwright-istanbul)
+- see [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
+
+### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
+- CodeceptJS is a [BDD](https://codecept.io/bdd/) + [AI](https://codecept.io/ai/) testing framework for e2e testing, it has integrated `MCR` since [v3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15), see [plugins/coverage](https://codecept.io/plugins/#coverage). There's no need to use ~~[codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage)~~ anymore.
 
 ### [Jest](https://github.com/jestjs/jest/)
 - [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - Jest custom reporter for coverage reports
-- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
-- Example for Jest (unit) + Puppeteer (e2e) + Codecov: [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js)
 
 ### [Vitest](https://github.com/vitest-dev/vitest)
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Vitest custom provider module for coverage reports
 
+### [Puppeteer](https://github.com/puppeteer/puppeteer/)
+- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
+- [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) - Example for Jest (unit) + Puppeteer (e2e) + Codecov
+- see [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
+
 ### [Cypress](https://github.com/cypress-io/cypress)
 - [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - Cypress plugin for coverage reports
-
-### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
-- CodeceptJS has integrated `MCR` since [v3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15)
-- [codeceptjs-monocart-coverage](https://github.com/cenfun/codeceptjs-monocart-coverage) - CodeceptJS plugin for coverage reports
 
 ### [WebdriverIO](https://github.com/webdriverio/webdriverio)
 - [wdio-monocart-service](https://github.com/cenfun/wdio-monocart-service) - WebdriverIO service for coverage reports
 
 ### [Storybook Test Runner](https://github.com/storybookjs/test-runner)
-- [storybook-monocart-coverage](https://github.com/cenfun/storybook-monocart-coverage) - Storybook V8 Coverage Example
+- [storybook-monocart-coverage](https://github.com/cenfun/storybook-monocart-coverage) - Example for Storybook V8 coverage reports
 
 ### [TestCafe](https://github.com/DevExpress/testcafe)
 - [testcafe-reporter-coverage](https://github.com/cenfun/testcafe-reporter-coverage) - TestCafe custom reporter for coverage reports
 
 ### [Selenium Webdriver](https://github.com/seleniumhq/selenium)
-- [selenium-webdriver-coverage](https://github.com/cenfun/selenium-webdriver-coverage) - Selenium Webdriver V8 Coverage Example
+- [selenium-webdriver-coverage](https://github.com/cenfun/selenium-webdriver-coverage) - Example for Selenium Webdriver V8 coverage reports
 
 ### [Mocha](https://github.com/mochajs/mocha)
 ```sh
