@@ -11,9 +11,10 @@ const beforeV8 = (item, Util) => {
     // using global coverage data
     const dataFile = 'coverage-data.js';
     const jsDataPath = path.resolve(__dirname, `../docs/v8/${dataFile}`);
+    // const jsDataPath = path.resolve(__dirname, `../docs/minify/${dataFile}`);
 
     // typescript repo huge data example 8M
-    // const jsDataPath = path.resolve(__dirname, `../../github/TypeScript/coverage/${dataFile}`);
+    // const jsDataPath = path.resolve(__dirname, `../../../github/TypeScript/coverage-mcr/${dataFile}`);
 
     const jsPath = path.resolve(item.buildPath, dataFile);
     const distDir = path.dirname(jsPath);

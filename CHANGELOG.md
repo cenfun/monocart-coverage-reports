@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.7.11
+  - fixed type style for UI
+
 - 2.7.10
   - fixed undefined error when reading mappings
 

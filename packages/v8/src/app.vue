@@ -777,16 +777,16 @@ const initGrid = () => {
         type: (v, rowItem, columnItem) => {
 
             if (rowItem.debug) {
-                return `<span class="mcr-debug" tooltip="debug file">${v}</span>`;
+                return `<span class="mcr-debug" tooltip="entry file with sourcemap for debugging">${v}</span>`;
             }
 
             if (rowItem.empty) {
-                return `<span class="mcr-empty" tooltip="empty coverage">${v}</span>`;
+                return `<span class="mcr-empty" tooltip="coverage is empty">${v}</span>`;
             }
 
             const distFile = rowItem.distFile;
             if (distFile) {
-                return `<span class="mcr-source" tooltip="source from ${distFile}">${v}</span>`;
+                return `<span class="mcr-source" tooltip="source file from ${distFile}">${v}</span>`;
             }
 
             return v;
@@ -1401,19 +1401,11 @@ icon
 }
 
 .mcr-empty {
-    padding-left: 13px;
-    background-image: url("./images/empty.svg");
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 11px 11px;
+    color: #969696;
 }
 
 .mcr-source {
-    padding-left: 15px;
-    background-image: url("./images/source.svg");
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 16px 16px;
+    color: #007800;
 }
 
 .mcr-url-plus {
