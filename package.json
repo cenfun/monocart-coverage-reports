@@ -92,9 +92,9 @@
         "eslint-plugin-vue": "^9.25.0",
         "minimatch": "^9.0.4",
         "stylelint": "^16.5.0",
-        "stylelint-config-plus": "^1.1.0",
+        "stylelint-config-plus": "^1.1.1",
         "supports-color": "^9.4.0",
-        "tsx": "^4.9.2",
+        "tsx": "^4.9.3",
         "ws": "^8.17.0"
     }
 }
