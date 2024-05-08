@@ -94,20 +94,20 @@ mcr node my-app.js -r v8,console-details
 ## Options
 - 默认选项: [lib/default/options.js](./lib/default/options.js)
 - 选项的类型描述，见 `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
-- [Config file](#config-file)
+- [配置文件](#config-file)
 
 ## Available Reports
 
 > 内置V8报告(仅V8格式数据支持):
 
 - `v8`
-    - Features: 
-        - A Brand-New V8 Coverage Report User Interface
-        - Support for Native Byte Statistics
-        - Coverage for Any Runtime Code
-        - CSS Coverage Support
-        - Better Support for Sourcemap Conversion
-    - Demos: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [more](https://cenfun.github.io/monocart-coverage-reports/)
+    - 推荐使用: 
+        - 全新的原生V8覆盖率报告界面，更好的用户体验
+        - 支持原生的Bytes覆盖率指标
+        - 支持任何运行时代码的覆盖率（压缩后的）
+        - 支持CSS代码覆盖率（用于分析CSS的冗余代码）
+        - 对Sourcemap转换有更好的支持
+    - 预览: [V8](https://cenfun.github.io/monocart-coverage-reports/v8) and [more](https://cenfun.github.io/monocart-coverage-reports/)
 
 ![](./assets/v8.gif)
 
