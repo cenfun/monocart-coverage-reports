@@ -64,7 +64,8 @@
         "test"
     ],
     "files": [
-        "lib"
+        "lib",
+        "README.zh-Hans.md"
     ],
     "license": "MIT",
     "repository": {
