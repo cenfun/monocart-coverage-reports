@@ -205,6 +205,8 @@ const mcr = MCR(coverageOptions);
 ```
 
 ## Compare Reports
+> If the V8 data format is used for Istanbul reports, it will be automatically converted from V8 to Istanbul.
+
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
 | Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |

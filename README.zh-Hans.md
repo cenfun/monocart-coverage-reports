@@ -139,18 +139,18 @@ mcr node my-app.js -r v8,console-details
 - `codecov`
     - 专属支持[Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format)的报告, see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 
-- `console-summary` shows coverage summary in the console
+- `console-summary` 在控制台显示覆盖率概要
 
 ![](./assets/console-summary.png)
 
-- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
+- `console-details` 在控制台显示每个文件的覆盖率概要。如果是Github actions，可以使用环境变量`FORCE_COLOR: true`来强制开启颜色支持
 
 ![](./assets/console-details.png)
 
-- `raw` only keep all original data, which can be used for other reports input with `inputDir`
-    - see [Merge Coverage Reports](#merge-coverage-reports)
+- `raw` 只是保存原始覆盖率数据, 用于使用`inputDir`参数来导入多个原始数据进行合并报告
+    - 参见 [合并覆盖率报告](#merge-coverage-reports)
 
-- Custom Reporter
+- 自定义报告
     ```js
     {
         reports: [
@@ -169,11 +169,12 @@ mcr node my-app.js -r v8,console-details
     }
     ```
     - Istanbul自定义报告
-    > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
+    > 例子: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
     - V8自定义报告
-    > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
+    > 例子: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
 ### Multiple Reports:
+如何配置多个报告
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = {
@@ -205,35 +206,37 @@ const mcr = MCR(coverageOptions);
 ```
 
 ## Compare Reports
+> 如果是V8数据格式使用Istanbul的报告，将自动从V8转换到Istanbul
+
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
 | 数据格式 | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |
 | 输出报告 | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
-| - Bytes | ❌ | ✅ | ❌ |
-| - Statements | ✅ | ✅ | ✅ |
-| - Branches | ✅ | ✅ | ✅ |
-| - Functions | ✅ | ✅ | ✅ |
-| - Lines | ✅ | ✅ | ✅ |
-| - Execution counts | ✅ | ✅ | ✅ |
-| CSS coverage | ❌ | ✅ | ✅ |
-| Minified code | ❌ | ✅ | ❌ |
+| - Bytes 字节覆盖率 | ❌ | ✅ | ❌ |
+| - Statements 语句覆盖率 | ✅ | ✅ | ✅ |
+| - Branches 分支覆盖率 | ✅ | ✅ | ✅ |
+| - Functions 函数覆盖率 | ✅ | ✅ | ✅ |
+| - Lines 行覆盖率 | ✅ | ✅ | ✅ |
+| - Execution counts 函数执行数 | ✅ | ✅ | ✅ |
+| CSS 覆盖率 | ❌ | ✅ | ✅ |
+| 压缩过的代码 | ❌ | ✅ | ❌ |
 
 ## Collecting Istanbul Coverage Data
 - 在收集Istanbul覆盖率数据之前，需要编译源代码来安装Istanbul计数器 
-    - webpack with babel loader: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), see example: [webpack.config-istanbul.js](./test/build/webpack.config-istanbul.js)
-    - CLI: [nyc instrument](https://github.com/istanbuljs/nyc/blob/master/docs/instrument.md) or API: [istanbul-lib-instrument](https://github.com/istanbuljs/istanbuljs/blob/main/packages/istanbul-lib-instrument/api.md)
+    - webpack babel-loader: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), 参见例子: [webpack.config-istanbul.js](./test/build/webpack.config-istanbul.js)
+    - 官方CLI: [nyc instrument](https://github.com/istanbuljs/nyc/blob/master/docs/instrument.md) 或API: [istanbul-lib-instrument](https://github.com/istanbuljs/istanbuljs/blob/main/packages/istanbul-lib-instrument/api.md)
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
     - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
     - swc: [swc-plugin-coverage-instrument](https://github.com/kwonoj/swc-plugin-coverage-instrument)
 
 - 从浏览器
-    - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](./test/test-istanbul.js)
+    - Istanbul的覆盖率数据会保存到全局的`window.__coverage__`，直接读取即可, 参见例子: [test-istanbul.js](./test/test-istanbul.js)
 
 - 从Node.js
-    - Collecting coverage data from `global.__coverage__`
+    - 同理对于Node.js会保存到全局的`global.__coverage__`
 
 - 使用CDP
-    - `getIstanbulCoverage()` see [`CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
+    - `getIstanbulCoverage()` 参见[`CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
 ## Collecting V8 Coverage Data
 - 在收集V8覆盖率数据之前，需要开启构建工具的`sourcemap`支持，并且不要压缩代码
@@ -243,14 +246,14 @@ const mcr = MCR(coverageOptions);
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
 
 - 浏览器 (仅支持基于Chromium的浏览器)
-    - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
-    - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
+    - [使用Playwright](#collecting-v8-coverage-data-with-playwright)
+    - [使用Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 
 - 从Node.js
-    - [Collecting V8 Coverage Data from Node.js](#collecting-v8-coverage-data-from-nodejs)
+    - [从Node.js收集V8覆盖率数据](#collecting-v8-coverage-data-from-nodejs)
 
 - 使用CDP
-    - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
+    - [使用`CDPClient` API收集V8覆盖率数据](#collecting-v8-coverage-data-with-cdpclient-api)
 
 ### Collecting V8 Coverage Data with Playwright
 使用Playwright的覆盖接口收集覆盖率数据
@@ -347,7 +350,7 @@ const coverageData = [... jsCoverage.map((it) => {
     - 如果是子进程，可参见 [命令行](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
-- `CDPClient`为内置接口类，用来处理覆盖率数据，可用API见下面
+- `CDPClient`为`MCR`提供的内置接口类，用来更便捷的处理覆盖率相关数据，所有的API如下
 ```js
 // 开始和停止并收集JS的覆盖率数据
 startJSCoverage: () => Promise<void>;
