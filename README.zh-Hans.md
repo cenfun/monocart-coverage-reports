@@ -6,38 +6,38 @@
 ![](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
 ![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/static.yml)
 
-🌐 English | [简体中文](README.zh-Hans.md)
+🌐 [English](README.md) | 简体中文
 
-> A JavaScript code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
+> JS代码覆盖率工具，用来生成原生的[V8](https://v8.dev/blog/javascript-code-coverage)或者[Istanbul](https://istanbul.js.org/)代码覆盖率报告
 
-* [Usage](#usage)
-* [Options](#options)
-* [Available Reports](#available-reports)
-* [Compare Reports](#compare-reports)
-* [Collecting Istanbul Coverage Data](#collecting-istanbul-coverage-data)
-* [Collecting V8 Coverage Data](#collecting-v8-coverage-data)
-    - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
-    - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
-    - [Collecting V8 Coverage Data from Node.js](#collecting-v8-coverage-data-from-nodejs)
-    - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
-    - [V8 Coverage Data API](#v8-coverage-data-api)
-* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
-* [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
-* [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
-* [onEnd Hook](#onend-hook)
-* [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
-* [Multiprocessing Support](#multiprocessing-support)
-* [Command Line](#command-line)
-* [Config File](#config-file)
-* [Merge Coverage Reports](#merge-coverage-reports)
-    - [Automatic Merging](#automatic-merging)
-    - [Manual Merging](#manual-merging)
-* [Common issues](#common-issues)
+* [用法](#usage)
+* [选项配置](#options)
+* [所有支持的报告类型](#available-reports)
+* [比较两种报告](#compare-reports)
+* [如何收集Istanbul覆盖率数据](#collecting-istanbul-coverage-data)
+* [如何收集V8覆盖率数据](#collecting-v8-coverage-data)
+    - [用Playwright](#collecting-v8-coverage-data-with-playwright)
+    - [用Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
+    - [从Node.js](#collecting-v8-coverage-data-from-nodejs)
+    - [使用`CDPClient`API](#collecting-v8-coverage-data-with-cdpclient-api)
+    - [参考V8覆盖率的API](#v8-coverage-data-api)
+* [使用 `entryFilter` 和 `sourceFilter` 来过滤V8覆盖率数据](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
+* [使用 `sourcePath` 修改源文件路径](#resolve-sourcepath-for-the-source-files)
+* [为未测试的文件添加空的覆盖率报告](#adding-empty-coverage-for-untested-files)
+* [onEnd回调函数](#onend-hook)
+* [如何忽略未覆盖的代码](#ignoring-uncovered-codes)
+* [多进程支持](#multiprocessing-support)
+* [如何使用CLI命令行](#command-line)
+* [如何加载配置文件](#config-file)
+* [如何合并覆盖率报告](#merge-coverage-reports)
+    - [自动合并](#automatic-merging)
+    - [手动合并](#manual-merging)
+* [常见问题](#common-issues)
     - [Unexpected coverage](#unexpected-coverage)
     - [Unparsable source](#unparsable-source)
-* [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
-* [Integration with Any Testing Framework](#integration-with-any-testing-framework)
-* [Integration Examples](#integration-examples)
+* [如何调试覆盖率数据和查看sourcemap](#debug-for-coverage-and-sourcemap)
+* [如何跟其他框架集成](#integration-with-any-testing-framework)
+* [集成的例子](#integration-examples)
     - [Playwright](#playwright)
     - [CodeceptJS](#codeceptjs)
     - [Jest](#jest)
@@ -56,12 +56,12 @@
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
 * [Contributing](#contributing)
-* [Changelog](CHANGELOG.md)
-* [Thanks](#thanks)
+* [更新日志](CHANGELOG.md)
+* [感谢](#thanks)
 
 ## Usage
-> It's recommended to use [Node.js 20+](https://nodejs.org/).
-- Install
+> 推荐使用 [Node.js 20+](https://nodejs.org/).
+- 安装
 ```sh
 npm install monocart-coverage-reports
 ```
@@ -77,28 +77,28 @@ const mcr = MCR({
 await mcr.add(coverageData);
 await mcr.generate();
 ```
-Using `import` and load options from [config file](#config-file)
+也可以使用ESM的 `import` 然后加载[配置文件](#config-file)
 ```js
 import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
 await mcr.loadConfig();
 ```
-For more information, see [Multiprocessing Support](#multiprocessing-support)
+参见 [多进程支持](#multiprocessing-support)
 
 - CLI
 ```sh
 mcr node my-app.js -r v8,console-details
 ```
-For more information, see [Command Line](#command-line)
+参见 [命令行](#command-line)
 
 ## Options
-- Default options: [lib/default/options.js](./lib/default/options.js)
-- Options declaration see `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
+- 默认选项: [lib/default/options.js](./lib/default/options.js)
+- 选项的类型描述，见 `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
 - [Config file](#config-file)
 
 ## Available Reports
 
-> V8 build-in reports (V8 data only):
+> 内置V8报告(仅V8格式数据支持):
 
 - `v8`
     - Features: 
@@ -114,7 +114,7 @@ For more information, see [Command Line](#command-line)
 - `v8-json`
     - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 
-> Istanbul build-in reports (both V8 and Istanbul data):
+> 内置Istanbul报告 (V8和Istanbul格式数据都支持):
 
 - `clover`
 - `cobertura`
@@ -134,10 +134,10 @@ For more information, see [Command Line](#command-line)
 - `text-lcov`
 - `text-summary`
 
-> Other build-in reports (both V8 and Istanbul data):
+> 其他内置报告 (V8和Istanbul格式数据都支持):
 
 - `codecov`
-    - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
+    - 专属支持[Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format)的报告, see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 
 - `console-summary` shows coverage summary in the console
 
@@ -168,9 +168,9 @@ For more information, see [Command Line](#command-line)
         ]
     }
     ```
-    - Istanbul custom reporter
+    - Istanbul自定义报告
     > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
-    - V8 custom reporter
+    - V8自定义报告
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
 ### Multiple Reports:
@@ -207,8 +207,8 @@ const mcr = MCR(coverageOptions);
 ## Compare Reports
 | | Istanbul | V8 | V8 to Istanbul |
 | :--------------| :------ | :------ | :----------------------  |
-| Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |
-| Output | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
+| 数据格式 | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](#v8-coverage-data-format) (Array) | [V8](#v8-coverage-data-format) (Array) |
+| 输出报告 | [Istanbul reports](#available-reports) | [V8 reports](#available-reports)  | [Istanbul reports](#available-reports) |
 | - Bytes | ❌ | ✅ | ❌ |
 | - Statements | ✅ | ✅ | ✅ |
 | - Branches | ✅ | ✅ | ✅ |
@@ -219,40 +219,41 @@ const mcr = MCR(coverageOptions);
 | Minified code | ❌ | ✅ | ❌ |
 
 ## Collecting Istanbul Coverage Data
-- Before coverage collection: Instrumenting source code with Istanbul
+- 在收集Istanbul覆盖率数据之前，需要编译源代码来安装Istanbul计数器 
     - webpack with babel loader: [babel-plugin-istanbul](https://github.com/istanbuljs/babel-plugin-istanbul), see example: [webpack.config-istanbul.js](./test/build/webpack.config-istanbul.js)
     - CLI: [nyc instrument](https://github.com/istanbuljs/nyc/blob/master/docs/instrument.md) or API: [istanbul-lib-instrument](https://github.com/istanbuljs/istanbuljs/blob/main/packages/istanbul-lib-instrument/api.md)
     - vite: [vite-plugin-istanbul](https://github.com/ifaxity/vite-plugin-istanbul)
     - rollup: [rollup-plugin-istanbul](https://github.com/artberri/rollup-plugin-istanbul)
     - swc: [swc-plugin-coverage-instrument](https://github.com/kwonoj/swc-plugin-coverage-instrument)
 
-- Browser
+- 从浏览器
     - Collecting coverage data from `window.__coverage__`, example: [test-istanbul.js](./test/test-istanbul.js)
 
-- Node.js
+- 从Node.js
     - Collecting coverage data from `global.__coverage__`
 
-- CDP
+- 使用CDP
     - `getIstanbulCoverage()` see [`CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
 ## Collecting V8 Coverage Data
-- Before coverage collection: Enabling `sourcemap` for source code
+- 在收集V8覆盖率数据之前，需要开启构建工具的`sourcemap`支持，并且不要压缩代码
     - [webpack](https://webpack.js.org/configuration/): `devtool: source-map` and `mode: development`, example [webpack.config-v8.js](./test/build/webpack.config-v8.js)
     - [rollup](https://rollupjs.org/configuration-options/): `sourcemap: true` and `treeshake: false`
     - [esbuild](https://esbuild.github.io/api/): `sourcemap: true`, `treeShaking: false` and `minify: false`
     - [vite](https://vitejs.dev/config/build-options.html): `sourcemap: true` and `minify: false`
 
-- Browser (Chromium-based Only)
+- 浏览器 (仅支持基于Chromium的浏览器)
     - [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
     - [Collecting Raw V8 Coverage Data with Puppeteer](#collecting-raw-v8-coverage-data-with-puppeteer)
 
-- Node.js
+- 从Node.js
     - [Collecting V8 Coverage Data from Node.js](#collecting-v8-coverage-data-from-nodejs)
 
-- CDP
+- 使用CDP
     - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
 
 ### Collecting V8 Coverage Data with Playwright
+使用Playwright的覆盖接口收集覆盖率数据
 ```js
 await Promise.all([
     page.coverage.startJSCoverage({
@@ -275,10 +276,11 @@ const [jsCoverage, cssCoverage] = await Promise.all([
 const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
-For more examples, see [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
+参见例子 [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
 
 
 ### Collecting Raw V8 Coverage Data with Puppeteer
+使用Puppeteer的覆盖接口收集覆盖率数据，注意Puppeteer默认不会提供原生V8的覆盖率数据，需要设置`includeRawScriptCoverage`
 ```js
 await Promise.all([
     page.coverage.startJSCoverage({
@@ -307,65 +309,66 @@ const coverageData = [... jsCoverage.map((it) => {
     };
 }), ... cssCoverage];
 ```
-Example: [./test/test-puppeteer.js](./test/test-puppeteer.js)
+参见: [./test/test-puppeteer.js](./test/test-puppeteer.js)
 
 ### Collecting V8 Coverage Data from Node.js
-Possible solutions:
+有多种方法可以从Node.js收集V8覆盖率数据:
 - [NODE_V8_COVERAGE](https://nodejs.org/docs/latest/api/cli.html#node_v8_coveragedir)=`dir`
-    - Sets Node.js env `NODE_V8_COVERAGE`=`dir` before the program running, the coverage data will be saved to the `dir` after the program exits gracefully.
-    - Read the JSON file(s) from the `dir` and generate coverage report.
-    - Example:
+    - 使用Node.js环境变量`NODE_V8_COVERAGE`=`dir`来启动程序, 然后在进程正常结束之后，覆盖率数据将自动保存到指定的`dir`目录.
+    - 从`dir`目录读取所有的JSON文件，来生成覆盖率报告
+    - 参见例子:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-env` node [./test/test-node-env.js](./test/test-node-env.js) && node [./test/generate-report.js](./test/generate-report.js)
 
 - [V8](https://nodejs.org/docs/latest/api/v8.html#v8takecoverage) API + NODE_V8_COVERAGE
-    - Writing the coverage started by NODE_V8_COVERAGE to disk on demand with `v8.takeCoverage()`, it does not require waiting until the program exits gracefully.
-    - Example:
+    - 如果进程不能正常结束，比如被强制关闭，或者压根就不结束，比如启动了一个服务类的，那么需要手动写入覆盖率数据，这里需要调用接口`v8.takeCoverage()`
+    - 参见例子:
     > cross-env NODE_V8_COVERAGE=`.temp/v8-coverage-api` node [./test/test-node-api.js](./test/test-node-api.js)
 
 - [Inspector](https://nodejs.org/docs/latest/api/inspector.html) API
-   - Connecting to the V8 inspector and enable V8 coverage.
-   - Taking coverage data and adding it to the report.
-   - Example: 
+   - 首先连接到Node.js的V8 inspector
+   - 然后使用inspector的覆盖相关API来开启和收集覆盖率数据
+   - 参见例子: 
    > node [./test/test-node-ins.js](./test/test-node-ins.js)
-   - vm Example (scriptOffset):
+   - vm的例子 (注意这里需要使用`scriptOffset`，因为vm里一般都会加一层包裹代码，需要这个偏移位置来修正覆盖率数据块的位置):
    > node [./test/test-node-vm.js](./test/test-node-vm.js)
    
 - [CDP](https://chromedevtools.github.io/devtools-protocol/) API
-    - Enabling [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started/).
-    - Collecting coverage data with CDP API.
-    - Example: 
+    - 开启[Node调试](https://nodejs.org/en/guides/debugging-getting-started/)
+    - 使用CDP的覆盖率接口开启和收集覆盖率数据
+    - 参见例子: 
     > node --inspect=9229 [./test/test-node-cdp.js](./test/test-node-cdp.js)
 
 - [Node Debugging](https://nodejs.org/en/guides/debugging-getting-started) + CDP + NODE_V8_COVERAGE + V8 API
-    - When the program starts a server, it will not exit on its own, thus requiring a manual invocation of the `v8.takeCoverage()` interface to manually collect coverage data. Remote invocation of the `v8.takeCoverage()` interface can be accomplished through the `Runtime.evaluate` of the CDP.
-    - Example for [koa](https://github.com/koajs/koa) web server:
+    - 如果启动了一个Node服务，可以手动调用`v8.takeCoverage()`接口来保存覆盖率数据，开启Node调试就可以远程通过CDP连接的`Runtime.evaluate`，来调用这个接口.
+    - 参见[koa](https://github.com/koajs/koa)的例子:
     > node [./test/test-node-koa.js](./test/test-node-koa.js)
 
 - [Child Process](https://nodejs.org/docs/latest/api/child_process.html) + NODE_V8_COVERAGE
-    - see [Command Line](#command-line)
+    - 如果是子进程，可参见 [命令行](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
-- `CDPClient` available APIs
+- `CDPClient`为内置接口类，用来处理覆盖率数据，可用API见下面
 ```js
+// 开始和停止并收集JS的覆盖率数据
 startJSCoverage: () => Promise<void>;
 stopJSCoverage: () => Promise<V8CoverageEntry[]>;
 
+// 开始和停止并收集CSS的覆盖率数据，支持匿名文件(比如style里的css)
 startCSSCoverage: () => Promise<void>;
 stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** start both js and css coverage */
+// 开始和停止并收集JS和CSS的覆盖率数据
 startCoverage: () => Promise<void>;
-/** stop and return both js and css coverage */
 stopCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
+/** 如果开启了NODE_V8_COVERAGE，这个接口用来手动保存当前覆盖率数据 */
 writeCoverage: () => Promise<string>;
 
-/** get istanbul coverage data */
+/** 收集istanbul覆盖率数据 */
 getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
 ```
 
-- Work with node debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`
+- 结合使用Node调试端口`--inspect=9229` 或者浏览器调试端口 `--remote-debugging-port=9229`
 ```js
 const MCR = require('monocart-coverage-reports');
 const client = await MCR.CDPClient({
@@ -376,7 +379,7 @@ await client.startJSCoverage();
 const coverageData = await client.stopJSCoverage();
 ```
 
-- Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
+- 结合使用 [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
 ```js
 const { chromium } = require('playwright');
 const MCR = require('monocart-coverage-reports');
@@ -393,7 +396,7 @@ await page.goto("your page url");
 const coverageData = await client.stopCoverage();
 ```
 
-- Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
+- 结合使用 [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
 ```js
 const puppeteer = require('puppeteer');
 const MCR = require('monocart-coverage-reports');
@@ -410,7 +413,7 @@ await page.goto("your page url");
 const coverageData = await client.stopCoverage();
 ```
 
-- Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
+- 结合使用 [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (仅支持Chrome/Edge浏览器)
 ```js
 const { Builder, Browser } = require('selenium-webdriver');
 const MCR = require('monocart-coverage-reports');
@@ -423,10 +426,10 @@ const client = await MCR.CDPClient({
 ```
 
 ### V8 Coverage Data API
-- [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
-- [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
-- [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
-- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
+- [JavaScript V8代码覆盖官方说明](https://v8.dev/blog/javascript-code-coverage)
+- [Playwright的覆盖率接口](https://playwright.dev/docs/api/class-coverage)
+- [Puppeteer的覆盖率接口](https://pptr.dev/api/puppeteer.coverage)
+- [DevTools Protocol的覆盖率接口](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) 参见 [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) 和 [v8-coverage](https://github.com/bcoe/v8-coverage)
 ```js
 // Coverage data for a source range.
 export interface CoverageRange {
@@ -466,42 +469,42 @@ export type V8CoverageData = ScriptCoverage[];
 ```
 
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
-When V8 coverage data collected, it actually contains the data of all entry files, for example:
+当收集到V8的覆盖数据时，它实际上包含了所有的入口文件的覆盖率数据, 比如有以下3个文件:
 
 - *dist/main.js*
 - *dist/vendor.js*
 - *dist/something-else.js*
 
-We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope. 
+这个时候可以使用`entryFilter`来过滤这些入口文件. 比如我们不需要看到`vendor.js`和`something-else.js`的覆盖率，就可以过滤掉，只剩下1个文件 
 
 - *dist/main.js*
 
-When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
+如果一个入口文件存在行内或者链接的sourcemap文件，那么我们会尝试读取并解析sourcemap，以获取入口文件包含的所有源文件，并添加到列表。此时如果`logging`没有设置成`debug`，那么这个入口文件在成功解出源文件后会被移除
 
 - *src/index.js*
 - *src/components/app.js*
 - *node_modules/dependency/dist/dependency.js*
 
-We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
+这个时候可以使用`sourceFilter`来过滤这些源文件。比如我们不需要看到源文件`dependency.js`的覆盖率，就可以过滤掉，最后只剩下如下文件
 
 - *src/index.js*
 - *src/components/app.js*
 
-For example:
+过滤可以使用函数:
 ```js
 const coverageOptions = {
     entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
-Or using [`minimatch`](https://github.com/isaacs/minimatch) pattern:
+也可以使用便捷的[`minimatch`](https://github.com/isaacs/minimatch)来匹配（推荐）:
 ```js
 const coverageOptions = {
     entryFilter: "**/main.js",
     sourceFilter: "**/src/**"
 };
 ```
-Supports multiple patterns:
+支持多个匹配:
 ```js
 const coverageOptions = {
     entryFilter: {
@@ -515,7 +518,7 @@ const coverageOptions = {
     }
 };
 ```
-In fact, the `minimatch` patterns will be transformed to a function like:
+这些`minimatch`匹配的运行逻辑，大概相当于:
 ```js
 const coverageOptions = {
     // '**/node_modules/**': false,
@@ -527,13 +530,12 @@ const coverageOptions = {
         if (minimatch(entry.url, '**/src/**')) { return true; }
         return false; // else unmatched
     }
-    // Note, the order of the patterns will impact the results
+    // 注意，前面的如果已经匹配到会直接返回，后面的不会继续匹配，所以如果存在包含关系的，需要注意每个匹配的上下顺序，最后如果都未匹配，则默认返回false
 };
 ```
 
 ## Resolve `sourcePath` for the Source Files
-If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
-For example, we have tested multiple dist files, which contain some common files. We hope to merge the coverage of the same files, so we need to unify the `sourcePath` in order to be able to merge the coverage data.
+当一个文件从sourcemap解包，它的路径可能是个虚拟路径, 此时可以使用`sourcePath`选项来修改文件路径。比如，我们测试了多个dist包的入口文件，它们的源文件可能包含了一些共同的文件，但路径可能不同，如果我们需要相同的文件覆盖率数据可以自动合并，那么需要使用`sourcePath`来统一这些相同文件的路径
 ```js
 const coverageOptions = {
     sourcePath: (filePath) => {
@@ -548,7 +550,7 @@ const coverageOptions = {
     }
 };
 ```
-It also supports simple key/value replacement:
+它也支持简单key/value的替换:
 ```js
 const coverageOptions = {
     sourcePath: {
@@ -559,7 +561,7 @@ const coverageOptions = {
 ```
 
 ## Adding Empty Coverage for Untested Files
-By default the untested files will not be included in the coverage report, we can add empty coverage data for all files with option `all`, the untested files will show 0% coverage.
+默认，未测试的文件是不会包含到覆盖率报告的，需要使用`all`选项来为这些文件添加一个空的覆盖率，也就是0%
 ```js
 const coverageOptions = {
     all: {
@@ -570,7 +572,7 @@ const coverageOptions = {
     }
 };
 ```
-The filter also supports [`minimatch`](https://github.com/isaacs/minimatch) pattern:
+`filter`过滤也支持[`minimatch`](https://github.com/isaacs/minimatch)匹配:
 ```js
 const coverageOptions = {
     all: {
@@ -578,7 +580,7 @@ const coverageOptions = {
         filter: '**/*.js'
     }
 };
-// or multiple patterns
+// 多个匹配
 const coverageOptions = {
     all: {
         dir: ['./src'],
@@ -596,7 +598,7 @@ const coverageOptions = {
 ```
 
 ## onEnd Hook
-For example, checking thresholds:
+结束回调可以用来自定义业务需求，比如检测覆盖率是否达标，对比每个指标的thresholds，如果低于要求的值则可以抛出一个错误退出
 ```js
 const EC = require('eight-colors');
 const coverageOptions = {
@@ -627,15 +629,15 @@ const coverageOptions = {
 ```
 
 ## Ignoring Uncovered Codes
-To ignore codes, use the special comment which starts with `v8 ignore `:
-- Ignoring all until stop
+使用特定的注释，以`v8 ignore `开头可以忽略未覆盖的代码:
+- 忽略开始到结束
 ```js
 /* v8 ignore start */
 function uncovered() {
 }
 /* v8 ignore stop */
 ```
-- Ignoring the next line or next N lines
+- 忽略接下来一行或者多行
 ```js
 /* v8 ignore next */
 const os = platform === 'wind32' ? 'Windows' : 'Other';
@@ -649,8 +651,8 @@ if (platform === 'linux') {
 ```
 
 ## Multiprocessing Support
-> The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
-- Main process, before the start of testing
+> 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](#debug-for-coverage-and-sourcemap)，或者使用了`raw`报告
+- 主进程，初始化，清理之前的缓存
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
@@ -660,7 +662,7 @@ const mcr = MCR(coverageOptions);
 mcr.cleanCache();
 ```
 
-- Sub process 1, testing stage 1
+- 子进程1, 测试业务1
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
@@ -668,7 +670,7 @@ const mcr = MCR(coverageOptions);
 await mcr.add(coverageData1);
 ```
 
-- Sub process 2, testing stage 2
+- 子进程2, 测试业务2
 ```js
 const MCR = require('monocart-coverage-reports');
 const coverageOptions = require('path-to/same-options.js');
@@ -676,7 +678,7 @@ const mcr = MCR(coverageOptions);
 await mcr.add(coverageData2);
 ```
 
-- Main process, after the completion of testing
+- 主进程，所有测试完成之后
 ```js
 // generate coverage reports after the completion of testing
 const MCR = require('monocart-coverage-reports');
@@ -686,21 +688,21 @@ await mcr.generate();
 ```
 
 ## Command Line
-> The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
+> 使用`mcr`命令行将使用`NODE_V8_COVERAGE=dir`来启动一个[子进程](https://nodejs.org/docs/latest/api/child_process.html)运行程序，直到正常退出，然后自动从`dir`目录来读取覆盖率数据，并生成覆盖率报告
 
-- Installing globally
+- 全局安装
 ```sh
 npm i monocart-coverage-reports -g
 mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
-- Locally in your project
+- 本地项目安装
 ```sh
 npm i monocart-coverage-reports
 npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
-- CLI Options
+- 命令行参数
 ```sh
 Usage: mcr [options] [command]
 
@@ -728,20 +730,20 @@ Options:
   -h, --help                   display help for command
 ```
 
-- Use `--` to separate sub CLI args
+- 使用 `--` 可以隔离子程序参数，以免两种参数混淆
 ```sh
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- Examples
+- 参见例子
     - [Mocha](#mocha)
     - [tsx](#tsx)
     - [ts-node](#ts-node)
     - [AVA](#ava)
 
 ## Config File
-Loading config file by priority:
-- Custom config file:
+根据以下优先级加载配置文件
+- 自定义配置文件（如果没有指定则加载后面的默认配置文件）:
     - CLI: `mcr --config <my-config-file-path>`
     - API: `await mcr.loadConfig("my-config-file-path")`
 - `mcr.config.js`
@@ -753,20 +755,19 @@ Loading config file by priority:
 - `.mcrrc` - json format
 
 ## Merge Coverage Reports
-The following usage scenarios may require merging coverage reports:
-- When the code is executed in different environments, like Node.js `server side` and browser `client side` (`Next.js` for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
-- When the code is subjected to different kinds of testing. For example, `unit tests` with `Jest` might cover certain parts of the code, while `end-to-end tests` with `Playwright` might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
-- When tests are run on different machines or containers, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
+以下这些使用场景可能需要使用合并覆盖率报告：
+- 多个执行环境，比如Node.js服务端，以及浏览器客户端，比如`Next.js`
+- 多种测试类型，比如`Jest`单元测试，以及`Playwright`的端到端自动化测试
+- 分布式测试，测试结果保存到了多台机器或不同的容器中
 
 ### Automatic Merging
-- The `MCR` will automatically merge all the added coverage data when executing `generate()`. And it supports adding coverage data asynchronously across processes, see [Multiprocessing Support](#multiprocessing-support)
-- For `Next.js`, it can actually add coverage data including both server side and client side before executing `generate()`, see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
-- Using `Codecov`, a popular online code coverage service, which supports automatic merging of reports. Please use report `codecov`, it will generate report file `codecov.json`. If multiple `codecov.json` files are generated, upload all these files, they will be automatically merged. see [Codecov](#codecov) and [merging reports](https://docs.codecov.com/docs/merging-reports)
+- 默认`MCR`在执行`generate()`时会自动合并覆盖率数据。所以可以在[多进程支持](#multiprocessing-support)下，多次添加覆盖率数据，最后将自动合并
+- 比如`Next.js`就可以同时添加前后端覆盖率数据，最后再执行`generate()`生成覆盖率报告，见例子[nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
+- 使用`Codecov`在线覆盖率报告服务，请设置输出`codecov`报告, 它会生成专属的`codecov.json`，如果有多个`codecov.json`文件上传，它们会自动合并数据，参见[Codecov](#codecov) 和 [合并报告说明](https://docs.codecov.com/docs/merging-reports)
 
 ### Manual Merging
-If the reports cannot be merged automatically, then here is how to manually merge the reports.  
-First, using the `raw` report to export the original coverage data to the specified directory.
-- For example, we have `raw` coverage data from `unit test`, which is output to `./coverage-reports/unit/raw`. Unit test examples:
+手动合并覆盖率报告需要使用`raw`报告来导出原始的覆盖率数据到指定的目录
+- 比如，单元测试保存到`./coverage-reports/unit/raw`，见例子
     - `Jest` + [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage)
     - `Vitest` + [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage)
 ```js
@@ -785,12 +786,12 @@ const coverageOptions = {
 };
 ```
 
-- We also have `raw` coverage data from `e2e test`, which is output to `./coverage-reports/e2e/raw`. E2E test examples:
+- 同样的，E2E测试保存到`./coverage-reports/e2e/raw`. 见例子:
     - `Playwright` + [monocart-reporter](https://github.com/cenfun/monocart-reporter) with coverage API
     - `Playwright` + `MCR`, see [playwright-coverage](https://github.com/cenfun/playwright-coverage)
     - see more [Integration Examples](#integration-examples)
 
-- Then create a script `merge-coverage.js` to generate a merged report with option `inputDir`.
+- 然后创建一个`merge-coverage.js`文件，使用`inputDir`参数导入`raw`数据，来生成合并的覆盖率报告.
 ```js
 // merge-coverage.js
 const fs = require('fs');
@@ -840,7 +841,7 @@ const coverageOptions = {
 };
 await new CoverageReport(coverageOptions).generate();
 ```
-- Running script `node path/to/merge-coverage.js` after all the tests are completed. All the command scripts are probably like following:
+- 最后在所有测试完成后运行`node path/to/merge-coverage.js`. 所有的执行脚本大概如下:
 ```json
 {
     "scripts": {
