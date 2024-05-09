@@ -232,8 +232,8 @@ declare namespace MCR {
 
         /** (V8 only) 
          * 
-         * {string} `minimatch` pattern for entry url; {object} multiple patterns;
-         * 
+         * {string} `minimatch` pattern for entry url; 
+         * {object} multiple patterns;
          * {function} A filter function for each entry file in the V8 list.
          */
         entryFilter?: string | {
@@ -242,13 +242,20 @@ declare namespace MCR {
 
         /** (V8 only) 
          * 
-         * {string} `minimatch` pattern for source path; {object} multiple patterns;
-         * 
+         * {string} `minimatch` pattern for source path; 
+         * {object} multiple patterns;
          * {function} A filter function for each source path when the source is unpacked from the source map. 
          */
         sourceFilter?: string | {
             [pattern: string]: boolean;
         } | ((sourcePath: string) => boolean);
+
+        /**
+         * The combined filter for entryFilter and sourceFilter
+         */
+        filter?: string | {
+            [pattern: string]: boolean;
+        } | ((input: string | V8CoverageEntry) => boolean);
 
         /** 
          * {function} Source path handler. 
