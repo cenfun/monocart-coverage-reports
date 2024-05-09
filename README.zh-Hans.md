@@ -857,23 +857,24 @@ await new CoverageReport(coverageOptions).generate();
 ```
 
 ## Common issues
+> 常见问题
 ### Unexpected coverage
-In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the configuration of build tools. Let's take a look at an example:
+覆盖率看起来不正确，多数情况是因为sourcemap转换的问题导致的. 可以先尝试设置构建工具的 `minify=false` 也就是不要压缩代码来解决。下面来看看sourcemap存在问题的具体原因：
 ```js
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
 ```
-In the generated code, there is a position `p`, and we need to find out its corresponding position in the original code. Unfortunately, there is no matched mapping for the position `p`. Instead, it has two adjacent upstream and downstream mappings `m1` and `m2`, so, the original position of `p` that we are looking for, might not be able to be precisely located. Especially, the generated code is different from the original code, such as the code was minified, compressed or converted, it is difficult to find the exact original position without matched mapping. 
-- Further understanding of sourcemap, try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
+上面是经过构建工具编译过的代码，通过AST分析，位置`p`对应的原始位置是我们要找的，而从sourcemap里仅能找到离`p`最近的位置映射`m1`和`m2`，也就是位置`p`并没有精确的映射保存到sourcemap里，从而无法直接获取精确的原始位置，但我们能知道`p`的原始位置应该在`m1`和`m2`之间。
+- 参见 [调试覆盖率和sourcemap](#debug-for-coverage-and-sourcemap)
 
-How `MCR` Works:
-- 1, Trying to fix the original position with string comparison and [`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences). However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
-- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). (There is a small issue is the V8 cannot provide effective branch coverage information for `AssignmentPattern`)
+`MCR`如何解决这个问题:
+- 1, 首先会尝试使用[`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences)工具来比较`m1`和`m2`之间的生成代码和原始代码，找到`p`对应的字符位置，可以解决绝大多数问题。但是如果代码是非JS格式的，比如Vue模板是HTML，或JSX这些，不管怎么比较也是很难精确找到对应位置的，甚至此时的sourcemap本身都比较乱。
+- 2, 然后就是通过分析[AST](https://github.com/acornjs/acorn)，找到所有的functions, statements 和 branches，因为V8覆盖率本身不提供这些指标的覆盖率. (对于分支覆盖暂不支持`AssignmentPattern`类型，因为即使分析AST也无法从V8覆盖率找到它的数据)。
 
 
 ### Unparsable source
-It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example `ts`, `jsx` and so on. There is a option to fix it, which is to manually compile the source code for these files.
+源码无法解析问题。由上面我们知道`MCR`通过分析源码的AST获取更多指标的覆盖率信息，但源码如果不是标准的 ECMAScript，比如`ts`, `jsx`这些，那么分析的时候就会报错，此时我们可以手动来编译这些文件（可行但不推荐）.
 ```js
 import * as fs from "fs";
 import * as path from "path";
@@ -893,8 +894,8 @@ const coverageOptions = {
 ```
 
 ## Debug for Coverage and Sourcemap
-> Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
-- Start debugging for v8 report with option `logging: 'debug'`
+> 当你觉得覆盖率存在问题的时候，`MCR`支持自行调试来核验覆盖率的准确性
+- 首先打开调试设置`logging: 'debug'`
 ```js
 const coverageOptions = {
     logging: 'debug',
@@ -904,21 +905,22 @@ const coverageOptions = {
     ]
 };
 ```
-When `logging` is `debug`, the raw report data will be preserved in `[outputDir]/.cache` or `[outputDir]/raw` if `raw` report is used. And the dist file will be preserved in the V8 list, and by opening the browser's devtool, it makes data verification visualization effortless.
+调试模式下，也就是`logging`为`debug`的时候, 原始的覆盖率数据将保留在`[outputDir]/.cache`缓存目录下，不会删除，如果使用了`raw`报告，那么位置变为`[outputDir]/raw`下，这样我们可以打开v8报告的html文件，通过下面新增的一些调试帮助信息来核对覆盖率
 ![](./assets/debug-coverage.png)
 
-- Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
+- 调试sourcemap可以直接使用[Source Map Visualization](https://evanw.github.io/source-map-visualization/) （esbuild作者提供的sourcemap在线查看器）
 
 ![](./assets/debug-sourcemap.png)
 
 ## Integration with Any Testing Framework
-- API
-    - Collecting coverage data when any stage of the test is completed, and adding the coverage data to the coverage reporter. `await mcr.add(coverageData)`
-    - Generating the coverage reports after the completion of all tests. `await mcr.generate()`
-    - see [Multiprocessing Support](#multiprocessing-support)
-- CLI
-    - Wrapping with any CLI. `mcr your-cli --your-arguments`
-    - see [Command line](#command-line)
+通用集成方案
+- 通过API接口在程序集成
+    - 首先，要自行收集覆盖率数据，然后，添加到报告实例 `await mcr.add(coverageData)`
+    - 最后，生成覆盖率报告 `await mcr.generate()`
+    - 参见 [多进程支持](#multiprocessing-support)
+- 通过CLI命令行与其他命令行集成
+    - 直接在其他命令行前面添加mcr的命令行即可 `mcr your-cli --your-arguments`
+    - 参见 [命令行](#command-line)
 
 ## Integration Examples
 
