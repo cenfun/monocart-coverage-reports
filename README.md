@@ -703,32 +703,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
 - CLI Options
-```sh
-Usage: mcr [options] [command]
-
-CLI to generate coverage reports
-
-Arguments:
-  command                      command to execute
-
-Options:
-  -v, --version                output the current version
-  -c, --config <path>          custom config file path
-  -l, --logging <logging>      off, error, info, debug
-  -n, --name <name>            report name for title
-  -r, --reports <name[,name]>  coverage reports to use
-  -o, --outputDir <dir>        output dir for reports
-  -i, --inputDir <dir>         input dir for merging raw files
-  --entryFilter <pattern>      entry url filter
-  --sourceFilter <pattern>     source path filter
-  --outputFile <path>          output file for v8 report
-  --inline                     inline html for v8 report
-  --assetsPath <path>          assets path if not inline
-  --lcov                       generate lcov.info file
-  --import <module>            preload module at startup
-  --require <module>           preload module at startup
-  -h, --help                   display help for command
-```
+see all options with running `mcr` or `mcr --help`
 
 - Use `--` to separate sub CLI args
 ```sh

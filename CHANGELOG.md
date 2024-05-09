@@ -3,6 +3,7 @@
 - 2.7.11
   - fixed type style for UI
   - fixed string to multiple patterns "{...}" for minimatch filter
+  - added `--all` option for CLI
   - added README.zh-Hans.md
 
 - 2.7.10
