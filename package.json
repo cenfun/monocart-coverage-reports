@@ -86,7 +86,7 @@
     },
     "devDependencies": {
         "commander": "^12.0.0",
-        "esbuild": "^0.21.0",
+        "esbuild": "^0.21.1",
         "eslint": "~9.2.0",
         "eslint-config-plus": "^2.0.0",
         "eslint-plugin-html": "^8.1.1",
