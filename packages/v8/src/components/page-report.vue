@@ -405,7 +405,8 @@ const formatSource = (item) => {
     if (!state.formatted) {
         // codemirror will replace all \r\n to \n, so end position will be mismatched
         // just replace all \r\n with \n
-        const formattedContent = source.replace(Util.lineBreakPattern, '\n');
+        const lineBreakPattern = /\r\n|[\r\n\u2028\u2029]/gu;
+        const formattedContent = source.replace(lineBreakPattern, '\n');
         const mapping = generateMapping(source, formattedContent);
         // console.log(mapping);
         return {
