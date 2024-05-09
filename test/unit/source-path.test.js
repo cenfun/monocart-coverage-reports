@@ -60,4 +60,6 @@ it('resolveSourceUrl', () => {
 
     assert.equal(getSourcePath(resolveSourceUrl('a.js', '/root')), 'root/a.js');
 
+    // base path
+    assert.equal(getSourcePath('file:///foo/bar/oof/a.js', '/foo/bar'), 'oof/a.js');
 });
