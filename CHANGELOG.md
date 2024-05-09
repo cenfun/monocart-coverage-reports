@@ -2,6 +2,7 @@
 
 - 2.7.11
   - fixed type style for UI
+  - fixed string to multiple patterns "{...}" for minimatch filter
 
 - 2.7.10
   - fixed undefined error when reading mappings
