@@ -385,8 +385,6 @@ declare namespace MCR {
             'mcr.config.cjs',
             'mcr.config.mjs',
             'mcr.config.json',
-            '.mcrrc.js',
-            '.mcrrc',
             'mcr.config.ts'
          */
         loadConfig: (configFile?: string) => Promise<void>;

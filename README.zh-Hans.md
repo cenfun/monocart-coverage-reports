@@ -729,8 +729,6 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
 - `mcr.config.ts` (requires preloading the ts execution module)
-- `.mcrrc.js`
-- `.mcrrc` - json format
 
 ## Merge Coverage Reports
 以下这些使用场景可能需要使用合并覆盖率报告：

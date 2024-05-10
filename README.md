@@ -726,8 +726,6 @@ Loading config file by priority:
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
 - `mcr.config.ts` (requires preloading the ts execution module)
-- `.mcrrc.js`
-- `.mcrrc` - json format
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:

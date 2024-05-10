@@ -3,6 +3,7 @@
 - 2.8.0
   - added `filter` option as combined filter for `entryFilter` and `sourceFilter`
   - added `--all` option for CLI
+  - removed default config file `.mcrrc.js` and `.mcrrc`
   - fixed type style for UI
   - fixed string to multiple patterns "{...}" for minimatch filter
   - added README.zh-Hans.md
