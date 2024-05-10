@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const assert = require('assert');
 const Util = require('../../lib/utils/util.js');
 
@@ -17,3 +19,50 @@ it('Util.cmpVersion', () => {
 
 
 });
+
+
+it('Util.findUpConfig', () => {
+
+    // custom
+    assert.equal(typeof Util.findUpConfig('package-invalid.json'), 'undefined');
+    assert.equal(Util.findUpConfig('package.json'), 'package.json');
+
+    // default config
+    const mcrPath = path.resolve('mcr.config.mjs');
+    const mcrParentPath = path.resolve('../mcr.config.js');
+    console.log(mcrPath);
+    console.log(mcrParentPath);
+    if (fs.existsSync(mcrPath)) {
+        fs.rmSync(mcrPath, {
+            force: true,
+            maxRetries: 10
+        });
+    }
+    if (fs.existsSync(mcrParentPath)) {
+        fs.rmSync(mcrParentPath, {
+            force: true,
+            maxRetries: 10
+        });
+    }
+
+    assert.equal(typeof Util.findUpConfig(), 'undefined');
+
+    fs.writeFileSync(mcrPath, '');
+    assert.equal(Util.findUpConfig(), mcrPath);
+    fs.rmSync(mcrPath, {
+        force: true,
+        maxRetries: 10
+    });
+    assert.equal(typeof Util.findUpConfig(), 'undefined');
+
+    // parent
+    fs.writeFileSync(mcrParentPath, '');
+    assert.equal(Util.findUpConfig(), mcrParentPath);
+    fs.rmSync(mcrParentPath, {
+        force: true,
+        maxRetries: 10
+    });
+    assert.equal(typeof Util.findUpConfig(), 'undefined');
+
+});
+

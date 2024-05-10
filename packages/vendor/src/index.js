@@ -19,6 +19,8 @@ import WebSocket from 'ws';
 
 import diff from 'diff-sequences';
 
+import { findUpSync } from 'find-up';
+
 import supportsColor from 'supports-color';
 
 export {
@@ -42,6 +44,8 @@ export {
     WebSocket,
 
     diff,
+
+    findUpSync,
 
     supportsColor
 };

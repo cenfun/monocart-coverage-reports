@@ -90,7 +90,7 @@
         "eslint": "~9.2.0",
         "eslint-config-plus": "^2.0.0",
         "eslint-plugin-html": "^8.1.1",
-        "eslint-plugin-vue": "^9.25.0",
+        "eslint-plugin-vue": "^9.26.0",
         "minimatch": "^9.0.4",
         "stylelint": "^16.5.0",
         "stylelint-config-plus": "^1.1.2",
