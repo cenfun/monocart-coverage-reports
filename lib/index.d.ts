@@ -230,6 +230,9 @@ declare namespace MCR {
         /** {string|string[]} input raw dir(s) */
         inputDir?: string | string[];
 
+        /** {string} base dir for normalizing the relative source path, defaults to cwd */
+        baseDir?: string;
+
         /** (V8 only) 
          * 
          * {string} `minimatch` pattern for entry url; 

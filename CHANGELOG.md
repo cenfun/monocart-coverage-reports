@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.8.1
+  - added `baseDir` option for normalizing the relative source path
+
 - 2.8.0
   - added `filter` option as combined filter for `entryFilter` and `sourceFilter`
   - added `--all` option for CLI
