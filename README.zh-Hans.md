@@ -21,7 +21,7 @@
     - [从Node.js](#collecting-v8-coverage-data-from-nodejs)
     - [使用`CDPClient`API](#collecting-v8-coverage-data-with-cdpclient-api)
     - [参考V8覆盖率的API](#v8-coverage-data-api)
-* [使用 `entryFilter` 和 `sourceFilter` 来过滤V8覆盖率数据](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
+* [过滤V8覆盖率数据](#filtering-results)
 * [使用 `sourcePath` 修改源文件路径](#resolve-sourcepath-for-the-source-files)
 * [为未测试的文件添加空的覆盖率报告](#adding-empty-coverage-for-untested-files)
 * [onEnd回调函数](#onend-hook)
@@ -53,6 +53,7 @@
     - [ts-node](#ts-node)
     - [AVA](#ava)
     - [Codecov](#codecov)
+    - [Codacy](#codacy)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
 * [Contributing](#contributing)
@@ -471,6 +472,7 @@ export interface ScriptCoverage {
 export type V8CoverageData = ScriptCoverage[];
 ```
 
+## Filtering Results
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 当收集到V8的覆盖数据时，它实际上包含了所有的入口文件的覆盖率数据, 比如有以下3个文件:
 
@@ -521,19 +523,33 @@ const coverageOptions = {
     }
 };
 ```
-这些`minimatch`匹配的运行逻辑，大概相当于:
+作为CLI参数（JSON字符串，Added in: v2.8）:
+```sh
+mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}"
+```
+注意，这些匹配实际上会转换成一个过滤函数（如下），所以如果一个匹配成功则会直接返回，后面的将不再继续匹配。请注意先后顺序，如果存在包含关系的，可以调整上下顺序，最后如果都未匹配，则默认返回false
 ```js
 const coverageOptions = {
-    // '**/node_modules/**': false,
-    // '**/vendor.js': false,
-    // '**/src/**': true
     entryFilter: (entry) => {
         if (minimatch(entry.url, '**/node_modules/**')) { return false; }
         if (minimatch(entry.url, '**/vendor.js')) { return false; }
         if (minimatch(entry.url, '**/src/**')) { return true; }
         return false; // else unmatched
     }
-    // 注意，前面的如果已经匹配到会直接返回，后面的不会继续匹配，所以如果存在包含关系的，需要注意每个匹配的上下顺序，最后如果都未匹配，则默认返回false
+};
+```
+
+### Using `filter` instead of `entryFilter` and `sourceFilter`
+如果你不想定义两个过滤器，可以使用 `filter` 选项代替，可以将多个匹配合并在一起. (Added in: v2.8)
+```js
+const coverageOptions = {
+    // combined patterns
+    filter: {
+        '**/node_modules/**': false,
+        '**/vendor.js': false,
+        '**/src/**': true
+        '**/**': true
+    }
 };
 ```
 

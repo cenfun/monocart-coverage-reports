@@ -21,7 +21,7 @@
     - [Collecting V8 Coverage Data from Node.js](#collecting-v8-coverage-data-from-nodejs)
     - [Collecting V8 Coverage Data with `CDPClient` API](#collecting-v8-coverage-data-with-cdpclient-api)
     - [V8 Coverage Data API](#v8-coverage-data-api)
-* [Using `entryFilter` and `sourceFilter` to filter the results for V8 report](#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report)
+* [Filtering Results](#filtering-results)
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
 * [onEnd Hook](#onend-hook)
@@ -53,6 +53,7 @@
     - [ts-node](#ts-node)
     - [AVA](#ava)
     - [Codecov](#codecov)
+    - [Codacy](#codacy)
     - [Coveralls](#coveralls)
     - [Sonar Cloud](#sonar-cloud)
 * [Contributing](#contributing)
@@ -467,7 +468,7 @@ export interface ScriptCoverage {
 export type V8CoverageData = ScriptCoverage[];
 ```
 
-## Filtering results
+## Filtering Results
 ### Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
 
@@ -518,19 +519,33 @@ const coverageOptions = {
     }
 };
 ```
-In fact, the `minimatch` patterns will be transformed to a function like:
+As CLI args (JSON-like string. Added in: v2.8):
+```sh
+mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}"
+```
+Note, those patterns will be transformed to a function, and the order of the patterns will impact the results:
 ```js
 const coverageOptions = {
-    // '**/node_modules/**': false,
-    // '**/vendor.js': false,
-    // '**/src/**': true
     entryFilter: (entry) => {
         if (minimatch(entry.url, '**/node_modules/**')) { return false; }
         if (minimatch(entry.url, '**/vendor.js')) { return false; }
         if (minimatch(entry.url, '**/src/**')) { return true; }
         return false; // else unmatched
     }
-    // Note, the order of the patterns will impact the results
+};
+```
+
+### Using `filter` instead of `entryFilter` and `sourceFilter`
+If you don't want to define both `entryFilter` and `sourceFilter`, you can use `filter` instead. (Added in: v2.8)
+```js
+const coverageOptions = {
+    // combined patterns
+    filter: {
+        '**/node_modules/**': false,
+        '**/vendor.js': false,
+        '**/src/**': true
+        '**/**': true
+    }
 };
 ```
 
