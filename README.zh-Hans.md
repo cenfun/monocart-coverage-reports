@@ -980,6 +980,25 @@ const coverageOptions = {
     with:
         files: ./coverage-reports/codecov.json
 ```
+
+### [Codacy](https://www.codacy.com/)
+[![Codacy](https://app.codacy.com/project/badge/Coverage/715016ea8e90479db875b777db8bad55)](https://app.codacy.com/gh/cenfun/monocart-coverage-reports/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+- Using `lcov` report:
+```js
+const coverageOptions = {
+    outputDir: "./coverage-reports",
+    lcov: true
+};
+```
+- Github actions:
+```yml
+- name: Codacy Coverage Reporter
+    uses: codacy/codacy-coverage-reporter-action@v1
+    with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: ./docs/mcr/lcov.info
+```
+
 ### [Coveralls](https://coveralls.io/)
 [![Coverage Status](https://coveralls.io/repos/github/cenfun/monocart-coverage-reports/badge.svg?branch=main)](https://coveralls.io/github/cenfun/monocart-coverage-reports?branch=main)
 - Using `lcov` report:
@@ -996,6 +1015,7 @@ const coverageOptions = {
     with:
         files: ./coverage-reports/lcov.info
 ```
+
 ### [Sonar Cloud](https://sonarcloud.io/)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=monocart-coverage-reports&metric=coverage)](https://sonarcloud.io/summary/new_code?id=monocart-coverage-reports)
 - Using `lcov` report. Github actions example:
