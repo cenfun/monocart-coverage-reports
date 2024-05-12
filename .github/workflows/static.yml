@@ -84,6 +84,12 @@ jobs:
         with:
           files: ./docs/mcr/lcov.info
       
+      - name: Codacy
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: ./docs/mcr/lcov.info
+      
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:
