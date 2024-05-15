@@ -50,8 +50,9 @@ const test = async (serverUrl) => {
 
     await page.goto(serverUrl);
 
+    // time for minify fps-detector
     await new Promise((resolve) => {
-        setTimeout(resolve, 500);
+        setTimeout(resolve, 1000);
     });
 
     const [jsCoverage, cssCoverage] = await Promise.all([
