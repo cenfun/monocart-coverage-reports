@@ -842,7 +842,7 @@ await new CoverageReport(coverageOptions).generate();
     }
 }
 ```
-see example: [merge-coverage-unit-e2e-shard](https://github.com/cenfun/merge-coverage-unit-e2e-shard)
+see example: [merge-code-coverage](https://github.com/cenfun/merge-code-coverage)
 
 ## Common issues
 ### Unexpected coverage

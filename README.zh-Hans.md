@@ -844,7 +844,7 @@ await new CoverageReport(coverageOptions).generate();
     }
 }
 ```
-参见例子： [merge-coverage-unit-e2e-shard](https://github.com/cenfun/merge-coverage-unit-e2e-shard)
+参见例子： [merge-code-coverage](https://github.com/cenfun/merge-code-coverage)
 
 ## Common issues
 > 常见问题
