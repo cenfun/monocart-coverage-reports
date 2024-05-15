@@ -918,6 +918,7 @@ const coverageOptions = {
 - [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright coverage reports
 - [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD coverage reports
 - [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code coverage report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+- [merge-code-coverage](https://github.com/cenfun/merge-code-coverage) - Example for merging code coverage (unit + e2e shard)
 - Coverage for component testing with `monocart-reporter`:
     - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
     - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
