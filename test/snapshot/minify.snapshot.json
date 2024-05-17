@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "41.67 %",
-        "statements": "39.41 %",
+        "bytes": "41.69 %",
+        "statements": "39.42 %",
         "branches": "25.37 %",
         "functions": "42.80 %",
-        "lines": "36.68 %"
+        "lines": "36.71 %"
     },
     "files": {
         "localhost-8130/demo.js": {
@@ -71,54 +71,6 @@
             "lines": "50.00 %",
             "bytes": "1.55 %",
             "uncoveredLines": "6"
-        },
-        "fps-detector/webpack/universalModuleDefinition": {
-            "functions": "100.00 %",
-            "branches": "42.86 %",
-            "statements": "100.00 %",
-            "lines": "54.55 %",
-            "bytes": "61.60 %",
-            "uncoveredLines": "2-5,7"
-        },
-        "fps-detector/webpack/bootstrap": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/runtime/define-property-getters": {
-            "functions": "100.00 %",
-            "branches": "100.00 %",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/runtime/hasOwnProperty-shorthand": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/runtime/make-namespace-object": {
-            "functions": "100.00 %",
-            "branches": "100.00 %",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/src/index.js": {
-            "functions": "81.25 %",
-            "branches": "61.11 %",
-            "statements": "76.79 %",
-            "lines": "81.34 %",
-            "bytes": "87.27 %",
-            "uncoveredLines": "3-4,28-30,94-95,105-120,160-161,167-178,187-188,239-241,254-256"
         },
         "monocart-v8/webpack/universalModuleDefinition": {
             "functions": "100.00 %",
@@ -631,6 +583,54 @@
             "lines": "100.00 %",
             "bytes": "100.00 %",
             "uncoveredLines": ""
+        },
+        "fps-detector/webpack/universalModuleDefinition": {
+            "functions": "100.00 %",
+            "branches": "42.86 %",
+            "statements": "100.00 %",
+            "lines": "54.55 %",
+            "bytes": "61.60 %",
+            "uncoveredLines": "2-5,7"
+        },
+        "fps-detector/webpack/bootstrap": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/runtime/define-property-getters": {
+            "functions": "100.00 %",
+            "branches": "100.00 %",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/runtime/hasOwnProperty-shorthand": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/runtime/make-namespace-object": {
+            "functions": "100.00 %",
+            "branches": "100.00 %",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/src/index.js": {
+            "functions": "81.25 %",
+            "branches": "61.11 %",
+            "statements": "78.57 %",
+            "lines": "83.25 %",
+            "bytes": "88.36 %",
+            "uncoveredLines": "3-4,28-30,94-95,105-120,163,167-178,187-188,254-256"
         }
     }
 }
