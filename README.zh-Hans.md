@@ -1055,8 +1055,9 @@ const coverageOptions = {
 ```
 
 ## Contributing
+- Node.js 20+
+- VSCode (extensions: eslint/stylelint/vue)
 ```sh
-# Node.js 20+
 npm install starfall-cli -g
 npm install
 

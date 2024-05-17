@@ -86,7 +86,7 @@
     },
     "devDependencies": {
         "commander": "^12.0.0",
-        "esbuild": "^0.21.2",
+        "esbuild": "^0.21.3",
         "eslint": "~9.2.0",
         "eslint-config-plus": "^2.0.0",
         "eslint-plugin-html": "^8.1.1",
@@ -95,7 +95,7 @@
         "stylelint": "^16.5.0",
         "stylelint-config-plus": "^1.1.2",
         "supports-color": "^9.4.0",
-        "tsx": "^4.10.2",
+        "tsx": "^4.10.3",
         "ws": "^8.17.0"
     }
 }

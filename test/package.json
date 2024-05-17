@@ -20,7 +20,7 @@
         "mocha": "^10.4.0",
         "open": "^10.1.0",
         "playwright": "^1.44.0",
-        "puppeteer": "^22.8.1",
+        "puppeteer": "^22.9.0",
         "rollup": "^4.17.2",
         "swc-loader": "^0.2.6",
         "ts-loader": "^9.5.1",
