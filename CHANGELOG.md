@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.8.2
+  - fixed source path issue on Windows (#12)
+
 - 2.8.1
   - added `baseDir` option for normalizing the relative source path
 
