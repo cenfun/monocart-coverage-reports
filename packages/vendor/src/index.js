@@ -10,9 +10,6 @@ import * as acornWalk from 'acorn-walk';
 
 import parseCss from 'postcss/lib/parse';
 
-import { program } from 'commander';
-import { foregroundChild } from 'foreground-child';
-
 import { minimatch } from 'minimatch';
 
 import WebSocket from 'ws';
@@ -36,9 +33,6 @@ export {
     acornWalk,
 
     parseCss,
-
-    program,
-    foregroundChild,
 
     minimatch,
     WebSocket,
