@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.8.3
+  - fixed error occurred in electron (#27)
+
 - 2.8.2
   - fixed source path issue on Windows (#12)
 
