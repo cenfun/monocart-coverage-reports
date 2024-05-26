@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const beforeV8 = (item, Util) => {
+const beforeApp = (item, Util) => {
 
     const EC = require('eight-colors');
 
@@ -48,7 +48,7 @@ module.exports = {
 
     build: {
 
-        vendors: ['common', 'v8'],
+        vendors: ['common', 'app'],
 
         before: (item, Util) => {
 
@@ -56,8 +56,8 @@ module.exports = {
                 item.devtool = false;
             }
 
-            if (item.name === 'v8') {
-                return beforeV8(item, Util);
+            if (item.name === 'app') {
+                return beforeApp(item, Util);
             }
 
             return 0;

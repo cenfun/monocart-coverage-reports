@@ -1,8 +1,8 @@
 {
-    "name": "monocart-coverage-v8",
+    "name": "monocart-coverage-app",
     "version": "2.8.2",
     "private": true,
-    "main": "dist/monocart-coverage-v8.js",
+    "main": "dist/monocart-coverage-app.js",
     "files": [
         "dist"
     ],
