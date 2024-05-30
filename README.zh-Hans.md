@@ -918,7 +918,6 @@ const coverageOptions = {
 - [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright coverage reports
 - [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD coverage reports
 - [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code coverage report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
-- [merge-code-coverage](https://github.com/cenfun/merge-code-coverage) - Example for merging code coverage (unit + e2e shard)
 - Coverage for component testing with `monocart-reporter`:
     - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
     - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
@@ -933,9 +932,11 @@ const coverageOptions = {
 
 ### [Jest](https://github.com/jestjs/jest/)
 - [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - Jest custom reporter for coverage reports
+- [merge-code-coverage](https://github.com/cenfun/merge-code-coverage) - Example for merging code coverage (Jest unit + Playwright e2e sharding)
 
 ### [Vitest](https://github.com/vitest-dev/vitest)
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Vitest custom provider module for coverage reports
+- [merge-code-coverage-vitest](https://github.com/cenfun/merge-code-coverage-vitest) - Example for merging code coverage (Vitest unit + Playwright e2e sharding)
 
 ### [Puppeteer](https://github.com/puppeteer/puppeteer/)
 - [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
