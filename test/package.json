@@ -8,7 +8,7 @@
     "dependencies": {},
     "devDependencies": {
         "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
-        "@rollup/plugin-commonjs": "^25.0.8",
+        "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-typescript": "^11.1.6",
         "@swc/core": "^1.5.24",
         "babel-loader": "^9.1.3",
