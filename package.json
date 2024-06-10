@@ -55,7 +55,7 @@
         "test-all": "node ./test/test.js && node ./scripts/docs.js",
         "test": "npm run test-unit && npx mcr npm run test-all -c test/mcr.config.mcr.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
-        "dev": "sf d v8",
+        "dev": "sf d app",
         "open": "node ./scripts/open.js",
         "patch": "npm run build && npm run test && sf publish patch -r"
     },
@@ -86,7 +86,7 @@
     },
     "devDependencies": {
         "commander": "^12.1.0",
-        "esbuild": "^0.21.4",
+        "esbuild": "^0.21.5",
         "eslint": "~9.4.0",
         "eslint-config-plus": "^2.0.1",
         "eslint-plugin-html": "^8.1.1",
@@ -96,7 +96,7 @@
         "stylelint": "^16.6.1",
         "stylelint-config-plus": "^1.1.2",
         "supports-color": "^9.4.0",
-        "tsx": "^4.11.2",
+        "tsx": "^4.15.1",
         "ws": "^8.17.0"
     }
 }
