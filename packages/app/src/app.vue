@@ -681,7 +681,9 @@ const watermarkFilter = (status) => {
     return false;
 };
 
-const searchHandler = (rowItem) => {
+const searchHandler = (rowItem, grid) => {
+
+    const hasMatched = grid.highlightKeywordsFilter(rowItem, ['name'], state.keywords);
 
     if (rowItem.tg_frozen) {
         return true;
@@ -693,20 +695,7 @@ const searchHandler = (rowItem) => {
         return false;
     }
 
-    const keywords = state.keywords.trim().toLowerCase();
-    if (!keywords) {
-        return true;
-    }
-    const keywordList = keywords.split(/\s+/g);
-    const value = rowItem.name;
-    for (const item of keywordList) {
-        if (value.indexOf(item) !== -1) {
-            return true;
-        }
-        if (value.toLowerCase().indexOf(item.toLowerCase()) !== -1) {
-            return true;
-        }
-    }
+    return hasMatched;
 };
 
 const initData = () => {
@@ -742,7 +731,9 @@ const initGrid = () => {
         frozenRow: 0,
         frozenColumn: 0,
         frozenRowHoverable: true,
-        rowFilter: searchHandler,
+        rowFilter: (rowItem) => {
+            return searchHandler(rowItem, grid);
+        },
         rowNumberVisible: true,
         rowNumberFilter: (rowItem) => {
             if (!rowItem.isSummary && !rowItem.subs) {
