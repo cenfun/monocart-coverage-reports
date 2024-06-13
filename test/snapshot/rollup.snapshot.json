@@ -1,7 +1,7 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "81.00 %",
+        "bytes": "80.99 %",
         "statements": "82.04 %",
         "branches": "59.43 %",
         "functions": "79.10 %",
@@ -133,7 +133,7 @@
             "branches": "50.00 %",
             "statements": "75.00 %",
             "lines": "75.00 %",
-            "bytes": "77.98 %",
+            "bytes": "77.83 %",
             "uncoveredLines": "9,11-13,25-27"
         },
         "src/index.js": {

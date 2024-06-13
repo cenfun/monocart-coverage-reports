@@ -133,7 +133,7 @@
             "branches": "50.00 %",
             "statements": "83.33 %",
             "lines": "75.00 %",
-            "bytes": "77.98 %",
+            "bytes": "77.83 %",
             "uncoveredLines": "9,11-13,25-27"
         },
         "src/index.js": {
