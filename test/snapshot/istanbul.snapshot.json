@@ -1,10 +1,10 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "82.46 %",
-        "statements": "82.55 %",
-        "functions": "76.11 %",
-        "branches": "58.46 %"
+        "lines": "82.33 %",
+        "statements": "82.42 %",
+        "functions": "75.71 %",
+        "branches": "58.33 %"
     },
     "files": {
         "async.js": {
@@ -99,11 +99,11 @@
             "uncoveredLines": "7,20"
         },
         "index.js": {
-            "lines": "69.64 %",
+            "lines": "70.68 %",
             "functions": "53.84 %",
-            "statements": "70.17 %",
+            "statements": "71.18 %",
             "branches": "57.14 %",
-            "uncoveredLines": "24,35-57,66-67,73,85,93-94"
+            "uncoveredLines": "26,37-59,68-69,75,87,97-98"
         },
         "statement.js": {
             "lines": "100.00 %",
@@ -111,6 +111,13 @@
             "statements": "100.00 %",
             "branches": "100.00 %",
             "uncoveredLines": ""
+        },
+        "static.js": {
+            "lines": "75.00 %",
+            "functions": "66.66 %",
+            "statements": "75.00 %",
+            "branches": "50.00 %",
+            "uncoveredLines": "9,12,26"
         },
         "typescript.ts": {
             "lines": "100.00 %",

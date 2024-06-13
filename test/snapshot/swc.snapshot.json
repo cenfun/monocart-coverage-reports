@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "80.99 %",
-        "statements": "82.51 %",
-        "branches": "59.58 %",
-        "functions": "79.37 %",
-        "lines": "70.61 %"
+        "bytes": "81.00 %",
+        "statements": "82.54 %",
+        "branches": "59.43 %",
+        "functions": "79.10 %",
+        "lines": "70.88 %"
     },
     "files": {
         "src/async.js": {
@@ -115,10 +115,10 @@
         "src/index.js": {
             "functions": "46.15 %",
             "branches": "42.86 %",
-            "statements": "65.08 %",
-            "lines": "51.81 %",
-            "bytes": "61.62 %",
-            "uncoveredLines": "20-26,34-59,65-68,72-74,84-86,92-95,106"
+            "statements": "66.15 %",
+            "lines": "52.94 %",
+            "bytes": "63.82 %",
+            "uncoveredLines": "22-28,36-61,67-70,74-76,86-88,96-99,110"
         },
         "src/statement.js": {
             "functions": "100.00 %",
@@ -127,6 +127,14 @@
             "lines": "100.00 %",
             "bytes": "100.00 %",
             "uncoveredLines": ""
+        },
+        "src/static.js": {
+            "functions": "75.00 %",
+            "branches": "50.00 %",
+            "statements": "81.25 %",
+            "lines": "75.00 %",
+            "bytes": "77.98 %",
+            "uncoveredLines": "9,11-13,25-27"
         },
         "src/typescript.ts": {
             "functions": "100.00 %",

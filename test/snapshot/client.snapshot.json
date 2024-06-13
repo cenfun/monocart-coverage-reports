@@ -8,22 +8,6 @@
         "lines": "40.00 %"
     },
     "files": {
-        "src/puppeteer.js": {
-            "functions": "0.00 %",
-            "branches": "",
-            "statements": "66.67 %",
-            "lines": "25.00 %",
-            "bytes": "68.03 %",
-            "uncoveredLines": "3-5"
-        },
-        "src/puppeteer.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "45.45 %",
-            "bytes": "63.30 %",
-            "uncoveredLines": "4-9"
-        },
         "src/playwright.js": {
             "functions": "0.00 %",
             "branches": "",
@@ -38,6 +22,22 @@
             "statements": "",
             "lines": "45.45 %",
             "bytes": "63.68 %",
+            "uncoveredLines": "4-9"
+        },
+        "src/puppeteer.js": {
+            "functions": "0.00 %",
+            "branches": "",
+            "statements": "66.67 %",
+            "lines": "25.00 %",
+            "bytes": "68.03 %",
+            "uncoveredLines": "3-5"
+        },
+        "src/puppeteer.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "45.45 %",
+            "bytes": "63.30 %",
             "uncoveredLines": "4-9"
         }
     }

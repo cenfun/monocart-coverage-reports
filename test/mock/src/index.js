@@ -9,6 +9,8 @@ const typescript = require('./typescript.ts');
 
 const component = require('./component.js');
 
+const { ClassWithStaticInitializationBlock } = require('./static.js');
+
 function foo(argument) {
     console.log('this is foo');
 
@@ -84,6 +86,8 @@ function init(stop) {
     if (f) {
         privateFunction();
     }
+
+    new ClassWithStaticInitializationBlock();
 
 }
 
