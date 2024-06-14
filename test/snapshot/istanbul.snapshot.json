@@ -1,10 +1,10 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "82.33 %",
-        "statements": "82.42 %",
-        "functions": "75.71 %",
-        "branches": "58.33 %"
+        "lines": "82.50 %",
+        "statements": "82.59 %",
+        "functions": "77.02 %",
+        "branches": "58.26 %"
     },
     "files": {
         "async.js": {
@@ -56,6 +56,13 @@
             "branches": "40.90 %",
             "uncoveredLines": "24,31-32,38,45-46,52,59-64,73-78"
         },
+        "closures.js": {
+            "lines": "85.71 %",
+            "functions": "100.00 %",
+            "statements": "85.71 %",
+            "branches": "50.00 %",
+            "uncoveredLines": "8"
+        },
         "comments.js": {
             "lines": "100.00 %",
             "functions": "100.00 %",
@@ -99,11 +106,11 @@
             "uncoveredLines": "7,20"
         },
         "index.js": {
-            "lines": "70.68 %",
+            "lines": "71.66 %",
             "functions": "53.84 %",
-            "statements": "71.18 %",
+            "statements": "72.13 %",
             "branches": "57.14 %",
-            "uncoveredLines": "26,37-59,68-69,75,87,97-98"
+            "uncoveredLines": "27,38-60,69-70,76,88,98-99"
         },
         "statement.js": {
             "lines": "100.00 %",
@@ -112,10 +119,10 @@
             "branches": "100.00 %",
             "uncoveredLines": ""
         },
-        "static.js": {
-            "lines": "75.00 %",
-            "functions": "66.66 %",
-            "statements": "75.00 %",
+        "statics.js": {
+            "lines": "76.92 %",
+            "functions": "75.00 %",
+            "statements": "76.92 %",
             "branches": "50.00 %",
             "uncoveredLines": "9,12,26"
         },

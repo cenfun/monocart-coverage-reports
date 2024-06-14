@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "54.91 %",
-        "statements": "59.92 %",
-        "branches": "52.69 %",
-        "functions": "55.70 %",
-        "lines": "47.60 %"
+        "bytes": "54.25 %",
+        "statements": "58.53 %",
+        "branches": "52.29 %",
+        "functions": "53.01 %",
+        "lines": "46.69 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -15,6 +15,14 @@
             "lines": "0.00 %",
             "bytes": "0.00 %",
             "uncoveredLines": "1-24"
+        },
+        "test/mock/src/closures.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-18"
         },
         "test/mock/src/comments.js": {
             "functions": "",
@@ -38,7 +46,7 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "1-122"
+            "uncoveredLines": "1-123"
         },
         "test/mock/src/statement.js": {
             "functions": "0.00 %",
@@ -48,7 +56,7 @@
             "bytes": "0.00 %",
             "uncoveredLines": "1-32"
         },
-        "test/mock/src/static.js": {
+        "test/mock/src/statics.js": {
             "functions": "0.00 %",
             "branches": "0.00 %",
             "statements": "0.00 %",

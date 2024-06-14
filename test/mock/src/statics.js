@@ -27,6 +27,6 @@ class ClassWithStaticInitializationBlock {
     }
 }
 
-module.exports = {
-    ClassWithStaticInitializationBlock
+module.exports = () => {
+    new ClassWithStaticInitializationBlock();
 };

@@ -9,7 +9,8 @@ const typescript = require('./typescript.ts');
 
 const component = require('./component.js');
 
-const { ClassWithStaticInitializationBlock } = require('./static.js');
+const statics = require('./statics.js');
+const closures = require('./closures.js');
 
 function foo(argument) {
     console.log('this is foo');
@@ -87,8 +88,8 @@ function init(stop) {
         privateFunction();
     }
 
-    new ClassWithStaticInitializationBlock();
-
+    statics();
+    closures();
 }
 
 const onload = (something) => {

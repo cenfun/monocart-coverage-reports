@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "81.00 %",
-        "statements": "83.37 %",
-        "branches": "59.43 %",
-        "functions": "83.33 %",
-        "lines": "70.88 %"
+        "bytes": "80.87 %",
+        "statements": "83.60 %",
+        "branches": "59.35 %",
+        "functions": "84.27 %",
+        "lines": "70.94 %"
     },
     "files": {
         "src/comments.js": {
@@ -128,21 +128,29 @@
             "bytes": "81.63 %",
             "uncoveredLines": "16-22"
         },
-        "src/static.js": {
-            "functions": "80.00 %",
+        "src/statics.js": {
+            "functions": "83.33 %",
             "branches": "50.00 %",
-            "statements": "83.33 %",
+            "statements": "84.21 %",
             "lines": "75.00 %",
-            "bytes": "77.83 %",
+            "bytes": "78.24 %",
             "uncoveredLines": "9,11-13,25-27"
+        },
+        "src/closures.js": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "90.00 %",
+            "lines": "69.23 %",
+            "bytes": "70.43 %",
+            "uncoveredLines": "8-12"
         },
         "src/index.js": {
             "functions": "50.00 %",
             "branches": "42.86 %",
-            "statements": "66.15 %",
-            "lines": "52.94 %",
-            "bytes": "63.82 %",
-            "uncoveredLines": "22-28,36-61,67-70,74-76,86-88,96-99,110"
+            "statements": "67.16 %",
+            "lines": "54.02 %",
+            "bytes": "63.77 %",
+            "uncoveredLines": "23-29,37-62,68-71,75-77,87-89,97-100,111"
         }
     }
 }

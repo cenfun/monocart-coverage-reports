@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "73.99 %",
-        "statements": "82.00 %",
-        "branches": "59.76 %",
-        "functions": "78.26 %",
-        "lines": "63.76 %"
+        "bytes": "73.96 %",
+        "statements": "82.24 %",
+        "branches": "59.68 %",
+        "functions": "79.45 %",
+        "lines": "63.94 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -15,6 +15,14 @@
             "lines": "72.22 %",
             "bytes": "82.62 %",
             "uncoveredLines": "9,14-20"
+        },
+        "test/mock/src/closures.js": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "88.89 %",
+            "lines": "69.23 %",
+            "bytes": "70.43 %",
+            "uncoveredLines": "8-12"
         },
         "test/mock/src/comments.js": {
             "functions": "",
@@ -35,10 +43,10 @@
         "test/mock/src/index.js": {
             "functions": "53.85 %",
             "branches": "57.14 %",
-            "statements": "70.77 %",
-            "lines": "56.47 %",
-            "bytes": "67.58 %",
-            "uncoveredLines": "25-27,36-61,67-70,74-76,86-88,96-99,110"
+            "statements": "71.64 %",
+            "lines": "57.47 %",
+            "bytes": "67.54 %",
+            "uncoveredLines": "26-28,37-62,68-71,75-77,87-89,97-100,111"
         },
         "test/mock/src/statement.js": {
             "functions": "100.00 %",
@@ -48,12 +56,12 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "test/mock/src/static.js": {
-            "functions": "75.00 %",
+        "test/mock/src/statics.js": {
+            "functions": "80.00 %",
             "branches": "50.00 %",
-            "statements": "75.00 %",
+            "statements": "76.92 %",
             "lines": "75.00 %",
-            "bytes": "77.83 %",
+            "bytes": "78.24 %",
             "uncoveredLines": "9,11-13,25-27"
         },
         "test/mock/src/typescript.ts": {
