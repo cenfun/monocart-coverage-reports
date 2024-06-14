@@ -3,6 +3,8 @@
 - 2.8.4
   - updated UI: highlight keywords for searching results
   - fixed coverage for static initialization blocks (#37)
+  - fixed ignored ranges
+  - fixed `CoverageReportOptions#reports` type
 
 - 2.8.3
   - fixed error occurred in electron (#27)

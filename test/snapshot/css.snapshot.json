@@ -8,20 +8,20 @@
         "lines": "39.44 %"
     },
     "files": {
-        "anonymous/style1.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "50.00 %",
-            "bytes": "70.81 %",
-            "uncoveredLines": "7-9"
-        },
         "anonymous/style2.css": {
             "functions": "",
             "branches": "",
             "statements": "",
             "lines": "50.00 %",
             "bytes": "71.12 %",
+            "uncoveredLines": "7-9"
+        },
+        "anonymous/style1.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "70.81 %",
             "uncoveredLines": "7-9"
         },
         "anonymous/style3.css": {

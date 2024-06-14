@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "80.87 %",
-        "statements": "82.77 %",
-        "branches": "59.35 %",
-        "functions": "80.28 %",
-        "lines": "70.94 %"
+        "bytes": "79.40 %",
+        "statements": "81.72 %",
+        "branches": "59.27 %",
+        "functions": "78.38 %",
+        "lines": "69.34 %"
     },
     "files": {
         "src/async.js": {
@@ -65,12 +65,12 @@
             "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78"
         },
         "src/closures.js": {
-            "functions": "100.00 %",
+            "functions": "66.67 %",
             "branches": "50.00 %",
-            "statements": "88.89 %",
-            "lines": "69.23 %",
-            "bytes": "70.43 %",
-            "uncoveredLines": "8-12"
+            "statements": "60.00 %",
+            "lines": "32.14 %",
+            "bytes": "33.11 %",
+            "uncoveredLines": "8-32"
         },
         "src/comments.js": {
             "functions": "",
@@ -92,7 +92,7 @@
             "functions": "100.00 %",
             "branches": "60.00 %",
             "statements": "83.33 %",
-            "lines": "80.00 %",
+            "lines": "78.95 %",
             "bytes": "88.89 %",
             "uncoveredLines": "9,33-35"
         },

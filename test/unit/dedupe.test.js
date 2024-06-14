@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { dedupeFlatRanges } = require('../../lib/utils/dedupe.js');
+const { dedupeFlatRanges, dedupeCountRanges } = require('../../lib/utils/dedupe.js');
 
 it('dedupeFlatRanges', () => {
 
@@ -28,5 +28,24 @@ it('dedupeFlatRanges', () => {
     // console.log('dedupeFlatRanges', newRanges);
 
     assert.equal(JSON.stringify(newRanges), '[{"start":0,"end":15},{"start":18,"end":80},{"start":100,"end":200}]');
+
+});
+
+it('dedupeCountRanges', () => {
+    const bytes = [{
+        'start': 11617, 'end': 12063, 'count': 1
+    }, {
+        'start': 11617, 'end': 12063, 'count': 1
+    }, {
+        'start': 11733, 'end': 12062, 'count': 0
+    }];
+
+    // console.log('bytes', bytes);
+
+    const list = dedupeCountRanges(bytes);
+
+    // console.log('results after dedupe', list);
+    // console.log(JSON.stringify(list));
+    assert.equal(JSON.stringify(list), '[{"start":11617,"end":12063,"count":2},{"start":11733,"end":12062,"count":0}]');
 
 });

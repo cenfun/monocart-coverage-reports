@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "82.16 %",
-        "statements": "83.56 %",
-        "branches": "60.00 %",
-        "functions": "86.54 %",
-        "lines": "69.94 %"
+        "bytes": "82.31 %",
+        "statements": "83.83 %",
+        "branches": "60.43 %",
+        "functions": "88.46 %",
+        "lines": "70.26 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -81,12 +81,12 @@
             "uncoveredLines": "4-6,12-22"
         },
         "monocart-coverage-reports/test/mock/src/ignore/ignore.js": {
-            "functions": "0.00 %",
-            "branches": "40.00 %",
-            "statements": "75.00 %",
-            "lines": "70.00 %",
-            "bytes": "86.04 %",
-            "uncoveredLines": "9,32-36"
+            "functions": "100.00 %",
+            "branches": "60.00 %",
+            "statements": "83.33 %",
+            "lines": "78.95 %",
+            "bytes": "88.89 %",
+            "uncoveredLines": "9,33-35"
         },
         "monocart-coverage-reports/test/mock/src/ignore/v8-ignore-next.js": {
             "functions": "",

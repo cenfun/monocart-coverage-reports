@@ -47,6 +47,9 @@ const executeNpmRun = (item) => {
 
 const test = async (type) => {
 
+    // remove assets
+    Util.rmSync('./docs/assets');
+
     const groups = {
 
         '--node': [
