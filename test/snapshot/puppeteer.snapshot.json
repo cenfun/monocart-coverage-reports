@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "72.80 %",
+        "bytes": "73.59 %",
         "statements": "81.20 %",
         "branches": "59.60 %",
         "functions": "77.63 %",
-        "lines": "62.68 %"
+        "lines": "63.57 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -20,9 +20,9 @@
             "functions": "66.67 %",
             "branches": "50.00 %",
             "statements": "60.00 %",
-            "lines": "32.14 %",
-            "bytes": "33.11 %",
-            "uncoveredLines": "8-32"
+            "lines": "57.14 %",
+            "bytes": "59.90 %",
+            "uncoveredLines": "8-16,19-21,26-28"
         },
         "test/mock/src/comments.js": {
             "functions": "",

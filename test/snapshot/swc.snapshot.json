@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "79.40 %",
+        "bytes": "80.30 %",
         "statements": "81.72 %",
         "branches": "59.27 %",
         "functions": "78.38 %",
-        "lines": "69.34 %"
+        "lines": "70.36 %"
     },
     "files": {
         "src/async.js": {
@@ -68,9 +68,9 @@
             "functions": "66.67 %",
             "branches": "50.00 %",
             "statements": "60.00 %",
-            "lines": "32.14 %",
-            "bytes": "33.11 %",
-            "uncoveredLines": "8-32"
+            "lines": "57.14 %",
+            "bytes": "59.90 %",
+            "uncoveredLines": "8-16,19-21,26-28"
         },
         "src/comments.js": {
             "functions": "",

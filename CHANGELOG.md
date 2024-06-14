@@ -3,6 +3,7 @@
 - 2.8.4
   - updated UI: highlight keywords for searching results
   - fixed coverage for static initialization blocks (#37)
+  - fixed coverage for function defined after return (#38)
   - fixed ignored ranges
   - fixed `CoverageReportOptions#reports` type
 
