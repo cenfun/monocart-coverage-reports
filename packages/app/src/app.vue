@@ -681,9 +681,9 @@ const watermarkFilter = (status) => {
     return false;
 };
 
-const searchHandler = (rowItem, grid) => {
+const searchHandler = function(rowItem) {
 
-    const hasMatched = grid.highlightKeywordsFilter(rowItem, ['name'], state.keywords);
+    const hasMatched = this.highlightKeywordsFilter(rowItem, ['name'], state.keywords);
 
     if (rowItem.tg_frozen) {
         return true;
@@ -731,9 +731,7 @@ const initGrid = () => {
         frozenRow: 0,
         frozenColumn: 0,
         frozenRowHoverable: true,
-        rowFilter: (rowItem) => {
-            return searchHandler(rowItem, grid);
-        },
+        rowFilter: searchHandler,
         rowNumberVisible: true,
         rowNumberFilter: (rowItem) => {
             if (!rowItem.isSummary && !rowItem.subs) {
