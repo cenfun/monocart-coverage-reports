@@ -57,6 +57,7 @@
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "dev": "sf d app",
         "open": "node ./scripts/open.js",
+        "eol": "git rm -rf --cached . && git reset --hard HEAD",
         "patch": "npm run build && npm run test && sf publish patch -r"
     },
     "workspaces": [

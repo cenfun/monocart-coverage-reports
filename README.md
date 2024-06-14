@@ -1072,8 +1072,7 @@ npm run dev
 ```
 - Refreshing `eol=lf` for snapshot of test (Windows)
 ```sh
-git rm -rf --cached .
-git reset --hard HEAD
+npm run eol
 ```
 
 ### VSCode Extension
