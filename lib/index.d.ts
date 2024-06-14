@@ -206,10 +206,11 @@ declare namespace MCR {
         files: CoverageFile[];
     } | undefined;
 
+    export type LoggingType = "off" | "error" | "info" | "debug";
     export interface CoverageReportOptions {
 
         /** {string} logging levels: off, error, info, debug */
-        logging?: string;
+        logging?: LoggingType;
 
         /** {string} Report name. Defaults to "Coverage Report". */
         name?: string;
@@ -493,6 +494,10 @@ declare namespace MCR {
     }
 
     export function CDPClient(cdpOptions: CDPOptions): Promise<CoverageClient | undefined>;
+
+    export const Util: {
+        initLoggingLevel: (logging: LoggingType) => string;
+    };
 
 }
 
