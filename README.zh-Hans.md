@@ -1076,6 +1076,9 @@ npm run dev
 ```
 - Refreshing `eol=lf` for snapshot of test (Windows)
 ```sh
+git add . -u
+git commit -m "Saving files before refreshing line endings"
+
 npm run eol
 ```
 
