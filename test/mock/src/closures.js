@@ -20,6 +20,12 @@ function functionDefineAfterReturn(v) {
             return a;
         }
         covered();
+        [1, 2].forEach((n) => {
+            // sub function
+        });
+
+        console.log('should be covered here');
+
         return 'Hello';
     }
 

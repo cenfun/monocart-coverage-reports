@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "73.44 %",
-        "statements": "77.07 %",
+        "bytes": "73.58 %",
+        "statements": "77.15 %",
         "branches": "59.46 %",
-        "functions": "71.00 %",
-        "lines": "63.47 %"
+        "functions": "71.29 %",
+        "lines": "63.60 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -17,12 +17,12 @@
             "uncoveredLines": "9,14-20"
         },
         "test/mock/src/closures.js": {
-            "functions": "66.67 %",
+            "functions": "71.43 %",
             "branches": "50.00 %",
-            "statements": "60.00 %",
-            "lines": "57.14 %",
-            "bytes": "59.90 %",
-            "uncoveredLines": "8-16,19-21,26-28"
+            "statements": "63.64 %",
+            "lines": "61.29 %",
+            "bytes": "66.76 %",
+            "uncoveredLines": "8-16,19-21,32-34"
         },
         "test/mock/src/comments.js": {
             "functions": "",
