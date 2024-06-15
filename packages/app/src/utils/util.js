@@ -51,7 +51,9 @@ const Util = {
                 const unit = units[i];
                 if (unit) {
                     const n = v / min;
-                    v = parseFloat(n.toFixed(2));
+                    const nl = n.toString().split('.')[0].length;
+                    const fl = Math.max(3 - nl, 1);
+                    v = n.toFixed(fl);
                 }
                 v = v + space + unit + postfix;
                 break;

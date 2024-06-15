@@ -6,6 +6,7 @@
   - fixed coverage for function defined after return (#38)
   - fixed ignored ranges
   - fixed `CoverageReportOptions#reports` type
+  - fixed v8 report UI for hits
 
 - 2.8.3
   - fixed error occurred in electron (#27)

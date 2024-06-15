@@ -338,26 +338,26 @@ const updateExecutionCounts = (coverage) => {
 
     // init
     coverage.executionCounts = {};
-    data.topCounts = null;
+    data.topHits = null;
 
     const { allExecutionCounts } = coverage;
     const allCounts = Object.keys(allExecutionCounts);
     if (!allCounts.length) {
-        data.showCount = false;
+        data.showHits = false;
         return;
     }
 
-    data.showCount = true;
+    data.showHits = true;
     if (!state.count) {
         return;
     }
 
     coverage.executionCounts = allExecutionCounts;
-    const topCounts = [];
+    const topHits = [];
     allCounts.forEach((lineIndex) => {
         const arr = allExecutionCounts[lineIndex];
         arr.forEach((item) => {
-            topCounts.push({
+            topHits.push({
                 ... item,
                 // line index to line number
                 line: parseInt(lineIndex) + 1
@@ -365,16 +365,16 @@ const updateExecutionCounts = (coverage) => {
         });
     });
 
-    topCounts.sort((a, b) => {
+    topHits.sort((a, b) => {
         return b.count - a.count;
     });
 
     const maxNumber = 5;
-    if (topCounts.length > maxNumber) {
-        topCounts.length = maxNumber;
+    if (topHits.length > maxNumber) {
+        topHits.length = maxNumber;
     }
 
-    data.topCounts = topCounts;
+    data.topHits = topHits;
 };
 
 const autoDetectType = (item) => {
@@ -689,15 +689,15 @@ onMounted(() => {
     </VuiFlex>
 
     <VuiFlex
-      v-if="data.topCounts"
+      v-if="data.topHits"
       padding="5px"
       class="mcr-report-head"
       wrap
       gap="10px"
     >
-      <div><b>Top Counts</b></div>
+      <div><b>Top Hits</b></div>
       <VuiFlex
-        v-for="(item, i) in data.topCounts"
+        v-for="(item, i) in data.topHits"
         :key="i"
         class="mcr-top-item"
         wrap
@@ -721,15 +721,15 @@ onMounted(() => {
       gap="10px"
     >
       <VuiSwitch
-        v-if="data.showCount"
+        v-if="data.showHits"
         v-model="state.count"
         width="30px"
         height="18px"
-        tooltip="Show Execution Count"
+        tooltip="Show Hits"
         :label-clickable="true"
         label-position="right"
       >
-        Count
+        Hits
       </VuiSwitch>
 
       <VuiSwitch
