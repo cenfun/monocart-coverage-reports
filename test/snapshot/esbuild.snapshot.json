@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "80.44 %",
-        "statements": "82.64 %",
+        "bytes": "80.86 %",
+        "statements": "82.92 %",
         "branches": "59.27 %",
-        "functions": "82.80 %",
-        "lines": "70.49 %"
+        "functions": "83.33 %",
+        "lines": "71.03 %"
     },
     "files": {
         "src/comments.js": {
@@ -17,12 +17,12 @@
             "uncoveredLines": ""
         },
         "src/async.js": {
-            "functions": "50.00 %",
+            "functions": "71.43 %",
             "branches": "62.50 %",
-            "statements": "85.71 %",
-            "lines": "72.22 %",
-            "bytes": "82.62 %",
-            "uncoveredLines": "9,14-20"
+            "statements": "89.29 %",
+            "lines": "80.49 %",
+            "bytes": "89.40 %",
+            "uncoveredLines": "9,15-22,40-41,49"
         },
         "src/ignore/v8-ignore-next.js": {
             "functions": "100.00 %",

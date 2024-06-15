@@ -1,20 +1,20 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "73.75 %",
-        "statements": "81.28 %",
+        "bytes": "74.32 %",
+        "statements": "81.60 %",
         "branches": "59.60 %",
-        "functions": "77.92 %",
-        "lines": "63.71 %"
+        "functions": "78.75 %",
+        "lines": "64.36 %"
     },
     "files": {
         "test/mock/src/async.js": {
-            "functions": "33.33 %",
+            "functions": "66.67 %",
             "branches": "62.50 %",
-            "statements": "84.62 %",
-            "lines": "72.22 %",
-            "bytes": "82.62 %",
-            "uncoveredLines": "9,14-20"
+            "statements": "88.89 %",
+            "lines": "80.49 %",
+            "bytes": "89.40 %",
+            "uncoveredLines": "9,15-22,40-41,49"
         },
         "test/mock/src/closures.js": {
             "functions": "71.43 %",

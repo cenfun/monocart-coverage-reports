@@ -1,18 +1,18 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "81.81 %",
-        "statements": "81.91 %",
-        "functions": "75.64 %",
+        "lines": "82.13 %",
+        "statements": "82.22 %",
+        "functions": "76.54 %",
         "branches": "58.20 %"
     },
     "files": {
         "async.js": {
-            "lines": "100.00 %",
-            "functions": "33.33 %",
-            "statements": "100.00 %",
+            "lines": "95.83 %",
+            "functions": "66.66 %",
+            "statements": "95.83 %",
             "branches": "62.50 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "40"
         },
         "branch/assignment.js": {
             "lines": "80.00 %",

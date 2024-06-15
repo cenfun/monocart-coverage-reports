@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "53.08 %",
-        "statements": "57.28 %",
+        "bytes": "51.47 %",
+        "statements": "55.80 %",
         "branches": "52.27 %",
-        "functions": "51.72 %",
-        "lines": "45.83 %"
+        "functions": "50.00 %",
+        "lines": "44.55 %"
     },
     "files": {
         "test/mock/src/async.js": {
@@ -14,7 +14,7 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "1-24"
+            "uncoveredLines": "1-54"
         },
         "test/mock/src/closures.js": {
             "functions": "0.00 %",
