@@ -25,7 +25,7 @@
     "types": "./lib/index.d.ts",
     "scripts": {
         "build-test": "node ./test/build/build-test.js",
-        "build": "sf lint && sf b -p && npm run build-test",
+        "build": "npx sf lint && npx sf b -p && npm run build-test",
         "test-unit": "mocha --parallel test/unit/*.test.js",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",
@@ -55,10 +55,10 @@
         "test-all": "node ./test/test.js && node ./scripts/docs.js",
         "test": "npm run test-unit && npx mcr npm run test-all -c test/mcr.config.mcr.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
-        "dev": "sf d app",
+        "dev": "npx sf d app",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
-        "patch": "npm run build && npm run test && sf publish patch -r"
+        "patch": "npm run build && npm run test && npx sf publish patch -r"
     },
     "workspaces": [
         "packages/*",
@@ -94,6 +94,7 @@
         "eslint-plugin-vue": "^9.26.0",
         "find-up": "^7.0.0",
         "minimatch": "^9.0.4",
+        "starfall-cli": "^2.0.19",
         "stylelint": "^16.6.1",
         "stylelint-config-plus": "^1.1.2",
         "supports-color": "^9.4.0",

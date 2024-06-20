@@ -1066,8 +1066,8 @@ const coverageOptions = {
 - Node.js 20+
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
-npm install starfall-cli -g
 npm install
+npx playwright install --with-deps
 
 npm run build
 npm run test
