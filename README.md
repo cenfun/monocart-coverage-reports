@@ -506,7 +506,7 @@ const coverageOptions = {
     sourceFilter: "**/src/**"
 };
 ```
-Supports multiple patterns:
+Support multiple patterns:
 ```js
 const coverageOptions = {
     entryFilter: {
