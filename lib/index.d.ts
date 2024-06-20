@@ -128,7 +128,7 @@ declare namespace MCR {
         path: string;
         type: "v8" | "istanbul";
         data: any;
-    } | undefined;
+    };
 
 
     export interface MetricsSummary {
@@ -204,7 +204,7 @@ declare namespace MCR {
         watermarks: Watermarks;
         summary: CoverageSummary;
         files: CoverageFile[];
-    } | undefined;
+    };
 
     export type LoggingType = "off" | "error" | "info" | "debug";
     export interface CoverageReportOptions {
@@ -329,7 +329,7 @@ declare namespace MCR {
         onEntry?: (entry: V8CoverageEntry) => Promise<void>;
 
         /** {function} onEnd hook */
-        onEnd?: (coverageResults: CoverageResults) => Promise<void>;
+        onEnd?: (coverageResults: CoverageResults | undefined) => Promise<void>;
 
         [key: string]: any;
     }
@@ -357,7 +357,7 @@ declare namespace MCR {
         /** add coverage data
          * 
          * @param coverageData {array} V8 format, {object} Istanbul format */
-        add: (coverageData: any[] | any) => Promise<AddedResults>;
+        add: (coverageData: any[] | any) => Promise<AddedResults | undefined>;
 
         /**
          * add V8 coverage from a dir
@@ -366,7 +366,7 @@ declare namespace MCR {
         addFromDir: (dir: string) => Promise<void>;
 
         /** generate report */
-        generate: () => Promise<CoverageResults>;
+        generate: () => Promise<CoverageResults | undefined>;
 
         /** check if cache exists */
         hasCache: () => boolean;
