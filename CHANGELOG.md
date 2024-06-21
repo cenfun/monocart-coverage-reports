@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.8.5
+  - fixed a sourcemap content issue
+
 - 2.8.4
   - updated UI: highlight keywords for searching results
   - fixed coverage for static initialization blocks (#37)
