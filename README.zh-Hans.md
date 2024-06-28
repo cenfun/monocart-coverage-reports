@@ -4,7 +4,7 @@
 [![](https://badgen.net/npm/dw/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
 ![](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
 ![](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
-![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/static.yml)
+![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/ci.yml)
 
 🌐 [English](README.md) | 简体中文
 
