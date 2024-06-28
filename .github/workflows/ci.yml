@@ -71,10 +71,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: artifact-20
-          path: ./
+          path: ./docs
 
       - run: ls -al
-      - run: ls -R docs
         
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
