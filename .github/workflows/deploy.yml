@@ -1,15 +1,10 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy Report to Pages
+name: Deploy
 
 on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-    
-  pull_request:
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -25,25 +20,7 @@ concurrency:
 
 jobs:
 
-  test-node-18:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-          cache: ''
-      - run: npm install
-      - run: npx playwright install --with-deps
-      - run: npm run build
-      - run: npm run test
-        env:
-          FORCE_COLOR: true
-
-  test-node-20-and-deploy:
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
