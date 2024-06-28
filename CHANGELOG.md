@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.8.6
+  - improved performance
+
 - 2.8.5
   - fixed a sourcemap content issue
 
