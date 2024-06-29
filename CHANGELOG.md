@@ -2,6 +2,8 @@
 
 - 2.8.6
   - improved performance
+  - fixed warning message for adding empty istanbul coverage
+  - fixed time duration formatter
 
 - 2.8.5
   - fixed a sourcemap content issue
