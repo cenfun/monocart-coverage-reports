@@ -5,7 +5,7 @@
         "statements": "39.42 %",
         "branches": "25.37 %",
         "functions": "42.80 %",
-        "lines": "36.71 %"
+        "lines": "36.73 %"
     },
     "files": {
         "localhost-8130/demo.js": {
@@ -244,9 +244,9 @@
             "functions": "27.78 %",
             "branches": "7.14 %",
             "statements": "22.86 %",
-            "lines": "31.10 %",
-            "bytes": "26.28 %",
-            "uncoveredLines": "31-250,254-290,309-347,360,365-367,370-398"
+            "lines": "31.90 %",
+            "bytes": "27.04 %",
+            "uncoveredLines": "31-250,254-290,309-347,360,365-366,372-398"
         },
         "monocart-v8/packages/v8/src/app.vue/5edf": {
             "functions": "",
