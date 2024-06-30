@@ -1,9 +1,7 @@
 /.temp
 /node_modules
 /packages/**/dist
-/package-lock.json
 /lib/packages
 /docs/*/.cache
 /test/mock/*/dist
 /docs
-/packages/*/node_modules/
