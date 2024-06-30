@@ -61,4 +61,3 @@ jobs:
         env:
           FORCE_COLOR: true
           MCR_LOG_TIME: true
-          NODE_OPTIONS: --max-old-space-size=8192
