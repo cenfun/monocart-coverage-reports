@@ -35,6 +35,7 @@
 * [常见问题](#common-issues)
     - [Unexpected coverage](#unexpected-coverage)
     - [Unparsable source](#unparsable-source)
+    - [JavaScript heap out of memory](#javascript-heap-out-of-memory)
 * [如何调试覆盖率数据和查看sourcemap](#debug-for-coverage-and-sourcemap)
 * [如何跟其他框架集成](#integration-with-any-testing-framework)
 * [集成的例子](#integration-examples)

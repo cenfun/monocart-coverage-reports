@@ -35,6 +35,7 @@
 * [Common issues](#common-issues)
     - [Unexpected coverage](#unexpected-coverage)
     - [Unparsable source](#unparsable-source)
+    - [JavaScript heap out of memory](#javascript-heap-out-of-memory)
 * [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 * [Integration with Any Testing Framework](#integration-with-any-testing-framework)
 * [Integration Examples](#integration-examples)
