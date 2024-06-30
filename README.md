@@ -881,6 +881,15 @@ const coverageOptions = {
 }
 ```
 
+### JavaScript heap out of memory
+When there are a lot of raw v8 coverage files to process, it may cause OOM. We can try the following Node.js options:
+```sh
+- run: npm run test:coverage
+    env:
+        NODE_OPTIONS: --max-old-space-size=8192
+```
+
+
 ## Debug for Coverage and Sourcemap
 > Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
 - Start debugging for v8 report with option `logging: 'debug'`
@@ -899,6 +908,11 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 - Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
 
 ![](./assets/debug-sourcemap.png)
+
+- Show time logs with env `MCR_LOG_TIME`
+```js
+process.env.MCR_LOG_TIME = true
+```
 
 ## Integration with Any Testing Framework
 - API

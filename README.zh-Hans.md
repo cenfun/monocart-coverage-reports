@@ -884,6 +884,15 @@ const coverageOptions = {
 }
 ```
 
+### JavaScript heap out of memory
+内存溢出问题可能出现在有太多的原生V8覆盖率文件要处理. 我们可以使用Node.js的一个选项来增加内存使用:
+```sh
+- run: npm run test:coverage
+    env:
+        NODE_OPTIONS: --max-old-space-size=8192
+```
+
+
 ## Debug for Coverage and Sourcemap
 > 当你觉得覆盖率存在问题的时候，`MCR`支持自行调试来核验覆盖率的准确性
 - 首先打开调试设置`logging: 'debug'`
@@ -902,6 +911,11 @@ const coverageOptions = {
 - 调试sourcemap可以直接使用[Source Map Visualization](https://evanw.github.io/source-map-visualization/) （esbuild作者提供的sourcemap在线查看器）
 
 ![](./assets/debug-sourcemap.png)
+
+- 使用环境变量`MCR_LOG_TIME`显示时间日志
+```js
+process.env.MCR_LOG_TIME = true
+```
 
 ## Integration with Any Testing Framework
 通用集成方案
