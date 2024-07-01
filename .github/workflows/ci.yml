@@ -76,7 +76,9 @@ jobs:
       - run: ls -al
 
       - name: Generate list using Markdown
-        run: cat docs/v8/coverage-summary.md > $GITHUB_STEP_SUMMARY
+        run: |
+          cat docs/v8/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+          cat docs/v8/coverage-details.md >> $GITHUB_STEP_SUMMARY
         
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
