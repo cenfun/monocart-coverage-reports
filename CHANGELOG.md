@@ -1,5 +1,9 @@
 ## Changelog
 
+- 2.8.7
+  - fixed OOM with better GC
+  - added new build-in report: `codacy` (codacy.json)
+
 - 2.8.6
   - improved performance
   - fixed warning message for adding empty istanbul coverage

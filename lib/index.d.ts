@@ -107,6 +107,9 @@ declare namespace MCR {
         ['codecov'] | ["codecov", {
             outputFile?: string;
         }] |
+        ['codacy'] | ["codacy", {
+            outputFile?: string;
+        }] |
         ['console-summary'] | ['console-summary', {
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
         }] |
@@ -190,7 +193,7 @@ declare namespace MCR {
             branches?: CoverageRange[];
             functions?: CoverageRange[];
             ignores?: IgnoredRange[];
-            /** codecov json format */
+            /** common json format */
             lines: {
                 [key: string]: number | string;
             };
