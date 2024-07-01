@@ -142,6 +142,9 @@ For more information, see [Command Line](#command-line)
 - `codecov`
     - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 
+- `codacy`
+    - coverage data for [Codacy](https://api.codacy.com/swagger#tocscoveragereport) API
+
 - `console-summary` shows coverage summary in the console
 
 ![](./assets/console-summary.png)

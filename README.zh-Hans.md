@@ -142,6 +142,9 @@ mcr node my-app.js -r v8,console-details
 - `codecov`
     - 专属支持[Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format)的报告, see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 
+- `codacy`
+    - 专属支持[Codacy](https://api.codacy.com/swagger#tocscoveragereport) API的报告
+
 - `console-summary` 在控制台显示覆盖率概要
 
 ![](./assets/console-summary.png)
