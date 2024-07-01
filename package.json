@@ -82,12 +82,12 @@
         "lz-utils": "^2.0.2",
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
-        "monocart-locator": "^1.0.0",
+        "monocart-locator": "^1.0.1",
         "turbogrid": "^3.2.0"
     },
     "devDependencies": {
         "commander": "^12.1.0",
-        "esbuild": "^0.21.5",
+        "esbuild": "^0.22.0",
         "eslint": "~9.6.0",
         "eslint-config-plus": "^2.0.2",
         "eslint-plugin-html": "^8.1.1",
