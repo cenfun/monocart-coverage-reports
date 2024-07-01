@@ -23,7 +23,9 @@ const coverageOptions = {
             // metrics: ['bytes', 'functions', 'lines']
         }],
         'v8-json',
-        'markdown-details',
+        ['markdown-details', {
+            metrics: ['bytes', 'lines']
+        }],
         'markdown-summary',
         [path.resolve('./test/custom-istanbul-reporter.js'), {
             type: 'istanbul',
