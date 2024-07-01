@@ -1,0 +1,67 @@
+name: Test typescript
+
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: ''
+
+      - run: npm install
+      - run: npm run build
+        env:
+          FORCE_COLOR: true
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: ./lib
+
+  coverage:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: jakebailey/TypeScript
+          ref: coverage
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          check-latest: true
+
+      - run: npm ci
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact
+          path: ./node_modules/monocart-coverage-reports/lib
+
+      - name: Show CPU and Memory
+        run: lscpu && free -h
+
+      - name: Run tests with coverage
+        run: npm test -- --no-lint --coverage
+        env:
+          FORCE_COLOR: true
+          MCR_LOG_TIME: true
