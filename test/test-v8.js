@@ -23,10 +23,14 @@ const coverageOptions = {
             // metrics: ['bytes', 'functions', 'lines']
         }],
         'v8-json',
+        ['markdown-summary', {
+            // color: 'html'
+        }],
         ['markdown-details', {
+            color: 'html',
+            baseUrl: 'https://github.com/cenfun/monocart-coverage-reports/blob/main/',
             metrics: ['bytes', 'lines']
         }],
-        'markdown-summary',
         [path.resolve('./test/custom-istanbul-reporter.js'), {
             type: 'istanbul',
             file: 'custom-istanbul-coverage.text'
