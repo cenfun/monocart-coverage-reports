@@ -32,14 +32,6 @@
             "bytes": "72.66 %",
             "uncoveredLines": "6-8"
         },
-        "test/mock/minify/with-map/bootstrap.min.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "50.00 %",
-            "bytes": "1.57 %",
-            "uncoveredLines": "6"
-        },
         "test/mock/css/style.css": {
             "functions": "",
             "branches": "",
@@ -47,6 +39,14 @@
             "lines": "35.29 %",
             "bytes": "48.28 %",
             "uncoveredLines": "12-18,33-53,69-85"
+        },
+        "test/mock/minify/with-map/bootstrap.min.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "1.57 %",
+            "uncoveredLines": "6"
         }
     }
 }

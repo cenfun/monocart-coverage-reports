@@ -8,13 +8,61 @@
         "lines": "36.73 %"
     },
     "files": {
-        "localhost-8130/demo.js": {
-            "functions": "80.00 %",
-            "branches": "73.33 %",
-            "statements": "89.29 %",
-            "lines": "77.50 %",
-            "bytes": "87.26 %",
-            "uncoveredLines": "28-30,39-41,48-50"
+        "fps-detector/src/index.js": {
+            "functions": "81.25 %",
+            "branches": "61.11 %",
+            "statements": "78.57 %",
+            "lines": "83.25 %",
+            "bytes": "88.36 %",
+            "uncoveredLines": "3-4,28-30,94-95,105-120,163,167-178,187-188,254-256"
+        },
+        "fps-detector/webpack/bootstrap": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/runtime/define-property-getters": {
+            "functions": "100.00 %",
+            "branches": "100.00 %",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/runtime/hasOwnProperty-shorthand": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/runtime/make-namespace-object": {
+            "functions": "100.00 %",
+            "branches": "100.00 %",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "fps-detector/webpack/universalModuleDefinition": {
+            "functions": "100.00 %",
+            "branches": "42.86 %",
+            "statements": "100.00 %",
+            "lines": "54.55 %",
+            "bytes": "61.60 %",
+            "uncoveredLines": "2-5,7"
+        },
+        "localhost-8130": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
         },
         "localhost-8130/browser.js": {
             "functions": "55.26 %",
@@ -23,6 +71,22 @@
             "lines": "0.00 %",
             "bytes": "69.67 %",
             "uncoveredLines": "1-2"
+        },
+        "localhost-8130/css/style.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "",
+            "bytes": "",
+            "uncoveredLines": ""
+        },
+        "localhost-8130/demo.js": {
+            "functions": "80.00 %",
+            "branches": "73.33 %",
+            "statements": "89.29 %",
+            "lines": "77.50 %",
+            "bytes": "87.26 %",
+            "uncoveredLines": "28-30,39-41,48-50"
         },
         "localhost-8130/ie-polyfill.js": {
             "functions": "46.23 %",
@@ -40,22 +104,6 @@
             "bytes": "71.91 %",
             "uncoveredLines": "6-7,14-18,69-72,77-78,80-87,97,107-136,140,142,144-145"
         },
-        "localhost-8130/with-map/coverage-data.js": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "localhost-8130": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
         "localhost-8130/with-map/bootstrap.min.css": {
             "functions": "",
             "branches": "",
@@ -64,21 +112,37 @@
             "bytes": "1.55 %",
             "uncoveredLines": "6"
         },
-        "localhost-8130/css/style.css": {
+        "localhost-8130/with-map/coverage-data.js": {
             "functions": "",
             "branches": "",
-            "statements": "",
-            "lines": "",
-            "bytes": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "monocart-v8/webpack/universalModuleDefinition": {
-            "functions": "100.00 %",
-            "branches": "50.00 %",
-            "statements": "57.14 %",
-            "lines": "54.55 %",
-            "bytes": "56.45 %",
-            "uncoveredLines": "2-5,7"
+        "monocart-v8/external-umd-monocart-code-viewer": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/external-umd-monocart-formatter": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/lib/platform/share.js": {
+            "functions": "28.57 %",
+            "branches": "31.00 %",
+            "statements": "33.09 %",
+            "lines": "41.82 %",
+            "bytes": "47.46 %",
+            "uncoveredLines": "66-90,93-98,105-176,185-187,191-194,200-217,231,245-249,254,260-263,284-328"
         },
         "monocart-v8/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js": {
             "functions": "46.72 %",
@@ -160,22 +224,6 @@
             "bytes": "54.10 %",
             "uncoveredLines": "14-20"
         },
-        "monocart-v8/packages/v8/src/images/icons/sync-.svg$": {
-            "functions": "100.00 %",
-            "branches": "50.00 %",
-            "statements": "80.00 %",
-            "lines": "77.27 %",
-            "bytes": "85.12 %",
-            "uncoveredLines": "12-16"
-        },
-        "monocart-v8/lib/platform/share.js": {
-            "functions": "28.57 %",
-            "branches": "31.00 %",
-            "statements": "33.09 %",
-            "lines": "41.82 %",
-            "bytes": "47.46 %",
-            "uncoveredLines": "66-90,93-98,105-176,185-187,191-194,200-217,231,245-249,254,260-263,284-328"
-        },
         "monocart-v8/packages/app/src/common/hash.js": {
             "functions": "20.00 %",
             "branches": "16.67 %",
@@ -200,22 +248,6 @@
             "bytes": "64.67 %",
             "uncoveredLines": "13,15-20"
         },
-        "monocart-v8/packages/v8/src/utils/coverage.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "1.96 %",
-            "lines": "1.65 %",
-            "bytes": "9.78 %",
-            "uncoveredLines": "4-256,259-262"
-        },
-        "monocart-v8/packages/v8/src/utils/util.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "66.67 %",
-            "lines": "75.00 %",
-            "bytes": "68.95 %",
-            "uncoveredLines": "11-13"
-        },
         "monocart-v8/packages/v8/src/app.vue": {
             "functions": "65.79 %",
             "branches": "36.29 %",
@@ -224,29 +256,21 @@
             "bytes": "76.53 %",
             "uncoveredLines": "68-70,79-99,102-144,152-156,165-170,175-186,196-230,242-251,261-263,270-272,293-305,319-321,335-337,367-369,433-435,444,450-452,458-467,477-479,538,544,558-569,584-588,620-627,635-661,692,699,714,731,748"
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue": {
-            "functions": "50.00 %",
-            "branches": "66.67 %",
-            "statements": "75.00 %",
-            "lines": "87.34 %",
-            "bytes": "90.14 %",
-            "uncoveredLines": "20,28,50-58"
+        "monocart-v8/packages/v8/src/app.vue/203c": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue": {
-            "functions": "81.82 %",
-            "branches": "55.56 %",
-            "statements": "85.37 %",
-            "lines": "84.62 %",
-            "bytes": "89.86 %",
-            "uncoveredLines": "11-12,58-60,70-72,79-81,90-92,96-98,108-110"
-        },
-        "monocart-v8/packages/v8/src/components/report.vue": {
-            "functions": "27.78 %",
-            "branches": "7.14 %",
-            "statements": "22.86 %",
-            "lines": "31.90 %",
-            "bytes": "27.04 %",
-            "uncoveredLines": "31-250,254-290,309-347,360,365-366,372-398"
+        "monocart-v8/packages/v8/src/app.vue/50ef": {
+            "functions": "",
+            "branches": "50.00 %",
+            "statements": "100.00 %",
+            "lines": "93.33 %",
+            "bytes": "98.80 %",
+            "uncoveredLines": "10"
         },
         "monocart-v8/packages/v8/src/app.vue/5edf": {
             "functions": "",
@@ -256,7 +280,127 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
+        "monocart-v8/packages/v8/src/app.vue/71dc": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/app.vue/7b12": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/app.vue/cdba": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/flyover.vue": {
+            "functions": "50.00 %",
+            "branches": "66.67 %",
+            "statements": "75.00 %",
+            "lines": "87.34 %",
+            "bytes": "90.14 %",
+            "uncoveredLines": "20,28,50-58"
+        },
         "monocart-v8/packages/v8/src/components/flyover.vue/747d": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/flyover.vue/801b": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/flyover.vue/99d3": {
+            "functions": "",
+            "branches": "50.00 %",
+            "statements": "100.00 %",
+            "lines": "93.33 %",
+            "bytes": "98.83 %",
+            "uncoveredLines": "10"
+        },
+        "monocart-v8/packages/v8/src/components/flyover.vue/a4df": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/flyover.vue/c68f": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/flyover.vue/f6bb": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/icon-label.vue": {
+            "functions": "81.82 %",
+            "branches": "55.56 %",
+            "statements": "85.37 %",
+            "lines": "84.62 %",
+            "bytes": "89.86 %",
+            "uncoveredLines": "11-12,58-60,70-72,79-81,90-92,96-98,108-110"
+        },
+        "monocart-v8/packages/v8/src/components/icon-label.vue/5065": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/icon-label.vue/5ece": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/icon-label.vue/8e7a": {
+            "functions": "",
+            "branches": "50.00 %",
+            "statements": "100.00 %",
+            "lines": "93.33 %",
+            "bytes": "98.83 %",
+            "uncoveredLines": "10"
+        },
+        "monocart-v8/packages/v8/src/components/icon-label.vue/97be": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/icon-label.vue/d678": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -272,6 +416,46 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
+        "monocart-v8/packages/v8/src/components/report.vue": {
+            "functions": "27.78 %",
+            "branches": "7.14 %",
+            "statements": "22.86 %",
+            "lines": "31.90 %",
+            "bytes": "27.04 %",
+            "uncoveredLines": "31-250,254-290,309-347,360,365-366,372-398"
+        },
+        "monocart-v8/packages/v8/src/components/report.vue/0555": {
+            "functions": "",
+            "branches": "50.00 %",
+            "statements": "100.00 %",
+            "lines": "93.33 %",
+            "bytes": "98.83 %",
+            "uncoveredLines": "10"
+        },
+        "monocart-v8/packages/v8/src/components/report.vue/0b1e": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/report.vue/22b6": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/report.vue/32fe": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
         "monocart-v8/packages/v8/src/components/report.vue/5c89": {
             "functions": "",
             "branches": "",
@@ -279,6 +463,46 @@
             "lines": "100.00 %",
             "bytes": "100.00 %",
             "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/components/report.vue/e437": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/images/icons/sync-.svg$": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "80.00 %",
+            "lines": "77.27 %",
+            "bytes": "85.12 %",
+            "uncoveredLines": "12-16"
+        },
+        "monocart-v8/packages/v8/src/index.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "monocart-v8/packages/v8/src/utils/coverage.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "1.96 %",
+            "lines": "1.65 %",
+            "bytes": "9.78 %",
+            "uncoveredLines": "4-256,259-262"
+        },
+        "monocart-v8/packages/v8/src/utils/util.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "66.67 %",
+            "lines": "75.00 %",
+            "bytes": "68.95 %",
+            "uncoveredLines": "11-13"
         },
         "monocart-v8/starfall-cli/node_modules/css-loader/dist/runtime/api.js": {
             "functions": "25.00 %",
@@ -303,38 +527,6 @@
             "lines": "25.00 %",
             "bytes": "51.56 %",
             "uncoveredLines": "3-5"
-        },
-        "monocart-v8/packages/v8/src/app.vue/50ef": {
-            "functions": "",
-            "branches": "50.00 %",
-            "statements": "100.00 %",
-            "lines": "93.33 %",
-            "bytes": "98.80 %",
-            "uncoveredLines": "10"
-        },
-        "monocart-v8/packages/v8/src/components/flyover.vue/99d3": {
-            "functions": "",
-            "branches": "50.00 %",
-            "statements": "100.00 %",
-            "lines": "93.33 %",
-            "bytes": "98.83 %",
-            "uncoveredLines": "10"
-        },
-        "monocart-v8/packages/v8/src/components/icon-label.vue/8e7a": {
-            "functions": "",
-            "branches": "50.00 %",
-            "statements": "100.00 %",
-            "lines": "93.33 %",
-            "bytes": "98.83 %",
-            "uncoveredLines": "10"
-        },
-        "monocart-v8/packages/v8/src/components/report.vue/0555": {
-            "functions": "",
-            "branches": "50.00 %",
-            "statements": "100.00 %",
-            "lines": "93.33 %",
-            "bytes": "98.83 %",
-            "uncoveredLines": "10"
         },
         "monocart-v8/starfall-cli/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js": {
             "functions": "66.67 %",
@@ -379,150 +571,6 @@
         "monocart-v8/starfall-cli/node_modules/vue-loader/dist/exportHelper.js": {
             "functions": "100.00 %",
             "branches": "100.00 %",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/app.vue/71dc": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/flyover.vue/801b": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/icon-label.vue/5065": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/report.vue/0b1e": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/app.vue/203c": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/flyover.vue/f6bb": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/icon-label.vue/d678": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/report.vue/32fe": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/app.vue/cdba": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/flyover.vue/c68f": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/icon-label.vue/97be": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/report.vue/22b6": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/app.vue/7b12": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/flyover.vue/a4df": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/icon-label.vue/5ece": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/packages/v8/src/components/report.vue/e437": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/external-umd-monocart-code-viewer": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "monocart-v8/external-umd-monocart-formatter": {
-            "functions": "",
-            "branches": "",
             "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",
@@ -576,61 +624,13 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "monocart-v8/packages/v8/src/index.js": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/universalModuleDefinition": {
+        "monocart-v8/webpack/universalModuleDefinition": {
             "functions": "100.00 %",
-            "branches": "42.86 %",
-            "statements": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "57.14 %",
             "lines": "54.55 %",
-            "bytes": "61.60 %",
+            "bytes": "56.45 %",
             "uncoveredLines": "2-5,7"
-        },
-        "fps-detector/webpack/bootstrap": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/runtime/define-property-getters": {
-            "functions": "100.00 %",
-            "branches": "100.00 %",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/runtime/hasOwnProperty-shorthand": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/webpack/runtime/make-namespace-object": {
-            "functions": "100.00 %",
-            "branches": "100.00 %",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "fps-detector/src/index.js": {
-            "functions": "81.25 %",
-            "branches": "61.11 %",
-            "statements": "78.57 %",
-            "lines": "83.25 %",
-            "bytes": "88.36 %",
-            "uncoveredLines": "3-4,28-30,94-95,105-120,163,167-178,187-188,254-256"
         }
     }
 }

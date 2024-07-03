@@ -8,6 +8,14 @@
         "lines": "64.36 %"
     },
     "files": {
+        "test/mock/css/style.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "27.45 %",
+            "bytes": "45.14 %",
+            "uncoveredLines": "12-18,22-25,33-53,69-85"
+        },
         "test/mock/src/async.js": {
             "functions": "66.67 %",
             "branches": "62.50 %",
@@ -15,62 +23,6 @@
             "lines": "80.49 %",
             "bytes": "89.40 %",
             "uncoveredLines": "9,15-22,40-41,49"
-        },
-        "test/mock/src/closures.js": {
-            "functions": "71.43 %",
-            "branches": "50.00 %",
-            "statements": "63.64 %",
-            "lines": "61.29 %",
-            "bytes": "66.76 %",
-            "uncoveredLines": "8-16,19-21,32-34"
-        },
-        "test/mock/src/comments.js": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "test/mock/src/component.js": {
-            "functions": "100.00 %",
-            "branches": "50.00 %",
-            "statements": "81.82 %",
-            "lines": "62.50 %",
-            "bytes": "81.63 %",
-            "uncoveredLines": "16-22"
-        },
-        "test/mock/src/index.js": {
-            "functions": "53.85 %",
-            "branches": "57.14 %",
-            "statements": "71.64 %",
-            "lines": "57.47 %",
-            "bytes": "67.54 %",
-            "uncoveredLines": "26-28,37-62,68-71,75-77,87-89,97-100,111"
-        },
-        "test/mock/src/statement.js": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
-        },
-        "test/mock/src/statics.js": {
-            "functions": "80.00 %",
-            "branches": "50.00 %",
-            "statements": "76.92 %",
-            "lines": "75.00 %",
-            "bytes": "78.24 %",
-            "uncoveredLines": "9,11-13,25-27"
-        },
-        "test/mock/src/typescript.ts": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
         },
         "test/mock/src/branch/assignment.js": {
             "functions": "80.00 %",
@@ -120,6 +72,30 @@
             "bytes": "72.92 %",
             "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78"
         },
+        "test/mock/src/closures.js": {
+            "functions": "71.43 %",
+            "branches": "50.00 %",
+            "statements": "63.64 %",
+            "lines": "61.29 %",
+            "bytes": "66.76 %",
+            "uncoveredLines": "8-16,19-21,32-34"
+        },
+        "test/mock/src/comments.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/component.js": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "81.82 %",
+            "lines": "62.50 %",
+            "bytes": "81.63 %",
+            "uncoveredLines": "16-22"
+        },
         "test/mock/src/ignore/ignore.js": {
             "functions": "100.00 %",
             "branches": "60.00 %",
@@ -151,6 +127,38 @@
             "lines": "71.43 %",
             "bytes": "85.30 %",
             "uncoveredLines": "2,19"
+        },
+        "test/mock/src/index.js": {
+            "functions": "53.85 %",
+            "branches": "57.14 %",
+            "statements": "71.64 %",
+            "lines": "57.47 %",
+            "bytes": "67.54 %",
+            "uncoveredLines": "26-28,37-62,68-71,75-77,87-89,97-100,111"
+        },
+        "test/mock/src/statement.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
+        "test/mock/src/statics.js": {
+            "functions": "80.00 %",
+            "branches": "50.00 %",
+            "statements": "76.92 %",
+            "lines": "75.00 %",
+            "bytes": "78.24 %",
+            "uncoveredLines": "9,11-13,25-27"
+        },
+        "test/mock/src/typescript.ts": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
         },
         "test/mock/src/untest/empty.js": {
             "functions": "",
@@ -191,14 +199,6 @@
             "lines": "0.00 %",
             "bytes": "0.00 %",
             "uncoveredLines": "1-15"
-        },
-        "test/mock/css/style.css": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "27.45 %",
-            "bytes": "45.14 %",
-            "uncoveredLines": "12-18,22-25,33-53,69-85"
         }
     }
 }

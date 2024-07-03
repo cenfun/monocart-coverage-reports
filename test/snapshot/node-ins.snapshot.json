@@ -8,14 +8,6 @@
         "lines": "70.26 %"
     },
     "files": {
-        "test/mock/node/lib/app.js": {
-            "functions": "80.00 %",
-            "branches": "60.00 %",
-            "statements": "80.00 %",
-            "lines": "59.38 %",
-            "bytes": "70.64 %",
-            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
-        },
         "monocart-coverage-reports/test/mock/node/src/index.js": {
             "functions": "",
             "branches": "",
@@ -120,13 +112,13 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "monocart-coverage-reports/webpack/bootstrap": {
-            "functions": "100.00 %",
-            "branches": "50.00 %",
-            "statements": "87.50 %",
-            "lines": "75.00 %",
-            "bytes": "94.44 %",
-            "uncoveredLines": "8-10"
+        "monocart-coverage-reports/webpack/after-startup": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "",
+            "bytes": "",
+            "uncoveredLines": ""
         },
         "monocart-coverage-reports/webpack/before-startup": {
             "functions": "",
@@ -136,6 +128,14 @@
             "bytes": "",
             "uncoveredLines": ""
         },
+        "monocart-coverage-reports/webpack/bootstrap": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "87.50 %",
+            "lines": "75.00 %",
+            "bytes": "94.44 %",
+            "uncoveredLines": "8-10"
+        },
         "monocart-coverage-reports/webpack/startup": {
             "functions": "",
             "branches": "",
@@ -144,13 +144,13 @@
             "bytes": "100.00 %",
             "uncoveredLines": ""
         },
-        "monocart-coverage-reports/webpack/after-startup": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "",
-            "bytes": "",
-            "uncoveredLines": ""
+        "test/mock/node/lib/app.js": {
+            "functions": "80.00 %",
+            "branches": "60.00 %",
+            "statements": "80.00 %",
+            "lines": "59.38 %",
+            "bytes": "70.64 %",
+            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
         }
     }
 }

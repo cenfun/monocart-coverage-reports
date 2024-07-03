@@ -8,6 +8,38 @@
         "lines": "44.55 %"
     },
     "files": {
+        "test/mock/node/lib/app.js": {
+            "functions": "80.00 %",
+            "branches": "60.00 %",
+            "statements": "80.00 %",
+            "lines": "59.38 %",
+            "bytes": "70.64 %",
+            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
+        },
+        "test/mock/node/lib/koa.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-23"
+        },
+        "test/mock/node/lib/util.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "6-18"
+        },
+        "test/mock/node/src/index.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
+        },
         "test/mock/src/async.js": {
             "functions": "0.00 %",
             "branches": "0.00 %",
@@ -15,62 +47,6 @@
             "lines": "0.00 %",
             "bytes": "0.00 %",
             "uncoveredLines": "1-54"
-        },
-        "test/mock/src/closures.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "1-44"
-        },
-        "test/mock/src/comments.js": {
-            "functions": "",
-            "branches": "",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "4-46"
-        },
-        "test/mock/src/component.js": {
-            "functions": "50.00 %",
-            "branches": "50.00 %",
-            "statements": "72.73 %",
-            "lines": "31.25 %",
-            "bytes": "68.90 %",
-            "uncoveredLines": "4-6,12-22"
-        },
-        "test/mock/src/index.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "1-123"
-        },
-        "test/mock/src/statement.js": {
-            "functions": "0.00 %",
-            "branches": "",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "1-32"
-        },
-        "test/mock/src/statics.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "1-32"
-        },
-        "test/mock/src/typescript.ts": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
         },
         "test/mock/src/branch/assignment.js": {
             "functions": "80.00 %",
@@ -120,6 +96,30 @@
             "bytes": "72.92 %",
             "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78"
         },
+        "test/mock/src/closures.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-44"
+        },
+        "test/mock/src/comments.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "4-46"
+        },
+        "test/mock/src/component.js": {
+            "functions": "50.00 %",
+            "branches": "50.00 %",
+            "statements": "72.73 %",
+            "lines": "31.25 %",
+            "bytes": "68.90 %",
+            "uncoveredLines": "4-6,12-22"
+        },
         "test/mock/src/ignore/ignore.js": {
             "functions": "100.00 %",
             "branches": "60.00 %",
@@ -151,6 +151,38 @@
             "lines": "71.43 %",
             "bytes": "85.30 %",
             "uncoveredLines": "2,19"
+        },
+        "test/mock/src/index.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-123"
+        },
+        "test/mock/src/statement.js": {
+            "functions": "0.00 %",
+            "branches": "",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-32"
+        },
+        "test/mock/src/statics.js": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-32"
+        },
+        "test/mock/src/typescript.ts": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": ""
         },
         "test/mock/src/untest/empty.js": {
             "functions": "",
@@ -191,38 +223,6 @@
             "lines": "0.00 %",
             "bytes": "0.00 %",
             "uncoveredLines": "1-15"
-        },
-        "test/mock/node/lib/koa.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "1-23"
-        },
-        "test/mock/node/lib/util.js": {
-            "functions": "0.00 %",
-            "branches": "0.00 %",
-            "statements": "0.00 %",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "6-18"
-        },
-        "test/mock/node/lib/app.js": {
-            "functions": "80.00 %",
-            "branches": "60.00 %",
-            "statements": "80.00 %",
-            "lines": "59.38 %",
-            "bytes": "70.64 %",
-            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
-        },
-        "test/mock/node/src/index.js": {
-            "functions": "",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": ""
         }
     }
 }
