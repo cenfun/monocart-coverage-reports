@@ -14,7 +14,8 @@
             "statements": "23.18 %",
             "lines": "21.50 %",
             "bytes": "26.51 %",
-            "uncoveredLines": "5-19,21,34-62,65,68-83,85,87,89,91-98,106-107,111-205,218,229-235,240,246-248,250-255,258-299"
+            "uncoveredLines": "5-19,21,34-62,65,68-83,85,87,89,91-98,106-107,111-205,218,229-235,240,246-248,250-255,258-299",
+            "extras": "1b,4b,23b,24b,25c,31b,32c,211b,212c,301b"
         },
         "anonymous-2.js": {
             "functions": "100.00 %",
@@ -22,7 +23,8 @@
             "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "anonymous-3.js": {
             "functions": "100.00 %",
@@ -30,7 +32,8 @@
             "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         }
     }
 }

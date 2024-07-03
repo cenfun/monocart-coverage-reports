@@ -14,7 +14,8 @@
             "statements": "",
             "lines": "45.45 %",
             "bytes": "63.68 %",
-            "uncoveredLines": "4-9"
+            "uncoveredLines": "4-9",
+            "extras": "1b,13c,14b"
         },
         "src/playwright.js": {
             "functions": "0.00 %",
@@ -22,7 +23,8 @@
             "statements": "66.67 %",
             "lines": "25.00 %",
             "bytes": "68.55 %",
-            "uncoveredLines": "3-5"
+            "uncoveredLines": "3-5",
+            "extras": "1b,6c,7b"
         },
         "src/puppeteer.css": {
             "functions": "",
@@ -30,7 +32,8 @@
             "statements": "",
             "lines": "45.45 %",
             "bytes": "63.30 %",
-            "uncoveredLines": "4-9"
+            "uncoveredLines": "4-9",
+            "extras": "1b,13c,14b"
         },
         "src/puppeteer.js": {
             "functions": "0.00 %",
@@ -38,7 +41,8 @@
             "statements": "66.67 %",
             "lines": "25.00 %",
             "bytes": "68.03 %",
-            "uncoveredLines": "3-5"
+            "uncoveredLines": "3-5",
+            "extras": "1b,6c,7b"
         }
     }
 }

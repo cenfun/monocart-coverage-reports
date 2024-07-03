@@ -5,6 +5,7 @@
   - added new build-in report: `markdown-summary` (coverage-summary.md)
   - added new build-in report: `markdown-details` (coverage-details.md)
   - added new option: `dataDir` alternative to method `addFromDir()`
+  - added new data `extras` for blank/comment/ignored lines
   
 - 2.8.7
   - fixed OOM with better GC

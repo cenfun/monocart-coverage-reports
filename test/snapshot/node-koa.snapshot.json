@@ -14,7 +14,8 @@
             "statements": "85.71 %",
             "lines": "66.67 %",
             "bytes": "85.17 %",
-            "uncoveredLines": "7-9,16-18"
+            "uncoveredLines": "7-9,16-18",
+            "extras": "4b,10b,13b,15b,19b,24b"
         }
     }
 }

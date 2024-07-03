@@ -12,161 +12,184 @@
             "functions": "66.66 %",
             "statements": "95.83 %",
             "branches": "62.50 %",
-            "uncoveredLines": "40"
+            "uncoveredLines": "40",
+            "extras": ""
         },
         "branch/assignment.js": {
             "lines": "80.00 %",
             "functions": "80.00 %",
             "statements": "80.00 %",
             "branches": "36.36 %",
-            "uncoveredLines": "9-10,23"
+            "uncoveredLines": "9-10,23",
+            "extras": ""
         },
         "branch/branch.js": {
             "lines": "86.11 %",
             "functions": "70.00 %",
             "statements": "86.48 %",
             "branches": "65.85 %",
-            "uncoveredLines": "10-17,55,78,116-117,134"
+            "uncoveredLines": "10-17,55,78,116-117,134",
+            "extras": ""
         },
         "branch/conditional.js": {
             "lines": "100.00 %",
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "60.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "branch/if.js": {
             "lines": "71.42 %",
             "functions": "100.00 %",
             "statements": "71.42 %",
             "branches": "52.00 %",
-            "uncoveredLines": "29,34-35,40-43,57-58,63-66,75,79,85,89,98,102,104,108,110"
+            "uncoveredLines": "29,34-35,40-43,57-58,63-66,75,79,85,89,98,102,104,108,110",
+            "extras": ""
         },
         "branch/logical.js": {
             "lines": "100.00 %",
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "74.07 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "branch/switch.js": {
             "lines": "70.00 %",
             "functions": "100.00 %",
             "statements": "70.00 %",
             "branches": "40.90 %",
-            "uncoveredLines": "24,31-32,38,45-46,52,59-64,73-78"
+            "uncoveredLines": "24,31-32,38,45-46,52,59-64,73-78",
+            "extras": ""
         },
         "closures.js": {
             "lines": "64.70 %",
             "functions": "71.42 %",
             "statements": "64.70 %",
             "branches": "50.00 %",
-            "uncoveredLines": "8-15,20,33"
+            "uncoveredLines": "8-15,20,33",
+            "extras": ""
         },
         "comments.js": {
             "lines": "100.00 %",
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "100.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "component.js": {
             "lines": "81.81 %",
             "functions": "100.00 %",
             "statements": "81.81 %",
             "branches": "50.00 %",
-            "uncoveredLines": "17,21"
+            "uncoveredLines": "17,21",
+            "extras": ""
         },
         "ignore/ignore.js": {
             "lines": "68.75 %",
             "functions": "33.33 %",
             "statements": "68.75 %",
             "branches": "50.00 %",
-            "uncoveredLines": "9,15,22,27,34"
+            "uncoveredLines": "9,15,22,27,34",
+            "extras": ""
         },
         "ignore/v8-ignore-next.js": {
             "lines": "77.77 %",
             "functions": "0.00 %",
             "statements": "70.00 %",
             "branches": "50.00 %",
-            "uncoveredLines": "7,21"
+            "uncoveredLines": "7,21",
+            "extras": ""
         },
         "ignore/v8-ignore-return.js": {
             "lines": "66.66 %",
             "functions": "100.00 %",
             "statements": "66.66 %",
             "branches": "100.00 %",
-            "uncoveredLines": "4"
+            "uncoveredLines": "4",
+            "extras": ""
         },
         "ignore/v8-ignore-start-stop.js": {
             "lines": "77.77 %",
             "functions": "0.00 %",
             "statements": "77.77 %",
             "branches": "50.00 %",
-            "uncoveredLines": "7,20"
+            "uncoveredLines": "7,20",
+            "extras": ""
         },
         "index.js": {
             "lines": "71.66 %",
             "functions": "53.84 %",
             "statements": "72.13 %",
             "branches": "57.14 %",
-            "uncoveredLines": "27,38-60,69-70,76,88,98-99"
+            "uncoveredLines": "27,38-60,69-70,76,88,98-99",
+            "extras": ""
         },
         "statement.js": {
             "lines": "100.00 %",
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "100.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "statics.js": {
             "lines": "76.92 %",
             "functions": "75.00 %",
             "statements": "76.92 %",
             "branches": "50.00 %",
-            "uncoveredLines": "9,12,26"
+            "uncoveredLines": "9,12,26",
+            "extras": ""
         },
         "typescript.ts": {
             "lines": "100.00 %",
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "100.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "untest/empty.js": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
             "branches": "0.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "untest/untest.js": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
             "branches": "0.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "untest/untest.scss": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
             "branches": "0.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "untest/untest.ts": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
             "branches": "0.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         },
         "untest/untest.vue": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
             "branches": "0.00 %",
-            "uncoveredLines": ""
+            "uncoveredLines": "",
+            "extras": ""
         }
     }
 }

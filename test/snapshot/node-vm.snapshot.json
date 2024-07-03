@@ -14,7 +14,8 @@
             "statements": "56.52 %",
             "lines": "30.00 %",
             "bytes": "58.87 %",
-            "uncoveredLines": "7-25,32,35-37,42-44"
+            "uncoveredLines": "7-25,32,35-37,42-44",
+            "extras": "4b,5c,6b,10b,12b,19b,21b,23c,26b,30b,34b,38b,40b,41b,45b,46c,47b"
         },
         "test/mock/node/lib/app.js": {
             "functions": "80.00 %",
@@ -22,7 +23,8 @@
             "statements": "80.00 %",
             "lines": "59.38 %",
             "bytes": "70.64 %",
-            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
+            "uncoveredLines": "4-6,12-14,17,25-27,32-34",
+            "extras": "3b,8b,11b,16b,18b,20b,24b,28b,36b,42b"
         },
         "test/mock/node/lib/app.js.fake.js": {
             "functions": "83.33 %",
@@ -30,7 +32,8 @@
             "statements": "61.54 %",
             "lines": "59.38 %",
             "bytes": "70.64 %",
-            "uncoveredLines": "4-6,12-14,17,25-27,32-34"
+            "uncoveredLines": "4-6,12-14,17,25-27,32-34",
+            "extras": "3b,8b,11b,16b,18b,20b,24b,28b,36b,42b"
         }
     }
 }
