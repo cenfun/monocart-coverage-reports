@@ -139,22 +139,27 @@ For more information, see [Command Line](#command-line)
 
 > Other build-in reports (both V8 and Istanbul data):
 
-- `codecov`
-    - coverage data for [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
+- `codecov` Save coverage data to a json file with [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format) format (defaults to `codecov.json`), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports).
 
-- `codacy`
-    - coverage data for [Codacy](https://api.codacy.com/swagger#tocscoveragereport) API
+- `codacy` Save coverage data to a json file with [Codacy API](https://api.codacy.com/swagger#tocscoveragereport) format (defaults to `codacy.json`).
 
-- `console-summary` shows coverage summary in the console
+- `console-summary` shows coverage summary in the console.
 
 ![](./assets/console-summary.png)
 
-- `console-details` Show file coverage and uncovered lines in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
+- `console-details` Show coverage details in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
 
 ![](./assets/console-details.png)
 
-- `raw` only keep all original data, which can be used for other reports input with `inputDir`
-    - see [Merge Coverage Reports](#merge-coverage-reports)
+- `markdown-summary` Save coverage summary to a markdown file (defaults to `coverage-summary.md`). For Github actions, we can show the markdown content to [a job summary](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary)
+```sh
+cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+```
+![](./assets/markdown-summary.png)
+
+- `markdown-details` Save coverage details to a markdown file (defaults to `coverage-details.md`).
+
+- `raw` only keep all original data, which can be used for other reports input with `inputDir`. see [Merge Coverage Reports](#merge-coverage-reports)
 
 - Custom Reporter
     ```js

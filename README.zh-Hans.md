@@ -139,11 +139,9 @@ mcr node my-app.js -r v8,console-details
 
 > 其他内置报告 (V8和Istanbul格式数据都支持):
 
-- `codecov`
-    - 专属支持[Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format)的报告, see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
+- `codecov` 保存覆盖率数据到 [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format) 专属的json文件 (默认是`codecov.json`), 见[例子](https://app.codecov.io/github/cenfun/monocart-coverage-reports) 
 
-- `codacy`
-    - 专属支持[Codacy](https://api.codacy.com/swagger#tocscoveragereport) API的报告
+- `codacy` 保存覆盖率数据到 [Codacy](https://api.codacy.com/swagger#tocscoveragereport) 专属的json文件 (默认是`codacy.json`)
 
 - `console-summary` 在控制台显示覆盖率概要
 
@@ -153,8 +151,15 @@ mcr node my-app.js -r v8,console-details
 
 ![](./assets/console-details.png)
 
-- `raw` 只是保存原始覆盖率数据, 用于使用`inputDir`参数来导入多个原始数据进行合并报告
-    - 参见 [合并覆盖率报告](#merge-coverage-reports)
+- `markdown-summary` 保存概要信息到markdown文件 (默认是`coverage-summary.md`)。 如果是Github actions, 可以把markdown的内容添加到[a job summary](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary)
+```sh
+cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+```
+![](./assets/markdown-summary.png)
+
+- `markdown-details` 保存覆盖率详情到markdown文件 (默认是 `coverage-details.md`)
+
+- `raw` 只是保存原始覆盖率数据, 用于使用`inputDir`参数来导入多个原始数据进行合并报告。参见 [合并覆盖率报告](#merge-coverage-reports)
 
 - 自定义报告
     ```js
