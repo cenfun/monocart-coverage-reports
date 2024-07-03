@@ -27,8 +27,8 @@ const coverageOptions = {
             // color: 'html'
         }],
         ['markdown-details', {
-            color: 'Tex',
-            // baseUrl: 'https://github.com/cenfun/monocart-coverage-reports/blob/main/',
+            // color: 'Tex',
+            baseUrl: 'https://github.com/cenfun/monocart-coverage-reports/blob/main/',
             metrics: ['bytes', 'lines']
         }],
         [path.resolve('./test/custom-istanbul-reporter.js'), {
