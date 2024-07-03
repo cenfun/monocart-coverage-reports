@@ -203,7 +203,7 @@ const hideFlyover = () => {
     state.flyoverData = null;
 };
 
-const showFlyover = (rowItem) => {
+const showFlyover = (rowItem, page) => {
 
     if (!state.flyoverVisible) {
         state.flyoverEndPromise = new Promise((resolve) => {
@@ -221,6 +221,10 @@ const showFlyover = (rowItem) => {
 
     state.flyoverTitle = ft;
     state.flyoverVisible = true;
+
+    if (rowItem.id === page || rowItem.sourcePath === page) {
+        return;
+    }
     hash.set('page', rowItem.id);
 };
 
@@ -230,11 +234,11 @@ const displayFlyoverWithHash = () => {
     if (page) {
         const grid = state.grid;
         if (grid) {
-            const rowItem = grid.getRowItemById(page);
+            const rowItem = grid.getRowItemBy('id', page) || grid.getRowItemBy('sourcePath', page);
             if (rowItem) {
                 grid.scrollRowIntoView(rowItem);
                 grid.setRowSelected(rowItem);
-                showFlyover(rowItem);
+                showFlyover(rowItem, page);
                 return;
             }
         }
