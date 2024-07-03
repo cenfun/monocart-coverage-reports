@@ -27,7 +27,7 @@ const coverageOptions = {
             // color: 'html'
         }],
         ['markdown-details', {
-            color: 'html',
+            color: 'Tex',
             baseUrl: 'https://github.com/cenfun/monocart-coverage-reports/blob/main/',
             metrics: ['bytes', 'lines']
         }],
