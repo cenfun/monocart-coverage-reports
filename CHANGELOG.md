@@ -1,5 +1,10 @@
 ## Changelog
 
+- 2.9.0
+  - performance improvement for comment parser (monocart-locator)
+  - added new build-in report: `markdown-summary` (coverage-summary.md)
+  - added new build-in report: `markdown-details` (coverage-details.md)
+  
 - 2.8.7
   - fixed OOM with better GC
   - added new build-in report: `codacy` (codacy.json)
