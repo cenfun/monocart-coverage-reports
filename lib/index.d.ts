@@ -44,12 +44,18 @@ declare namespace MCR {
 
     export type ReportDescription =
         ['v8'] | ["v8", {
+            /**
+             * defaults to `index.html`
+             */
             outputFile?: string;
             inline?: boolean;
             assetsPath?: string;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
         }] |
         ['v8-json'] | ["v8-json", {
+            /**
+             * defaults to `coverage-report.json`
+             */
             outputFile?: string;
         }] |
         ['clover'] | ['clover', {
@@ -105,9 +111,15 @@ declare namespace MCR {
             file?: string;
         }] |
         ['codecov'] | ["codecov", {
+            /**
+             * defaults to `codecov.json`
+             */
             outputFile?: string;
         }] |
         ['codacy'] | ["codacy", {
+            /**
+             * defaults to `codacy.json`
+             */
             outputFile?: string;
         }] |
         ['console-summary'] | ['console-summary', {
@@ -121,6 +133,9 @@ declare namespace MCR {
         ['markdown-summary'] | ['markdown-summary', {
             color: 'unicode' | 'html' | 'tex' | string;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+            /**
+             * defaults to `coverage-summary.md`
+             */
             outputFile?: string;
         }] |
         ['markdown-details'] | ['markdown-details', {
@@ -128,6 +143,9 @@ declare namespace MCR {
             color: 'unicode' | 'html' | 'tex' | string;
             skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+            /**
+             * defaults to `coverage-details.md`
+             */
             outputFile?: string;
         }] |
         ['raw'] | ['raw', {
@@ -205,12 +223,21 @@ declare namespace MCR {
             branches?: CoverageRange[];
             functions?: CoverageRange[];
             ignores?: IgnoredRange[];
-            lines: {
-                /** number: hits (0 means uncovered), string: partial covered */
+            lines?: {
+                /** 
+                 * key: line number;
+                 * number: hits (0 means uncovered);
+                 * string: partial covered 
+                 */
                 [key: string]: number | string;
             };
-            extras: {
-                /** b: blank, c: comment, i: ignored */
+            extras?: {
+                /** 
+                 * key: line number;
+                 * b: blank;
+                 * c: comment;
+                 * i: ignored;
+                 */
                 [key: string]: "b" | "c" | "i";
             }
         }
