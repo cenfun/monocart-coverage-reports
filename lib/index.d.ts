@@ -118,6 +118,18 @@ declare namespace MCR {
             skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
         }] |
+        ['markdown-summary'] | ['markdown-summary', {
+            color: 'unicode' | 'html' | 'tex' | string;
+            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+            outputFile?: string;
+        }] |
+        ['markdown-details'] | ['markdown-details', {
+            baseUrl?: string;
+            color: 'unicode' | 'html' | 'tex' | string;
+            skipPercent?: number;
+            metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+            outputFile?: string;
+        }] |
         ['raw'] | ['raw', {
             outputDir?: string;
         }] |
@@ -236,6 +248,9 @@ declare namespace MCR {
 
         /** {string} base dir for normalizing the relative source path, defaults to cwd */
         baseDir?: string;
+
+        /** {string} coverage data dir, alternative to method `addFromDir()`, defaults to null */
+        dataDir?: string;
 
         /** (V8 only) 
          * 

@@ -15,6 +15,8 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
+    dataDir: dir,
+
     entryFilter: {
         '**/test/mock/node/**': true
     },
@@ -32,7 +34,6 @@ const generate = async () => {
     // clean cache before add coverage data
     coverageReport.cleanCache();
 
-    await coverageReport.addFromDir(dir);
     const coverageResults = await coverageReport.generate();
     console.log('test-node-api coverage reportPath', EC.magenta(coverageResults.reportPath));
 
