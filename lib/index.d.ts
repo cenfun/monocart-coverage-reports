@@ -205,10 +205,14 @@ declare namespace MCR {
             branches?: CoverageRange[];
             functions?: CoverageRange[];
             ignores?: IgnoredRange[];
-            /** common json format */
             lines: {
+                /** number: hits (0 means uncovered), string: partial covered */
                 [key: string]: number | string;
             };
+            extras: {
+                /** b: blank, c: comment, i: ignored */
+                [key: string]: "b" | "c" | "i";
+            }
         }
     }
 
@@ -431,6 +435,7 @@ declare namespace MCR {
                 functions: string;
                 lines: string;
                 uncoveredLines: string;
+                extras: string;
             }
         }
     }
