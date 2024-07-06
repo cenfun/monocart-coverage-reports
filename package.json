@@ -94,11 +94,11 @@
         "eslint-plugin-vue": "^9.27.0",
         "find-up": "^7.0.0",
         "minimatch": "^9.0.5",
-        "starfall-cli": "^2.0.19",
+        "starfall-cli": "^2.0.20",
         "stylelint": "^16.6.1",
         "stylelint-config-plus": "^1.1.2",
         "supports-color": "^9.4.0",
         "tsx": "^4.16.2",
-        "ws": "^8.17.1"
+        "ws": "^8.18.0"
     }
 }
