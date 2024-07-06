@@ -107,9 +107,10 @@ jobs:
           coverage-reports: ./docs/mcr/lcov.info
       
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ./docs/mcr/codecov.json
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
