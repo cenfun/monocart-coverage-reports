@@ -110,7 +110,9 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./docs/mcr/codecov.json
+          verbose: true
+          disable_search: true
+          files: ${{ github.workspace }}/docs/mcr/codecov.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
