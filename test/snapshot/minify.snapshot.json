@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "41.69 %",
-        "statements": "39.42 %",
-        "branches": "25.37 %",
-        "functions": "42.80 %",
-        "lines": "36.73 %"
+        "bytes": "41.53 %",
+        "statements": "39.38 %",
+        "branches": "25.34 %",
+        "functions": "42.78 %",
+        "lines": "36.49 %"
     },
     "files": {
         "fps-detector/src/index.js": {
@@ -106,15 +106,6 @@
             "bytes": "51.16 %",
             "uncoveredLines": "1",
             "extras": ""
-        },
-        "localhost-8130/redirection.js/one&amp;two": {
-            "functions": "55.56 %",
-            "branches": "33.33 %",
-            "statements": "49.30 %",
-            "lines": "60.31 %",
-            "bytes": "71.91 %",
-            "uncoveredLines": "6-7,14-18,69-72,77-78,80-87,97,107-136,140,142,144-145",
-            "extras": "9b,13b,15c,16c,20c,39c,48c,57c,75b,89b,91b,100b,104b,117b,133b,137b,147b,149b"
         },
         "localhost-8130/with-map/bootstrap.min.css": {
             "functions": "",
