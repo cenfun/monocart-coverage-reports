@@ -1021,8 +1021,9 @@ const coverageOptions = {
 - Github actions:
 ```yml
 - name: Codecov
-    uses: codecov/codecov-action@v3
+    uses: codecov/codecov-action@v4
     with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         files: ./coverage-reports/codecov.json
 ```
 

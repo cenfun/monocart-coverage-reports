@@ -109,8 +109,8 @@ jobs:
       - name: Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: ./docs/mcr/codecov.json
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./docs/mcr/codecov.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
