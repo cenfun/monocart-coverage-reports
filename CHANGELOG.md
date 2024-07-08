@@ -1,5 +1,9 @@
 ## Changelog
 
+- 2.9.1
+  - improved performance
+  - refactor for vendor
+
 - 2.9.0
   - performance improvement for comment parser (monocart-locator)
   - added new build-in report: `markdown-summary` (coverage-summary.md)
