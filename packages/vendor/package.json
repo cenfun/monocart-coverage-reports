@@ -9,10 +9,7 @@
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
-        "@bcoe/v8-coverage": "^0.2.3",
-        "@jridgewell/sourcemap-codec": "^1.4.15",
         "convert-source-map": "^2.0.0",
-        "diff-sequences": "^29.6.3",
         "postcss": "^8.4.39"
     },
     "platform": "node"
