@@ -4,10 +4,6 @@ import { decode } from '@jridgewell/sourcemap-codec';
 
 import { mergeScriptCovs } from '@bcoe/v8-coverage';
 
-import * as acorn from 'acorn';
-import * as acornLoose from 'acorn-loose';
-import * as acornWalk from 'acorn-walk';
-
 import parseCss from 'postcss/lib/parse';
 
 import { minimatch } from 'minimatch';
@@ -27,10 +23,6 @@ export {
     decode,
 
     mergeScriptCovs,
-
-    acorn,
-    acornLoose,
-    acornWalk,
 
     parseCss,
 
