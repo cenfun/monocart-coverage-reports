@@ -1,0 +1,30 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "96.33 %",
+        "statements": "88.24 %",
+        "branches": "100.00 %",
+        "functions": "85.71 %",
+        "lines": "96.30 %"
+    },
+    "files": {
+        "localhost-8170": {
+            "functions": "100.00 %",
+            "branches": "100.00 %",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "1b,2b,15b,20b,24b"
+        },
+        "localhost-8170/bundle.js": {
+            "functions": "75.00 %",
+            "branches": "",
+            "statements": "77.78 %",
+            "lines": "87.50 %",
+            "bytes": "91.37 %",
+            "uncoveredLines": "7",
+            "extras": "1c,10c"
+        }
+    }
+}

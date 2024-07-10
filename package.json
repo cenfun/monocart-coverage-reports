@@ -43,6 +43,7 @@
         "test-minify": "node ./test/test-minify.js",
         "test-esbuild": "node ./test/test-esbuild.js",
         "test-rollup": "node ./test/test-rollup.js",
+        "test-sections": "node ./test/test-sections.js",
         "test-swc": "node ./test/test-swc.js",
         "test-v8-and-istanbul": "node ./test/test-v8-and-istanbul.js",
         "test-browser": "node ./test/test.js --browser",
@@ -76,6 +77,7 @@
     "dependencies": {
         "@bcoe/v8-coverage": "^0.2.3",
         "@jridgewell/sourcemap-codec": "^1.4.15",
+        "@jridgewell/trace-mapping": "^0.3.25",
         "acorn": "^8.12.1",
         "acorn-loose": "^8.4.0",
         "acorn-walk": "^8.3.3",
