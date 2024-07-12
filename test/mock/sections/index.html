@@ -9,30 +9,6 @@
 </head>
 
 <body>
-    <script>
-
-        let src;
-       window.sap = {
-        ui: {
-          require: {
-            preload:(obj) => {
-              Object.keys(obj).forEach(k=>{
-                src = k;
-                obj[k]()
-              })
-            }
-          },
-          define: (deps, handler)=> {
-
-            console.log(src, deps, handler)
-            if (src === "@admin-center/core/a.js"){
-              handler()
-            }
-
-          }
-        }
-       }
-    </script>
     <script src="bundle.js"></script>
 </body>
 

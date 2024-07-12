@@ -50,6 +50,10 @@ const test = async (serverUrl) => {
         setTimeout(resolve, 100);
     });
 
+    await page.evaluate(() => {
+        window.A();
+    });
+
     const [jsCoverage, cssCoverage] = await Promise.all([
         page.coverage.stopJSCoverage(),
         page.coverage.stopCSSCoverage()
