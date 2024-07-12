@@ -588,6 +588,20 @@ const coverageOptions = {
     }
 };
 ```
+解决文件路径不完整的问题：
+```js
+const path = require("path")
+
+// MCR coverage options
+const coverageOptions = {
+    sourcePath: (filePath, info)=> {
+        if (!filePath.includes('/') && info.distFile) {
+            return `${path.dirname(info.distFile)}/${filePath}`;
+        }
+        return filePath;
+    }
+}
+```
 
 ## Adding Empty Coverage for Untested Files
 默认，未测试的文件是不会包含到覆盖率报告的，需要使用`all`选项来为这些文件添加一个空的覆盖率，也就是0%
