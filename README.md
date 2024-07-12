@@ -585,6 +585,20 @@ const coverageOptions = {
     }
 };
 ```
+Normalize the full path of the file:
+```js
+const path = require("path")
+
+// MCR coverage options
+const coverageOptions = {
+    sourcePath: (filePath, info)=> {
+        if (!filePath.includes('/') && info.distFile) {
+            return `${path.dirname(info.distFile)}/${filePath}`;
+        }
+        return filePath;
+    }
+}
+```
 
 ## Adding Empty Coverage for Untested Files
 By default the untested files will not be included in the coverage report, we can add empty coverage data for all files with option `all`, the untested files will show 0% coverage.
