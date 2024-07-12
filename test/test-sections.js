@@ -6,7 +6,7 @@ const serve = require('./serve.js');
 const MCR = require('../');
 const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
-    logging: 'debug',
+    // logging: 'debug',
     reports: [
         ['v8', {
             assetsPath: '../assets'
