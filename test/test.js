@@ -73,6 +73,7 @@ const test = async (type) => {
             'test-esbuild',
             'test-rollup',
             'test-swc',
+            'test-sections',
             'test-v8-and-istanbul'
         ]
     };

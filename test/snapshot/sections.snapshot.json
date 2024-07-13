@@ -1,0 +1,75 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "85.74 %",
+        "statements": "83.51 %",
+        "branches": "56.25 %",
+        "functions": "68.42 %",
+        "lines": "78.42 %"
+    },
+    "files": {
+        "a.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "async.js": {
+            "functions": "66.67 %",
+            "branches": "62.50 %",
+            "statements": "88.89 %",
+            "lines": "80.49 %",
+            "bytes": "89.40 %",
+            "uncoveredLines": "9,15-22,40-41,49",
+            "extras": "4b,13b,14c,16b,18b,19c,21b,23b,27b,28b,35b,44b,53b,55b"
+        },
+        "b.js": {
+            "functions": "0.00 %",
+            "branches": "",
+            "statements": "33.33 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-3",
+            "extras": ""
+        },
+        "closures.js": {
+            "functions": "66.67 %",
+            "branches": "50.00 %",
+            "statements": "63.64 %",
+            "lines": "58.62 %",
+            "bytes": "65.19 %",
+            "uncoveredLines": "8-16,19-21,32-34",
+            "extras": "2b,7b,10b,12b,13c,17b,24c,26b,28b,31b,35b,40b,41b,43b"
+        },
+        "comments.js": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "1c,2c,3b,5b,6c,8c,9c,11c,17b,18c,19c,20b,21c,22b,24b,26b,27c,28c,30c,31c,32b,34c,35b,36c,37b,39b,40c,41c,42c,43b,44c,45b,47c,48c,49b,50b,51b"
+        },
+        "statement.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "2b,7b,8c,12b,17b,22b,29b,30b,32b"
+        },
+        "statics.js": {
+            "functions": "75.00 %",
+            "branches": "50.00 %",
+            "statements": "76.92 %",
+            "lines": "73.08 %",
+            "bytes": "77.19 %",
+            "uncoveredLines": "9,11-13,25-27",
+            "extras": "18b,20b,24b,29b,31b"
+        }
+    }
+}
