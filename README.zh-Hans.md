@@ -1,7 +1,7 @@
 # Monocart Coverage Reports
 
 [![](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
-[![](https://badgen.net/npm/dw/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
+[![](https://devimg.vercel.app/npm/downloads/monocart-coverage-reports?label=downloads%20{total}/month)](https://www.npmjs.com/package/monocart-coverage-reports)
 ![](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
 ![](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
 ![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/ci.yml)
