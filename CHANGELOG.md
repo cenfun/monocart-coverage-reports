@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.9.2
+  - supported indexed sourcemaps (#57)
+
 - 2.9.1
   - improved performance
   - refactor for vendor
