@@ -46,6 +46,12 @@ module.exports = {
         enable: 'lint + build'
     },
 
+    outdate: {
+        exclude: [
+            'minimatch'
+        ]
+    },
+
     build: {
 
         vendors: ['common', 'app'],

@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.9.3
+  - fixed `minimatch` version to support Nodejs 18
+
 - 2.9.2
   - supported indexed sourcemaps (#57)
 
