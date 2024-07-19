@@ -107,6 +107,7 @@ For more information, see [Command Line](#command-line)
     - Features: 
         - A Brand-New V8 Coverage Report User Interface
         - Support for Native Byte Statistics
+        - Support processing big data with high performance
         - Coverage for Any Runtime Code
         - CSS Coverage Support
         - Better Support for Sourcemap Conversion
