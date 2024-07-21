@@ -141,6 +141,7 @@ declare namespace MCR {
         ['markdown-details'] | ['markdown-details', {
             baseUrl?: string;
             color: 'unicode' | 'html' | 'tex' | string;
+            maxCols?: number;
             skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
             /**
