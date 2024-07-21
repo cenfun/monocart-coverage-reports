@@ -202,7 +202,7 @@ declare namespace MCR {
     export interface IgnoredRange {
         start: number;
         end: number;
-        /** next, start-stop */
+        /** next, range */
         type: string;
         /** next n lines */
         n?: number;
