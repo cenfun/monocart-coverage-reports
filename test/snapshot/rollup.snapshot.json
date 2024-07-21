@@ -1,7 +1,7 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "81.59 %",
+        "bytes": "81.57 %",
         "statements": "81.78 %",
         "branches": "59.27 %",
         "functions": "79.49 %",
