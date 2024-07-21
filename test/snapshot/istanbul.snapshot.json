@@ -1,10 +1,10 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "82.13 %",
-        "statements": "82.22 %",
+        "lines": "81.94 %",
+        "statements": "81.87 %",
         "functions": "76.54 %",
-        "branches": "58.20 %"
+        "branches": "58.01 %"
     },
     "files": {
         "async.js": {
@@ -88,11 +88,19 @@
             "extras": ""
         },
         "ignore/ignore.js": {
-            "lines": "68.75 %",
+            "lines": "70.58 %",
             "functions": "33.33 %",
-            "statements": "68.75 %",
+            "statements": "70.58 %",
             "branches": "50.00 %",
-            "uncoveredLines": "9,15,22,27,34",
+            "uncoveredLines": "10,16,23,28,35",
+            "extras": ""
+        },
+        "ignore/node-coverage.js": {
+            "lines": "60.00 %",
+            "functions": "100.00 %",
+            "statements": "50.00 %",
+            "branches": "50.00 %",
+            "uncoveredLines": "10,21",
             "extras": ""
         },
         "ignore/v8-ignore-next.js": {

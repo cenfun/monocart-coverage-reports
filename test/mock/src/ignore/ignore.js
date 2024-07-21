@@ -1,6 +1,7 @@
 require('./v8-ignore-next.js');
 require('./v8-ignore-return.js');
 require('./v8-ignore-start-stop.js');
+require('./node-coverage.js');
 
 const platform = 'wind32';
 

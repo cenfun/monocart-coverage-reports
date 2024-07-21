@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "80.86 %",
-        "statements": "82.92 %",
+        "bytes": "81.60 %",
+        "statements": "83.11 %",
         "branches": "59.27 %",
-        "functions": "83.33 %",
-        "lines": "71.03 %"
+        "functions": "83.51 %",
+        "lines": "71.23 %"
     },
     "files": {
         "src/async.js": {
@@ -101,11 +101,20 @@
         "src/ignore/ignore.js": {
             "functions": "100.00 %",
             "branches": "60.00 %",
-            "statements": "92.31 %",
-            "lines": "78.95 %",
-            "bytes": "88.89 %",
-            "uncoveredLines": "9,33-35",
-            "extras": "4b,6b,7c,8i,10c,11i,12b,13c,14i,15i,16i,17b,18b,20b,21i,22i,23i,24b,25b,27i,28i,29b,30c,31b,37b,45b,46b"
+            "statements": "92.86 %",
+            "lines": "80.00 %",
+            "bytes": "89.34 %",
+            "uncoveredLines": "10,34-36",
+            "extras": "5b,7b,8c,9i,11c,12i,13b,14c,15i,16i,17i,18b,19b,21b,22i,23i,24i,25b,26b,28i,29i,30b,31c,32b,38b,46b,47b"
+        },
+        "src/ignore/node-coverage.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "1c,2b,4b,5c,6i,7c,8c,9c,10i,11i,12i,14b,15c,16i,18b,19c,20i,21i,22i,24b"
         },
         "src/ignore/v8-ignore-next.js": {
             "functions": "100.00 %",
