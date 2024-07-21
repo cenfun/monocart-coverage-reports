@@ -116,7 +116,8 @@ mcr node my-app.js -r v8,console-details
 ![](./assets/v8.gif)
 
 - `v8-json`
-    - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
+    - 保存 `CoverageResults` 到一个json文件
+    - 预览 [coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 
 > 内置Istanbul报告 (V8和Istanbul格式数据都支持):
 

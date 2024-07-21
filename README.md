@@ -116,7 +116,8 @@ For more information, see [Command Line](#command-line)
 ![](./assets/v8.gif)
 
 - `v8-json`
-    - [V8 coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
+    - Save `CoverageResults` to a json file
+    - Preview [coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
 
 > Istanbul build-in reports (both V8 and Istanbul data):
 
