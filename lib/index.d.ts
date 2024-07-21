@@ -190,14 +190,20 @@ declare namespace MCR {
         start: number;
         end: number;
         count: number;
+        /** ignored by special comment which starts with `v8 ignore` */
         ignored?: boolean;
+        /** branch only, for example: 
+         * there is only `if` branch but no `else` branch, then `none` will be true, it shows `else path uncovered`
+         */
         none?: boolean;
     }
 
     export interface IgnoredRange {
         start: number;
         end: number;
+        /** next, start-stop */
         type: string;
+        /** next n lines */
         n?: number;
     }
 
@@ -242,7 +248,6 @@ declare namespace MCR {
             }
         }
     }
-
 
     export type CoverageResults = {
         type: "v8" | "istanbul";
