@@ -15,7 +15,7 @@ module.exports = {
         }],
         ['markdown-details', {
             // color: 'Tex',
-            maxCols: 80,
+            maxCols: 50,
             baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/mcr/#page=',
             metrics: ['bytes', 'lines']
         }]
