@@ -243,9 +243,11 @@ declare namespace MCR {
         }
     }
 
+
     export type CoverageResults = {
         type: "v8" | "istanbul";
         reportPath: string;
+        version: string;
         name: string;
         watermarks: Watermarks;
         summary: CoverageSummary;

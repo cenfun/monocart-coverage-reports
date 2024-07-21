@@ -113,6 +113,7 @@ const generate = async () => {
     console.log('generate v8-and-istanbul coverage reports ...');
     // to istanbul
     const coverageResults = await MCR(multipleReportsOptions).generate();
+    console.log('v8-to-istanbul coverageResults', Object.keys(coverageResults));
     console.log('reportPath', EC.magenta(coverageResults.reportPath));
 };
 

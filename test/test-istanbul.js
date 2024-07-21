@@ -76,7 +76,7 @@ const generate = async () => {
     console.log('generate istanbul coverage reports ...');
 
     const coverageResults = await MCR(coverageOptions).generate();
-
+    console.log('istanbul coverageResults', Object.keys(coverageResults));
     console.log('istanbul coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 

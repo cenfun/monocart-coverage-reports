@@ -183,6 +183,7 @@ const generate = async () => {
     console.log('generate v8 coverage reports ...');
 
     const coverageResults = await MCR(coverageOptions).generate();
+    console.log('v8 coverageResults', Object.keys(coverageResults));
     console.log('v8 coverage reportPath', EC.magenta(coverageResults.reportPath));
 };
 
