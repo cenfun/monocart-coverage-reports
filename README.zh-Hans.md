@@ -160,6 +160,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 ![](./assets/markdown-summary.png)
 
 - `markdown-details` 保存覆盖率详情到markdown文件 (默认是 `coverage-details.md`)
+    - 预览运行结果 [runs](https://github.com/cenfun/monocart-coverage-reports/actions/workflows/ci.yml)
 
 - `raw` 只是保存原始覆盖率数据, 用于使用`inputDir`参数来导入多个原始数据进行合并报告。参见 [合并覆盖率报告](#merge-coverage-reports)
 

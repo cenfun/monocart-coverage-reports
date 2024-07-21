@@ -160,6 +160,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 ![](./assets/markdown-summary.png)
 
 - `markdown-details` Save coverage details to a markdown file (defaults to `coverage-details.md`).
+    - Preview in [runs](https://github.com/cenfun/monocart-coverage-reports/actions/workflows/ci.yml)
 
 - `raw` only keep all original data, which can be used for other reports input with `inputDir`. see [Merge Coverage Reports](#merge-coverage-reports)
 
