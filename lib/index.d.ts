@@ -326,7 +326,11 @@ declare namespace MCR {
          * 
          * {object} Replace key with value.
          * */
-        sourcePath?: ((filePath: string, info: any) => string) | {
+        sourcePath?: ((filePath: string, info: {
+            /** the related dist file of current source file */
+            distFile?: string;
+            [key: string]: any;
+        }) => string) | {
             [key: string]: string;
         };
 
