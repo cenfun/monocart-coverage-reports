@@ -2,6 +2,7 @@
 
 - 2.9.4
   - added `maxCols` for `markdown-details`
+  - added name for function coverage
 
 - 2.9.3
   - fixed `minimatch` version to support Nodejs 18

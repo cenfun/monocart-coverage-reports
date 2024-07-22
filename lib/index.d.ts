@@ -193,18 +193,21 @@ declare namespace MCR {
         count: number;
         /** ignored by special comment which starts with `v8 ignore` */
         ignored?: boolean;
-        /** branch only, for example: 
+        /** 
+         * branch only, for example: 
          * there is only `if` branch but no `else` branch, then `none` will be true, it shows `else path uncovered`
          */
         none?: boolean;
+        /**  function only, function name */
+        name?: boolean;
     }
 
     export interface IgnoredRange {
         start: number;
         end: number;
-        /** next, range */
+        /** ignore type: `next` or `range` */
         type: string;
-        /** next n lines */
+        /** n lines for `next` type */
         n?: number;
     }
 
