@@ -41,8 +41,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: jakebailey/TypeScript
-          ref: coverage
+          repository: microsoft/TypeScript
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
@@ -50,6 +50,7 @@ jobs:
           check-latest: true
 
       - run: npm ci
+      - run: npm i monocart-coverage-reports@latest
 
       - name: Download artifact
         uses: actions/download-artifact@v4
