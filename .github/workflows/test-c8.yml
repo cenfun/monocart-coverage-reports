@@ -43,6 +43,7 @@ jobs:
         with:
           repository: bcoe/c8
           ref: main
+          path: c8
 
       - uses: actions/setup-node@v4
         with:
