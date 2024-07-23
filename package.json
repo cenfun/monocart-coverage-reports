@@ -62,6 +62,7 @@
         "patch": "npm run build && npm run test && npx sf publish patch -r"
     },
     "workspaces": [
+        "packages/*",
         "test"
     ],
     "files": [
