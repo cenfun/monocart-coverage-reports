@@ -61,4 +61,3 @@ jobs:
       - run: npm run coverage
         env:
           FORCE_COLOR: true
-          MCR_LOG_TIME: true
