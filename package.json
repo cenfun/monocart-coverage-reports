@@ -93,6 +93,7 @@
         "monocart-locator": "^1.0.2"
     },
     "devDependencies": {
+        "async-tick": "^1.0.0",
         "esbuild": "^0.23.0",
         "eslint": "~9.7.0",
         "eslint-config-plus": "^2.0.2",
@@ -107,6 +108,7 @@
         "supports-color": "^9.4.0",
         "tsx": "^4.16.2",
         "turbogrid": "^3.2.0",
+        "vine-ui": "^3.1.16",
         "ws": "^8.18.0"
     }
 }

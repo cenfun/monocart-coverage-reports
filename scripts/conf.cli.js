@@ -61,28 +61,19 @@ const buildAssets = (EC, toPath) => {
     const { deflateSync } = require('lz-utils');
 
     const toJs = path.resolve(toPath, 'monocart-coverage-assets.js');
-    const moduleList = [
-        'monocart-code-viewer',
-        'monocart-formatter',
-        'turbogrid',
-        'monocart-coverage-app'
-    ];
 
-    const assetsList = moduleList.map((id) => {
-        return {
-            id,
-            path: require.resolve(id)
-        };
-    });
-    assetsList.push({
+    const assetsList = [{
         id: 'template',
         path: path.resolve(__dirname, '../lib/default/template.html')
-    });
+    }, {
+        id: 'monocart-coverage-app',
+        path: require.resolve('monocart-coverage-app')
+    }];
 
     const assetsMap = {};
     for (const item of assetsList) {
         if (!fs.existsSync(item.path)) {
-            EC.logRed(`Not found assets: ${item.path}`);
+            EC.logRed(`Not found asset: ${item.path}`);
             return;
         }
         const content = fs.readFileSync(item.path).toString('utf-8');
