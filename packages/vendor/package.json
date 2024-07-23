@@ -8,9 +8,6 @@
     ],
     "license": "MIT",
     "dependencies": {},
-    "devDependencies": {
-        "convert-source-map": "^2.0.0",
-        "postcss": "^8.4.39"
-    },
+    "devDependencies": {},
     "platform": "node"
 }

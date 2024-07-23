@@ -62,7 +62,6 @@
         "patch": "npm run build && npm run test && npx sf publish patch -r"
     },
     "workspaces": [
-        "packages/*",
         "test"
     ],
     "files": [
@@ -94,6 +93,7 @@
     },
     "devDependencies": {
         "async-tick": "^1.0.0",
+        "convert-source-map": "^2.0.0",
         "esbuild": "^0.23.0",
         "eslint": "~9.7.0",
         "eslint-config-plus": "^2.0.2",
@@ -102,6 +102,7 @@
         "find-up": "^7.0.0",
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
+        "postcss": "^8.4.39",
         "starfall-cli": "^2.0.20",
         "stylelint": "^16.7.0",
         "stylelint-config-plus": "^1.1.2",
