@@ -1,0 +1,64 @@
+name: Test c8
+
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: ''
+
+      - run: npm install
+      - run: npm run build
+        env:
+          FORCE_COLOR: true
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: ./lib
+
+  coverage:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: bcoe/c8
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          check-latest: true
+
+      - run: npm ci
+      - run: npm i monocart-coverage-reports@latest
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact
+          path: ./node_modules/monocart-coverage-reports/lib
+
+      - run: npm run coverage
+        env:
+          FORCE_COLOR: true
+          MCR_LOG_TIME: true
