@@ -90,10 +90,7 @@
         "istanbul-reports": "^3.1.7",
         "lz-utils": "^2.0.2",
         "minimatch": "9.0.5",
-        "monocart-code-viewer": "^1.1.4",
-        "monocart-formatter": "^3.0.0",
-        "monocart-locator": "^1.0.2",
-        "turbogrid": "^3.2.0"
+        "monocart-locator": "^1.0.2"
     },
     "devDependencies": {
         "esbuild": "^0.23.0",
@@ -102,11 +99,14 @@
         "eslint-plugin-html": "^8.1.1",
         "eslint-plugin-vue": "^9.27.0",
         "find-up": "^7.0.0",
+        "monocart-code-viewer": "^1.1.4",
+        "monocart-formatter": "^3.0.0",
         "starfall-cli": "^2.0.20",
         "stylelint": "^16.7.0",
         "stylelint-config-plus": "^1.1.2",
         "supports-color": "^9.4.0",
         "tsx": "^4.16.2",
+        "turbogrid": "^3.2.0",
         "ws": "^8.18.0"
     }
 }

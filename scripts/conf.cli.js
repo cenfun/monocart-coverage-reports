@@ -39,6 +39,62 @@ const beforeApp = (item, Util) => {
     return 0;
 };
 
+const copyVendor = (EC, toPath) => {
+    EC.logCyan('copy vendor ...');
+    const vendorPath = path.resolve(__dirname, '../packages/vendor/dist/monocart-coverage-vendor.js');
+    if (!fs.existsSync(vendorPath)) {
+        EC.logRed(`ERROR: Not found dist: ${vendorPath}`);
+        return;
+    }
+
+    const filename = path.basename(vendorPath);
+    const toJs = path.resolve(toPath, filename);
+    // console.log(distPath, toJs);
+    // node 14 do not support cpSync
+    fs.writeFileSync(toJs, fs.readFileSync(vendorPath));
+    EC.logGreen(`copied ${toJs}`);
+
+    return toJs;
+};
+
+const buildAssets = (EC, toPath) => {
+    const { deflateSync } = require('lz-utils');
+
+    const toJs = path.resolve(toPath, 'monocart-coverage-assets.js');
+    const moduleList = [
+        'monocart-code-viewer',
+        'monocart-formatter',
+        'turbogrid',
+        'monocart-coverage-app'
+    ];
+
+    const assetsList = moduleList.map((id) => {
+        return {
+            id,
+            path: require.resolve(id)
+        };
+    });
+    assetsList.push({
+        id: 'template',
+        path: path.resolve(__dirname, '../lib/default/template.html')
+    });
+
+    const assetsMap = {};
+    for (const item of assetsList) {
+        if (!fs.existsSync(item.path)) {
+            EC.logRed(`Not found assets: ${item.path}`);
+            return;
+        }
+        const content = fs.readFileSync(item.path).toString('utf-8');
+        assetsMap[item.id] = deflateSync(content);
+    }
+
+    fs.writeFileSync(toJs, `module.exports = ${JSON.stringify(assetsMap, null, 4)};`);
+    EC.logGreen(`created ${toJs}`);
+
+    return toJs;
+};
+
 module.exports = {
 
     precommit: {
@@ -54,7 +110,7 @@ module.exports = {
 
     build: {
 
-        vendors: ['common', 'app'],
+        vendors: ['vendor', 'app'],
 
         before: (item, Util) => {
 
@@ -78,43 +134,45 @@ module.exports = {
 
             const EC = require('eight-colors');
 
+            // =====================================================================
+            // clean packages
             const toPath = path.resolve(__dirname, '../lib/packages');
-
-            // only clean if build all
-            const totalComponents = fs.readdirSync(path.resolve(__dirname, '../packages'));
-            if (results.jobList.length === totalComponents.length && fs.existsSync(toPath)) {
-                fs.readdirSync(toPath).forEach((f) => {
-                    const jsPath = path.resolve(toPath, f);
-                    fs.rmSync(jsPath, {
-                        force: true
-                    });
-                    EC.logRed(`removed ${jsPath}`);
+            if (fs.existsSync(toPath)) {
+                fs.rmSync(toPath, {
+                    force: true,
+                    recursive: true,
+                    maxRetries: 10
                 });
+                EC.logRed(`clean packages: ${toPath}`);
             }
 
-            if (!fs.existsSync(toPath)) {
-                fs.mkdirSync(toPath);
-            }
-
-            const distList = [];
-            let code = 0;
-
-            EC.log('get workspace packages dist files ...');
-            // sometimes only on job
-            results.jobList.forEach((job) => {
-                const distPath = path.resolve(job.buildPath, `${job.fullName}.js`);
-                if (!fs.existsSync(distPath)) {
-                    EC.logRed(`ERROR: Not found dist: ${distPath}`);
-                    code = 1;
-                    return;
-                }
-                distList.push(distPath);
+            fs.mkdirSync(toPath, {
+                recursive: true
             });
 
-            if (code) {
-                return code;
+            // =====================================================================
+            // copy vendor
+            const distList = [];
+
+            const vendorPath = copyVendor(EC, toPath);
+            if (!vendorPath) {
+                return 1;
             }
 
+            distList.push(vendorPath);
+
+            // =====================================================================
+            // build assets
+
+            const assetsPath = buildAssets(EC, toPath);
+            if (!assetsPath) {
+                return 1;
+            }
+
+            distList.push(assetsPath);
+
+            // =====================================================================
+            // show packages
             let index = 1;
             const rows = [];
 
@@ -131,18 +189,9 @@ module.exports = {
 
                 const stat = fs.statSync(distPath);
 
-                const filename = path.basename(distPath);
-                const toJs = path.resolve(toPath, filename);
-
-                // console.log(distPath, toJs);
-                // node 14 do not support cpSync
-                fs.writeFileSync(toJs, fs.readFileSync(distPath));
-
-                EC.logGreen(`copied ${toJs}`);
-
                 rows.push({
                     index,
-                    name: EC.green(filename),
+                    name: EC.green(path.basename(distPath)),
                     size: stat.size
                 });
                 index += 1;
@@ -202,7 +251,7 @@ module.exports = {
                 rows: rows
             });
 
-            return code;
+            return 0;
         }
 
     },
