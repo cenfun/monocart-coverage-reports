@@ -59,5 +59,3 @@ jobs:
           path: ./node_modules/monocart-coverage-reports/lib
 
       - run: npm run coverage
-        env:
-          FORCE_COLOR: true
