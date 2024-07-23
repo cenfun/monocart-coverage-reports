@@ -50,6 +50,7 @@ jobs:
           node-version: 20
           check-latest: true
 
+      - run: cd c8
       - run: npm ci
       - run: npm i monocart-coverage-reports@latest
 
