@@ -64,19 +64,40 @@ const buildAssets = (EC, toPath) => {
 
     const assetsList = [{
         id: 'template',
-        path: path.resolve(__dirname, '../lib/default/template.html')
+        getContent: () => {
+            const p = path.resolve(__dirname, '../lib/default/template.html');
+            if (!fs.existsSync(p)) {
+                return;
+            }
+            return fs.readFileSync(p).toString('utf-8');
+        }
     }, {
         id: 'monocart-coverage-app',
-        path: require.resolve('monocart-coverage-app')
+        getContent: () => {
+            const appPath = path.resolve(__dirname, '../packages/app/dist/monocart-coverage-app.js');
+            if (!fs.existsSync(appPath)) {
+                return;
+            }
+            const loaderPath = path.resolve(__dirname, '../packages/loader/dist/monocart-coverage-loader.js');
+            if (!fs.existsSync(loaderPath)) {
+                return;
+            }
+
+            const appContent = fs.readFileSync(appPath).toString('utf-8');
+            const loaderContent = fs.readFileSync(loaderPath).toString('utf-8');
+
+            return loaderContent.replace('{compressed_placeholder}', deflateSync(appContent));
+
+        }
     }];
 
     const assetsMap = {};
     for (const item of assetsList) {
-        if (!fs.existsSync(item.path)) {
-            EC.logRed(`Not found asset: ${item.path}`);
+        const content = item.getContent();
+        if (!content) {
+            EC.logRed(`Not found asset: ${item.id}`);
             return;
         }
-        const content = fs.readFileSync(item.path).toString('utf-8');
         assetsMap[item.id] = deflateSync(content);
     }
 
@@ -101,7 +122,7 @@ module.exports = {
 
     build: {
 
-        vendors: ['vendor', 'app'],
+        vendors: ['vendor', 'app', 'loader'],
 
         before: (item, Util) => {
 

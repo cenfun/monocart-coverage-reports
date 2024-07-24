@@ -1,8 +1,8 @@
 ## Changelog
 
 - 2.10.0
-  - fixed file sorting for details report (breaking snapshot)
-  - fixed js assets for `v8` report (single asset)
+  - fixed sorting of files (breaking snapshot)
+  - fixed assets to a single compressed file
   - added `maxCols` for `markdown-details`
   - added name for function coverage
 
