@@ -102,7 +102,7 @@
         "find-up": "^7.0.0",
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
-        "postcss": "^8.4.39",
+        "postcss": "^8.4.40",
         "starfall-cli": "^2.0.20",
         "stylelint": "^16.7.0",
         "stylelint-config-plus": "^1.1.2",

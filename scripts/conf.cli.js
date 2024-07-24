@@ -98,7 +98,7 @@ const buildAssets = (EC, toPath) => {
             EC.logRed(`Not found asset: ${item.id}`);
             return;
         }
-        assetsMap[item.id] = deflateSync(content);
+        assetsMap[item.id] = content;
     }
 
     fs.writeFileSync(toJs, `module.exports = ${JSON.stringify(assetsMap, null, 4)};`);
