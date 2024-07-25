@@ -58,7 +58,7 @@ const copyVendor = (EC, toPath) => {
 };
 
 const buildAssets = (EC, toPath) => {
-    const { deflateSync } = require('lz-utils');
+    const { createScriptLoader } = require('lz-utils');
 
     const toJs = path.resolve(toPath, 'monocart-coverage-assets.js');
 
@@ -78,16 +78,8 @@ const buildAssets = (EC, toPath) => {
             if (!fs.existsSync(appPath)) {
                 return;
             }
-            const loaderPath = path.resolve(__dirname, '../packages/loader/dist/monocart-coverage-loader.js');
-            if (!fs.existsSync(loaderPath)) {
-                return;
-            }
-
             const appContent = fs.readFileSync(appPath).toString('utf-8');
-            const loaderContent = fs.readFileSync(loaderPath).toString('utf-8');
-
-            return loaderContent.replace('{compressed_placeholder}', deflateSync(appContent));
-
+            return createScriptLoader(appContent);
         }
     }];
 

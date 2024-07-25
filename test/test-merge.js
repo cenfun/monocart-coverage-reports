@@ -15,6 +15,8 @@ const coverageOptions = {
         'v8'
     ],
 
+    inline: true,
+
     // merge from exists raw dirs
     inputDir: './docs/node-vm/raw, ./docs/cli/raw, ./wrong-raw-dir',
 
