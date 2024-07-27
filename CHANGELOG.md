@@ -1,9 +1,10 @@
 ## Changelog
 
 - 2.10.0
-  - fixed sorting of files (breaking snapshot)
-  - fixed assets to a single compressed file
+  - (breaking snapshot) the report's files will be sorted by default
+  - (breaking assets) the report assets have been changed from multiple files to a single compressed file
   - added `maxCols` for `markdown-details`
+  - added `filter` for `markdown-details` and `console-details`
   - added name for function coverage
 
 - 2.9.3
