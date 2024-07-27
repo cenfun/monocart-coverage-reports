@@ -129,6 +129,9 @@ declare namespace MCR {
             maxCols?: number;
             skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+            filter?: string | {
+                [pattern: string]: boolean;
+            } | ((row: any) => boolean);
         }] |
         ['markdown-summary'] | ['markdown-summary', {
             color: 'unicode' | 'html' | 'tex' | string;
@@ -144,6 +147,9 @@ declare namespace MCR {
             maxCols?: number;
             skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
+            filter?: string | {
+                [pattern: string]: boolean;
+            } | ((row: any) => boolean);
             /**
              * defaults to `coverage-details.md`
              */

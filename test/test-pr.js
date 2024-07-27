@@ -51,6 +51,10 @@ const test = async () => {
     const prChanges = await getPullRequestChanges();
     console.log('prChanges', prChanges);
 
+    const filter = (row) => {
+        console.log(row);
+    };
+
     const coverageOptions = {
         // logging: 'debug',
         cleanCache: true,
@@ -61,7 +65,8 @@ const test = async () => {
             ['console-details', {
                 // skipPercent: 100,
                 metrics: ['bytes', 'lines'],
-                maxCols: 30
+                maxCols: 30,
+                filter
             }],
             ['v8', {
                 // metrics: ['bytes', 'functions', 'lines']
@@ -72,7 +77,8 @@ const test = async () => {
             ['markdown-details', {
                 // color: 'Tex',
                 baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/pr/#page=',
-                metrics: ['bytes', 'lines']
+                metrics: ['bytes', 'lines'],
+                filter
             }]
         ],
 
@@ -81,16 +87,10 @@ const test = async () => {
 
         outputDir: './docs/pr',
 
-        sourceFilter: (sourcePath) => {
-            if (prChanges.length) {
-                for (const file of prChanges) {
-                    if (sourcePath.includes(file)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+        sourceFilter: {
+            '**/src/**': true
         }
+
     };
 
     const mcr = new CoverageReport(coverageOptions);
