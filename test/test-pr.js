@@ -51,8 +51,10 @@ const test = async () => {
     const prChanges = await getPullRequestChanges();
     console.log('prChanges', prChanges);
 
-    const filter = (row) => {
-        console.log(row);
+    const filter = (file) => {
+        //  console.log(file.sourcePath);
+
+        return true;
     };
 
     const coverageOptions = {

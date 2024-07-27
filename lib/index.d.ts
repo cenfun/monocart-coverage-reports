@@ -131,7 +131,7 @@ declare namespace MCR {
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
             filter?: string | {
                 [pattern: string]: boolean;
-            } | ((row: any) => boolean);
+            } | ((file: CoverageFile) => boolean);
         }] |
         ['markdown-summary'] | ['markdown-summary', {
             color: 'unicode' | 'html' | 'tex' | string;
@@ -149,7 +149,7 @@ declare namespace MCR {
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
             filter?: string | {
                 [pattern: string]: boolean;
-            } | ((row: any) => boolean);
+            } | ((file: CoverageFile) => boolean);
             /**
              * defaults to `coverage-details.md`
              */
