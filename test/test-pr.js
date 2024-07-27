@@ -1,40 +1,46 @@
-const fs = require('fs');
-const path = require('path');
-const { chromium } = require('playwright');
-const MCR = require('../');
+const { CDPClient, CoverageReport } = require('../');
 
 const github = require('@actions/github');
 const core = require('@actions/core');
 
-const getPR = async () => {
+const getPullRequestChanges = async () => {
+
+    if (!github.context.payload.pull_request) {
+        // console.log(Object.keys(github.context));
+        return [];
+    }
+
+    console.log('pull_request', github.context.payload.pull_request);
+
     // This should be a token with access to your repository scoped in as a secret.
     // The YML workflow will need to set myToken with the GitHub Secret Token
     // myToken: ${{ secrets.GITHUB_TOKEN }}
     // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
     const myToken = core.getInput('myToken');
+    console.log('myToken', `${myToken}`.length);
 
-    const octokit = github.getOctokit(myToken);
+    // const octokit = github.getOctokit(myToken);
 
-    // You can also pass in additional options as a second parameter to getOctokit
-    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
+    // // You can also pass in additional options as a second parameter to getOctokit
+    // // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
 
-    const { data } = await octokit.rest.pulls.get({
-        owner: 'octokit',
-        repo: 'rest.js',
-        pull_number: 123,
-        mediaType: {
-            format: 'diff'
-        }
-    });
+    // const { data } = await octokit.rest.pulls.get({
+    //     owner: 'octokit',
+    //     repo: 'rest.js',
+    //     pull_number: 123,
+    //     mediaType: {
+    //         format: 'diff'
+    //     }
+    // });
 
-    return data;
+    // return data;
 };
 
 
 const test = async () => {
 
-    const pr = await getPR();
-    console.log(pr);
+    const prChanges = await getPullRequestChanges();
+    console.log('prChanges', prChanges);
 
     const coverageOptions = {
         // logging: 'debug',
@@ -56,7 +62,7 @@ const test = async () => {
             }],
             ['markdown-details', {
                 // color: 'Tex',
-                baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/v8/#page=',
+                baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/pr/#page=',
                 metrics: ['bytes', 'lines']
             }]
         ],
@@ -75,55 +81,34 @@ const test = async () => {
         }
     };
 
-    const mcr = await MCR(coverageOptions);
+    const mcr = new CoverageReport(coverageOptions);
 
-    const browser = await chromium.launch();
-    const page = await browser.newPage();
-
-    await Promise.all([
-        page.coverage.startJSCoverage({
-            resetOnNavigation: false
-        }),
-        page.coverage.startCSSCoverage({
-            resetOnNavigation: false
-        })
-    ]);
-
-    const fileList = [
-        './test/mock/v8/index.html',
-        './test/mock/v8/dist/coverage-v8.js',
-        './test/mock/css/style.css'
-    ];
-    for (const filePath of fileList) {
-        const content = fs.readFileSync(filePath).toString('utf-8');
-        const extname = path.extname(filePath);
-        if (extname === '.html') {
-            await page.setContent(content);
-        } else if (extname === '.css') {
-            await page.addStyleTag({
-                content: `${content}\n/*# sourceURL=${filePath} */`
-            });
-        } else {
-            await page.addScriptTag({
-                content: `${content}\n//# sourceURL=${filePath}`
-            });
-        }
-    }
-
-    await new Promise((resolve) => {
-        setTimeout(resolve, 500);
+    const client = await CDPClient({
+        port: 9230
     });
 
-    const [jsCoverage, cssCoverage] = await Promise.all([
-        page.coverage.stopJSCoverage(),
-        page.coverage.stopCSSCoverage()
-    ]);
+    await client.startJSCoverage();
 
-    await browser.close();
+    // =====================================================
+    require('./specs/node.test.js');
+    // =====================================================
 
-    const coverageList = [... jsCoverage, ... cssCoverage];
+    const coverageData = await client.stopJSCoverage();
+    // console.log('check source', coverageList.filter((it) => !it.source).map((it) => [it.scriptId, it.url]));
+    // console.log(coverageList.map((it) => it.url));
 
-    await mcr.add(coverageList);
+    await client.close();
+
+    if (coverageData) {
+        // filter node internal files
+        let coverageList = coverageData.filter((entry) => entry.url && entry.url.startsWith('file:'));
+
+        // console.log(coverageList);
+        coverageList = coverageList.filter((entry) => entry.url.includes('test/mock/node'));
+
+        await mcr.add(coverageList);
+    }
+
     await mcr.generate();
 };
 
