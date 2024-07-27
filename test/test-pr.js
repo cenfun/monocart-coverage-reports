@@ -49,12 +49,20 @@ const getPullRequestChanges = async () => {
 const test = async () => {
 
     const prChanges = await getPullRequestChanges();
+    // prChanges.push('ignore.js');
     console.log('prChanges', prChanges);
 
-    const filter = (file) => {
-        //  console.log(file.sourcePath);
+    // const filter = (file) => file.sourcePath.includes('/branch');
+    // const filter = {
+    //     '**/ignore/**': true
+    // };
 
-        return true;
+    const filter = (file) => {
+        for (const p of prChanges) {
+            if (file.sourcePath.includes(p)) {
+                return true;
+            }
+        }
     };
 
     const coverageOptions = {
