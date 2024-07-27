@@ -3,6 +3,8 @@ const { CDPClient, CoverageReport } = require('../');
 const github = require('@actions/github');
 const core = require('@actions/core');
 
+console.log('there is change');
+
 const getPullRequestChanges = async () => {
 
     if (!github.context.payload.pull_request) {
