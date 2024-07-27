@@ -12,37 +12,60 @@ const getPullRequestChanges = async () => {
         return [];
     }
 
-    console.log('pull_request', github.context.payload.pull_request);
+    // console.log('pull_request', github.context.payload.pull_request);
 
-    // This should be a token with access to your repository scoped in as a secret.
-    // The YML workflow will need to set myToken with the GitHub Secret Token
-    // myToken: ${{ secrets.GITHUB_TOKEN }}
-    // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-    const myToken = core.getInput('myToken');
-    console.log('myToken', `${myToken}`.length);
+    /**
+     * env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     */
 
-    // const octokit = github.getOctokit(myToken);
+    const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+    const prNumber = github.context.payload.pull_request.number;
+    core.startGroup(`Fetching list of changed files for PR#${prNumber} from Github API`);
 
-    // // You can also pass in additional options as a second parameter to getOctokit
-    // // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
+    const iterator = octokit.paginate.iterator(
+        octokit.rest.pulls.listFiles, {
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            pull_number: prNumber,
+            per_page: 100
+        }
+    );
 
-    // const { data } = await octokit.rest.pulls.get({
-    //     owner: 'octokit',
-    //     repo: 'rest.js',
-    //     pull_number: 123,
-    //     mediaType: {
-    //         format: 'diff'
-    //     }
-    // });
+    const files = [];
+    for await (const response of iterator) {
+        core.info(`Received ${response.data.length} items`);
 
-    // return data;
+        for (const file of response.data) {
+            core.debug(`[${file.status}] ${file.filename}`);
+            if (['added', 'modified'].includes(file.status)) {
+                files.push(file.filename);
+            }
+        }
+    }
+
+    return files;
 };
 
 
 const test = async () => {
 
     const prChanges = await getPullRequestChanges();
+    // prChanges.push('ignore.js');
     console.log('prChanges', prChanges);
+
+    // const filter = (file) => file.sourcePath.includes('/branch');
+    // const filter = {
+    //     '**/ignore/**': true
+    // };
+
+    const filter = (file) => {
+        for (const p of prChanges) {
+            if (file.sourcePath.includes(p)) {
+                return true;
+            }
+        }
+    };
 
     const coverageOptions = {
         // logging: 'debug',
@@ -54,7 +77,8 @@ const test = async () => {
             ['console-details', {
                 // skipPercent: 100,
                 metrics: ['bytes', 'lines'],
-                maxCols: 30
+                maxCols: 30,
+                filter
             }],
             ['v8', {
                 // metrics: ['bytes', 'functions', 'lines']
@@ -65,7 +89,8 @@ const test = async () => {
             ['markdown-details', {
                 // color: 'Tex',
                 baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/pr/#page=',
-                metrics: ['bytes', 'lines']
+                metrics: ['bytes', 'lines'],
+                filter
             }]
         ],
 
@@ -76,11 +101,8 @@ const test = async () => {
 
         sourceFilter: {
             '**/src/**': true
-        },
-
-        onEnd: (coverageResults) => {
-
         }
+
     };
 
     const mcr = new CoverageReport(coverageOptions);

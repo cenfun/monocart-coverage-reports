@@ -3,16 +3,17 @@ name: Test PR
 on:
 
   push:
-    branches: ["main"]
+    branches: ["test-pr-changes"]
     
   pull_request:
-    branches: ["main"]
+    branches: ["test-pr-changes"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
 
@@ -33,6 +34,11 @@ jobs:
       - run: npm run build
       - run: npm run test-pr
         env:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FORCE_COLOR: true
+
+      - name: Generate list using Markdown
+        run: |
+          cat docs/pr/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+          cat docs/pr/coverage-details.md >> $GITHUB_STEP_SUMMARY
           
