@@ -6,6 +6,8 @@ import WebSocket from 'ws';
 
 import { minimatch } from 'minimatch';
 
+import diffSequence from 'diff-sequences';
+
 import { findUpSync } from 'find-up';
 
 import supportsColor from 'supports-color';
@@ -19,6 +21,8 @@ export {
     WebSocket,
 
     minimatch,
+
+    diffSequence,
 
     findUpSync,
 
