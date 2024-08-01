@@ -42,9 +42,8 @@ class CoverageParser {
             }
             // 1-base
             const line = lineItem.line + 1;
-            lineItem.coveredCount = 1;
-            lineItem.uncoveredEntire = null;
-            lineItem.uncoveredPieces = [];
+
+            Util.initLineCoverage(lineItem);
 
             // need set `ignore` line, and will add ignoredCount
             lineItem.ignored = this.isLineIgnored(lineItem, formattedIgnores);
