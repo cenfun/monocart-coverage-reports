@@ -281,7 +281,7 @@ class CoverageParser {
 
     // ====================================================================================================
 
-    // only for js
+    // only for js, and count > 1
     setExecutionCounts(range) {
 
         const {
@@ -298,25 +298,31 @@ class CoverageParser {
 
         // start in a comment, it does not make sense
         // all comments range should be ignored, resolve it later
-        if (locator.lineParser.commentParser.isComment(start, start)) {
-            return;
+        // if (locator.lineParser.commentParser.isComment(formattedStart, formattedEnd)) {
+        //     return;
+        // }
+
+        // fix start indent
+        const text = locator.getSlice(formattedStart, formattedEnd);
+        const blankBlock = /\S/;
+        const indent = text.search(blankBlock);
+        let offset = indent;
+
+        // It should never be possible to start with }
+        if (indent === 0 && text[0] === '}') {
+            offset = 1;
         }
 
+        const fixedStart = formattedStart + offset;
+
         // 1-base
-        const sLoc = locator.offsetToLocation(formattedStart);
+        const sLoc = locator.offsetToLocation(fixedStart);
 
         // to index 0-base
         const index = sLoc.line - 1;
 
         // fix column
-        let column = Math.max(sLoc.column, sLoc.indent);
-        // It should never be possible to start with }
-        const pos = sLoc.start + column;
-        const char = locator.getSlice(pos, pos + 1);
-        if (char === '}') {
-        // console.log(line, char);
-            column += 1;
-        }
+        const column = sLoc.column;
 
         const eLoc = locator.offsetToLocation(formattedEnd);
         let endPos = eLoc.start;

@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.1
+  - fixed hits UI issue (skip indent)
+
 - 2.10.0
   - (breaking snapshot) the report's files will be sorted by default
   - (breaking assets) the report assets have been changed from multiple files to a single compressed file
