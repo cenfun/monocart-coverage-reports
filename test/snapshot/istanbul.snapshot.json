@@ -28,7 +28,7 @@
             "functions": "70.00 %",
             "statements": "86.48 %",
             "branches": "65.85 %",
-            "uncoveredLines": "10-17,55,78,116-117,134",
+            "uncoveredLines": "10-17,58,81,119-120,137",
             "extras": ""
         },
         "branch/conditional.js": {

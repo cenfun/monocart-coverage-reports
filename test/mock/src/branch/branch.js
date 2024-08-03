@@ -33,6 +33,9 @@ const logicalReturn = function(a) {
     }
 
     // count will be left 10 - 2 = 8
+    /** multiple lines comments
+     * for checking fixRangeStart */
+    // comments again
     if (a < 5 || a > 8) {
         console.log(a);
     }

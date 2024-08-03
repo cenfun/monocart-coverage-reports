@@ -1,20 +1,20 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "81.57 %",
+        "bytes": "82.06 %",
         "statements": "81.78 %",
         "branches": "59.27 %",
         "functions": "79.49 %",
-        "lines": "71.23 %"
+        "lines": "71.37 %"
     },
     "files": {
         "src/async.js": {
             "functions": "66.67 %",
             "branches": "62.50 %",
             "statements": "88.89 %",
-            "lines": "80.49 %",
-            "bytes": "89.40 %",
-            "uncoveredLines": "9,15-22,40-41,49",
+            "lines": "82.93 %",
+            "bytes": "91.26 %",
+            "uncoveredLines": "9,15-22,40-41",
             "extras": "4b,13b,14c,16b,18b,19c,21b,23b,27b,28b,35b,44b,53b,55b"
         },
         "src/branch/assignment.js": {
@@ -22,7 +22,7 @@
             "branches": "54.55 %",
             "statements": "76.47 %",
             "lines": "75.00 %",
-            "bytes": "78.10 %",
+            "bytes": "78.90 %",
             "uncoveredLines": "9-11,22-24",
             "extras": "1b,2c,3c,4b,13b,17b,21b,25b,28b,31b,32b,36b"
         },
@@ -31,9 +31,9 @@
             "branches": "65.85 %",
             "statements": "84.72 %",
             "lines": "73.87 %",
-            "bytes": "80.28 %",
-            "uncoveredLines": "9-19,27,53-56,70,77-79,104,115-120,132-135,140-142",
-            "extras": "1c,2b,8b,14b,16c,20b,25b,26c,29b,30c,34b,35c,39b,41b,43b,52b,54c,57b,66b,68b,69c,72b,73c,81b,83b,94b,96b,101b,103c,107b,109b,111b,113b,114b,118c,121b,123b,130b,131b,133c,136b,137c,138c,146b,152b,154b,158b"
+            "bytes": "80.88 %",
+            "uncoveredLines": "9-19,27,56-59,73,80-82,107,118-123,135-138,143-145",
+            "extras": "1c,2b,8b,14b,16c,20b,25b,26c,29b,30c,34b,35c,36c,37c,38c,42b,44b,46b,55b,57c,60b,69b,71b,72c,75b,76c,84b,86b,97b,99b,104b,106c,110b,112b,114b,116b,117b,121c,124b,126b,133b,134b,136c,139b,140c,141c,149b,155b,157b,161b"
         },
         "src/branch/conditional.js": {
             "functions": "100.00 %",
@@ -49,7 +49,7 @@
             "branches": "52.00 %",
             "statements": "71.43 %",
             "lines": "54.64 %",
-            "bytes": "67.31 %",
+            "bytes": "67.60 %",
             "uncoveredLines": "28-30,34-36,40-44,57-59,63-67,74-80,84-86,88-90,97-111",
             "extras": "1c,3b,7b,13b,21b,23b,25b,31b,37b,45b,47b,50b,54b,60b,68b,70b,73b,77b,83b,91b,93b,96b,100b,106b,114b,116b,118b,125b"
         },
@@ -76,7 +76,7 @@
             "branches": "50.00 %",
             "statements": "63.64 %",
             "lines": "61.29 %",
-            "bytes": "66.76 %",
+            "bytes": "70.16 %",
             "uncoveredLines": "8-16,19-21,32-34",
             "extras": "2b,7b,10b,12b,13c,17b,24c,26b,28b,31b,35b,40b,41b,45b"
         },
@@ -121,7 +121,7 @@
             "branches": "75.00 %",
             "statements": "100.00 %",
             "lines": "75.00 %",
-            "bytes": "84.38 %",
+            "bytes": "84.66 %",
             "uncoveredLines": "20-22",
             "extras": "5c,6i,7i,8i,9b,10c,11i,12b,13c,14i,15b,16i,17b,21i,23b"
         },
@@ -139,7 +139,7 @@
             "branches": "60.00 %",
             "statements": "100.00 %",
             "lines": "71.43 %",
-            "bytes": "85.06 %",
+            "bytes": "85.54 %",
             "uncoveredLines": "2,19",
             "extras": "5c,6i,7i,8i,9c,10b,11i,12i,13b,14i,15c,16b,20i,21i,22c,23c"
         },
@@ -166,7 +166,7 @@
             "branches": "50.00 %",
             "statements": "76.92 %",
             "lines": "75.00 %",
-            "bytes": "78.24 %",
+            "bytes": "81.41 %",
             "uncoveredLines": "9,11-13,25-27",
             "extras": "18b,20b,24b,29b,33b"
         },

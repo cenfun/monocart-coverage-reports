@@ -280,49 +280,6 @@ class CoverageParser {
     }
 
     // ====================================================================================================
-    fixRangeStart(locator, start, end) {
-        const comments = locator.lineParser.commentParser.comments;
-        const blankBlock = /\S/;
-        const len = end - start;
-        let text = locator.getSlice(start, end);
-        let offset = 0;
-
-        while (offset < len) {
-
-            const indent = text.search(blankBlock);
-            if (indent === 0) {
-                break;
-            }
-
-            offset += indent;
-
-            // skip comments
-            if (!comments.length) {
-                break;
-            }
-
-            const nextPos = start + offset;
-            const comment = comments.find((it) => it.start === nextPos);
-            if (!comment) {
-                break;
-            }
-
-            const commentLen = comment.end - comment.start;
-
-            offset += commentLen;
-
-            // next text
-            text = text.slice(indent + commentLen);
-
-        }
-
-        // It should never be possible to start with }
-        // if (text[0] === '}') {
-        //     offset = 1;
-        // }
-
-        return offset;
-    }
 
     // only for js, and count > 1
     setExecutionCounts(range) {
@@ -338,12 +295,9 @@ class CoverageParser {
         const formattedEnd = mappingParser.originalToFormatted(end);
 
         const locator = this.formattedLocator;
-        // fix start indent
-        const offset = this.fixRangeStart(locator, formattedStart, formattedEnd);
-        const fixedStart = formattedStart + offset;
 
         // 1-base
-        const sLoc = locator.offsetToLocation(fixedStart);
+        const sLoc = locator.offsetToLocation(formattedStart);
 
         // to index 0-base
         const index = sLoc.line - 1;

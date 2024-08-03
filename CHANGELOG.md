@@ -2,6 +2,7 @@
 
 - 2.10.1
   - fixed hits UI issue (skip indent)
+  - fixed ranges for original bytes 
 
 - 2.10.0
   - (breaking snapshot) the report's files will be sorted by default

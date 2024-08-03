@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "85.74 %",
+        "bytes": "87.44 %",
         "statements": "83.51 %",
         "branches": "56.25 %",
         "functions": "68.42 %",
-        "lines": "78.42 %"
+        "lines": "79.14 %"
     },
     "files": {
         "a.js": {
@@ -21,9 +21,9 @@
             "functions": "66.67 %",
             "branches": "62.50 %",
             "statements": "88.89 %",
-            "lines": "80.49 %",
-            "bytes": "89.40 %",
-            "uncoveredLines": "9,15-22,40-41,49",
+            "lines": "82.93 %",
+            "bytes": "91.26 %",
+            "uncoveredLines": "9,15-22,40-41",
             "extras": "4b,13b,14c,16b,18b,19c,21b,23b,27b,28b,35b,44b,53b,55b"
         },
         "b.js": {
@@ -40,7 +40,7 @@
             "branches": "50.00 %",
             "statements": "63.64 %",
             "lines": "58.62 %",
-            "bytes": "65.19 %",
+            "bytes": "68.74 %",
             "uncoveredLines": "8-16,19-21,32-34",
             "extras": "2b,7b,10b,12b,13c,17b,24c,26b,28b,31b,35b,40b,41b,43b"
         },
@@ -67,7 +67,7 @@
             "branches": "50.00 %",
             "statements": "76.92 %",
             "lines": "73.08 %",
-            "bytes": "77.19 %",
+            "bytes": "80.51 %",
             "uncoveredLines": "9,11-13,25-27",
             "extras": "18b,20b,24b,29b,31b"
         }
