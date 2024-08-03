@@ -7,7 +7,7 @@ const checkSnapshot = require('./check-snapshot.js');
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    reports: ['v8', 'v8-json'],
+    reports: ['v8'],
 
     name: 'My V8 Node cdp Coverage Report',
     assetsPath: '../assets',

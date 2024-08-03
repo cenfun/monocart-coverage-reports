@@ -8,6 +8,7 @@ module.exports = {
 
     reports: [
         'v8',
+        'v8-json',
         'console-summary',
         'codecov',
         ['markdown-summary', {

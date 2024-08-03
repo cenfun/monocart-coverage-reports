@@ -16,8 +16,7 @@ const coverageOptions = {
         }],
         ['v8', {
             // metrics: ['bytes', 'functions', 'lines']
-        }],
-        'v8-json'
+        }]
     ],
 
     name: 'My Puppeteer Coverage Report',

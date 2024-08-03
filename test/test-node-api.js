@@ -9,7 +9,7 @@ const dir = process.env.NODE_V8_COVERAGE;
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
-    reports: ['v8', 'v8-json'],
+    reports: ['v8'],
 
     name: 'My V8 Node api Coverage Report',
     assetsPath: '../assets',
