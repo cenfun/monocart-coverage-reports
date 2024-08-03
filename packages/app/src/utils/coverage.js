@@ -280,6 +280,49 @@ class CoverageParser {
     }
 
     // ====================================================================================================
+    fixRangeStart(locator, start, end) {
+        const comments = locator.lineParser.commentParser.comments;
+        const blankBlock = /\S/;
+        const len = end - start;
+        let text = locator.getSlice(start, end);
+        let offset = 0;
+
+        while (offset < len) {
+
+            const indent = text.search(blankBlock);
+            if (indent === 0) {
+                break;
+            }
+
+            offset += indent;
+
+            // skip comments
+            if (!comments.length) {
+                break;
+            }
+
+            const nextPos = start + offset;
+            const comment = comments.find((it) => it.start === nextPos);
+            if (!comment) {
+                break;
+            }
+
+            const commentLen = comment.end - comment.start;
+
+            offset += commentLen;
+
+            // next text
+            text = text.slice(indent + commentLen);
+
+        }
+
+        // It should never be possible to start with }
+        // if (text[0] === '}') {
+        //     offset = 1;
+        // }
+
+        return offset;
+    }
 
     // only for js, and count > 1
     setExecutionCounts(range) {
@@ -295,24 +338,8 @@ class CoverageParser {
         const formattedEnd = mappingParser.originalToFormatted(end);
 
         const locator = this.formattedLocator;
-
-        // start in a comment, it does not make sense
-        // all comments range should be ignored, resolve it later
-        // if (locator.lineParser.commentParser.isComment(formattedStart, formattedEnd)) {
-        //     return;
-        // }
-
         // fix start indent
-        const text = locator.getSlice(formattedStart, formattedEnd);
-        const blankBlock = /\S/;
-        const indent = text.search(blankBlock);
-        let offset = indent;
-
-        // It should never be possible to start with }
-        if (indent === 0 && text[0] === '}') {
-            offset = 1;
-        }
-
+        const offset = this.fixRangeStart(locator, formattedStart, formattedEnd);
         const fixedStart = formattedStart + offset;
 
         // 1-base

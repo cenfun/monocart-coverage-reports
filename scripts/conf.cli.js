@@ -14,7 +14,7 @@ const beforeApp = (item, Util) => {
     // const jsDataPath = path.resolve(__dirname, `../docs/minify/${dataFile}`);
 
     // typescript repo huge data example 8M
-    // const jsDataPath = path.resolve(__dirname, `../../../github/TypeScript/coverage-mcr/${dataFile}`);
+    // const jsDataPath = path.resolve(__dirname, `../../../github/TypeScript/coverage-reports/${dataFile}`);
 
     const jsPath = path.resolve(item.buildPath, dataFile);
     const distDir = path.dirname(jsPath);
