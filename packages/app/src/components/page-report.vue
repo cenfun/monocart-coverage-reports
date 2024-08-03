@@ -747,7 +747,7 @@ onMounted(() => {
         class="mcr-locate-switch"
         icon="locate"
         :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
-        :tooltip="'Locate '+state.locate+' Range'"
+        tooltip="Switch Locating Between All Ranges or Uncovered Ranges"
         @click="switchLocate()"
       >
         <span>{{ state.locate }}</span>
@@ -785,12 +785,13 @@ onMounted(() => {
           <IconLabel
             icon="location"
             class="mcr-report-goto"
+            title="Jump to position"
             @click="showGotoPopover"
           >
             Pos
           </IconLabel>
           <div v-if="data.cursor.original">
-            <span>{{ Util.NF(data.cursor.originalPosition) }}</span>
+            <span :tooltip="'Formatted: ' + Util.NF(data.cursor.position)">{{ Util.NF(data.cursor.originalPosition) }}</span>
           </div>
         </VuiFlex>
       </VuiFlex>
@@ -934,6 +935,7 @@ onMounted(() => {
 .mcr-cursor-foot {
     span {
         font-size: var(--font-monospace);
+        cursor: default;
     }
 }
 
