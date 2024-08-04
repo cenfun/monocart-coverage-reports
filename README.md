@@ -116,8 +116,10 @@ For more information, see [Command Line](#command-line)
 ![](./assets/v8.gif)
 
 - `v8-json`
-    - Save `CoverageResults` to a json file
-    - Preview [coverage-report.json](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)
+    - Save `CoverageResults` to a json file (defaults to [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json)).
+    - Shows native V8 code coverage with VSCode extension [monocart-coverage-vscode](https://github.com/cenfun/monocart-coverage-vscode)
+
+![](./assets/mcv.gif)
 
 > Istanbul build-in reports (both V8 and Istanbul data):
 
