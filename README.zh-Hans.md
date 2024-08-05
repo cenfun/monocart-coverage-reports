@@ -42,6 +42,7 @@
     - [Playwright](#playwright)
     - [c8](#c8)
     - [CodeceptJS](#codeceptjs)
+    - [VSCode](#vscode)
     - [Jest](#jest)
     - [Vitest](#vitest)
     - [Puppeteer](#puppeteer)
@@ -976,6 +977,9 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 
 ### [CodeceptJS](https://github.com/codeceptjs/CodeceptJS)
 - CodeceptJS is a [BDD](https://codecept.io/bdd/) + [AI](https://codecept.io/ai/) testing framework for e2e testing, it has integrated `MCR` since [v3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15), see [plugins/coverage](https://codecept.io/plugins/#coverage)
+
+### [VSCode](https://github.com/microsoft/vscode)
+- [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode) - Shows native V8 code coverage in VSCode
 
 ### [Jest](https://github.com/jestjs/jest/)
 - [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage) - Jest custom reporter for coverage reports
