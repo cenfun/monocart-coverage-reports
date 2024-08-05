@@ -105,10 +105,10 @@
         "monocart-formatter": "^3.0.0",
         "postcss": "^8.4.40",
         "starfall-cli": "^2.0.20",
-        "stylelint": "^16.7.0",
+        "stylelint": "^16.8.1",
         "stylelint-config-plus": "^1.1.2",
         "supports-color": "^9.4.0",
-        "tsx": "^4.16.2",
+        "tsx": "^4.16.5",
         "turbogrid": "^3.2.0",
         "vine-ui": "^3.1.16",
         "ws": "^8.18.0"
