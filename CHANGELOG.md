@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.2
+  - fixed branch coverage issue for `static async` function (#67)
+
 - 2.10.1
   - fixed hits UI issue (skip indent)
   - fixed ranges for original bytes 

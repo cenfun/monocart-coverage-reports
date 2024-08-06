@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 class ClassWithStaticInitializationBlock {
     static staticProperty1 = 'Property 1';
     static staticProperty2;
@@ -27,6 +28,18 @@ class ClassWithStaticInitializationBlock {
     }
 }
 
-module.exports = () => {
+class StaticAsync {
+    static async covered(active) {
+        // should be covered
+        if (active) {
+            return 1;
+        }
+        return 2;
+    }
+}
+
+module.exports = async () => {
     new ClassWithStaticInitializationBlock();
+    await StaticAsync.covered(false);
+    await StaticAsync.covered(true);
 };

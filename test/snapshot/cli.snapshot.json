@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "53.32 %",
-        "statements": "56.20 %",
-        "branches": "52.27 %",
-        "functions": "50.00 %",
-        "lines": "44.89 %"
+        "bytes": "52.61 %",
+        "statements": "55.60 %",
+        "branches": "51.88 %",
+        "functions": "49.45 %",
+        "lines": "44.35 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -203,8 +203,8 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "1-32",
-            "extras": "18b,20b,24b,29b,33b"
+            "uncoveredLines": "2-45",
+            "extras": "1c,19b,21b,25b,30b,33c,40b,46b"
         },
         "test/mock/src/typescript.ts": {
             "functions": "100.00 %",

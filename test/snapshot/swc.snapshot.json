@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "82.06 %",
-        "statements": "82.39 %",
-        "branches": "59.27 %",
-        "functions": "79.75 %",
-        "lines": "71.37 %"
+        "bytes": "82.34 %",
+        "statements": "82.63 %",
+        "branches": "59.60 %",
+        "functions": "80.00 %",
+        "lines": "71.76 %"
     },
     "files": {
         "src/async.js": {
@@ -162,13 +162,13 @@
             "extras": "2b,7b,8c,12b,17b,22b,29b,33b"
         },
         "src/statics.js": {
-            "functions": "80.00 %",
-            "branches": "50.00 %",
-            "statements": "82.35 %",
-            "lines": "75.00 %",
-            "bytes": "81.41 %",
-            "uncoveredLines": "9,11-13,25-27",
-            "extras": "18b,20b,24b,29b,33b"
+            "functions": "83.33 %",
+            "branches": "66.67 %",
+            "statements": "87.50 %",
+            "lines": "81.58 %",
+            "bytes": "86.96 %",
+            "uncoveredLines": "10,12-14,26-28",
+            "extras": "1c,19b,21b,25b,30b,33c,40b,46b"
         },
         "src/typescript.ts": {
             "functions": "100.00 %",

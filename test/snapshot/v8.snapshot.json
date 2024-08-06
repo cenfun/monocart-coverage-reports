@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "75.63 %",
-        "statements": "81.78 %",
-        "branches": "59.60 %",
-        "functions": "78.75 %",
-        "lines": "64.71 %"
+        "bytes": "75.96 %",
+        "statements": "82.00 %",
+        "branches": "59.92 %",
+        "functions": "79.01 %",
+        "lines": "65.13 %"
     },
     "files": {
         "test/mock/css/style.css": {
@@ -171,13 +171,13 @@
             "extras": "2b,7b,8c,12b,17b,22b,29b,33b"
         },
         "test/mock/src/statics.js": {
-            "functions": "80.00 %",
-            "branches": "50.00 %",
-            "statements": "76.92 %",
-            "lines": "75.00 %",
-            "bytes": "81.41 %",
-            "uncoveredLines": "9,11-13,25-27",
-            "extras": "18b,20b,24b,29b,33b"
+            "functions": "83.33 %",
+            "branches": "66.67 %",
+            "statements": "84.21 %",
+            "lines": "81.58 %",
+            "bytes": "86.96 %",
+            "uncoveredLines": "10,12-14,26-28",
+            "extras": "1c,19b,21b,25b,30b,33c,40b,46b"
         },
         "test/mock/src/typescript.ts": {
             "functions": "100.00 %",
