@@ -103,7 +103,7 @@
         "minimatch": "^9.0.5",
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
-        "postcss": "^8.4.40",
+        "postcss": "^8.4.41",
         "starfall-cli": "^2.0.20",
         "stylelint": "^16.8.1",
         "stylelint-config-plus": "^1.1.2",
