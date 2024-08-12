@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "52.61 %",
-        "statements": "55.60 %",
-        "branches": "51.88 %",
-        "functions": "49.45 %",
-        "lines": "44.35 %"
+        "bytes": "53.59 %",
+        "statements": "56.61 %",
+        "branches": "52.04 %",
+        "functions": "50.54 %",
+        "lines": "45.58 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -65,11 +65,11 @@
         "test/mock/src/branch/branch.js": {
             "functions": "70.00 %",
             "branches": "65.85 %",
-            "statements": "84.72 %",
-            "lines": "73.87 %",
-            "bytes": "80.92 %",
-            "uncoveredLines": "9-19,27,56-59,73,80-82,107,118-123,135-138,143-145",
-            "extras": "1c,2b,8b,14b,16c,20b,25b,26c,29b,30c,34b,35c,36c,37c,38c,42b,44b,46b,55b,57c,60b,69b,71b,72c,75b,76c,84b,86b,97b,99b,104b,106c,110b,112b,114b,116b,117b,121c,124b,126b,133b,134b,136c,139b,140c,141c,149b,155b,157b,161b"
+            "statements": "85.14 %",
+            "lines": "74.34 %",
+            "bytes": "81.49 %",
+            "uncoveredLines": "10-20,28,57-60,74,81-83,108,119-124,136-139,144-146",
+            "extras": "1c,2b,9b,15b,17c,21b,26b,27c,30b,31c,35b,36c,37c,38c,39c,43b,45b,47b,56b,58c,61b,70b,72b,73c,76b,77c,85b,87b,98b,100b,105b,107c,111b,113b,115b,117b,118b,122c,125b,127b,134b,135b,137c,140b,141c,142c,150b,158b,162b"
         },
         "test/mock/src/branch/conditional.js": {
             "functions": "100.00 %",
@@ -97,6 +97,15 @@
             "bytes": "95.25 %",
             "uncoveredLines": "22-23,33-34,38,45,48-49,59-60",
             "extras": "1c,2b,4b,10b,15b,19b,25b,29b,36b,40b,47b,51b,58b,62b,65b,66b,68b,73b,75b"
+        },
+        "test/mock/src/branch/switch-no-break.js": {
+            "functions": "100.00 %",
+            "branches": "66.67 %",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "1c,14b,20b"
         },
         "test/mock/src/branch/switch.js": {
             "functions": "100.00 %",

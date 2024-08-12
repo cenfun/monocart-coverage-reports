@@ -1,10 +1,10 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "82.12 %",
-        "statements": "82.05 %",
-        "functions": "76.82 %",
-        "branches": "58.33 %"
+        "lines": "82.54 %",
+        "statements": "82.46 %",
+        "functions": "77.38 %",
+        "branches": "58.80 %"
     },
     "files": {
         "async.js": {
@@ -24,11 +24,11 @@
             "extras": ""
         },
         "branch/branch.js": {
-            "lines": "86.11 %",
+            "lines": "86.48 %",
             "functions": "70.00 %",
-            "statements": "86.48 %",
+            "statements": "86.84 %",
             "branches": "65.85 %",
-            "uncoveredLines": "10-17,58,81,119-120,137",
+            "uncoveredLines": "11-18,59,82,120-121,138",
             "extras": ""
         },
         "branch/conditional.js": {
@@ -52,6 +52,14 @@
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "74.07 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "branch/switch-no-break.js": {
+            "lines": "100.00 %",
+            "functions": "100.00 %",
+            "statements": "100.00 %",
+            "branches": "100.00 %",
             "uncoveredLines": "",
             "extras": ""
         },
