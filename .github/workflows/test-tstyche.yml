@@ -49,6 +49,7 @@ jobs:
           node-version: 20
           check-latest: true
 
+      - run: npm i yarn -g
       - run: yarn install
       - run: yarn add monocart-coverage-reports@latest
 
