@@ -3,7 +3,7 @@
     "summary": {
         "bytes": "75.97 %",
         "statements": "78.39 %",
-        "branches": "59.80 %",
+        "branches": "60.13 %",
         "functions": "72.90 %",
         "lines": "65.58 %"
     },
@@ -118,7 +118,7 @@
         },
         "test/mock/src/branch/switch-no-break.js": {
             "functions": "100.00 %",
-            "branches": "66.67 %",
+            "branches": "100.00 %",
             "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",

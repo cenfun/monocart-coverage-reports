@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.3
+  - fixed branch coverage issue for `switch/case` (#68)
+
 - 2.10.2
   - fixed branch coverage issue for `static async` function (#67)
 

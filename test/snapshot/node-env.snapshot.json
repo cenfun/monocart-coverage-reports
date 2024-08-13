@@ -3,7 +3,7 @@
     "summary": {
         "bytes": "83.86 %",
         "statements": "84.58 %",
-        "branches": "60.52 %",
+        "branches": "60.94 %",
         "functions": "88.89 %",
         "lines": "71.53 %"
     },
@@ -64,7 +64,7 @@
         },
         "monocart-coverage-reports/test/mock/src/branch/switch-no-break.js": {
             "functions": "100.00 %",
-            "branches": "66.67 %",
+            "branches": "100.00 %",
             "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",
