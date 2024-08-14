@@ -32,11 +32,11 @@ module.exports = function(coverageResults) {
 
     const snapName = path.basename(snapPath);
     if (diff.change) {
-        EC.logRed(`ERROR: Snapshot does not match reference: ${snapName}`);
+        EC.logRed(`❌ ERROR: Snapshot does not match reference: ${snapName}`);
         console.log(diff.message);
         process.exit(1);
     } else {
-        EC.logGreen(`Snapshot matched: ${snapName}`);
+        EC.logGreen(`✅ Snapshot matched: ${snapName}`);
     }
 
 };
