@@ -6,6 +6,7 @@ const IfStatement = require('./if.js');
 const LogicalExpression = require('./logical.js');
 const SwitchStatement = require('./switch.js');
 const SwitchStatementNoBreak = require('./switch-no-break.js');
+const OptionalChaining = require('./optional-chaining.js');
 
 const uncoveredFunction = (a) => {
     const list = [1, 2, 3, 4, 5];
@@ -154,6 +155,7 @@ const branch = (a) => {
     LogicalExpression();
     SwitchStatement();
     SwitchStatementNoBreak();
+    OptionalChaining();
 };
 
 module.exports = {

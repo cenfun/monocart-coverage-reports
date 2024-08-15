@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "53.59 %",
-        "statements": "56.61 %",
+        "bytes": "54.97 %",
+        "statements": "57.37 %",
         "branches": "52.42 %",
-        "functions": "50.54 %",
-        "lines": "45.58 %"
+        "functions": "51.58 %",
+        "lines": "46.29 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -65,11 +65,11 @@
         "test/mock/src/branch/branch.js": {
             "functions": "70.00 %",
             "branches": "65.85 %",
-            "statements": "85.14 %",
-            "lines": "74.34 %",
-            "bytes": "81.49 %",
-            "uncoveredLines": "10-20,28,57-60,74,81-83,108,119-124,136-139,144-146",
-            "extras": "1c,2b,9b,15b,17c,21b,26b,27c,30b,31c,35b,36c,37c,38c,39c,43b,45b,47b,56b,58c,61b,70b,72b,73c,76b,77c,85b,87b,98b,100b,105b,107c,111b,113b,115b,117b,118b,122c,125b,127b,134b,135b,137c,140b,141c,142c,150b,158b,162b"
+            "statements": "85.53 %",
+            "lines": "74.78 %",
+            "bytes": "81.98 %",
+            "uncoveredLines": "11-21,29,58-61,75,82-84,109,120-125,137-140,145-147",
+            "extras": "1c,2b,10b,16b,18c,22b,27b,28c,31b,32c,36b,37c,38c,39c,40c,44b,46b,48b,57b,59c,62b,71b,73b,74c,77b,78c,86b,88b,99b,101b,106b,108c,112b,114b,116b,118b,119b,123c,126b,128b,135b,136b,138c,141b,142c,143c,151b,160b,164b"
         },
         "test/mock/src/branch/conditional.js": {
             "functions": "100.00 %",
@@ -97,6 +97,15 @@
             "bytes": "95.25 %",
             "uncoveredLines": "22-23,33-34,38,45,48-49,59-60",
             "extras": "1c,2b,4b,10b,15b,19b,25b,29b,36b,40b,47b,51b,58b,62b,65b,66b,68b,73b,75b"
+        },
+        "test/mock/src/branch/optional-chaining.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "80.00 %",
+            "bytes": "97.21 %",
+            "uncoveredLines": "24-29",
+            "extras": "1c,2c,3c,4c,5c,6c,7b,14b,15c,16c,17c,18b,20b,22b,23c,25b,26c,28b,31b,35b"
         },
         "test/mock/src/branch/switch-no-break.js": {
             "functions": "100.00 %",

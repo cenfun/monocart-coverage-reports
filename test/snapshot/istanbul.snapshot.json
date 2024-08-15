@@ -1,9 +1,9 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "82.54 %",
-        "statements": "82.46 %",
-        "functions": "77.38 %",
+        "lines": "82.85 %",
+        "statements": "82.76 %",
+        "functions": "77.90 %",
         "branches": "58.80 %"
     },
     "files": {
@@ -24,11 +24,11 @@
             "extras": ""
         },
         "branch/branch.js": {
-            "lines": "86.48 %",
+            "lines": "86.84 %",
             "functions": "70.00 %",
-            "statements": "86.84 %",
+            "statements": "87.17 %",
             "branches": "65.85 %",
-            "uncoveredLines": "11-18,59,82,120-121,138",
+            "uncoveredLines": "12-19,60,83,121-122,139",
             "extras": ""
         },
         "branch/conditional.js": {
@@ -52,6 +52,14 @@
             "functions": "100.00 %",
             "statements": "100.00 %",
             "branches": "74.07 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "branch/optional-chaining.js": {
+            "lines": "100.00 %",
+            "functions": "100.00 %",
+            "statements": "100.00 %",
+            "branches": "100.00 %",
             "uncoveredLines": "",
             "extras": ""
         },
