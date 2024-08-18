@@ -117,7 +117,6 @@ mcr node my-app.js -r v8,console-details
 ![](./assets/v8.gif)
 
 - `v8-json`
-    - 保存 `CoverageResults` 到一个json文件
     - 保存 `CoverageResults` 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json))
     - 用于VSCode扩展来显示原生V8代码覆盖率: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
