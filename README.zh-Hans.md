@@ -121,6 +121,8 @@ mcr node my-app.js -r v8,console-details
     - 保存 `CoverageResults` 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/v8-and-istanbul/coverage-report.json))
     - 用于VSCode扩展来显示原生V8代码覆盖率: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
+![](./assets/mcv.gif)
+
 > 内置Istanbul报告 (V8和Istanbul格式数据都支持):
 
 - `clover`
@@ -1044,7 +1046,7 @@ const coverageOptions = {
     ]
 };
 ```
-- Github actions example:
+- Github actions:
 ```yml
 - name: Codecov
     uses: codecov/codecov-action@v4
@@ -1080,7 +1082,7 @@ const coverageOptions = {
     lcov: true
 };
 ```
-- Github actions example:
+- Github actions:
 ```yml
 - name: Coveralls
     uses: coverallsapp/github-action@v2
