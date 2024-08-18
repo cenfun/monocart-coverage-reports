@@ -45,6 +45,7 @@
     - [VSCode](#vscode)
     - [Jest](#jest)
     - [Vitest](#vitest)
+    - [Node Test Runner](#node-test-runner)
     - [Puppeteer](#puppeteer)
     - [Cypress](#cypress)
     - [WebdriverIO](#webdriverio)
@@ -990,6 +991,9 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 ### [Vitest](https://github.com/vitest-dev/vitest)
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Vitest custom provider module for coverage reports
 - [merge-code-coverage-vitest](https://github.com/cenfun/merge-code-coverage-vitest) - Example for merging code coverage (Vitest unit + Playwright e2e sharding)
+
+### [Node Test Runner](https://nodejs.org/docs/latest/api/test.html)
+- [node-monocart-coverage](https://github.com/cenfun/node-monocart-coverage) - Custom reporter for Node test runner for coverage
 
 ### [Puppeteer](https://github.com/puppeteer/puppeteer/)
 - [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
