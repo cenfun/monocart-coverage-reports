@@ -297,6 +297,7 @@ const [jsCoverage, cssCoverage] = await Promise.all([
 const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
+使用 `@playwright/test` 的 [`Automatic fixtures`](https://playwright.dev/docs/test-fixtures#automatic-fixtures)收集覆盖率数据, 见例子: [fixtures.ts](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.ts)
 参见例子 [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
 
 

@@ -295,6 +295,7 @@ const [jsCoverage, cssCoverage] = await Promise.all([
 const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
+Collect coverage with `@playwright/test` [`Automatic fixtures`](https://playwright.dev/docs/test-fixtures#automatic-fixtures), see example: [fixtures.ts](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.ts)
 For more examples, see [./test/test-v8.js](./test/test-v8.js), and [anonymous](./test/test-anonymous.js), [css](./test/test-css.js)
 
 

@@ -10,13 +10,11 @@
         ".": {
             "types": "./lib/index.d.ts",
             "import": "./lib/index.mjs",
-            "require": "./lib/index.js",
-            "default": "./lib/index.js"
+            "require": "./lib/index.js"
         },
         "./register": {
             "import": "./lib/register/register.mjs",
-            "require": "./lib/register/register.js",
-            "default": "./lib/register/register.js"
+            "require": "./lib/register/register.js"
         },
         "./converter": "./lib/converter/converter.js",
         "./util": "./lib/utils/util.js",
@@ -94,21 +92,21 @@
         "async-tick": "^1.0.0",
         "convert-source-map": "^2.0.0",
         "diff-sequences": "^29.6.3",
-        "esbuild": "^0.23.0",
-        "eslint": "~9.9.0",
+        "esbuild": "^0.23.1",
+        "eslint": "~9.9.1",
         "eslint-config-plus": "^2.0.2",
         "eslint-plugin-html": "^8.1.1",
-        "eslint-plugin-vue": "^9.27.0",
+        "eslint-plugin-vue": "^9.28.0",
         "find-up": "^7.0.0",
         "minimatch": "^9.0.5",
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
-        "postcss": "^8.4.41",
+        "postcss": "^8.4.45",
         "starfall-cli": "^2.0.20",
-        "stylelint": "^16.8.1",
-        "stylelint-config-plus": "^1.1.2",
+        "stylelint": "^16.9.0",
+        "stylelint-config-plus": "^1.1.3",
         "supports-color": "^9.4.0",
-        "tsx": "^4.17.0",
+        "tsx": "^4.19.0",
         "turbogrid": "^3.2.0",
         "vine-ui": "^3.1.16",
         "ws": "^8.18.0"
