@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.4
+  - fixed sourcemap issue for jsx file (#72)
+
 - 2.10.3
   - fixed branch coverage issue for `switch/case` (#68)
 

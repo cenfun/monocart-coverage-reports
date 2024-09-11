@@ -460,8 +460,8 @@
         },
         "monocart-v8/packages/v8/src/components/report.vue": {
             "functions": "27.78 %",
-            "branches": "7.14 %",
-            "statements": "22.86 %",
+            "branches": "5.56 %",
+            "statements": "22.30 %",
             "lines": "31.90 %",
             "bytes": "27.14 %",
             "uncoveredLines": "31-250,254-290,309-347,360,365-366,372-398",

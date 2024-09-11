@@ -2,7 +2,7 @@
     "type": "v8",
     "summary": {
         "bytes": "83.25 %",
-        "statements": "83.39 %",
+        "statements": "83.36 %",
         "branches": "61.05 %",
         "functions": "80.95 %",
         "lines": "72.70 %"
@@ -11,7 +11,7 @@
         "src/async.js": {
             "functions": "71.43 %",
             "branches": "62.50 %",
-            "statements": "90.00 %",
+            "statements": "89.66 %",
             "lines": "82.93 %",
             "bytes": "91.26 %",
             "uncoveredLines": "9,15-22,40-41",
