@@ -2,7 +2,7 @@
     "type": "v8",
     "summary": {
         "bytes": "76.54 %",
-        "statements": "78.73 %",
+        "statements": "79.05 %",
         "branches": "60.13 %",
         "functions": "73.39 %",
         "lines": "65.87 %"
@@ -164,7 +164,7 @@
         "test/mock/src/component.js": {
             "functions": "100.00 %",
             "branches": "83.33 %",
-            "statements": "81.82 %",
+            "statements": "90.91 %",
             "lines": "81.25 %",
             "bytes": "90.81 %",
             "uncoveredLines": "16-18",
@@ -317,7 +317,7 @@
         "webpack/bootstrap": {
             "functions": "100.00 %",
             "branches": "100.00 %",
-            "statements": "87.50 %",
+            "statements": "100.00 %",
             "lines": "100.00 %",
             "bytes": "100.00 %",
             "uncoveredLines": "",
