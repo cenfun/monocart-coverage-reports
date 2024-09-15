@@ -971,6 +971,8 @@ process.env.MCR_LOG_TIME = true
 - Coverage for Next.js, both server side and client side:
     - [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
     - [nextjs-with-playwright-istanbul](https://github.com/cenfun/nextjs-with-playwright-istanbul)
+- Coverage for Remix:
+    - [remix-with-playwright](https://github.com/cenfun/remix-with-playwright)
 - see [Collecting V8 Coverage Data with Playwright](#collecting-v8-coverage-data-with-playwright)
 
 ### [c8](https://github.com/bcoe/c8)
