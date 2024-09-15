@@ -1,5 +1,11 @@
 ## Changelog
 
+- 2.10.5
+  - added `all.transformer` option to transform untested files
+  - fixed merging issue for statements coverage
+  - fixed merging issue for uncovered bytes if range not in sourcemap
+
+
 - 2.10.4
   - fixed sourcemap issue for jsx file (#72)
 
