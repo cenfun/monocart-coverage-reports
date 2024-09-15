@@ -368,6 +368,14 @@ declare namespace MCR {
             filter?: string | {
                 [pattern: string]: "js" | "css" | boolean;
             } | ((filePath: string) => "js" | "css" | boolean);
+
+            /**
+             * the file transformer for source and sourceMap
+             * some of untested files like .ts/.jsx/.vue can not be parsed to AST directly by acorn
+             * so this is the function which can transform the original source to generated source and sourceMap
+             */
+            transformer?: (entry: any) => Promise<void>;
+
         };
 
         /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
