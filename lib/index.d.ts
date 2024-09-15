@@ -359,8 +359,7 @@ declare namespace MCR {
         all?: string | string[] | {
             /** the dir(s) of all files */
             dir: string | string[];
-            /** the coverage data type, v8 or istanbul */
-            type?: "v8" | "istanbul";
+
             /** 
              * the file filter, return the file type, if true, defaults to css if ".css" otherwise is js 
              * 
