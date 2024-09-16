@@ -24,7 +24,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    all: ['test/mock/src', 'test/mock/node/lib'],
+    // all: ['test/mock/src', 'test/mock/node/lib'],
 
     sourcePath: (filePath) => {
         const list = ['monocart-coverage-reports/', 'coverage-v8/'];
