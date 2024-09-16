@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.6
+  - fixed untested file coverage
+
 - 2.10.5
   - added `all.transformer` option to transform untested files
   - fixed merging issue for statements coverage
