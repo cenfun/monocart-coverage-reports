@@ -615,23 +615,14 @@ const coverageOptions = {
 默认，未测试的文件是不会包含到覆盖率报告的，需要使用`all`选项来为这些文件添加一个空的覆盖率，也就是0%
 ```js
 const coverageOptions = {
-    all: {
-        dir: ['./src'],
-        filter: (filePath) => {
-            return true;
-        }
-    }
+    all: './src',
+
+    // 支持多个目录
+    all: ['./src', './lib'],
 };
 ```
-`filter`过滤也支持[`minimatch`](https://github.com/isaacs/minimatch)匹配:
+未测试的文件也适用于`sourceFilter`过滤器. 而且也可以指定自己的`filter`过滤器 (可以返回文件类型来支持js或css的覆盖率格式):
 ```js
-const coverageOptions = {
-    all: {
-        dir: ['./src'],
-        filter: '**/*.js'
-    }
-};
-// 多个匹配
 const coverageOptions = {
     all: {
         dir: ['./src'],
@@ -639,10 +630,35 @@ const coverageOptions = {
             // exclude files
             '**/ignored-*.js': false,
             '**/*.html': false,
-            '**/*.ts': false,
             // empty css coverage
             '**/*.scss': "css",
             '**/*': true
+        }
+    }
+};
+```
+我们可能需要编译.ts, .jsx, .vue等等这样的文件, 这样才能被默认的AST解析器解析，以得到更多的覆盖率指标的数据
+```js
+const path = require("path");
+const swc = require("@swc/core");
+const coverageOptions = {
+    all: {
+        dir: ['./src'],
+        transformer: async (entry) => {
+            const { code, map } = await swc.transform(entry.source, {
+                filename: path.basename(entry.url),
+                sourceMaps: true,
+                isModule: true,
+                jsc: {
+                    parser: {
+                        syntax: "typescript",
+                        jsx: true
+                    },
+                    transform: {}
+                }
+            });
+            entry.source = code;
+            entry.sourceMap = JSON.parse(map);
         }
     }
 };
