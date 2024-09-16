@@ -361,8 +361,8 @@ declare namespace MCR {
             dir: string | string[];
 
             /** 
-             * the file filter, return the file type, if true, defaults to css if ".css" otherwise is js 
-             * 
+             * the file filter is triggered before `sourceFilter`, no need to use it in normal case
+             * the filter could return the file type, if true, defaults to css if ".css" otherwise is js 
              * {string} `minimatch` pattern for file path; {object} multiple patterns; {function} A filter function for file path;
             */
             filter?: string | {

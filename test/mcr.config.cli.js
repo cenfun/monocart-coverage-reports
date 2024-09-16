@@ -45,6 +45,7 @@ module.exports = {
 
     sourceFilter: {
         // '**/ignore/**': false,
+        '**/mock/node/**': true,
         '**/src/**': true
     },
 

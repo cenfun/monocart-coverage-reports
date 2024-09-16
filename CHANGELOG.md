@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.7
+  - fixed source filter for untested files
+
 - 2.10.6
   - fixed untested file coverage
 
