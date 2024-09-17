@@ -58,7 +58,8 @@
         "dev": "npx sf d app",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
-        "patch": "npm run build && npm run test && npx sf publish patch -r"
+        "patch": "npm run build && npm run test && npx sf publish patch -r",
+        "beta": "npm run build && npm run test && npm publish --tag beta"
     },
     "workspaces": [
         "test"
