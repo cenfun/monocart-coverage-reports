@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.10.9
+  - fixed empty coverage issue
+
 - 2.10.8
   - fixed source path for untested files
 
