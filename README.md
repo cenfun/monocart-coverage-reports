@@ -53,8 +53,7 @@
     - [TestCafe](#testcafe)
     - [Selenium Webdriver](#selenium-webdriver)
     - [Mocha](#mocha)
-    - [tsx](#tsx)
-    - [ts-node](#ts-node)
+    - [TypeScript](#typescript)
     - [AVA](#ava)
     - [Codecov](#codecov)
     - [Codacy](#codacy)
@@ -776,8 +775,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 - Examples
     - [Mocha](#mocha)
-    - [tsx](#tsx)
-    - [ts-node](#ts-node)
+    - [TypeScript](#typescript)
     - [AVA](#ava)
 
 ## Config File
@@ -1034,19 +1032,22 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 ```sh
 mcr mocha ./test/**/*.js
 ```
+
+### [TypeScript](https://github.com/microsoft/typescript)
+
+- [tsx](https://github.com/privatenumber/tsx)
 ```sh
+cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
+cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
+# Node.js v20.6.0 +
+mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
-- see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
-
-### [tsx](https://github.com/privatenumber/tsx)
+- [ts-node](https://github.com/TypeStrong/ts-node)
 ```sh
-mcr --import tsx tsx ./src/example.ts
+cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr ts-node ./src/example.ts
+cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test/**/*.ts
 ```
-- see [mcr-tsx](https://github.com/cenfun/mcr-tsx)
-
-### [ts-node](https://github.com/TypeStrong/ts-node)
-- see [mcr-ts-node](https://github.com/cenfun/mcr-ts-node)
 
 ### [AVA](https://github.com/avajs/ava)
 ```sh
