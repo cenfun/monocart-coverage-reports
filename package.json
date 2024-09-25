@@ -74,8 +74,6 @@
         "url": "git+https://github.com/cenfun/monocart-coverage-reports.git"
     },
     "dependencies": {
-        "@bcoe/v8-coverage": "^0.2.3",
-        "@jridgewell/sourcemap-codec": "^1.5.0",
         "acorn": "^8.12.1",
         "acorn-loose": "^8.4.0",
         "acorn-walk": "^8.3.4",
@@ -90,6 +88,8 @@
         "monocart-locator": "^1.0.2"
     },
     "devDependencies": {
+        "@bcoe/v8-coverage": "^0.2.3",
+        "@jridgewell/sourcemap-codec": "^1.5.0",
         "async-tick": "^1.0.0",
         "convert-source-map": "^2.0.0",
         "diff-sequences": "^29.6.3",

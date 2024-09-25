@@ -1,4 +1,13 @@
+/**
+ * there is performance issue if adding acorn: https://github.com/cenfun/monocart-coverage-reports/issues/47
+ *
+ */
+
 import * as convertSourceMap from 'convert-source-map';
+
+import { decode } from '@jridgewell/sourcemap-codec';
+
+import { mergeScriptCovs } from '@bcoe/v8-coverage';
 
 import parseCss from 'postcss/lib/parse';
 
@@ -18,6 +27,10 @@ import supportsColor from 'supports-color';
 export {
 
     convertSourceMap,
+
+    decode,
+
+    mergeScriptCovs,
 
     parseCss,
 
