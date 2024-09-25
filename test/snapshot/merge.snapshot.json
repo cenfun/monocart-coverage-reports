@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "76.54 %",
-        "statements": "79.05 %",
+        "bytes": "76.25 %",
+        "statements": "78.67 %",
         "branches": "60.13 %",
-        "functions": "73.39 %",
-        "lines": "65.87 %"
+        "functions": "72.73 %",
+        "lines": "65.60 %"
     },
     "files": {
         "my-vm-filename.js": {
@@ -295,6 +295,15 @@
             "bytes": "0.00 %",
             "uncoveredLines": "1-15",
             "extras": "6b,10b,16b"
+        },
+        "test/mock/src/untest/中文.js": {
+            "functions": "0.00 %",
+            "branches": "",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "2-6",
+            "extras": "1c,3b,7b"
         },
         "webpack/after-startup": {
             "functions": "",

@@ -214,6 +214,14 @@
             "branches": "0.00 %",
             "uncoveredLines": "",
             "extras": ""
+        },
+        "untest/中文.js": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
         }
     }
 }

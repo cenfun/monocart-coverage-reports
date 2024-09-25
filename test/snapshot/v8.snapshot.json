@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "77.10 %",
-        "statements": "82.77 %",
+        "bytes": "76.77 %",
+        "statements": "82.31 %",
         "branches": "60.39 %",
-        "functions": "80.00 %",
-        "lines": "66.24 %"
+        "functions": "79.07 %",
+        "lines": "65.94 %"
     },
     "files": {
         "test/mock/css/style.css": {
@@ -250,6 +250,15 @@
             "bytes": "0.00 %",
             "uncoveredLines": "1-15",
             "extras": "6b,10b,16b"
+        },
+        "test/mock/src/untest/中文.js": {
+            "functions": "0.00 %",
+            "branches": "",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "2-6",
+            "extras": "1c,3b,7b"
         }
     }
 }
