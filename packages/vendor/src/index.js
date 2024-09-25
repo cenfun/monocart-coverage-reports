@@ -7,8 +7,6 @@ import * as convertSourceMap from 'convert-source-map';
 
 import { decode } from '@jridgewell/sourcemap-codec';
 
-import { mergeScriptCovs } from '@bcoe/v8-coverage';
-
 import parseCss from 'postcss/lib/parse';
 
 import WebSocket from 'ws';
@@ -29,8 +27,6 @@ export {
     convertSourceMap,
 
     decode,
-
-    mergeScriptCovs,
 
     parseCss,
 
