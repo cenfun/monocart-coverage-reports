@@ -1,7 +1,7 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "76.25 %",
+        "bytes": "76.23 %",
         "statements": "78.67 %",
         "branches": "60.13 %",
         "functions": "72.73 %",
@@ -302,8 +302,8 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "2-6",
-            "extras": "1c,3b,7b"
+            "uncoveredLines": "2-7",
+            "extras": "1c,3b,5c,8b"
         },
         "webpack/after-startup": {
             "functions": "",
