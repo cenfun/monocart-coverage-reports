@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "54.91 %",
-        "statements": "57.37 %",
+        "bytes": "54.66 %",
+        "statements": "57.07 %",
         "branches": "52.42 %",
-        "functions": "51.58 %",
-        "lines": "46.29 %"
+        "functions": "51.04 %",
+        "lines": "46.08 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -277,6 +277,15 @@
             "bytes": "0.00 %",
             "uncoveredLines": "1-15",
             "extras": "6b,10b,16b"
+        },
+        "test/mock/src/untest/中文.js": {
+            "functions": "0.00 %",
+            "branches": "",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "2-7",
+            "extras": "1c,3b,5c,8b"
         }
     }
 }
