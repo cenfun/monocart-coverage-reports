@@ -102,6 +102,7 @@
         "minimatch": "^9.0.5",
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
+        "node-stream-zip": "^1.15.0",
         "postcss": "^8.4.47",
         "starfall-cli": "^2.0.20",
         "stylelint": "^16.9.0",
@@ -110,6 +111,7 @@
         "tsx": "^4.19.1",
         "turbogrid": "^3.2.0",
         "vine-ui": "^3.1.16",
-        "ws": "^8.18.0"
+        "ws": "^8.18.0",
+        "yazl": "^2.5.1"
     }
 }

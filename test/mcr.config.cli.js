@@ -5,7 +5,14 @@ module.exports = {
 
     name: 'My CLI Coverage Report',
 
-    reports: 'v8,console-summary,raw,codecov',
+    reports: [
+        'v8',
+        'console-summary',
+        ['raw', {
+            zip: true
+        }],
+        'codecov'
+    ],
 
     outputDir: 'docs/cli',
 

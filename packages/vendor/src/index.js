@@ -10,6 +10,9 @@ import diffSequence from 'diff-sequences';
 
 import { findUpSync } from 'find-up';
 
+import { ZipFile } from 'yazl';
+import { async as StreamZip } from 'node-stream-zip';
+
 import supportsColor from 'supports-color';
 
 export {
@@ -25,6 +28,9 @@ export {
     diffSequence,
 
     findUpSync,
+
+    ZipFile,
+    StreamZip,
 
     supportsColor
 };
