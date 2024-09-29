@@ -156,6 +156,8 @@ declare namespace MCR {
             outputFile?: string;
         }] |
         ['raw'] | ['raw', {
+            merge?: boolean;
+            zip?: boolean;
             outputDir?: string;
         }] |
         [string] | [string, {
