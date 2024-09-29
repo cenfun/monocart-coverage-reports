@@ -14,7 +14,7 @@ const coverageOptions = {
 
     cleanCache: false,
     // clean: false,
-    inputDir: './.temp/code-coverage/raw-merged',
+    inputDir: './.temp/code-coverage/raw',
 
     filter: {
         '**/webpack/**': false,
@@ -24,7 +24,7 @@ const coverageOptions = {
     },
 
     name: 'My Merge V8 Coverage Report',
-    outputDir: './.temp/merge-v8-merged',
+    outputDir: './.temp/merge-v8',
     onEnd: function(coverageResults) {
         console.log('end');
     }
