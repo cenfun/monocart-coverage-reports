@@ -439,9 +439,8 @@ declare namespace MCR {
         /**
          * add V8 coverage from a dir
          * @param dir node v8 coverage dir
-         * @param remove whether to remove dir after added
          */
-        addFromDir: (dir: string, remove?: boolean) => Promise<void>;
+        addFromDir: (dir: string) => Promise<void>;
 
         /** generate report */
         generate: () => Promise<CoverageResults | undefined>;
