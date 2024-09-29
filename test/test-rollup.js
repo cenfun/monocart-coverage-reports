@@ -15,6 +15,11 @@ const coverageOptions = {
 
     name: 'My V8 Rollup Coverage Report',
 
+    filter: {
+        '**/commonjs-entry': false,
+        '**/*': true
+    },
+
     outputDir: './docs/rollup',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);

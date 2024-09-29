@@ -1,35 +1,35 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "83.25 %",
-        "statements": "82.79 %",
+        "bytes": "83.26 %",
+        "statements": "83.61 %",
         "branches": "60.08 %",
-        "functions": "80.72 %",
-        "lines": "72.70 %"
+        "functions": "84.47 %",
+        "lines": "72.83 %"
     },
     "files": {
         "src/async.js": {
-            "functions": "66.67 %",
+            "functions": "71.43 %",
             "branches": "62.50 %",
-            "statements": "88.89 %",
+            "statements": "89.29 %",
             "lines": "82.93 %",
             "bytes": "91.26 %",
             "uncoveredLines": "9,15-22,40-41",
             "extras": "4b,13b,14c,16b,18b,19c,21b,23b,27b,28b,35b,44b,53b,55b"
         },
         "src/branch/assignment.js": {
-            "functions": "80.00 %",
+            "functions": "83.33 %",
             "branches": "54.55 %",
-            "statements": "76.47 %",
+            "statements": "77.78 %",
             "lines": "75.00 %",
             "bytes": "78.90 %",
             "uncoveredLines": "9-11,22-24",
             "extras": "1b,2c,3c,4b,13b,17b,21b,25b,28b,31b,32b,36b"
         },
         "src/branch/branch.js": {
-            "functions": "70.00 %",
+            "functions": "72.73 %",
             "branches": "65.85 %",
-            "statements": "85.53 %",
+            "statements": "85.71 %",
             "lines": "74.78 %",
             "bytes": "81.95 %",
             "uncoveredLines": "11-21,29,58-61,75,82-84,109,120-125,137-140,145-147",
@@ -47,7 +47,7 @@
         "src/branch/if.js": {
             "functions": "100.00 %",
             "branches": "52.00 %",
-            "statements": "71.43 %",
+            "statements": "71.83 %",
             "lines": "54.64 %",
             "bytes": "67.60 %",
             "uncoveredLines": "28-30,34-36,40-44,57-59,63-67,74-80,84-86,88-90,97-111",
@@ -83,16 +83,16 @@
         "src/branch/switch.js": {
             "functions": "100.00 %",
             "branches": "40.91 %",
-            "statements": "70.00 %",
+            "statements": "70.59 %",
             "lines": "67.06 %",
             "bytes": "72.92 %",
             "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78",
             "extras": "1c,2b,3c,82b,83b,91b"
         },
         "src/closures.js": {
-            "functions": "71.43 %",
+            "functions": "75.00 %",
             "branches": "50.00 %",
-            "statements": "63.64 %",
+            "statements": "65.22 %",
             "lines": "61.29 %",
             "bytes": "70.16 %",
             "uncoveredLines": "8-16,19-21,32-34",
@@ -110,7 +110,7 @@
         "src/component.js": {
             "functions": "100.00 %",
             "branches": "50.00 %",
-            "statements": "81.82 %",
+            "statements": "83.33 %",
             "lines": "62.50 %",
             "bytes": "81.63 %",
             "uncoveredLines": "16-22",
@@ -119,14 +119,14 @@
         "src/ignore/ignore.js": {
             "functions": "100.00 %",
             "branches": "60.00 %",
-            "statements": "77.78 %",
+            "statements": "85.71 %",
             "lines": "80.00 %",
             "bytes": "89.34 %",
             "uncoveredLines": "10,34-36",
             "extras": "5b,7b,8c,9i,11c,12i,13b,14c,15i,16i,17i,18b,19b,21b,22i,23i,24i,25b,26b,28i,29i,30b,31c,32b,38b,46b,47b"
         },
         "src/ignore/node-coverage.js": {
-            "functions": "",
+            "functions": "100.00 %",
             "branches": "",
             "statements": "100.00 %",
             "lines": "100.00 %",
@@ -135,12 +135,12 @@
             "extras": "1c,2b,4b,5c,6i,7c,8c,9c,10i,11i,12i,14b,15c,16i,18b,19c,20i,21i,22i,24b"
         },
         "src/ignore/v8-ignore-next.js": {
-            "functions": "",
+            "functions": "100.00 %",
             "branches": "75.00 %",
             "statements": "100.00 %",
-            "lines": "75.00 %",
-            "bytes": "84.66 %",
-            "uncoveredLines": "20-22",
+            "lines": "87.50 %",
+            "bytes": "85.21 %",
+            "uncoveredLines": "20",
             "extras": "5c,6i,7i,8i,9b,10c,11i,12b,13c,14i,15b,16i,17b,21i,23b"
         },
         "src/ignore/v8-ignore-return.js": {
@@ -153,7 +153,7 @@
             "extras": "3c,4i,6b"
         },
         "src/ignore/v8-ignore-start-stop.js": {
-            "functions": "",
+            "functions": "100.00 %",
             "branches": "60.00 %",
             "statements": "100.00 %",
             "lines": "71.43 %",
@@ -162,9 +162,9 @@
             "extras": "5c,6i,7i,8i,9c,10b,11i,12i,13b,14i,15c,16b,20i,21i,22c,23c"
         },
         "src/index.js": {
-            "functions": "46.15 %",
+            "functions": "50.00 %",
             "branches": "42.86 %",
-            "statements": "66.15 %",
+            "statements": "67.65 %",
             "lines": "54.02 %",
             "bytes": "63.77 %",
             "uncoveredLines": "23-29,37-62,68-71,75-77,87-89,97-100,111",
@@ -180,9 +180,9 @@
             "extras": "2b,7b,8c,12b,17b,22b,29b,33b"
         },
         "src/statics.js": {
-            "functions": "83.33 %",
+            "functions": "85.71 %",
             "branches": "66.67 %",
-            "statements": "84.21 %",
+            "statements": "85.00 %",
             "lines": "81.58 %",
             "bytes": "86.96 %",
             "uncoveredLines": "10,12-14,26-28",
