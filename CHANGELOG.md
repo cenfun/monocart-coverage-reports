@@ -1,8 +1,7 @@
 ## Changelog
 
 - 2.11.0
-  - removed the data dir for `addFromDir` and `dataDir`
-  - added `zip` option for `raw` report
+  - added `zip` and `merge` option for `raw` report
 
 - 2.10.9
   - fixed empty coverage issue

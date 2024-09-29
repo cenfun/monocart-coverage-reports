@@ -9,7 +9,8 @@ module.exports = {
         'v8',
         'console-summary',
         ['raw', {
-            zip: true
+            merge: true
+            // zip: true
         }],
         'codecov'
     ],

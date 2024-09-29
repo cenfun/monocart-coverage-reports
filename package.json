@@ -50,6 +50,7 @@
         "test-demo": "node ./test/test-demo.js",
         "test-merge": "node ./test/test-merge.js",
         "test-merge-istanbul": "node ./test/test-merge-istanbul.js",
+        "test-merge-v8": "node ./test/test-merge-v8.js",
         "test-client": "node ./test/test-client.js",
         "test-all": "node ./test/test.js",
         "test-pr": "node --inspect=9230 ./test/test-pr.js",
