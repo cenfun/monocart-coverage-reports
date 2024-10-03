@@ -489,6 +489,16 @@ export interface ScriptCoverage {
 export type V8CoverageData = ScriptCoverage[];
 ```
 
+| JavaScript Runtime | V8 Coverage |  |
+| :--------------| :----: | :----------------------  |
+| Chrome (65%) | ✅ | Chromium-based |
+| Safari (18%) | ❌ |  |
+| Edge (5%) | ✅ | Chromium-based |
+| Firefox (2%) | ❌ |  |
+| Node.js | ✅ |  |
+| Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
+| Bun | ❌ |  |
+
 ## Filtering Results
 ## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 当收集到V8的覆盖数据时，它实际上包含了所有的入口文件的覆盖率数据, 比如有以下3个文件:

@@ -485,6 +485,16 @@ export interface ScriptCoverage {
 export type V8CoverageData = ScriptCoverage[];
 ```
 
+| JavaScript Runtime | V8 Coverage |  |
+| :--------------| :----: | :----------------------  |
+| Chrome (65%) | ✅ | Chromium-based |
+| Safari (18%) | ❌ |  |
+| Edge (5%) | ✅ | Chromium-based |
+| Firefox (2%) | ❌ |  |
+| Node.js | ✅ |  |
+| Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
+| Bun | ❌ |  |
+
 ## Filtering Results
 ### Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
