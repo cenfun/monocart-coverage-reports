@@ -1,10 +1,11 @@
 # Monocart Coverage Reports
 
-[![](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
-[![](https://devimg.vercel.app/npm/downloads/monocart-coverage-reports?label={total}%20downloads/month)](https://www.npmjs.com/package/monocart-coverage-reports)
-![](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
-![](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
-![](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/ci.yml)
+[![npm](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
+![license](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
+![build](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/ci.yml)
+[![downloads](https://devimg.vercel.app/npm/downloads/monocart-coverage-reports?label={total}%20downloads/month)](https://www.npmjs.com/package/monocart-coverage-reports)
+[![install size](https://packagephobia.com/badge?p=monocart-coverage-reports)](https://packagephobia.com/result?p=monocart-coverage-reports)
+![dependencies](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
 
 🌐 English | [简体中文](README.zh-Hans.md)
 
