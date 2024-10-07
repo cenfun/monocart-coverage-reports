@@ -404,6 +404,13 @@ declare namespace MCR {
         */
         cleanCache?: boolean;
 
+        /**
+         * {number} gc threshold
+         * for example: sets gc to 1024 means that force gc when the memory > 1024M at certain critical stages
+         * https://nodejs.org/docs/latest/api/v8.html#v8setflagsfromstringflags
+         */
+        gc?: number;
+
         /** (V8 only) {function} onEntry hook */
         onEntry?: (entry: V8CoverageEntry) => Promise<void>;
 

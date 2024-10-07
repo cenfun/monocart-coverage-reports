@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.11.1
+  - added option `gc` for running gc manually
+
 - 2.11.0
   - added `zip` and `merge` option for `raw` report
 
