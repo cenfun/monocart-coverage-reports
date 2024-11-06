@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.11.2
+  - fixed log style
+
 - 2.11.1
   - added option `gc` for running gc manually
 
