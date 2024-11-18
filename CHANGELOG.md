@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.11.3
+  - fixed cli to support `merge` command
+
 - 2.11.2
   - fixed log style
 
