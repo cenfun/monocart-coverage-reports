@@ -52,7 +52,6 @@ jobs:
           path: ./docs
 
   test-experimental:
-    continue-on-error: true
     runs-on: ubuntu-latest
     name: Test Node 22
 
@@ -69,6 +68,7 @@ jobs:
       - run: npx playwright install --with-deps
       - run: npm run build
       - run: npm run test
+        continue-on-error: true
         env:
           FORCE_COLOR: true
 
