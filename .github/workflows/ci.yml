@@ -24,12 +24,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version:
-          - '20'
-          - '18'
+        node-version: [18, 20]
 
     runs-on: ubuntu-latest
-
     name: Test Node ${{ matrix.node-version }}
 
     steps:
@@ -53,6 +50,27 @@ jobs:
         with:
           name: artifact-${{ matrix.node-version }}
           path: ./docs
+
+  test-experimental:
+    runs-on: ubuntu-latest
+    name: Test Node 22
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: ''
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run build
+      - run: npm run test
+        continue-on-error: true
+        env:
+          FORCE_COLOR: true
 
   deploy:
     if: github.ref == 'refs/heads/main'
