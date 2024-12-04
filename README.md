@@ -966,6 +966,14 @@ When `logging` is `debug`, the raw report data will be preserved in `[outputDir]
 
 ![](./assets/debug-sourcemap.png)
 
+- Generate additional source and sourcemap files to cache or raw dir
+```js
+const coverageOptions = {
+    logging: 'debug',
+    sourceMap: true
+};
+```
+
 - Show time logs with env `MCR_LOG_TIME`
 ```js
 process.env.MCR_LOG_TIME = true

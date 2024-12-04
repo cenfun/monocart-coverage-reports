@@ -969,6 +969,14 @@ const coverageOptions = {
 
 ![](./assets/debug-sourcemap.png)
 
+- 生成额外的source和sourcemap文件到cache或raw文件夹
+```js
+const coverageOptions = {
+    logging: 'debug',
+    sourceMap: true
+};
+```
+
 - 使用环境变量`MCR_LOG_TIME`显示时间日志
 ```js
 process.env.MCR_LOG_TIME = true
