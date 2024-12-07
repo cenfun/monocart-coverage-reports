@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.11.4
+  - fixed encoded source url issue
+
 - 2.11.3
   - fixed cli to support `merge` command
 
