@@ -20,11 +20,11 @@
         "koa-static-resolver": "^1.0.6",
         "open": "^10.1.0",
         "playwright": "^1.49.0",
-        "puppeteer": "^23.10.0",
-        "rollup": "^4.28.0",
+        "puppeteer": "^23.10.1",
+        "rollup": "^4.28.1",
         "swc-loader": "^0.2.6",
         "ts-loader": "^9.5.1",
         "typescript": "^5.7.2",
-        "webpack": "^5.97.0"
+        "webpack": "^5.97.1"
     }
 }
