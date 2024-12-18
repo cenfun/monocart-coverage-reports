@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.11.5
+  - fixed sourcemap file JSON error (#97)
+
 - 2.11.4
   - fixed encoded source url issue
   - fixed filter for encoded url
