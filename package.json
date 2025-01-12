@@ -95,7 +95,7 @@
         "convert-source-map": "^2.0.0",
         "diff-sequences": "^29.6.3",
         "esbuild": "^0.24.2",
-        "eslint": "~9.17.0",
+        "eslint": "~9.18.0",
         "eslint-config-plus": "^2.0.2",
         "eslint-plugin-html": "^8.1.2",
         "eslint-plugin-vue": "^9.32.0",
