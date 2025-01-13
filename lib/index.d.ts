@@ -544,6 +544,8 @@ declare namespace MCR {
          * @param coverageKey defaults to `__coverage__`
          */
         getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+
+        close: () => Promise<void>
     }
 
     /** Adapt to the CDPSession of Playwright or Puppeteer */
