@@ -2,6 +2,7 @@ const EC = require('eight-colors');
 const { spawn } = require('node:child_process');
 const Util = require('../lib/utils/util.js');
 
+// eslint-disable-next-line complexity
 const executeNpmRun = (item) => {
     const nv = process.versions.node;
 
@@ -27,6 +28,16 @@ const executeNpmRun = (item) => {
         // module register added in Node.js: v20.6.0
         if (item.includes('tsx')) {
             EC.logYellow(`Ignore test tsx - node ${nv} < 20.6`);
+            return 0;
+        }
+
+    }
+
+    if (Util.cmpVersion(nv, '22') > 0) {
+
+        // module register added in Node.js: v20.6.0
+        if (item.includes('tsx')) {
+            EC.logYellow(`Ignore test tsx - node ${nv} > 22`);
             return 0;
         }
 
