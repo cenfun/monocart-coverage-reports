@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.11.6
+  - added close() to CoverageClient type definition (#102)
+
 - 2.11.5
   - fixed sourcemap file JSON error (#97)
 
