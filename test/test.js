@@ -2,26 +2,9 @@ const EC = require('eight-colors');
 const { spawn } = require('node:child_process');
 const Util = require('../lib/utils/util.js');
 
-// eslint-disable-next-line complexity
+
 const executeNpmRun = (item) => {
     const nv = process.versions.node;
-
-    if (Util.cmpVersion(nv, '18') < 0) {
-
-        // puppeteer drop support for node16
-        // client includes puppeteer
-        if (item.includes('puppeteer') || item.includes('client')) {
-            EC.logYellow(`Ignore test puppeteer - node ${nv} < 18`);
-            return 0;
-        }
-
-        // The minimal required Node version is now 18.0.0
-        if (item.includes('rollup')) {
-            EC.logYellow(`Ignore test rollup - node ${nv} < 18`);
-            return 0;
-        }
-
-    }
 
     if (Util.cmpVersion(nv, '20.6.0') < 0) {
 
