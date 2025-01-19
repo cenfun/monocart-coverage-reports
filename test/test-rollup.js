@@ -16,7 +16,7 @@ const coverageOptions = {
     name: 'My V8 Rollup Coverage Report',
 
     filter: {
-        '**/commonjs-entry': false,
+        'commonjs-entry': false,
         '**/*': true
     },
 
