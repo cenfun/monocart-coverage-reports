@@ -1,6 +1,6 @@
 ## Changelog
 
-- 2.12.7
+- 2.12.0
   - fixed source path normalization policy (localhost-8130 => localhost:8130)
 
 - 2.11.6
