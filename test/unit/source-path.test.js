@@ -7,11 +7,11 @@ it('normalizeSourcePath', () => {
     // windows absolute path
     if (platform === 'win32') {
         console.log('test win32 path');
-        assert.equal(normalizeSourcePath('C://a.js'), 'C/a.js');
-        assert.equal(normalizeSourcePath('C:\\\\a.js'), 'C/a.js');
-        assert.equal(normalizeSourcePath('c://workspace/test.spec.js'), 'c/workspace/test.spec.js');
-        assert.equal(normalizeSourcePath('c:/workspace/test.spec.js'), 'c/workspace/test.spec.js');
-        assert.equal(normalizeSourcePath('c:\\workspace\\test.spec.js'), 'c/workspace/test.spec.js');
+        assert.equal(normalizeSourcePath('C://a.js'), 'C:/a.js');
+        assert.equal(normalizeSourcePath('C:\\\\a.js'), 'C:/a.js');
+        assert.equal(normalizeSourcePath('c://workspace/test.spec.js'), 'c:/workspace/test.spec.js');
+        assert.equal(normalizeSourcePath('c:/workspace/test.spec.js'), 'c:/workspace/test.spec.js');
+        assert.equal(normalizeSourcePath('c:\\workspace\\test.spec.js'), 'c:/workspace/test.spec.js');
     }
 
     // linux absolute path
@@ -19,8 +19,8 @@ it('normalizeSourcePath', () => {
 
     // protocol
     assert.equal(normalizeSourcePath('ws://a.js'), 'a.js');
-    assert.equal(normalizeSourcePath('http://127.0.0:8080/a.js'), '127.0.0.0-8080/a.js');
-    assert.equal(normalizeSourcePath('https://127.0.0:8080/a.js?v=1'), '127.0.0.0-8080/a.js/v=1');
+    assert.equal(normalizeSourcePath('http://127.0.0:8080/a.js'), '127.0.0.0:8080/a.js');
+    assert.equal(normalizeSourcePath('https://127.0.0:8080/a.js?v=1'), '127.0.0.0:8080/a.js?v=1');
 
     assert.equal(normalizeSourcePath('webpack://coverage-v8/./src/branch.js'), 'coverage-v8/src/branch.js');
     assert.equal(normalizeSourcePath('webpack://coverage-v8/../src/branch.js'), 'coverage-v8/src/branch.js');
@@ -28,7 +28,7 @@ it('normalizeSourcePath', () => {
     // file:// protocol
     if (platform === 'win32') {
         // absolute
-        assert.equal(normalizeSourcePath('file:///C:/path/src/a.js'), 'C/path/src/a.js');
+        assert.equal(normalizeSourcePath('file:///C:/path/src/a.js'), 'C:/path/src/a.js');
         // relative
         assert.equal(normalizeSourcePath('file://src/a.js'), 'src/a.js');
     } else {
@@ -50,8 +50,8 @@ it('normalizeSourcePath', () => {
     assert.equal(normalizeSourcePath('dist/../a.js'), 'a.js');
 
     if (platform === 'win32') {
-        assert.equal(normalizeSourcePath('file:///C:/path/src/a.js'), 'C/path/src/a.js');
-        assert.equal(normalizeSourcePath('file:///C:/path/src/../a.js'), 'C/path/a.js');
+        assert.equal(normalizeSourcePath('file:///C:/path/src/a.js'), 'C:/path/src/a.js');
+        assert.equal(normalizeSourcePath('file:///C:/path/src/../a.js'), 'C:/path/a.js');
 
         assert.equal(normalizeSourcePath('file://path/src/a.js'), 'path/src/a.js');
         assert.equal(normalizeSourcePath('file://path/src/../a.js'), 'path/a.js');

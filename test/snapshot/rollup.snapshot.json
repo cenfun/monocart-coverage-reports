@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "84.10 %",
-        "statements": "83.61 %",
+        "bytes": "84.34 %",
+        "statements": "83.67 %",
         "branches": "60.08 %",
         "functions": "84.47 %",
-        "lines": "76.64 %"
+        "lines": "76.79 %"
     },
     "files": {
         "src/async.js": {
@@ -169,6 +169,15 @@
             "bytes": "65.60 %",
             "uncoveredLines": "23-27,37-61,68-70,75-76,87-88,97-99,111",
             "extras": "3b,5b,9b,11b,14b,17b,22b,25b,30b,33b,36b,39b,41b,44b,47b,52b,54b,58b,63b,67b,72b,79b,81b,85b,90b,94b,102b,105b,108b,110b,113b,115b,116b,117c,119b,120b,124b"
+        },
+        "src/index.js?commonjs-entry": {
+            "functions": "",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": ""
         },
         "src/statement.js": {
             "functions": "100.00 %",
