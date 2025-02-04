@@ -724,6 +724,18 @@ if (platform === 'linux') {
     console.log('hello linux');
 }
 ```
+- Compatible with [c8 coverage](https://github.com/bcoe/c8/?tab=readme-ov-file#ignoring-all-lines-until-told) or [nodejs coverage](https://nodejs.org/docs/latest/api/test.html#collecting-code-coverage) syntax
+```js
+/* c8 ignore start */
+function uncovered() {
+}
+/* c8 ignore stop */
+
+/* node:coverage disable */
+function uncovered() {
+}
+/* node:coverage enable */
+```
 
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)

@@ -727,6 +727,18 @@ if (platform === 'linux') {
     console.log('hello linux');
 }
 ```
+- 兼容支持 [c8 coverage](https://github.com/bcoe/c8/?tab=readme-ov-file#ignoring-all-lines-until-told) 或 [nodejs coverage](https://nodejs.org/docs/latest/api/test.html#collecting-code-coverage) 的语法格式
+```js
+/* c8 ignore start */
+function uncovered() {
+}
+/* c8 ignore stop */
+
+/* node:coverage disable */
+function uncovered() {
+}
+/* node:coverage enable */
+```
 
 ## Multiprocessing Support
 > 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](#debug-for-coverage-and-sourcemap)，或者使用了`raw`报告
