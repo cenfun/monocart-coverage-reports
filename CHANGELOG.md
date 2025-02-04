@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.12.1
+  - fixed a css coverage issue for tailwindcss v4: Cannot read properties of undefined (reading 'forEach')
+
 - 2.12.0
   - fixed source path normalization policy (localhost-8130 => localhost:8130)
 
