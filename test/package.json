@@ -16,15 +16,15 @@
         "babel-plugin-istanbul": "^7.0.0",
         "cross-env": "^7.0.3",
         "foreground-child": "^3.3.0",
-        "koa": "^2.15.3",
+        "koa": "^2.15.4",
         "koa-static-resolver": "^1.0.6",
         "open": "^10.1.0",
         "playwright": "^1.50.1",
-        "puppeteer": "^24.1.1",
-        "rollup": "^4.34.1",
+        "puppeteer": "^24.2.1",
+        "rollup": "^4.34.8",
         "swc-loader": "^0.2.6",
         "ts-loader": "^9.5.2",
         "typescript": "^5.7.3",
-        "webpack": "^5.97.1"
+        "webpack": "^5.98.0"
     }
 }

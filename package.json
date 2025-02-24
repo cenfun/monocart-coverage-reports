@@ -93,8 +93,8 @@
         "async-tick": "^1.0.0",
         "convert-source-map": "^2.0.0",
         "diff-sequences": "^29.6.3",
-        "esbuild": "^0.24.2",
-        "eslint": "~9.19.0",
+        "esbuild": "^0.25.0",
+        "eslint": "~9.21.0",
         "eslint-config-plus": "^2.0.2",
         "eslint-plugin-html": "^8.1.2",
         "eslint-plugin-vue": "^9.32.0",
@@ -104,14 +104,14 @@
         "monocart-code-viewer": "^1.1.4",
         "monocart-formatter": "^3.0.0",
         "node-stream-zip": "^1.15.0",
-        "postcss": "^8.5.1",
+        "postcss": "^8.5.3",
         "starfall-cli": "^2.0.20",
         "stylelint": "^16.14.1",
         "stylelint-config-plus": "^1.1.3",
         "supports-color": "^10.0.0",
         "turbogrid": "^3.2.0",
         "vine-ui": "^3.1.16",
-        "ws": "^8.18.0",
+        "ws": "^8.18.1",
         "yazl": "^3.3.1"
     }
 }
