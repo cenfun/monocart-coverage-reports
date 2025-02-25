@@ -2,7 +2,7 @@
     "type": "v8",
     "summary": {
         "bytes": "83.25 %",
-        "statements": "84.05 %",
+        "statements": "84.08 %",
         "branches": "60.08 %",
         "functions": "84.62 %",
         "lines": "72.70 %"
@@ -164,7 +164,7 @@
         "src/index.js": {
             "functions": "50.00 %",
             "branches": "42.86 %",
-            "statements": "67.16 %",
+            "statements": "67.65 %",
             "lines": "54.02 %",
             "bytes": "63.77 %",
             "uncoveredLines": "23-29,37-62,68-71,75-77,87-89,97-100,111",

@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "41.58 %",
-        "statements": "39.38 %",
+        "bytes": "41.59 %",
+        "statements": "39.37 %",
         "branches": "25.34 %",
-        "functions": "42.78 %",
-        "lines": "36.49 %"
+        "functions": "42.85 %",
+        "lines": "36.54 %"
     },
     "files": {
         "fps-detector/src/index.js": {
@@ -270,12 +270,12 @@
             "extras": "2b,6b,22b,24b"
         },
         "monocart-v8/packages/v8/src/app.vue": {
-            "functions": "65.79 %",
-            "branches": "36.29 %",
+            "functions": "70.42 %",
+            "branches": "30.70 %",
             "statements": "60.27 %",
-            "lines": "73.17 %",
-            "bytes": "76.90 %",
-            "uncoveredLines": "68-70,79-99,102-144,152-156,165-170,175-186,196-230,242-251,261-263,270-272,293-305,319-321,335-337,367-369,433-435,444,450-452,458-467,477-479,538,544,558-569,584-588,620-627,635-661,692,699,714,731,748",
+            "lines": "73.80 %",
+            "bytes": "77.29 %",
+            "uncoveredLines": "68-70,79-99,102-144,152-156,165-170,175-186,196-230,242-251,261-263,270-272,293-305,319-321,335-337,367-369,433-435,444,450-452,458-467,477-479,538,544,558-569,584-588,620-627,635-661",
             "extras": "9b,12b,15b,23b,24c,25c,29b,32b,34b,39b,41b,42c,48b,51b,54b,56b,58b,65b,73b,74b,75c,76b,77c,80c,81b,85b,89b,90c,91c,92c,93c,94b,96c,101b,106b,114b,119b,121b,132b,134b,145b,146c,147b,150b,159b,164b,171b,173b,187b,189b,191b,192c,193b,195b,205b,207b,211b,215b,219b,221b,229b,231b,236b,238b,252b,256b,258b,259c,282b,285b,289b,291b,306b,311b,313b,318b,322b,325c,326b,329b,332c,333b,338b,340b,349b,350c,354b,370b,372b,375b,376b,378b,380b,424b,429b,431b,446b,448b,453b,469b,472b,475c,483b,485b,487b,492b,501c,502c,503c,516b,519b,523b,529b,535b,557b,564b,570b,571c,572b,579c,591b,594b,598b,599c,603b,605b,607b,609b,611b,614b,615b,619b,624b,628b,638b,642b,649b,655b,662b,664b,681b,684b,697b,705b,707b,722b,739b,758b,760b,764b,772b,780b,785b,794b,804b,808b,813b,817b,823b,828b,833b,834c,835c,836c,837b,849b,853b,857b,863b,870b,874b,884b,892b,897b,904b,908b,914b,918b,922b,926b,931b,938b,942b,946b,959b,970b,980b,982b"
         },
         "monocart-v8/packages/v8/src/app.vue?203c": {
@@ -289,7 +289,7 @@
         },
         "monocart-v8/packages/v8/src/app.vue?50ef": {
             "functions": "",
-            "branches": "50.00 %",
+            "branches": "80.00 %",
             "statements": "100.00 %",
             "lines": "93.33 %",
             "bytes": "98.80 %",
@@ -361,7 +361,7 @@
         },
         "monocart-v8/packages/v8/src/components/flyover.vue?99d3": {
             "functions": "",
-            "branches": "50.00 %",
+            "branches": "80.00 %",
             "statements": "100.00 %",
             "lines": "93.33 %",
             "bytes": "98.83 %",
@@ -397,8 +397,8 @@
         },
         "monocart-v8/packages/v8/src/components/icon-label.vue": {
             "functions": "81.82 %",
-            "branches": "55.56 %",
-            "statements": "85.37 %",
+            "branches": "55.00 %",
+            "statements": "84.62 %",
             "lines": "84.62 %",
             "bytes": "89.86 %",
             "uncoveredLines": "11-12,58-60,70-72,79-81,90-92,96-98,108-110",
@@ -424,7 +424,7 @@
         },
         "monocart-v8/packages/v8/src/components/icon-label.vue?8e7a": {
             "functions": "",
-            "branches": "50.00 %",
+            "branches": "80.00 %",
             "statements": "100.00 %",
             "lines": "93.33 %",
             "bytes": "98.83 %",
@@ -459,17 +459,17 @@
             "extras": "1c,5c,7c,9b"
         },
         "monocart-v8/packages/v8/src/components/report.vue": {
-            "functions": "27.78 %",
-            "branches": "5.56 %",
-            "statements": "22.30 %",
-            "lines": "31.90 %",
-            "bytes": "27.14 %",
-            "uncoveredLines": "31-250,254-290,309-347,360,365-366,372-398",
+            "functions": "29.41 %",
+            "branches": "2.00 %",
+            "statements": "21.74 %",
+            "lines": "32.17 %",
+            "bytes": "27.17 %",
+            "uncoveredLines": "31-250,254-290,309-347,365-366,372-398",
             "extras": "5b,8b,10b,12b,14b,16b,20b,22b,24b,26b,30b,43b,44b,46b,52b,58c,64b,69b,73b,75b,79b,82b,85b,91b,92c,93c,94c,95c,96c,97c,98c,99b,102b,105b,106c,107b,108c,110c,111c,114c,120b,125b,128b,130b,132b,140b,146b,148b,150b,151c,152c,153c,154b,160b,162b,165b,168b,171b,178b,192b,194b,196b,199b,215b,232b,234b,235c,236b,239b,240c,241c,242b,248b,251b,253b,260b,265b,273b,275b,278b,279b,283b,287b,291b,295b,297b,319b,350b,364b,369b,386b,413b,419b,424b,429b,436b,440b,443b,449b,453b,457b,460b,466b,476b,478b"
         },
         "monocart-v8/packages/v8/src/components/report.vue?0555": {
             "functions": "",
-            "branches": "50.00 %",
+            "branches": "80.00 %",
             "statements": "100.00 %",
             "lines": "93.33 %",
             "bytes": "98.83 %",
