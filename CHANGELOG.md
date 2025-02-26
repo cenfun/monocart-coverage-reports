@@ -1,5 +1,9 @@
 ## Changelog
 
+- 2.12.2
+  - fixed #104
+  - fixed #106
+
 - 2.12.1
   - fixed a css coverage issue for tailwindcss v4: Cannot read properties of undefined (reading 'forEach')
 
