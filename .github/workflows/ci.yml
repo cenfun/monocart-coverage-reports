@@ -78,7 +78,7 @@ jobs:
           cat docs/mcr/coverage-details.md >> $GITHUB_STEP_SUMMARY
         
       - name: Analyze with SonarCloud
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@master
         env: 
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
