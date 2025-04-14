@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.12.4
+  - fixed #109
+
 - 2.12.3
   - fixed (#108)
 
