@@ -1,21 +1,21 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "28.15 %",
-        "statements": "24.90 %",
-        "branches": "12.87 %",
-        "functions": "40.63 %",
-        "lines": "23.47 %"
+        "bytes": "61.23 %",
+        "statements": "55.99 %",
+        "branches": "35.84 %",
+        "functions": "70.49 %",
+        "lines": "55.08 %"
     },
     "files": {
         "anonymous-1.js": {
-            "functions": "36.67 %",
-            "branches": "12.87 %",
-            "statements": "23.01 %",
-            "lines": "20.93 %",
-            "bytes": "26.29 %",
-            "uncoveredLines": "5-19,21,34-62,65,68-83,85,87,89-95,97-104,112-113,117-213,226,237-243,248,254-256,258-263,266-307",
-            "extras": "1b,4b,23b,24b,25c,31b,32c,219b,220c,309b"
+            "functions": "92.86 %",
+            "branches": "49.70 %",
+            "statements": "79.18 %",
+            "lines": "80.90 %",
+            "bytes": "84.47 %",
+            "uncoveredLines": "139,142,146-189,191,314-318,320,322,327,333-335,337-342",
+            "extras": "1b,4b,23b,24b,25c,31b,32c,71b,72c,118c,296b,297c,346b"
         },
         "anonymous-2.js": {
             "functions": "100.00 %",
@@ -27,6 +27,33 @@
             "extras": ""
         },
         "anonymous-3.js": {
+            "functions": "100.00 %",
+            "branches": "75.00 %",
+            "statements": "75.00 %",
+            "lines": "33.33 %",
+            "bytes": "34.54 %",
+            "uncoveredLines": "5,9-27",
+            "extras": ""
+        },
+        "anonymous-4.js": {
+            "functions": "42.86 %",
+            "branches": "20.12 %",
+            "statements": "30.61 %",
+            "lines": "30.15 %",
+            "bytes": "40.01 %",
+            "uncoveredLines": "5-19,21,35,38-45,47,74-109,124-136,139,142-157,159,161,163-169,171-178,186-189,193-293,300-302,316-322,327,333-335,337-342",
+            "extras": "1b,4b,23b,24b,25c,31b,32c,71b,72c,118c,296b,297c,346b"
+        },
+        "anonymous-5.js": {
+            "functions": "100.00 %",
+            "branches": "",
+            "statements": "100.00 %",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "anonymous-6.js": {
             "functions": "100.00 %",
             "branches": "",
             "statements": "100.00 %",

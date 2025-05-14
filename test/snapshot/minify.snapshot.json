@@ -3,7 +3,7 @@
     "summary": {
         "bytes": "41.59 %",
         "statements": "39.37 %",
-        "branches": "25.34 %",
+        "branches": "25.37 %",
         "functions": "42.85 %",
         "lines": "36.54 %"
     },
@@ -100,10 +100,10 @@
         },
         "localhost:8130/ie-polyfill.js": {
             "functions": "46.23 %",
-            "branches": "19.99 %",
+            "branches": "20.05 %",
             "statements": "38.10 %",
             "lines": "0.00 %",
-            "bytes": "51.16 %",
+            "bytes": "51.18 %",
             "uncoveredLines": "1",
             "extras": ""
         },
