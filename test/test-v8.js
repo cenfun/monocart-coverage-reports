@@ -71,6 +71,13 @@ const coverageOptions = {
 
     all: 'test/mock/src',
 
+    sourceMapResolver: (url, defaultResolver) => {
+
+        console.log('sourceMapResolver', url);
+
+        return defaultResolver(url);
+    },
+
     onEnd: (coverageResults) => {
         checkSnapshot(coverageResults);
         const thresholds = {
