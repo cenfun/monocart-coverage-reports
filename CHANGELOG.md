@@ -1,5 +1,9 @@
 ## Changelog
 
+- 2.12.5
+  - fixed #112 
+  - added `sourceMapResolver` option
+
 - 2.12.4
   - fixed #109
 
