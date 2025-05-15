@@ -419,7 +419,7 @@ declare namespace MCR {
         /**
          * {function} Custom resolver for sourcemap content
          */
-        sourceMapResolver?: (url: string, defaultResolver: function) => Promise<any>;
+        sourceMapResolver?: (url: string, defaultResolver: Function) => Promise<any>;
 
         /** (V8 only) {function} onEntry hook */
         onEntry?: (entry: V8CoverageEntry) => Promise<void>;
