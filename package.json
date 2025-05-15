@@ -36,7 +36,6 @@
         "test-istanbul": "node ./test/test-istanbul.js",
         "test-v8": "node ./test/test-v8.js",
         "test-puppeteer": "node ./test/test-puppeteer.js",
-        "test-anonymous": "node ./test/test-anonymous.js",
         "test-css": "node ./test/test-css.js",
         "test-minify": "node ./test/test-minify.js",
         "test-esbuild": "node ./test/test-esbuild.js",
