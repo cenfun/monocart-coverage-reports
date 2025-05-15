@@ -1,5 +1,9 @@
 ## Changelog
 
+- 2.12.6
+  - fixed typo in `index.d.ts`
+  - fixed #113
+
 - 2.12.5
   - fixed #112 
   - added `sourceMapResolver` option
