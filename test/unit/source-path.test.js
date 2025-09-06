@@ -19,8 +19,8 @@ it('normalizeSourcePath', () => {
 
     // protocol
     assert.equal(normalizeSourcePath('ws://a.js'), 'a.js');
-    assert.equal(normalizeSourcePath('http://127.0.0:8080/a.js'), '127.0.0.0:8080/a.js');
-    assert.equal(normalizeSourcePath('https://127.0.0:8080/a.js?v=1'), '127.0.0.0:8080/a.js?v=1');
+    assert.equal(normalizeSourcePath('http://127.0.0:8080/a.js'), '127.0.0.0-8080/a.js');
+    assert.equal(normalizeSourcePath('https://127.0.0:8080/a.js?v=1'), '127.0.0.0-8080/a.js-v=1');
 
     assert.equal(normalizeSourcePath('webpack://coverage-v8/./src/branch.js'), 'coverage-v8/src/branch.js');
     assert.equal(normalizeSourcePath('webpack://coverage-v8/../src/branch.js'), 'coverage-v8/src/branch.js');

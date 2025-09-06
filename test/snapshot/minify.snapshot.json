@@ -62,7 +62,7 @@
             "uncoveredLines": "2-5,7",
             "extras": ""
         },
-        "localhost:8130": {
+        "localhost-8130": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -71,7 +71,7 @@
             "uncoveredLines": "",
             "extras": "1b,4b,8c,10b,11b"
         },
-        "localhost:8130/browser.js": {
+        "localhost-8130/browser.js": {
             "functions": "55.26 %",
             "branches": "54.55 %",
             "statements": "53.25 %",
@@ -80,7 +80,7 @@
             "uncoveredLines": "1-2",
             "extras": "3b"
         },
-        "localhost:8130/css/style.css": {
+        "localhost-8130/css/style.css": {
             "functions": "",
             "branches": "",
             "statements": "",
@@ -89,7 +89,7 @@
             "uncoveredLines": "",
             "extras": "1b"
         },
-        "localhost:8130/demo.js": {
+        "localhost-8130/demo.js": {
             "functions": "80.00 %",
             "branches": "73.33 %",
             "statements": "89.29 %",
@@ -98,7 +98,7 @@
             "uncoveredLines": "28-30,39-41,48-50",
             "extras": "1b,3b,5b,6c,7c,8c,9b,10c,11i,12i,13i,14b,15c,17c,27b,32b,34c,37b,42b,46b,51b,53b,59b,61b,65b"
         },
-        "localhost:8130/ie-polyfill.js": {
+        "localhost-8130/ie-polyfill.js": {
             "functions": "46.23 %",
             "branches": "20.05 %",
             "statements": "38.10 %",
@@ -107,7 +107,7 @@
             "uncoveredLines": "1",
             "extras": ""
         },
-        "localhost:8130/with-map/bootstrap.min.css": {
+        "localhost-8130/with-map/bootstrap.min.css": {
             "functions": "",
             "branches": "",
             "statements": "",
@@ -116,7 +116,7 @@
             "uncoveredLines": "6",
             "extras": "2c,3c,4c,5c,7c"
         },
-        "localhost:8130/with-map/coverage-data.js": {
+        "localhost-8130/with-map/coverage-data.js": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -125,7 +125,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/external umd \"monocart-code-viewer\"": {
+        "monocart-v8/external umd monocart-code-viewer": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -134,7 +134,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/external umd \"monocart-formatter\"": {
+        "monocart-v8/external umd monocart-formatter": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -278,7 +278,7 @@
             "uncoveredLines": "68-70,79-99,102-144,152-156,165-170,175-186,196-230,242-251,261-263,270-272,293-305,319-321,335-337,367-369,433-435,444,450-452,458-467,477-479,538,544,558-569,584-588,620-627,635-661",
             "extras": "9b,12b,15b,23b,24c,25c,29b,32b,34b,39b,41b,42c,48b,51b,54b,56b,58b,65b,73b,74b,75c,76b,77c,80c,81b,85b,89b,90c,91c,92c,93c,94b,96c,101b,106b,114b,119b,121b,132b,134b,145b,146c,147b,150b,159b,164b,171b,173b,187b,189b,191b,192c,193b,195b,205b,207b,211b,215b,219b,221b,229b,231b,236b,238b,252b,256b,258b,259c,282b,285b,289b,291b,306b,311b,313b,318b,322b,325c,326b,329b,332c,333b,338b,340b,349b,350c,354b,370b,372b,375b,376b,378b,380b,424b,429b,431b,446b,448b,453b,469b,472b,475c,483b,485b,487b,492b,501c,502c,503c,516b,519b,523b,529b,535b,557b,564b,570b,571c,572b,579c,591b,594b,598b,599c,603b,605b,607b,609b,611b,614b,615b,619b,624b,628b,638b,642b,649b,655b,662b,664b,681b,684b,697b,705b,707b,722b,739b,758b,760b,764b,772b,780b,785b,794b,804b,808b,813b,817b,823b,828b,833b,834c,835c,836c,837b,849b,853b,857b,863b,870b,874b,884b,892b,897b,904b,908b,914b,918b,922b,926b,931b,938b,942b,946b,959b,970b,980b,982b"
         },
-        "monocart-v8/packages/v8/src/app.vue?203c": {
+        "monocart-v8/packages/v8/src/app.vue-203c": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -287,7 +287,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/app.vue?50ef": {
+        "monocart-v8/packages/v8/src/app.vue-50ef": {
             "functions": "",
             "branches": "80.00 %",
             "statements": "100.00 %",
@@ -296,7 +296,7 @@
             "uncoveredLines": "10",
             "extras": "1b,7b,9b,11b,13b,16b,18b,21b,23b,24b,25b,27b"
         },
-        "monocart-v8/packages/v8/src/app.vue?5edf": {
+        "monocart-v8/packages/v8/src/app.vue-5edf": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -305,7 +305,7 @@
             "uncoveredLines": "",
             "extras": "1c,8c,10c,12b"
         },
-        "monocart-v8/packages/v8/src/app.vue?71dc": {
+        "monocart-v8/packages/v8/src/app.vue-71dc": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -314,7 +314,7 @@
             "uncoveredLines": "",
             "extras": "4b,6b,9b"
         },
-        "monocart-v8/packages/v8/src/app.vue?7b12": {
+        "monocart-v8/packages/v8/src/app.vue-7b12": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -323,7 +323,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/app.vue?cdba": {
+        "monocart-v8/packages/v8/src/app.vue-cdba": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -341,7 +341,7 @@
             "uncoveredLines": "20,28,50-58",
             "extras": "37b,42b,44b,46b,48b,49c,55b,59b,69b,74b,79b,87b,91b,93b"
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue?747d": {
+        "monocart-v8/packages/v8/src/components/flyover.vue-747d": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -350,7 +350,7 @@
             "uncoveredLines": "",
             "extras": "1c,5c,7c,9b"
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue?801b": {
+        "monocart-v8/packages/v8/src/components/flyover.vue-801b": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -359,7 +359,7 @@
             "uncoveredLines": "",
             "extras": "4b,6b,9b"
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue?99d3": {
+        "monocart-v8/packages/v8/src/components/flyover.vue-99d3": {
             "functions": "",
             "branches": "80.00 %",
             "statements": "100.00 %",
@@ -368,7 +368,7 @@
             "uncoveredLines": "10",
             "extras": "1b,7b,9b,11b,13b,16b,18b,21b,23b,24b,25b,27b"
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue?a4df": {
+        "monocart-v8/packages/v8/src/components/flyover.vue-a4df": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -377,7 +377,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue?c68f": {
+        "monocart-v8/packages/v8/src/components/flyover.vue-c68f": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -386,7 +386,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/flyover.vue?f6bb": {
+        "monocart-v8/packages/v8/src/components/flyover.vue-f6bb": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -404,7 +404,7 @@
             "uncoveredLines": "11-12,58-60,70-72,79-81,90-92,96-98,108-110",
             "extras": "20b,24b,51b,53b,64b,75b,83b,87b,89b,93b,95b,100b,103b,107b,111b,117b,121b,130b,134b,140b,144b,148b,152b,154b"
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue?5065": {
+        "monocart-v8/packages/v8/src/components/icon-label.vue-5065": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -413,7 +413,7 @@
             "uncoveredLines": "",
             "extras": "4b,6b,9b"
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue?5ece": {
+        "monocart-v8/packages/v8/src/components/icon-label.vue-5ece": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -422,7 +422,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue?8e7a": {
+        "monocart-v8/packages/v8/src/components/icon-label.vue-8e7a": {
             "functions": "",
             "branches": "80.00 %",
             "statements": "100.00 %",
@@ -431,7 +431,7 @@
             "uncoveredLines": "10",
             "extras": "1b,7b,9b,11b,13b,16b,18b,21b,23b,24b,25b,27b"
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue?97be": {
+        "monocart-v8/packages/v8/src/components/icon-label.vue-97be": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -440,7 +440,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue?d678": {
+        "monocart-v8/packages/v8/src/components/icon-label.vue-d678": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -449,7 +449,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/icon-label.vue?d8da": {
+        "monocart-v8/packages/v8/src/components/icon-label.vue-d8da": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -467,7 +467,7 @@
             "uncoveredLines": "31-250,254-290,309-347,365-366,372-398",
             "extras": "5b,8b,10b,12b,14b,16b,20b,22b,24b,26b,30b,43b,44b,46b,52b,58c,64b,69b,73b,75b,79b,82b,85b,91b,92c,93c,94c,95c,96c,97c,98c,99b,102b,105b,106c,107b,108c,110c,111c,114c,120b,125b,128b,130b,132b,140b,146b,148b,150b,151c,152c,153c,154b,160b,162b,165b,168b,171b,178b,192b,194b,196b,199b,215b,232b,234b,235c,236b,239b,240c,241c,242b,248b,251b,253b,260b,265b,273b,275b,278b,279b,283b,287b,291b,295b,297b,319b,350b,364b,369b,386b,413b,419b,424b,429b,436b,440b,443b,449b,453b,457b,460b,466b,476b,478b"
         },
-        "monocart-v8/packages/v8/src/components/report.vue?0555": {
+        "monocart-v8/packages/v8/src/components/report.vue-0555": {
             "functions": "",
             "branches": "80.00 %",
             "statements": "100.00 %",
@@ -476,7 +476,7 @@
             "uncoveredLines": "10",
             "extras": "1b,7b,9b,11b,13b,16b,18b,21b,23b,24b,25b,27b"
         },
-        "monocart-v8/packages/v8/src/components/report.vue?0b1e": {
+        "monocart-v8/packages/v8/src/components/report.vue-0b1e": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -485,7 +485,7 @@
             "uncoveredLines": "",
             "extras": "4b,6b,9b"
         },
-        "monocart-v8/packages/v8/src/components/report.vue?22b6": {
+        "monocart-v8/packages/v8/src/components/report.vue-22b6": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -494,7 +494,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/report.vue?32fe": {
+        "monocart-v8/packages/v8/src/components/report.vue-32fe": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -503,7 +503,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/components/report.vue?5c89": {
+        "monocart-v8/packages/v8/src/components/report.vue-5c89": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -512,7 +512,7 @@
             "uncoveredLines": "",
             "extras": "1c,5c,7c,9b"
         },
-        "monocart-v8/packages/v8/src/components/report.vue?e437": {
+        "monocart-v8/packages/v8/src/components/report.vue-e437": {
             "functions": "",
             "branches": "",
             "statements": "100.00 %",
@@ -521,7 +521,7 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "monocart-v8/packages/v8/src/images/icons/ sync \\.svg$": {
+        "monocart-v8/packages/v8/src/images/icons/sync/.svg$": {
             "functions": "100.00 %",
             "branches": "50.00 %",
             "statements": "80.00 %",
