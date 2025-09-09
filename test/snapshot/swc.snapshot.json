@@ -2,16 +2,16 @@
     "type": "v8",
     "summary": {
         "bytes": "83.25 %",
-        "statements": "83.36 %",
+        "statements": "83.33 %",
         "branches": "61.05 %",
-        "functions": "80.95 %",
+        "functions": "81.40 %",
         "lines": "72.70 %"
     },
     "files": {
         "src/async.js": {
             "functions": "71.43 %",
             "branches": "62.50 %",
-            "statements": "89.66 %",
+            "statements": "89.29 %",
             "lines": "82.93 %",
             "bytes": "91.26 %",
             "uncoveredLines": "9,15-22,40-41",
@@ -180,7 +180,7 @@
             "extras": "2b,7b,8c,12b,17b,22b,29b,33b"
         },
         "src/statics.js": {
-            "functions": "83.33 %",
+            "functions": "87.50 %",
             "branches": "66.67 %",
             "statements": "87.50 %",
             "lines": "81.58 %",

@@ -848,6 +848,7 @@ onMounted(() => {
 .mcr-report {
     position: relative;
     height: 100%;
+    overflow: hidden;
 }
 
 .mcr-report-head {
@@ -883,6 +884,7 @@ onMounted(() => {
 
 .mcr-report-code {
     position: relative;
+    overflow: hidden;
 }
 
 .mcr-top-number {

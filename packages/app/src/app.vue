@@ -1245,11 +1245,9 @@ icon
 .mcr-search {
     position: relative;
     width: 100%;
-    max-width: 350px;
-    padding: 5px;
+    max-width: 300px;
 
     input {
-        height: 30px;
         padding-right: 30px;
         padding-left: 30px;
         border-radius: 10px;
@@ -1259,7 +1257,7 @@ icon
 .mcr-search-icon {
     position: absolute;
     top: 50%;
-    left: 13px;
+    left: 8px;
     color: gray;
     transform: translate(0, -50%);
 }
@@ -1267,7 +1265,7 @@ icon
 .mcr-search-clear {
     position: absolute;
     top: 50%;
-    right: 13px;
+    right: 8px;
     transform: translate(0, -50%);
 }
 
@@ -1304,6 +1302,7 @@ icon
     position: relative;
     border: 1px solid #ccc;
     border-radius: 10px;
+    overflow: hidden;
 
     .mcr-low,
     .mcr-medium,
