@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.12.7
+  - fixed normalizeSourcePath
+
 - 2.12.6
   - fixed typo in `index.d.ts`
   - fixed #113
