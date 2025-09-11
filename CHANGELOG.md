@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.12.8
+  - fixed (#119)
+
 - 2.12.7
   - fixed normalizeSourcePath
 

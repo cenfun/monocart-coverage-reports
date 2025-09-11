@@ -7,11 +7,11 @@ it('normalizeSourcePath', () => {
     // windows absolute path
     if (platform === 'win32') {
         console.log('test win32 path');
-        assert.equal(normalizeSourcePath('Z://a.js'), 'Z:/a.js');
-        assert.equal(normalizeSourcePath('Z:\\\\b.js'), 'Z:/b.js');
-        assert.equal(normalizeSourcePath('z://workspace/test.spec.js'), 'z:/workspace/test.spec.js');
-        assert.equal(normalizeSourcePath('z:/workspace/test.spec.js'), 'z:/workspace/test.spec.js');
-        assert.equal(normalizeSourcePath('z:\\workspace\\test.spec.js'), 'z:/workspace/test.spec.js');
+        assert.equal(normalizeSourcePath('Z://a.js'), 'Z/a.js');
+        assert.equal(normalizeSourcePath('Z:\\\\b.js'), 'Z/b.js');
+        assert.equal(normalizeSourcePath('z://workspace/test.spec.js'), 'z/workspace/test.spec.js');
+        assert.equal(normalizeSourcePath('z:/workspace/test.spec.js'), 'z/workspace/test.spec.js');
+        assert.equal(normalizeSourcePath('z:\\workspace\\test.spec.js'), 'z/workspace/test.spec.js');
     }
 
     // linux absolute path
@@ -28,7 +28,7 @@ it('normalizeSourcePath', () => {
     // file:// protocol
     if (platform === 'win32') {
         // absolute
-        assert.equal(normalizeSourcePath('file:///Z:/path/src/a.js'), 'Z:/path/src/a.js');
+        assert.equal(normalizeSourcePath('file:///Z:/path/src/a.js'), 'Z/path/src/a.js');
         // relative
         assert.equal(normalizeSourcePath('file://src/e.js'), 'src/e.js');
     } else {
@@ -50,8 +50,8 @@ it('normalizeSourcePath', () => {
     assert.equal(normalizeSourcePath('dist/../o.js'), 'o.js');
 
     if (platform === 'win32') {
-        assert.equal(normalizeSourcePath('file:///Z:/path/src/p.js'), 'Z:/path/src/p.js');
-        assert.equal(normalizeSourcePath('file:///Z:/path/src/../q.js'), 'Z:/path/q.js');
+        assert.equal(normalizeSourcePath('file:///Z:/path/src/p.js'), 'Z/path/src/p.js');
+        assert.equal(normalizeSourcePath('file:///Z:/path/src/../q.js'), 'Z/path/q.js');
 
         assert.equal(normalizeSourcePath('file://path/src/r.js'), 'path/src/r.js');
         assert.equal(normalizeSourcePath('file://path/src/../s.js'), 'path/s.js');
