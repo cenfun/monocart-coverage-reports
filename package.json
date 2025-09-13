@@ -1,6 +1,6 @@
 {
     "name": "monocart-coverage-reports",
-    "version": "2.12.8",
+    "version": "2.12.9",
     "description": "A code coverage tool to generate native V8 reports or Istanbul reports.",
     "main": "./lib/index.js",
     "bin": {
