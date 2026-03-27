@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "76.23 %",
-        "statements": "78.67 %",
-        "branches": "60.13 %",
+        "bytes": "75.83 %",
+        "statements": "78.37 %",
+        "branches": "60.07 %",
         "functions": "72.73 %",
-        "lines": "65.60 %"
+        "lines": "65.20 %"
     },
     "files": {
         "my-vm-filename.js": {
@@ -173,7 +173,7 @@
         "test/mock/src/ignore/ignore.js": {
             "functions": "100.00 %",
             "branches": "60.00 %",
-            "statements": "84.62 %",
+            "statements": "92.31 %",
             "lines": "80.00 %",
             "bytes": "89.34 %",
             "uncoveredLines": "10,34-36",
@@ -325,12 +325,12 @@
         },
         "webpack/bootstrap": {
             "functions": "100.00 %",
-            "branches": "100.00 %",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": "",
-            "extras": "1c,3b,4c,6c,11c,13c,14c,17b,18c,20b,21c,24b,25b"
+            "branches": "75.00 %",
+            "statements": "69.23 %",
+            "lines": "66.67 %",
+            "bytes": "81.45 %",
+            "uncoveredLines": "19-24",
+            "extras": "1c,3b,4c,6c,11c,13c,14c,17b,18c,26b,27c,30b,31b"
         },
         "webpack/startup": {
             "functions": "",

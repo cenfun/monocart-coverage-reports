@@ -2,7 +2,7 @@
     "type": "v8",
     "summary": {
         "bytes": "83.25 %",
-        "statements": "83.33 %",
+        "statements": "83.52 %",
         "branches": "61.05 %",
         "functions": "81.40 %",
         "lines": "72.70 %"
@@ -119,7 +119,7 @@
         "src/ignore/ignore.js": {
             "functions": "100.00 %",
             "branches": "60.00 %",
-            "statements": "84.62 %",
+            "statements": "92.31 %",
             "lines": "80.00 %",
             "bytes": "89.34 %",
             "uncoveredLines": "10,34-36",

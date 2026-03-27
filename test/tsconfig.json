@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
-        "sourceMap": true
+        "sourceMap": true,
+        "types": [
+            "node"
+        ]
     }
 }
