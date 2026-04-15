@@ -1,5 +1,8 @@
 ## Changelog
 
+- 2.12.10
+  - updated dependencies
+
 - 2.12.9
   - fixed (#119)
 
