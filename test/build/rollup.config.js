@@ -13,6 +13,7 @@ const inputOptions = {
             extensions: ['.js', '.ts']
         }),
         rollupTypescript({
+            tsconfig: path.resolve('test/tsconfig.json'),
             sourceMap: true,
             inlineSources: true
         })
