@@ -104,7 +104,7 @@ For more information, see [Command Line](#command-line)
 
 ## Available Reports
 
-> V8 build-in reports (V8 data only):
+> V8 built-in reports (V8 data only):
 
 - `v8`
     - Features: 
@@ -124,7 +124,7 @@ For more information, see [Command Line](#command-line)
 
 ![](./assets/mcv.gif)
 
-> Istanbul build-in reports (both V8 and Istanbul data):
+> Istanbul built-in reports (both V8 and Istanbul data):
 
 - `clover`
 - `cobertura`
@@ -144,7 +144,7 @@ For more information, see [Command Line](#command-line)
 - `text-lcov`
 - `text-summary`
 
-> Other build-in reports (both V8 and Istanbul data):
+> Other built-in reports (both V8 and Istanbul data):
 
 - `codecov` Save coverage data to a json file with [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format) format (defaults to `codecov.json`), see [example](https://app.codecov.io/github/cenfun/monocart-coverage-reports).
 
@@ -198,7 +198,7 @@ const MCR = require('monocart-coverage-reports');
 const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
-        // build-in reports
+        // built-in reports
         ['console-summary'],
         ['v8'],
         ['html', {
@@ -464,7 +464,7 @@ export interface CoverageRange {
  * @functionName can be an empty string.
  * @ranges is always non-empty. The first range is called the "root range".
  * @isBlockCoverage indicates if the function has block coverage information.
-    If this is false, it usually means that the functions was never called.
+    If this is false, it usually means that the function was never called.
     It seems to be equivalent to ranges.length === 1 && ranges[0].count === 0.
 */
 export interface FunctionCoverage {
@@ -572,7 +572,7 @@ const coverageOptions = {
     filter: {
         '**/node_modules/**': false,
         '**/vendor.js': false,
-        '**/src/**': true
+        '**/src/**': true,
         '**/**': true
     }
 };
@@ -715,9 +715,9 @@ function uncovered() {
 - Ignoring the next line or next N lines
 ```js
 /* v8 ignore next */
-const os = platform === 'wind32' ? 'Windows' : 'Other';
+const os = platform === 'win32' ? 'Windows' : 'Other';
 
-const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
+const os = platform === 'win32' ? 'Windows' /* v8 ignore next */ : 'Other';
 
 // v8 ignore next 3
 if (platform === 'linux') {
@@ -890,7 +890,7 @@ const coverageOptions = {
     ],
     
     onEnd: () => {
-        // remove the raw files if it useless
+        // remove the raw files if no longer needed
         // inputDir.forEach((p) => {
         //     fs.rmSync(p, {
         //         recursive: true,
@@ -926,8 +926,8 @@ In the generated code, there is a position `p`, and we need to find out its corr
 - Further understanding of sourcemap, try [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 
 How `MCR` Works:
-- 1, Trying to fix the original position with string comparison and [`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences). However, for non-JS code, such as Vue template, JSX, etc., it might be hard to find a perfect solution.
-- 2, Finding all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). (There is a small issue is the V8 cannot provide effective branch coverage information for `AssignmentPattern`)
+1. Tries to fix the original position with string comparison and [`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences). However, for non-JS code such as Vue templates or JSX, a perfect solution may not always be possible.
+2. Finds all functions, statements and branches by parsing the source code [AST](https://github.com/acornjs/acorn). (One small caveat: V8 cannot provide effective branch coverage information for `AssignmentPattern`.)
 
 
 ### Unparsable source
@@ -971,7 +971,7 @@ const coverageOptions = {
     ]
 };
 ```
-When `logging` is `debug`, the raw report data will be preserved in `[outputDir]/.cache` or `[outputDir]/raw` if `raw` report is used. And the dist file will be preserved in the V8 list, and by opening the browser's devtool, it makes data verification visualization effortless.
+When `logging` is `debug`, the raw report data is preserved in `[outputDir]/.cache` (or `[outputDir]/raw` if the `raw` report is used). The dist file is also kept in the V8 list, so you can open the browser's devtools and visually verify the coverage data.
 ![](./assets/debug-coverage.png)
 
 - Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)

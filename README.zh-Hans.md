@@ -199,7 +199,7 @@ const MCR = require('monocart-coverage-reports');
 const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
-        // build-in reports
+        // built-in reports
         ['console-summary'],
         ['v8'],
         ['html', {
@@ -468,7 +468,7 @@ export interface CoverageRange {
  * @functionName can be an empty string.
  * @ranges is always non-empty. The first range is called the "root range".
  * @isBlockCoverage indicates if the function has block coverage information.
-    If this is false, it usually means that the functions was never called.
+    If this is false, it usually means that the function was never called.
     It seems to be equivalent to ranges.length === 1 && ranges[0].count === 0.
 */
 export interface FunctionCoverage {
@@ -502,7 +502,7 @@ export type V8CoverageData = ScriptCoverage[];
 | Bun | ❌ |  |
 
 ## Filtering Results
-## Using `entryFilter` and `sourceFilter` to filter the results for V8 report
+### Using `entryFilter` and `sourceFilter` to filter the results for V8 report
 当收集到V8的覆盖数据时，它实际上包含了所有的入口文件的覆盖率数据, 比如有以下3个文件:
 
 - *dist/main.js*
@@ -576,7 +576,7 @@ const coverageOptions = {
     filter: {
         '**/node_modules/**': false,
         '**/vendor.js': false,
-        '**/src/**': true
+        '**/src/**': true,
         '**/**': true
     }
 };
@@ -718,9 +718,9 @@ function uncovered() {
 - 忽略接下来一行或者多行
 ```js
 /* v8 ignore next */
-const os = platform === 'wind32' ? 'Windows' : 'Other';
+const os = platform === 'win32' ? 'Windows' : 'Other';
 
-const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
+const os = platform === 'win32' ? 'Windows' /* v8 ignore next */ : 'Other';
 
 // v8 ignore next 3
 if (platform === 'linux') {
@@ -892,7 +892,7 @@ const coverageOptions = {
     ],
     
     onEnd: () => {
-        // remove the raw files if it useless
+        // remove the raw files if no longer needed
         // inputDir.forEach((p) => {
         //     fs.rmSync(p, {
         //         recursive: true,

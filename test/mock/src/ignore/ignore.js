@@ -3,7 +3,7 @@ require('./v8-ignore-return.js');
 require('./v8-ignore-start-stop.js');
 require('./node-coverage.js');
 
-const platform = 'wind32';
+const platform = 'win32';
 
 /* v8 ignore next */
 if (platform === 'darwin') {
@@ -17,7 +17,7 @@ if (platform === 'linux') {
 }
 
 
-const os = platform === 'wind32' ? 'Windows' /* v8 ignore next */ : 'Other';
+const os = platform === 'win32' ? 'Windows' /* v8 ignore next */ : 'Other';
 
 /* v8 ignore start */ function uncovered(v) {
     console.log(os);
