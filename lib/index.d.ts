@@ -36,7 +36,7 @@ declare namespace MCR {
     export type Watermarks = [number, number] | {
         /** V8 only */
         bytes?: [number, number];
-        statements: [number, number];
+        statements?: [number, number];
         branches?: [number, number];
         functions?: [number, number];
         lines?: [number, number];
@@ -134,7 +134,7 @@ declare namespace MCR {
             } | ((file: CoverageFile) => boolean);
         }] |
         ['markdown-summary'] | ['markdown-summary', {
-            color: 'unicode' | 'html' | 'tex' | string;
+            color?: 'unicode' | 'html' | 'tex' | string;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
             /**
              * defaults to `coverage-summary.md`
@@ -143,7 +143,7 @@ declare namespace MCR {
         }] |
         ['markdown-details'] | ['markdown-details', {
             baseUrl?: string;
-            color: 'unicode' | 'html' | 'tex' | string;
+            color?: 'unicode' | 'html' | 'tex' | string;
             maxCols?: number;
             skipPercent?: number;
             metrics?: Array<"bytes" | "statements" | "branches" | "functions" | "lines">;
@@ -207,7 +207,7 @@ declare namespace MCR {
          */
         none?: boolean;
         /**  function only, function name */
-        name?: boolean;
+        name?: string;
     }
 
     export interface IgnoredRange {
@@ -422,10 +422,10 @@ declare namespace MCR {
         sourceMapResolver?: (url: string, defaultResolver: Function) => Promise<any>;
 
         /** (V8 only) {function} onEntry hook */
-        onEntry?: (entry: V8CoverageEntry) => Promise<void>;
+        onEntry?: (entry: V8CoverageEntry) => void | Promise<void>;
 
         /** {function} onEnd hook */
-        onEnd?: (coverageResults: CoverageResults | undefined) => Promise<void>;
+        onEnd?: (coverageResults: CoverageResults | undefined) => void | Promise<void>;
 
         [key: string]: any;
     }
@@ -433,13 +433,13 @@ declare namespace MCR {
     export interface McrCliOptions extends CoverageReportOptions {
 
         /** (CLI only) {function} onStart hook */
-        onStart?: (coverageReport: CoverageReport) => Promise<void>;
+        onStart?: (coverageReport: CoverageReport) => void | Promise<void>;
 
         /** (CLI only) {function} onReady hook before adding coverage data.
-         * 
+         *
          * Sometimes, the child process has not yet finished writing the coverage data, and it needs to wait here.
         */
-        onReady?: (coverageReport: CoverageReport, nodeV8CoverageDir: string, subprocess: any) => Promise<void>;
+        onReady?: (coverageReport: CoverageReport, nodeV8CoverageDir: string, subprocess: any) => void | Promise<void>;
 
     }
 
