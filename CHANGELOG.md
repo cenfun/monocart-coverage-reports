@@ -1,7 +1,7 @@
 ## Changelog
 
 - 2.12.11
-  - fixed #194 child process crash when the tested code spawns a subprocess with a different cwd (NODE_OPTIONS register path is now absolute)
+  - fixed child process crash when the tested code spawns a subprocess with a different cwd (NODE_OPTIONS register path is now absolute)
 
 - 2.12.10
   - updated dependencies
