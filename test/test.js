@@ -63,7 +63,8 @@ const test = async (type) => {
         'test-node',
         'test-browser',
         'test-cli',
-        'test-merge'
+        'test-merge',
+        'test-cp'
     ];
 
     for (const item of all) {
