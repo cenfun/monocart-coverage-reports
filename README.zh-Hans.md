@@ -103,6 +103,17 @@ mcr node my-app.js -r v8,console-details
 - 选项的类型描述，见 `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
 - [配置文件](#config-file)
 
+### Advanced Options
+一些容易被忽略但比较实用的选项：
+
+| 选项 | 类型 | 说明 |
+| :-- | :-- | :-- |
+| `baseDir` | `string` | 用于规范化源文件相对路径的基准目录，默认为 `process.cwd()`。当生成报告的工作目录和源码目录不一致时需要设置。 |
+| `dataDir` | `string` | 在 `generate()` 阶段自动加载的原始覆盖率数据目录，作为显式调用 `addFromDir()` 的替代。 |
+| `reportPath` | `string \| () => string` | 覆盖默认的报告入口路径（`outputDir/index.html`）。当多个报告共用同一个 `outputDir`，需要让外部工具或 CI 链接指向特定报告时很有用。 |
+| `gc` | `number` | 内存阈值（MB）。在关键阶段若驻留内存超过该阈值则强制触发 GC。适用于超大覆盖率数据集，另见 [JavaScript heap out of memory](#javascript-heap-out-of-memory)。 |
+| `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | 自定义 sourcemap 内容加载逻辑（例如从内存中的构建缓存读取）。可调用 `defaultResolver(url)` 回退到默认解析。 |
+
 ## Available Reports
 
 > 内置V8报告(仅V8格式数据支持):

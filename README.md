@@ -103,6 +103,17 @@ For more information, see [Command Line](#command-line)
 - Options declaration see `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
 - [Config file](#config-file)
 
+### Advanced Options
+A few less-obvious options worth knowing:
+
+| Option | Type | Description |
+| :-- | :-- | :-- |
+| `baseDir` | `string` | Base dir for normalizing the relative source path. Defaults to `process.cwd()`. Use this when the report is generated from a different working directory than the sources. |
+| `dataDir` | `string` | A directory of raw coverage data to load at `generate()` time — alternative to calling `addFromDir()` explicitly. |
+| `reportPath` | `string \| () => string` | Overrides the default report entry path (`outputDir/index.html`). Useful when multiple reports share an `outputDir` and you want to direct tools or CI links to a specific one. |
+| `gc` | `number` | Memory threshold in MB. Forces GC at critical stages when resident memory exceeds the threshold. Helpful for very large coverage sets; see also [JavaScript heap out of memory](#javascript-heap-out-of-memory). |
+| `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | Custom hook for loading sourcemap content (e.g. from an in-memory build cache). Call `defaultResolver(url)` to fall back to built-in resolution. |
+
 ## Available Reports
 
 > V8 built-in reports (V8 data only):
