@@ -27,7 +27,6 @@
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
 * [Hooks](#hooks)
-* [Snapshot Testing](#snapshot-testing)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Command Line](#command-line)
@@ -758,26 +757,6 @@ module.exports = {
         // wait for something, or pre-process the raw files
     }
 };
-```
-
-## Snapshot Testing
-MCR exposes `getSnapshot` and `diffSnapshot` to compare coverage between runs (e.g. in CI to detect regressions).
-```js
-const MCR = require('monocart-coverage-reports');
-const mcr = MCR(coverageOptions);
-// ... add coverage ...
-const coverageResults = await mcr.generate();
-
-const snapshot = MCR.getSnapshot(coverageResults);
-// persist snapshot to disk, then on the next run:
-const { change, results, message } = MCR.diffSnapshot(previousSnapshot, snapshot, {
-    skipEqual: true,
-    showSummary: true,
-    metrics: ['bytes', 'lines']
-});
-if (change) {
-    console.log(message);
-}
 ```
 
 ## Ignoring Uncovered Codes

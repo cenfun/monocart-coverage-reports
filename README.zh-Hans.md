@@ -27,7 +27,6 @@
 * [使用 `sourcePath` 修改源文件路径](#resolve-sourcepath-for-the-source-files)
 * [为未测试的文件添加空的覆盖率报告](#adding-empty-coverage-for-untested-files)
 * [回调钩子 Hooks](#hooks)
-* [覆盖率快照对比 Snapshot Testing](#snapshot-testing)
 * [如何忽略未覆盖的代码](#ignoring-uncovered-codes)
 * [多进程支持](#multiprocessing-support)
 * [如何使用CLI命令行](#command-line)
@@ -761,26 +760,6 @@ module.exports = {
         // 等待某个信号，或先对 raw 文件做一些预处理
     }
 };
-```
-
-## Snapshot Testing
-MCR 提供 `getSnapshot` 和 `diffSnapshot` 用于对比两次运行的覆盖率数据（典型场景：CI 中检测覆盖率回退）
-```js
-const MCR = require('monocart-coverage-reports');
-const mcr = MCR(coverageOptions);
-// ... 添加覆盖率数据 ...
-const coverageResults = await mcr.generate();
-
-const snapshot = MCR.getSnapshot(coverageResults);
-// 把 snapshot 存到磁盘，下次运行时：
-const { change, results, message } = MCR.diffSnapshot(previousSnapshot, snapshot, {
-    skipEqual: true,
-    showSummary: true,
-    metrics: ['bytes', 'lines']
-});
-if (change) {
-    console.log(message);
-}
 ```
 
 ## Ignoring Uncovered Codes
