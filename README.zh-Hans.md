@@ -26,7 +26,8 @@
 * [过滤V8覆盖率数据](#filtering-results)
 * [使用 `sourcePath` 修改源文件路径](#resolve-sourcepath-for-the-source-files)
 * [为未测试的文件添加空的覆盖率报告](#adding-empty-coverage-for-untested-files)
-* [onEnd回调函数](#onend-hook)
+* [回调钩子 Hooks](#hooks)
+* [覆盖率快照对比 Snapshot Testing](#snapshot-testing)
 * [如何忽略未覆盖的代码](#ignoring-uncovered-codes)
 * [多进程支持](#multiprocessing-support)
 * [如何使用CLI命令行](#command-line)
@@ -675,8 +676,10 @@ const coverageOptions = {
 };
 ```
 
-## onEnd Hook
-结束回调可以用来自定义业务需求，比如检测覆盖率是否达标，对比每个指标的thresholds，如果低于要求的值则可以抛出一个错误退出
+## Hooks
+
+### `onEnd` — 报告生成后触发
+典型用法：检测覆盖率是否达标，低于 threshold 时抛错退出。
 ```js
 const EC = require('eight-colors');
 const coverageOptions = {
@@ -703,6 +706,49 @@ const coverageOptions = {
             // process.exit(1);
         }
     }
+}
+```
+
+### `onEntry` — 每个V8入口在处理前触发（仅V8）
+可以在进入AST解析前改写 entry（例如对非标准语法的源码做预编译），参见 [Unparsable source](#unparsable-source)
+```js
+const coverageOptions = {
+    onEntry: async (entry) => {
+        // entry.source, entry.sourceMap, entry.fake, ...
+    }
+};
+```
+
+### `onStart` / `onReady` — 仅CLI可用
+只在使用 `mcr <command>` 时有效:
+- `onStart(coverageReport)` — 子进程启动前触发
+- `onReady(coverageReport, nodeV8CoverageDir, subprocess)` — 子进程退出后、MCR 读取 `nodeV8CoverageDir` 之前触发。用于子进程尚未写完覆盖数据需要等待的场景
+```js
+// mcr.config.js
+module.exports = {
+    onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
+        // 等待某个信号，或先对 raw 文件做一些预处理
+    }
+};
+```
+
+## Snapshot Testing
+MCR 提供 `getSnapshot` 和 `diffSnapshot` 用于对比两次运行的覆盖率数据（典型场景：CI 中检测覆盖率回退）
+```js
+const MCR = require('monocart-coverage-reports');
+const mcr = MCR(coverageOptions);
+// ... 添加覆盖率数据 ...
+const coverageResults = await mcr.generate();
+
+const snapshot = MCR.getSnapshot(coverageResults);
+// 把 snapshot 存到磁盘，下次运行时：
+const { change, results, message } = MCR.diffSnapshot(previousSnapshot, snapshot, {
+    skipEqual: true,
+    showSummary: true,
+    metrics: ['bytes', 'lines']
+});
+if (change) {
+    console.log(message);
 }
 ```
 
@@ -739,6 +785,7 @@ function uncovered() {
 }
 /* node:coverage enable */
 ```
+- 可以设置 `v8Ignore: false` 完全禁用基于注释的忽略机制。
 
 ## Multiprocessing Support
 > 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](#debug-for-coverage-and-sourcemap)，或者使用了`raw`报告
@@ -800,6 +847,16 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
+- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。要求 Node.js `>= 18.19`
+```sh
+mcr --import tsx node ./test.ts
+```
+
+- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。依赖 `process.loadEnvFile`，Node.js `20.6` 起支持
+```sh
+mcr --env .env.test node ./test.js
+```
+
 - 参见例子
     - [Mocha](#mocha)
     - [TypeScript](#typescript)
@@ -814,7 +871,12 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 - `mcr.config.cjs`
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
-- `mcr.config.ts` (requires preloading the ts execution module)
+- `mcr.config.ts` （需要预加载 TypeScript 执行模块，比如 `tsx`）:
+```sh
+mcr --import tsx -c mcr.config.ts node ./test.js
+```
+
+> 未指定自定义路径时，MCR 会从当前工作目录向上查找默认配置文件（通过 [`find-up`](https://github.com/sindresorhus/find-up)）。不在搜索路径内的文件会被忽略
 
 ## Merge Coverage Reports
 以下这些使用场景可能需要使用合并覆盖率报告：

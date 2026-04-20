@@ -26,7 +26,8 @@
 * [Filtering Results](#filtering-results)
 * [Resolve `sourcePath` for the Source Files](#resolve-sourcepath-for-the-source-files)
 * [Adding Empty Coverage for Untested Files](#adding-empty-coverage-for-untested-files)
-* [onEnd Hook](#onend-hook)
+* [Hooks](#hooks)
+* [Snapshot Testing](#snapshot-testing)
 * [Ignoring Uncovered Codes](#ignoring-uncovered-codes)
 * [Multiprocessing Support](#multiprocessing-support)
 * [Command Line](#command-line)
@@ -672,8 +673,10 @@ const coverageOptions = {
 };
 ```
 
-## onEnd Hook
-For example, checking thresholds:
+## Hooks
+
+### `onEnd` — after the report is generated
+Typical use case: enforce coverage thresholds.
 ```js
 const EC = require('eight-colors');
 const coverageOptions = {
@@ -700,6 +703,49 @@ const coverageOptions = {
             // process.exit(1);
         }
     }
+}
+```
+
+### `onEntry` — before each V8 entry is processed (V8 only)
+Use this to mutate the entry (for example, transform non-standard sources into valid ECMAScript before the AST parser runs). See [Unparsable source](#unparsable-source).
+```js
+const coverageOptions = {
+    onEntry: async (entry) => {
+        // entry.source, entry.sourceMap, entry.fake, ...
+    }
+};
+```
+
+### `onStart` / `onReady` — CLI-only
+Only available when using `mcr <command>`:
+- `onStart(coverageReport)` — runs before the child process is spawned.
+- `onReady(coverageReport, nodeV8CoverageDir, subprocess)` — runs after the child exits, before MCR reads coverage from `nodeV8CoverageDir`. Useful when the child hasn't finished flushing coverage data and needs to be waited on.
+```js
+// mcr.config.js
+module.exports = {
+    onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
+        // wait for something, or pre-process the raw files
+    }
+};
+```
+
+## Snapshot Testing
+MCR exposes `getSnapshot` and `diffSnapshot` to compare coverage between runs (e.g. in CI to detect regressions).
+```js
+const MCR = require('monocart-coverage-reports');
+const mcr = MCR(coverageOptions);
+// ... add coverage ...
+const coverageResults = await mcr.generate();
+
+const snapshot = MCR.getSnapshot(coverageResults);
+// persist snapshot to disk, then on the next run:
+const { change, results, message } = MCR.diffSnapshot(previousSnapshot, snapshot, {
+    skipEqual: true,
+    showSummary: true,
+    metrics: ['bytes', 'lines']
+});
+if (change) {
+    console.log(message);
 }
 ```
 
@@ -736,6 +782,7 @@ function uncovered() {
 }
 /* node:coverage enable */
 ```
+- To disable comment-based ignoring entirely, set `v8Ignore: false`.
 
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
@@ -797,6 +844,16 @@ see all options with running `mcr` or `mcr --help`
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
+- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Requires Node.js `>= 18.19`.
+```sh
+mcr --import tsx node ./test.ts
+```
+
+- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Requires `process.loadEnvFile`, added in Node.js `20.6`.
+```sh
+mcr --env .env.test node ./test.js
+```
+
 - Examples
     - [Mocha](#mocha)
     - [TypeScript](#typescript)
@@ -811,7 +868,12 @@ Loading config file by priority:
 - `mcr.config.cjs`
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
-- `mcr.config.ts` (requires preloading the ts execution module)
+- `mcr.config.ts` (requires preloading the TypeScript execution module, for example with `tsx`):
+```sh
+mcr --import tsx -c mcr.config.ts node ./test.js
+```
+
+> If no custom path is given, MCR walks up from the current working directory to find the default config file (via [`find-up`](https://github.com/sindresorhus/find-up)). Files outside the search path will be ignored.
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:
