@@ -535,7 +535,7 @@ export type V8CoverageData = ScriptCoverage[];
 | Firefox (2%) | ❌ |  |
 | Node.js | ✅ |  |
 | Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
-| Bun | ❌ |  |
+| Bun | ❌ | [issue](https://github.com/oven-sh/bun/issues/30968) |
 
 > MCR 为每个 V8 覆盖率条目扩展了以下字段：
 

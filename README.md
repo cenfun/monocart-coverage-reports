@@ -531,7 +531,7 @@ export type V8CoverageData = ScriptCoverage[];
 | Firefox (2%) | ❌ |  |
 | Node.js | ✅ |  |
 | Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
-| Bun | ❌ |  |
+| Bun | ❌ | [issue](https://github.com/oven-sh/bun/issues/30968) |
 
 > MCR extends each V8 coverage entry with additional fields:
 
