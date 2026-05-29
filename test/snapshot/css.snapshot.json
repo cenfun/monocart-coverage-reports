@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "2.12 %",
+        "bytes": "48.33 %",
         "statements": "",
         "branches": "",
         "functions": "",
-        "lines": "39.44 %"
+        "lines": "38.57 %"
     },
     "files": {
         "anonymous/style1.css": {
@@ -44,14 +44,14 @@
             "uncoveredLines": "12-18,33-53,69-85",
             "extras": "2b,6b,10b,11c,13b,14b,16c,19b,21b,26b,32b,38b,42b,48b,54b,55c,56i,57i,58i,59i,60i,61i,62i,63i,64c,65b,67b,68b,74b,75c,76i,77i,78i,80b,86b,87c"
         },
-        "test/mock/minify/with-map/bootstrap.min.css": {
+        "test/mock/minify/with-map/bootstrap-reboot.min.css": {
             "functions": "",
             "branches": "",
             "statements": "",
-            "lines": "50.00 %",
-            "bytes": "1.57 %",
-            "uncoveredLines": "6",
-            "extras": "2c,3c,4c,5c,7c,8c"
+            "lines": "0.00 %",
+            "bytes": "46.91 %",
+            "uncoveredLines": "5",
+            "extras": "1c,2c,3c,4c,6c,7c"
         }
     }
 }

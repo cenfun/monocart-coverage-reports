@@ -1,7 +1,7 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "41.57 %",
+        "bytes": "49.02 %",
         "statements": "39.37 %",
         "branches": "25.37 %",
         "functions": "42.85 %",
@@ -107,14 +107,14 @@
             "uncoveredLines": "1",
             "extras": ""
         },
-        "localhost-8130/with-map/bootstrap.min.css": {
+        "localhost-8130/with-map/bootstrap-reboot.min.css": {
             "functions": "",
             "branches": "",
             "statements": "",
-            "lines": "50.00 %",
-            "bytes": "1.45 %",
-            "uncoveredLines": "6",
-            "extras": "2c,3c,4c,5c,7c"
+            "lines": "0.00 %",
+            "bytes": "47.15 %",
+            "uncoveredLines": "5",
+            "extras": "1c,2c,3c,4c,6c"
         },
         "localhost-8130/with-map/coverage-data.js": {
             "functions": "",

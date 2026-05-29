@@ -31,7 +31,7 @@ const test = async (serverUrl) => {
 
     const fileList = [
         './test/mock/css/index.html',
-        './test/mock/minify/with-map/bootstrap.min.css',
+        './test/mock/minify/with-map/bootstrap-reboot.min.css',
         './test/mock/css/style.css'
     ];
     for (const filePath of fileList) {
