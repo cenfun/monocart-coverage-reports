@@ -11,6 +11,7 @@
   - optimized `findInRanges` from O(n) linear scan to O(log n) binary search for sorted range lists
   - refactored `while(true)` with post-guard in `fromSortedRanges` to a condition-clear `while (stack.length > 0)`
   - renamed `calculateSha1` parameter from misleading `buffer` to `input`
+  - fixed `mergeCssRanges` O(n²) array concatenation (now O(n) with push) and removed unnecessary Promise wrapper
 
 - 2.12.11
   - fixed child process crash when the tested code spawns a subprocess with a different cwd (NODE_OPTIONS register path is now absolute)
