@@ -108,7 +108,8 @@ module.exports = {
 
     outdate: {
         exclude: [
-            'minimatch'
+            'minimatch',
+            'commander'
         ]
     },
 
