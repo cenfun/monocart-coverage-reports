@@ -89,6 +89,8 @@ import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
 await mcr.loadConfig();
 ```
+> Both `MCR({...})` and `new CoverageReport()` create the same instance. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
+
 For more information, see [Multiprocessing Support](#multiprocessing-support)
 
 - CLI
@@ -106,7 +108,7 @@ For more information, see [Command Line](#command-line)
 | :-- | :-- | :-- | :-- |
 | `logging` | `"off" \| "error" \| "info" \| "debug"` | `"info"` | Logging level. Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap). |
 | `name` | `string` | `"Coverage Report"` | Report title shown in the UI and summary reports. |
-| `reports` | `string \| (string \| ReportDescription)[]` | `"v8"` (V8) / `"html"` (Istanbul) | Reports to generate. See [Available Reports](#available-reports). |
+| `reports` | `string \| (string \| ReportDescription)[]` | `""` (auto) | Reports to generate. Defaults to `"v8"` for V8 data and `"html"` for Istanbul data. See [Available Reports](#available-reports). |
 | `outputDir` | `string` | `"./coverage-reports"` | Output directory for all reports and the `.cache` folder. |
 | `inputDir` | `string \| string[]` | `null` | Input directories of raw coverage data for [merging](#merge-coverage-reports). |
 | `baseDir` | `string` | `process.cwd()` | Base dir used to normalize relative source paths. Set when the report is generated from a different working directory than the sources. |
@@ -123,8 +125,8 @@ For more information, see [Command Line](#command-line)
 | `v8Ignore` | `boolean` | `true` | (V8 only) Enable/disable comment-based ignoring (`v8 ignore …`). See [Ignoring Uncovered Codes](#ignoring-uncovered-codes). |
 | `reportPath` | `string \| () => string` | `null` | Override the report entry path (defaults to `outputDir/index.html`). Useful when multiple reports share an `outputDir`. |
 | `watermarks` | `[number, number] \| object` | `[50, 80]` | Low/high thresholds (percent). Accepts per-metric object like `{ bytes:[50,80], lines:[50,80] }`. |
-| `clean` | `boolean` | `true` | Clean previous reports in `outputDir` before generating. |
-| `cleanCache` | `boolean` | `false` | Clean the cache dir on start. |
+| `clean` | `boolean` | `true` | Clean previous reports in `outputDir` before generating (the `.cache` dir is preserved unless `cleanCache` is also `true`). |
+| `cleanCache` | `boolean` | `false` | Clean the cache dir on start. When both `clean` and `cleanCache` are `false`, cached coverage data from previous runs is preserved and can be reused across processes. |
 | `gc` | `number` | `null` | Memory threshold in MB; force GC at critical stages when RSS exceeds it. Useful for very large data sets, see [JavaScript heap out of memory](#javascript-heap-out-of-memory). |
 | `sourceMap` | `boolean` | `false` | Save source/sourcemap files to cache for debugging (requires `logging: "debug"`). |
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | Custom sourcemap loader (e.g. from a build cache). Call `defaultResolver(url)` to fall back. |
@@ -863,6 +865,12 @@ mcr --import tsx node ./test.ts
 ```sh
 mcr --env .env.test node ./test.js
 ```
+
+- `merge`: merge raw coverage data from `inputDir`(s) and generate merged reports directly, without running a child process.
+```sh
+mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverage-reports/e2e/raw --outputDir ./coverage-reports/merged
+```
+See [Merge Coverage Reports](#merge-coverage-reports).
 
 - Examples
     - [Mocha](#mocha)
