@@ -1,5 +1,14 @@
 ## Changelog
 
+- 2.12.12
+  - refactored `getEntryFilter` / `getSourceFilter` / `getFileFilter` into a shared `createFilterHandler` factory
+  - replaced `.filter().forEach()` chains with single loops to avoid intermediate array allocations
+  - replaced `.map().flat()` with `.flatMap()` for reduced memory churn
+  - fixed `resolveWatermarks` mutating the input `defaultWatermarks` object (now clones before modifying)
+  - consolidated `writeFileSync` / `writeFile` directory creation into shared `ensureDirSync` helper
+  - added `lib/packages/` to eslint ignore to skip linting built vendor bundles
+  - fixed minor lint warnings (unused variable assignments)
+
 - 2.12.11
   - fixed child process crash when the tested code spawns a subprocess with a different cwd (NODE_OPTIONS register path is now absolute)
 
