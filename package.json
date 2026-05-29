@@ -117,7 +117,7 @@
         "open": "^11.0.0",
         "playwright": "^1.60.0",
         "postcss": "^8.5.15",
-        "puppeteer": "^25.0.4",
+        "puppeteer": "^25.1.0",
         "rollup": "^4.60.4",
         "starfall-cli": "^2.0.24",
         "stylelint": "^17.12.0",
@@ -129,7 +129,7 @@
         "turbogrid": "^3.2.4",
         "typescript": "^6.0.3",
         "vine-ui": "^3.1.18",
-        "webpack": "^5.107.1",
+        "webpack": "^5.107.2",
         "ws": "^8.21.0",
         "yazl": "^3.3.1"
     }
