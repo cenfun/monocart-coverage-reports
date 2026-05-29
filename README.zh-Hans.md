@@ -132,8 +132,6 @@ mcr node my-app.js -r v8,console-details
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | 自定义 sourcemap 加载逻辑（例如从构建缓存中读取），可调用 `defaultResolver(url)` 回退到默认解析。 |
 | `onEntry` | `(entry) => void \| Promise<void>` | `null` | （仅 V8）每个入口文件处理前触发，参见 [Hooks](#hooks)。 |
 | `onEnd` | `(coverageResults) => void \| Promise<void>` | `null` | 报告生成完成后触发，参见 [Hooks](#hooks)。 |
-| `onStart` | `(coverageReport) => void \| Promise<void>` | `null` | （仅 CLI）子进程启动前触发，参见 [Hooks](#hooks)。 |
-| `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => void \| Promise<void>` | `null` | （仅 CLI）子进程退出后、MCR 读取覆盖率数据前触发，参见 [Hooks](#hooks)。 |
 
 ## Available Reports
 
@@ -224,6 +222,11 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
     > 例子: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
     - V8自定义报告
     > 例子: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
+
+    `type` 选项决定报告接收的覆盖率数据格式：
+    - `'istanbul'` — 报告接收 Istanbul 格式的覆盖率数据（`coverageResults.istanbulData`）。
+    - `'v8'` — 报告接收原生 V8 格式的覆盖率数据（`coverageResults.v8Data`）。
+    - `'both'` — 报告同时接收两种格式，可通过 `coverageResults.v8Data` 和 `coverageResults.istanbulData` 访问。
 
 ### Multiple Reports:
 如何配置多个报告
@@ -533,6 +536,21 @@ export type V8CoverageData = ScriptCoverage[];
 | Node.js | ✅ |  |
 | Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
 | Bun | ❌ |  |
+
+> MCR 为每个 V8 覆盖率条目扩展了以下字段：
+
+| 字段 | 类型 | 说明 |
+| :-- | :-- | :-- |
+| `url` | `string` | 脚本 URL 或文件路径 |
+| `type` | `"js" \| "css"` | 条目类型 |
+| `source` | `string` | （JS）源代码文本 |
+| `sourceMap` | `object` | （JS）已解析的 sourcemap 对象 |
+| `scriptOffset` | `number` | （JS）脚本包裹层的字节偏移（例如 `vm` 模块中）。此偏移会自动加到所有 range 的 start/end 值上 |
+| `distFile` | `string` | （JS）该 source 解包自的 dist 打包文件 |
+| `empty` | `boolean` | 当条目通过 `all` 选项添加（无真实覆盖率数据）时标记为 `true`，显示为 0% 覆盖 |
+| `fake` | `boolean` | 当源代码非原始代码（例如从 `.ts`/`.jsx` 编译而来）时标记为 `true`。AST 解析器会跳过 fake 源的覆盖率提取 |
+
+这些字段可以在 [`onEntry`](#hooks) 钩子中读取或修改。
 
 ## Filtering Results
 ### Using `entryFilter` and `sourceFilter` to filter the results for V8 report
@@ -851,8 +869,20 @@ npm i monocart-coverage-reports
 npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
-- 命令行参数
-直接运行 `mcr` 或 `mcr --help` 查看所有CLI的参数
+- CLI 选项
+
+以下选项仅在 CLI 模式（`mcr <command>`）下可用：
+
+| 选项 | 类型 | 默认值 | 说明 |
+| :-- | :-- | :-- | :-- |
+| `-c, --config` | `string` | — | 自定义配置文件路径 |
+| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。需要 Node.js `>= 18.19` |
+| `--require` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 CJS 模块 |
+| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。需要 Node.js `>= 20.6` |
+| `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](#hooks) |
+| `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](#hooks) |
+
+其他选项（如 `--name`、`--reports`、`--outputDir`、`--lcov` 等）参见 [选项配置](#options) 表格，它们在 CLI 中的用法相同。
 
 - 使用 `--` 可以隔离子程序参数，以免两种参数混淆
 ```sh

@@ -132,8 +132,6 @@ For more information, see [Command Line](#command-line)
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | Custom sourcemap loader (e.g. from a build cache). Call `defaultResolver(url)` to fall back. |
 | `onEntry` | `(entry) => void \| Promise<void>` | `null` | (V8 only) Per-entry hook; see [Hooks](#hooks). |
 | `onEnd` | `(coverageResults) => void \| Promise<void>` | `null` | Hook invoked after report generation; see [Hooks](#hooks). |
-| `onStart` | `(coverageReport) => void \| Promise<void>` | `null` | (CLI only) Before the child process starts; see [Hooks](#hooks). |
-| `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => void \| Promise<void>` | `null` | (CLI only) After the child exits, before MCR reads coverage data; see [Hooks](#hooks). |
 
 ## Available Reports
 
@@ -224,6 +222,11 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
     > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
     - V8 custom reporter
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
+
+    The `type` option determines which coverage format the reporter receives:
+    - `'istanbul'` — the reporter receives Istanbul-format coverage data (`coverageResults.istanbulData`).
+    - `'v8'` — the reporter receives native V8-format coverage data (`coverageResults.v8Data`).
+    - `'both'` — the reporter receives both formats, accessible via `coverageResults.v8Data` and `coverageResults.istanbulData`.
 
 ### Multiple Reports:
 ```js
@@ -529,6 +532,21 @@ export type V8CoverageData = ScriptCoverage[];
 | Node.js | ✅ |  |
 | Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
 | Bun | ❌ |  |
+
+> MCR extends each V8 coverage entry with additional fields:
+
+| Field | Type | Description |
+| :-- | :-- | :-- |
+| `url` | `string` | Script URL or file path |
+| `type` | `"js" \| "css"` | Entry type |
+| `source` | `string` | (JS) Source code text |
+| `sourceMap` | `object` | (JS) Parsed sourcemap object |
+| `scriptOffset` | `number` | (JS) Byte offset for the script wrapper (e.g. in `vm` modules). This offset is automatically added to all range start/end values |
+| `distFile` | `string` | (JS) The dist bundle file this source was unpacked from |
+| `empty` | `boolean` | Marked as `true` when this entry was added via the `all` option (no real coverage data), showing 0% coverage |
+| `fake` | `boolean` | Marked as `true` when the source code is not original (e.g. compiled from `.ts`/`.jsx`). The AST parser skips coverage extraction for fake sources |
+
+These fields can be read/mutated in [`onEntry`](#hooks) hooks.
 
 ## Filtering Results
 ### Using `entryFilter` and `sourceFilter` to filter the results for V8 report
@@ -849,7 +867,19 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
 - CLI Options
-see all options with running `mcr` or `mcr --help`
+
+The options below are only available when using the CLI (`mcr <command>`):
+
+| Option | Type | Default | Description |
+| :-- | :-- | :-- | :-- |
+| `-c, --config` | `string` | — | Custom config file path |
+| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. Requires Node.js `>= 18.19` |
+| `--require` | `string` | `null` | Preload CJS module via `NODE_OPTIONS` |
+| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). Requires Node.js `>= 20.6` |
+| `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](#hooks) |
+| `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](#hooks) |
+
+For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see the [Options](#options) table — they work the same way in CLI.
 
 - Use `--` to separate sub CLI args
 ```sh
