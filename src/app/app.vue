@@ -23,7 +23,6 @@ import Util from './utils/util.js';
 
 import PageFlyover from './components/page-flyover.vue';
 import PageReport from './components/page-report.vue';
-import IconLabel from './components/icon-label.vue';
 
 import faviconIcon from './images/icons/monocart.svg';
 
@@ -1050,24 +1049,15 @@ window.addEventListener('unhandledrejection', function(e) {
           gap="10px"
           shrink
         >
-          <div class="mcr-search">
-            <VuiInput
-              v-model="state.keywords"
-              width="100%"
-              :class="state.keywords?'mcr-search-keywords':''"
-            />
-            <IconLabel
-              class="mcr-search-icon"
-              icon="search"
-              :button="false"
-            />
-            <IconLabel
-              v-if="state.keywords"
-              class="mcr-search-clear"
-              icon="close"
-              @click="state.keywords = ''"
-            />
-          </div>
+          <VuiInput
+            v-model="state.keywords"
+            class="mcr-search"
+            :class="state.keywords?'mcr-search-keywords':''"
+            width="100%"
+            icon="search"
+            icon-color="gray"
+            cleanable
+          />
           <VuiSwitch
             v-model="state.group"
             :label-clickable="true"
@@ -1249,30 +1239,12 @@ icon
 }
 
 .mcr-search {
-    position: relative;
     width: 100%;
     max-width: 300px;
 
     input {
-        padding-right: 30px;
-        padding-left: 30px;
         border-radius: 10px;
     }
-}
-
-.mcr-search-icon {
-    position: absolute;
-    top: 50%;
-    left: 8px;
-    color: gray;
-    transform: translate(0, -50%);
-}
-
-.mcr-search-clear {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translate(0, -50%);
 }
 
 .mcr-search-keywords {
