@@ -146,17 +146,15 @@ export default defineConfig(({ command, mode }) => {
         define,
         build: {
             outDir: 'dist',
-            lib: {
-                entry: path.resolve(import.meta.dirname, 'src/app/index.js'),
-                name: ID,
-                formats: ['umd'],
-                fileName: (format) => `${ID}.js`
-            },
             rolldownOptions: {
+                input: path.resolve(import.meta.dirname, 'src/app/index.js'),
                 output: {
-                    exports: 'named'
+                    format: 'iife',
+                    name: 'MonocartCoverageReports',
+                    entryFileNames: `${ID}.js`
                 }
             },
+            chunkSizeWarningLimit: 1000,
             sourcemap: false,
             cssCodeSplit: false,
             emptyOutDir: true
