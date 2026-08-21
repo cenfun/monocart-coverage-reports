@@ -328,7 +328,7 @@
             "branches": "75.00 %",
             "statements": "69.23 %",
             "lines": "66.67 %",
-            "bytes": "81.45 %",
+            "bytes": "81.39 %",
             "uncoveredLines": "19-24",
             "extras": "1c,3b,4c,6c,11c,13c,14c,17b,18c,26b,27c,30b,31b"
         },

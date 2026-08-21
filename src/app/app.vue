@@ -2,7 +2,15 @@
 import {
     shallowReactive, onMounted, reactive, provide, watch, watchEffect
 } from 'vue';
-import { components, generateTooltips } from 'vine-ui';
+import {
+    VuiFlex,
+    VuiInput,
+    VuiSwitch,
+    VuiSelect,
+    VuiTooltip,
+    VuiLoading,
+    initGlobalTooltips
+} from 'vine-ui';
 
 import { Grid } from 'turbogrid';
 import inflate from 'lz-utils/inflate';
@@ -18,15 +26,6 @@ import PageReport from './components/page-report.vue';
 import IconLabel from './components/icon-label.vue';
 
 import faviconIcon from './images/icons/monocart.svg';
-
-const {
-    VuiFlex,
-    VuiInput,
-    VuiSwitch,
-    VuiSelect,
-    VuiTooltip,
-    VuiLoading
-} = components;
 
 
 const allMetrics = [{
@@ -163,7 +162,14 @@ const showTooltip = (target, text) => {
 };
 
 const initTooltip = () => {
-    generateTooltips((target, text) => {
+    initGlobalTooltips((target) => {
+        const text = target.getAttribute('tooltip');
+        if (!text) {
+            if (target.clientWidth < target.scrollWidth) {
+                showTooltip(target, target.innerText);
+            }
+            return;
+        }
         showTooltip(target, text);
     }, (target) => {
         hideTooltip();

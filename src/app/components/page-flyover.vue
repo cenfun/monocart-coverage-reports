@@ -1,11 +1,9 @@
 <script setup>
 import { inject } from 'vue';
-import { components } from 'vine-ui';
+import { VuiFlex, VuiFlyover } from 'vine-ui';
 import hash from '../core/hash.js';
 
 import IconLabel from './icon-label.vue';
-
-const { VuiFlex, VuiFlyover } = components;
 
 const state = inject('state');
 
@@ -30,8 +28,8 @@ const onFlyoverResize = (width) => {
 <template>
   <VuiFlyover
     ref="flyover"
+    v-model="state.flyoverVisible"
     position="right"
-    :visible="state.flyoverVisible"
     :width="state.flyoverWidth"
     min-width="350"
     @end="onFlyoverEnd"

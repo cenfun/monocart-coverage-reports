@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const net = require('net');
 const {
     execSync, spawn, spawnSync
 } = require('child_process');
@@ -34,23 +35,65 @@ const coverageOptions = {
 // ==================================================================
 
 // mock start koa server
-const startKoaProcess = (port) => {
+const startKoaProcess = (inspectPort, serverPort) => {
     console.log('start koa server ...');
-    const cp = spawn(`node --inspect=${port} ./test/mock/node/lib/koa.js`, {
+    const cp = spawn(`node --inspect=${inspectPort} ./test/mock/node/lib/koa.js`, {
         stdio: 'inherit',
         shell: true
     });
+
     return new Promise((resolve) => {
-        cp.on('error', (err) => {
+        const timeout = 10000;
+        const startTime = Date.now();
+        let settled = false;
+
+        const finish = (result) => {
+            if (settled) {
+                return;
+            }
+            settled = true;
+            resolve(result);
+        };
+
+        const waitForServer = () => {
+            if (settled) {
+                return;
+            }
+
+            const socket = net.createConnection({
+                host: '127.0.0.1',
+                port: serverPort
+            });
+
+            socket.once('connect', () => {
+                socket.destroy();
+                finish(cp);
+            });
+
+            socket.once('error', () => {
+                socket.destroy();
+                if (Date.now() - startTime >= timeout) {
+                    console.log(`timeout waiting for koa server on port ${serverPort}`);
+                    finish();
+                    return;
+                }
+                setTimeout(waitForServer, 100);
+            });
+        };
+
+        cp.once('error', (err) => {
             console.log('sub process error', err);
-            resolve();
+            finish();
         });
-        cp.on('spawn', () => {
-            // wait for sub process ready
-            setTimeout(() => {
-                resolve(cp);
-            }, 1000);
+
+        cp.once('exit', (code) => {
+            if (!settled) {
+                console.log(`koa process exited before ready, code: ${code}`);
+                finish();
+            }
         });
+
+        cp.once('spawn', waitForServer);
     });
 };
 
@@ -125,8 +168,9 @@ const generate = async () => {
     }
 
     const port = 9280;
+    const serverPort = 3080;
 
-    const cp = await startKoaProcess(port);
+    const cp = await startKoaProcess(port, serverPort);
     if (!cp) {
         EC.logRed('can not start koa process');
         process.exit(1);
@@ -134,7 +178,7 @@ const generate = async () => {
     }
 
     // request koa server
-    const url = 'http://localhost:3080';
+    const url = `http://localhost:${serverPort}`;
     const [err, res] = await Util.request(url);
     if (err) {
         EC.logRed(`failed to request koa url: ${url}`);

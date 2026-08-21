@@ -51,9 +51,12 @@ const test = async (type) => {
 
     const list = groups[type];
     if (list) {
-        const codes = await Promise.all(list.map((item) => executeNpmRun(item)));
-        if (codes.find((c) => c !== 0)) {
-            process.exit(1);
+        for (const item of list) {
+            const code = await executeNpmRun(item);
+            if (code !== 0) {
+                process.exit(1);
+                return;
+            }
         }
         return;
     }

@@ -96,6 +96,10 @@ const test = async () => {
         }
     }
 
+    // Chrome may defer style calculation in headless mode. Force it before
+    // collecting CSS coverage so matching rules are reported consistently.
+    await page.evaluate(() => window.getComputedStyle(document.querySelector('h3')).color);
+
     await new Promise((resolve) => {
         setTimeout(resolve, 500);
     });

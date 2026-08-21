@@ -1,7 +1,7 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "83.69 %",
+        "bytes": "83.68 %",
         "statements": "84.41 %",
         "branches": "60.85 %",
         "functions": "89.29 %",
@@ -175,7 +175,7 @@
             "branches": "50.00 %",
             "statements": "61.54 %",
             "lines": "50.00 %",
-            "bytes": "77.21 %",
+            "bytes": "77.19 %",
             "uncoveredLines": "8-10,19-24",
             "extras": "1c,3b,4c,6c,11c,13c,14c,17b,18c,26b,27c,30b,31b"
         },

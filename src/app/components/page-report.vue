@@ -3,7 +3,9 @@ import {
     ref, watch, inject, onMounted, shallowReactive
 } from 'vue';
 
-import { components } from 'vine-ui';
+import {
+    VuiFlex, VuiSwitch, VuiLoading, VuiPopover, VuiInput, VuiButton
+} from 'vine-ui';
 import { microtask } from 'async-tick';
 
 import { createCodeViewer } from 'monocart-code-viewer';
@@ -18,10 +20,6 @@ import IconLabel from './icon-label.vue';
 import Util from '../utils/util.js';
 
 import { getCoverage } from '../utils/coverage.js';
-
-const {
-    VuiFlex, VuiSwitch, VuiLoading, VuiPopover, VuiInput, VuiButton
-} = components;
 
 const state = inject('state');
 const tooltip = inject('tooltip');

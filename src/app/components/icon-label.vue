@@ -5,8 +5,12 @@ import {
 
 import decodeIcons from '../core/icons.js';
 
-const context = require.context('../images/icons', true, /\.svg$/);
-const icons = decodeIcons(context);
+const iconModules = import.meta.glob('../images/icons/**/*.svg', {
+    eager: true,
+    import: 'default',
+    query: '?raw'
+});
+const icons = decodeIcons(iconModules);
 
 const props = defineProps({
     icon: {
