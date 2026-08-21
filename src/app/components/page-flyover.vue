@@ -1,9 +1,9 @@
 <script setup>
 import { inject } from 'vue';
-import { VuiFlex, VuiFlyover } from 'vine-ui';
+import {
+    VuiFlex, VuiFlyover, VuiIconLabel
+} from 'vine-ui';
 import hash from '../core/hash.js';
-
-import IconLabel from './icon-label.vue';
 
 const state = inject('state');
 
@@ -41,17 +41,19 @@ const onFlyoverResize = (width) => {
         padding="10px"
         class="mcr-flyover-header"
       >
-        <IconLabel
+        <VuiIconLabel
           icon="arrow-right"
           size="20px"
+          button
           @click="state.flyoverVisible=false"
         />
         <div class="mcr-flyover-title vui-flex-auto">
           {{ state.flyoverTitle }}
         </div>
-        <IconLabel
+        <VuiIconLabel
           icon="close"
           size="20px"
+          button
           @click="state.flyoverVisible=false"
         />
       </VuiFlex>

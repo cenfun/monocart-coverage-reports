@@ -1278,6 +1278,9 @@ icon
 
 .mcr-watermarks {
     position: relative;
+    align-items: center;
+    box-sizing: border-box;
+    height: 28px;
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
@@ -1285,7 +1288,9 @@ icon
     .mcr-low,
     .mcr-medium,
     .mcr-high {
-        padding: 5px 20px;
+        align-items: center;
+        height: 100%;
+        padding: 0 20px;
         overflow: visible;
     }
 

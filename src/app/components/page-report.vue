@@ -4,7 +4,7 @@ import {
 } from 'vue';
 
 import {
-    VuiFlex, VuiSwitch, VuiLoading, VuiPopover, VuiInput, VuiButton
+    VuiFlex, VuiSwitch, VuiLoading, VuiPopover, VuiInput, VuiButton, VuiIconLabel
 } from 'vine-ui';
 import { microtask } from 'async-tick';
 
@@ -14,8 +14,6 @@ import {
 } from 'monocart-formatter';
 
 import { Locator } from 'monocart-locator';
-
-import IconLabel from './icon-label.vue';
 
 import Util from '../utils/util.js';
 
@@ -651,10 +649,11 @@ onMounted(() => {
             {{ Util.NF(item.total) }}
           </div>
 
-          <IconLabel
+          <VuiIconLabel
             v-if="enableLocate(item)"
             :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
             icon="locate"
+            button
             @click="showNextRange(item.id)"
           />
         </VuiFlex>
@@ -741,30 +740,32 @@ onMounted(() => {
         Format
       </VuiSwitch>
 
-      <IconLabel
+      <VuiIconLabel
         class="mcr-locate-switch"
         icon="locate"
         :class="state.locate==='Uncovered'?'mcr-locate-uncovered':''"
         tooltip="Switch Locating Between All Ranges or Uncovered Ranges"
+        button
         @click="switchLocate()"
       >
         <span>{{ state.locate }}</span>
-      </IconLabel>
+      </VuiIconLabel>
 
       <VuiFlex
         v-if="data.range"
         gap="10px"
       >
         <span>{{ Util.NF(data.range.start) }}~{{ Util.NF(data.range.end) }}</span>
-        <IconLabel
+        <VuiIconLabel
           v-if="data.rangeMapping"
           icon="link"
           class="mcr-generated-range"
           :tooltip="'Mapping to '+data.rangeMapping.sourcePath"
+          button
           @click="jumpToRangeMapping(data.rangeMapping)"
         >
           {{ Util.NF(data.rangeMapping.start) }}~{{ Util.NF(data.rangeMapping.end) }}
-        </IconLabel>
+        </VuiIconLabel>
       </VuiFlex>
 
       <div class="vui-flex-auto" />
@@ -780,25 +781,27 @@ onMounted(() => {
           <span tooltip="0-base">Col {{ Util.NF(data.cursor.column) }}</span>
         </div>
         <VuiFlex gap="5px">
-          <IconLabel
+          <VuiIconLabel
             icon="location"
             class="mcr-report-goto"
             title="Jump to position"
+            button
             @click="showGotoPopover"
           >
             Pos
-          </IconLabel>
+          </VuiIconLabel>
           <div v-if="data.cursor.original">
             <span :tooltip="'Formatted: ' + Util.NF(data.cursor.position)">{{ Util.NF(data.cursor.originalPosition) }}</span>
           </div>
         </VuiFlex>
       </VuiFlex>
 
-      <IconLabel
+      <VuiIconLabel
         v-if="state.globalError"
         class="mcr-icon-error"
         tooltip="Unknown error"
         icon="error"
+        button
       />
 
       <div class="mcr-about">
@@ -807,9 +810,10 @@ onMounted(() => {
           target="_blank"
           tooltip-timeout="30000"
           :tooltip="'Monocart Coverage Reports v'+state.version"
-        ><IconLabel
+        ><VuiIconLabel
           class="mcr-icon-monocart"
           icon="monocart"
+          button
         /></a>
       </div>
     </VuiFlex>
