@@ -11,7 +11,7 @@ import { createScriptLoader } from 'lz-utils';
 import { defineConfig } from 'vite';
 
 // Replace with your library id
-const ID = 'monocart-coverage-reports';
+const ID = 'monocart-coverage-app';
 
 const timestamp = (postfix) => {
     let ts = new Date(Date.now() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(2, 19);

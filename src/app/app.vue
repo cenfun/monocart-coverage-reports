@@ -1052,7 +1052,6 @@ window.addEventListener('unhandledrejection', function(e) {
           <VuiInput
             v-model="state.keywords"
             class="mcr-search"
-            :class="state.keywords?'mcr-search-keywords':''"
             width="100%"
             icon="search"
             icon-color="gray"
@@ -1068,7 +1067,11 @@ window.addEventListener('unhandledrejection', function(e) {
         </VuiFlex>
       </div>
 
-      <VuiFlex class="mcr-watermarks">
+      <VuiFlex
+        class="mcr-watermarks"
+        overflow="hidden"
+        shrink
+      >
         <VuiFlex
           class="mcr-low"
           gap="5px"
@@ -1147,6 +1150,10 @@ window.addEventListener('unhandledrejection', function(e) {
 </template>
 
 <style lang="scss">
+:root {
+    --vui-flex-overflow: hidden;
+}
+
 html {
     height: 100%;
 }
@@ -1236,22 +1243,14 @@ icon
 
 .mcr-search-holder {
     min-width: 150px;
-}
 
-.mcr-search {
-    width: 100%;
-    max-width: 300px;
+    .mcr-search {
+        width: 100%;
+        max-width: 300px;
 
-    input {
-        border-radius: 10px;
-    }
-}
-
-.mcr-search-keywords {
-    input {
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+        input {
+            border-radius: 10px;
+        }
     }
 }
 
@@ -1279,8 +1278,8 @@ icon
 .mcr-watermarks {
     position: relative;
     align-items: center;
-    box-sizing: border-box;
     height: 28px;
+    box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;

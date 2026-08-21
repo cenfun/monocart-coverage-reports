@@ -630,23 +630,22 @@ onMounted(() => {
         >
           {{ Util.PF(item.pct, 100, 2) }}
         </div>
-        <VuiFlex
-          gap="5px"
-          class="mcr-report-values"
-        >
-          <div :tooltip="formatTooltip(item, 'covered')">
-            <span :class="item.covered?'mcr-covered':''">{{ Util.NF(item.covered) }}</span>
-          </div>
+        <VuiFlex gap="3px">
+          <div class="mcr-report-values">
+            <div :tooltip="formatTooltip(item, 'covered')">
+              <span :class="item.covered?'mcr-covered':''">{{ Util.NF(item.covered) }}</span>
+            </div>
 
-          <div
-            :class="item.uncovered?'mcr-uncovered':''"
-            :tooltip="formatTooltip(item, 'uncovered')"
-          >
-            {{ Util.NF(item.uncovered) }}
-          </div>
+            <div
+              :class="item.uncovered?'mcr-uncovered':''"
+              :tooltip="formatTooltip(item, 'uncovered')"
+            >
+              {{ Util.NF(item.uncovered) }}
+            </div>
 
-          <div :tooltip="formatTooltip(item, 'total')">
-            {{ Util.NF(item.total) }}
+            <div :tooltip="formatTooltip(item, 'total')">
+              {{ Util.NF(item.total) }}
+            </div>
           </div>
 
           <VuiIconLabel
@@ -869,14 +868,23 @@ onMounted(() => {
     border-radius: 3px;
 }
 
+.vui-icon-label-button {
+    user-select: none;
+}
+
 .mcr-report-values {
-    padding: 0 3px;
+    display: flex;
+    align-items: center;
     border: 1px solid #ccc;
     border-radius: 3px;
 
-    > div:not(:last-child) {
-        padding-right: 5px;
-        border-right: 1px solid #ccc;
+    > div {
+        padding: 0 5px;
+        font-size: 13px;
+
+        &:not(:last-child) {
+            border-right: 1px solid #ccc;
+        }
     }
 }
 
