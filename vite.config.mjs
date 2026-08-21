@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import vue from '@vitejs/plugin-vue';
-// import EC from 'eight-colors';
+import EC from 'eight-colors';
 
 import cssInjectedByJs from 'vite-plugin-css-injected-by-js';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -76,6 +76,11 @@ function buildEndPlugin() {
                 recursive: true
             });
 
+            const logBuilt = (filePath) => {
+                const size = (fs.statSync(filePath).size / 1024).toFixed(2);
+                console.log(`built ${path.relative(import.meta.dirname, filePath)} ${EC.yellow(`${size} kB`)}`);
+            };
+
             // Build the dependencies shared by the Node.js runtime into one
             // CommonJS file. Files under lib require this bundle directly.
             const vendorPath = path.resolve(packagesDir, 'monocart-coverage-vendor.js');
@@ -88,7 +93,7 @@ function buildEndPlugin() {
                 minify: true,
                 sourcemap: false
             });
-            console.log(`built ${path.relative(import.meta.dirname, vendorPath)}`);
+            logBuilt(vendorPath);
 
             // Package the report template and the browser application so the
             // runtime can generate both inline and external HTML reports.
@@ -101,7 +106,7 @@ function buildEndPlugin() {
                 'monocart-coverage-app': createScriptLoader(fs.readFileSync(appPath, 'utf8'))
             };
             fs.writeFileSync(assetsPath, `module.exports = ${JSON.stringify(assetsMap, null, 4)};`);
-            console.log(`built ${path.relative(import.meta.dirname, assetsPath)}`);
+            logBuilt(assetsPath);
         }
     };
 }
