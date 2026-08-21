@@ -66,7 +66,7 @@
 * [感谢](#thanks)
 
 ## Usage
-> 推荐使用 [Node.js 20+](https://nodejs.org/).
+> 推荐使用 [Node.js 22+](https://nodejs.org/)，项目将其作为持续维护的目标版本。
 - 安装
 ```sh
 npm install monocart-coverage-reports
@@ -1277,7 +1277,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 20+
+- Node.js 22+（推荐的开发版本）
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

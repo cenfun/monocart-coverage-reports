@@ -66,7 +66,7 @@
 * [Thanks](#thanks)
 
 ## Usage
-> It's recommended to use [Node.js 20+](https://nodejs.org/).
+> [Node.js 22+](https://nodejs.org/) is recommended and is the actively maintained target.
 - Install
 ```sh
 npm install monocart-coverage-reports
@@ -1272,7 +1272,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 20+
+- Node.js 22+ (recommended development version)
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

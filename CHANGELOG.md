@@ -1,5 +1,10 @@
 ## Changelog
 
+- 2.13.0
+  - recommended Node.js 22
+  - migrated the build to Vite and esbuild, upgraded Vine UI and other dependencies
+  - improved the release workflow and test stability
+
 - 2.12.12
   - refactored `getEntryFilter` / `getSourceFilter` / `getFileFilter` into a shared `createFilterHandler` factory
   - replaced `.filter().forEach()` chains with single loops to avoid intermediate array allocations
