@@ -1,5 +1,9 @@
 ## Changelog
 
+- 3.0.0 (Unreleased)
+  - requires Node.js 22.12.0 or later
+  - CLI passes child arguments literally instead of interpreting shell syntax; Windows command shims remain supported
+
 - 2.13.0
   - recommended Node.js 22
   - migrated the build to Vite and esbuild, upgraded Vine UI and other dependencies

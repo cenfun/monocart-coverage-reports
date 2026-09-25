@@ -90,7 +90,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=docs/mcr/lcov.info
             -Dsonar.sources=lib
             -Dsonar.tests=test
-            -Dsonar.exclusions=dist/*,packages/*
+            -Dsonar.exclusions=dist/*,packages/*,lib/packages/**
 
       - name: Coveralls
         uses: coverallsapp/github-action@v2

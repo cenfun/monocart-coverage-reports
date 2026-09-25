@@ -66,7 +66,7 @@
 * [Thanks](#thanks)
 
 ## Usage
-> [Node.js 22+](https://nodejs.org/) is recommended and is the actively maintained target.
+> Version 3 requires [Node.js 22.12+](https://nodejs.org/). Node.js 18/20 users should use a compatible 2.x release.
 - Install
 ```sh
 npm install monocart-coverage-reports
@@ -873,9 +873,9 @@ The options below are only available when using the CLI (`mcr <command>`):
 | Option | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | Custom config file path |
-| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. Requires Node.js `>= 18.19` |
+| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript |
 | `--require` | `string` | `null` | Preload CJS module via `NODE_OPTIONS` |
-| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). Requires Node.js `>= 20.6` |
+| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`) |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](#hooks) |
 
@@ -886,12 +886,12 @@ For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), s
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Requires Node.js `>= 18.19`.
+- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Requires Node.js 22.12+ in version 3.
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Requires `process.loadEnvFile`, added in Node.js `20.6`.
+- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Uses `process.loadEnvFile` (available in Node.js 22.12+).
 ```sh
 mcr --env .env.test node ./test.js
 ```
@@ -1181,7 +1181,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# Node.js v18.19.0 +
+# Node.js 22.12+
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1272,7 +1272,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 22+ (recommended development version)
+- Node.js 22.12+ (required)
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

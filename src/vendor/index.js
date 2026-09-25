@@ -22,6 +22,8 @@ import { async as StreamZip } from 'node-stream-zip';
 
 import supportsColor from 'supports-color';
 
+import { execa } from 'execa';
+
 export {
 
     convertSourceMap,
@@ -41,5 +43,7 @@ export {
     ZipFile,
     StreamZip,
 
-    supportsColor
+    supportsColor,
+
+    execa
 };

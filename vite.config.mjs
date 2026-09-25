@@ -78,7 +78,9 @@ function buildEndPlugin() {
 
             const logBuilt = (filePath) => {
                 const size = (fs.statSync(filePath).size / 1024).toFixed(2);
-                console.log(`built ${path.relative(import.meta.dirname, filePath)} ${EC.yellow(`${size} kB`)}`);
+                if (process.env.npm_lifecycle_event !== 'prepack') {
+                    console.log(`built ${path.relative(import.meta.dirname, filePath)} ${EC.yellow(`${size} kB`)}`);
+                }
             };
 
             // Build the dependencies shared by the Node.js runtime into one

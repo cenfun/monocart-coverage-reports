@@ -66,7 +66,7 @@
 * [感谢](#thanks)
 
 ## Usage
-> 推荐使用 [Node.js 22+](https://nodejs.org/)，项目将其作为持续维护的目标版本。
+> 3.x 版本要求 [Node.js 22.12+](https://nodejs.org/)；Node.js 18/20 用户请使用兼容的 2.x 版本。
 - 安装
 ```sh
 npm install monocart-coverage-reports
@@ -876,9 +876,9 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 | 选项 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | 自定义配置文件路径 |
-| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。需要 Node.js `>= 18.19` |
+| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx` |
 | `--require` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 CJS 模块 |
-| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。需要 Node.js `>= 20.6` |
+| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`） |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](#hooks) |
 
@@ -889,12 +889,12 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。要求 Node.js `>= 18.19`
+- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。3.x 版本要求 Node.js 22.12+。
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。依赖 `process.loadEnvFile`，Node.js `20.6` 起支持
+- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。依赖 `process.loadEnvFile`（Node.js 22.12+ 支持）
 ```sh
 mcr --env .env.test node ./test.js
 ```
@@ -1185,7 +1185,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# Node.js v18.19.0 +
+# Node.js 22.12+
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1277,7 +1277,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 22+（推荐的开发版本）
+- Node.js 22.12+（必需）
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install
