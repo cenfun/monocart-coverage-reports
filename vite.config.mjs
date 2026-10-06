@@ -9,6 +9,7 @@ import { build as esbuild } from 'esbuild';
 import { createScriptLoader } from 'lz-utils';
 
 import { defineConfig } from 'vite';
+import vendorLicense from './scripts/generate-vendor-license.js';
 
 // Replace with your library id
 const ID = 'monocart-coverage-app';
@@ -84,16 +85,20 @@ function buildEndPlugin() {
             // Build the dependencies shared by the Node.js runtime into one
             // CommonJS file. Files under lib require this bundle directly.
             const vendorPath = path.resolve(packagesDir, 'monocart-coverage-vendor.js');
-            await esbuild({
+            const vendorBuild = await esbuild({
                 entryPoints: [path.resolve(import.meta.dirname, 'src/vendor/index.js')],
                 outfile: vendorPath,
                 bundle: true,
                 platform: 'node',
                 format: 'cjs',
                 minify: true,
-                sourcemap: false
+                sourcemap: false,
+                metafile: true
             });
             logBuilt(vendorPath);
+            const vendorLicensePath = `${vendorPath}.LICENSE`;
+            vendorLicense.generateVendorLicense(vendorBuild.metafile, import.meta.dirname, vendorLicensePath);
+            logBuilt(vendorLicensePath);
 
             // Package the report template and the browser application so the
             // runtime can generate both inline and external HTML reports.
