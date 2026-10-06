@@ -1,5 +1,11 @@
 ## Changelog
 
+- 2.13.1
+  - fixed `all` not generating zero-coverage reports when no coverage data is supplied (#126)
+  - fixed source-map annotations inside JavaScript strings or templates being mistaken for real comments; preserve original source and V8 offsets while resolving source maps (#129)
+  - included third-party license notices for dependencies bundled into the Node.js vendor file
+  - updated dependencies
+
 - 2.13.0
   - recommended Node.js 22
   - migrated the build to Vite and esbuild, upgraded Vine UI and other dependencies

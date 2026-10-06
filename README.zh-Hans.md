@@ -674,7 +674,7 @@ const coverageOptions = {
 ```
 
 ## Adding Empty Coverage for Untested Files
-默认，未测试的文件是不会包含到覆盖率报告的，需要使用`all`选项来为这些文件添加一个空的覆盖率，也就是0%
+默认，未测试的文件不会包含在覆盖率报告中。使用 `all` 选项可将它们以 0% 覆盖率加入报告。即使没有收集到任何覆盖率数据，也会为匹配的未测试文件生成 V8 报告。
 ```js
 const coverageOptions = {
     all: './src',

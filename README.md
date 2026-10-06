@@ -671,7 +671,7 @@ const coverageOptions = {
 ```
 
 ## Adding Empty Coverage for Untested Files
-By default the untested files will not be included in the coverage report, we can add empty coverage for untested files with option `all`, the untested files will show 0% coverage.
+By default the untested files will not be included in the coverage report. Use `all` to include them with 0% coverage. This also works when no coverage data has been collected: a V8 report is generated from the matching untested files.
 ```js
 const coverageOptions = {
     all: './src',
