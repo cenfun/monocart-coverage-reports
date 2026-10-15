@@ -1,5 +1,9 @@
 ## Changelog
 
+- 2.13.2
+  - fixed source-map detection after regular expressions containing quotes (#131)
+  - fixed source-map fallback for invalid annotations without changing V8 offsets (#129)
+
 - 2.13.1
   - fixed `all` not generating zero-coverage reports when no coverage data is supplied (#126)
   - fixed source-map annotations inside JavaScript strings or templates being mistaken for real comments; preserve original source and V8 offsets while resolving source maps (#129)
