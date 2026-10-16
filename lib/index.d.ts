@@ -440,6 +440,15 @@ declare namespace MCR {
 
     export interface McrCliOptions extends CoverageReportOptions {
 
+        /** Only used by `mcr test`. Test file paths or glob patterns accepted by node --test.
+         * A string is one positional argument; an array supplies multiple arguments unchanged.
+         * Node handles parsing and discovery relative to cwd; null is not passed to Node.
+         * Positional CLI targets override this option.
+         * Defaults to null (skip tests unless CLI targets are supplied).
+         * Requires Node.js >= 22.12.0. Ignored by other commands and the API.
+         */
+        test?: string | string[] | null;
+
         /** (CLI only) {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => void | Promise<void>;
 
@@ -487,6 +496,8 @@ declare namespace MCR {
         /** load config file. 
          * 
          * @param configFile custom config file path
+         * Throws if a custom config is missing or a discovered config fails to load.
+         * If no custom config is specified and no default config is found, returns normally.
          * 
          * Supports loading default config file if no custom config specified: 
             'mcr.config.js',

@@ -21,12 +21,16 @@
         "./package.json": "./package.json"
     },
     "types": "./lib/index.d.ts",
+    "engines": {
+        "node": ">=22.12.0"
+    },
     "scripts": {
         "dev": "vite",
         "build": "vite build",
         "postbuild": "npm run build-test",
         "build-test": "node ./test/build/build-test.js",
         "test-unit": "mocha --parallel test/unit/*.test.js",
+        "test-runtime": "node ./scripts/test-runtime.cjs",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",
         "test-node-ins": "node ./test/test-node-ins.js",

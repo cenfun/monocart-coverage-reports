@@ -66,7 +66,9 @@
 * [感谢](#thanks)
 
 ## Usage
-> 推荐使用 [Node.js 22+](https://nodejs.org/)，项目将其作为持续维护的目标版本。
+> **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.12.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
+
+**从 2.x 升级：** 请先升级 Node.js，再安装 MCR 3.x。不再支持 Node.js 18、20，以及低于 22.12.0 的 Node.js 22。若暂时无法升级 Node.js，请保留已验证兼容的 2.x 版本及其依赖锁文件；并非所有 2.x 依赖组合都兼容旧版 Node.js。现有覆盖率 API 和报告配置继续保留，`mcr test` 是新增的可选命令。
 - 安装
 ```sh
 npm install monocart-coverage-reports
@@ -635,7 +637,7 @@ const coverageOptions = {
 ```
 
 ### 使用 `outputFilter` 过滤最终文件
-> **版本要求：** `outputFilter` 是下一个 minor 版本 **v2.14.0** 新增的选项，v2.13.x 及更早版本不支持。
+> **版本要求：** `outputFilter` 是 **v3.0.0** 新增的选项，v2.13.x 及更早版本不支持。
 
 **两套过滤方案选一套即可，不要混淆。** `outputFilter` 与已有的 `entryFilter` + `sourceFilter` 都用于决定报告中保留哪些文件，功能重叠，是两种替代方案，而不是必须叠加配置的过滤器。合并选项 `filter` 只是 `entryFilter` + `sourceFilter` 的简写，不会配置 `outputFilter`。
 
@@ -913,9 +915,10 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 | 选项 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | 自定义配置文件路径 |
-| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。需要 Node.js `>= 18.19` |
+| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。|
 | `--require` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 CJS 模块 |
-| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。需要 Node.js `>= 20.6` |
+| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。|
+| `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.12.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](#hooks) |
 
@@ -926,15 +929,39 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。要求 Node.js `>= 18.19`
+- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。在所有受支持的 Node.js 版本中均可用
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。依赖 `process.loadEnvFile`，Node.js `20.6` 起支持
+- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。使用 `process.loadEnvFile`，在所有受支持的 Node.js 版本中均可用
 ```sh
 mcr --env .env.test node ./test.js
 ```
+
+- `test`: 使用 Node.js 自带的测试 runner 运行测试，并自动生成覆盖率报告。需要 Node.js **>= 22.12.0**。在 `mcr.config.js` 中指定测试目标：
+```js
+module.exports = {
+    // node --test 原生接受的测试文件路径或 glob
+    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
+    reports: ['v8', 'console-summary'],
+    outputDir: './coverage-reports'
+};
+```
+```sh
+mcr test
+mcr test "../tests/**/*.test.js" -c ./mcr.config.js
+mcr test "../tests/**/*.test.js" -r v8,console-summary
+mcr test ./test/first.test.js ./test/second.test.js
+mcr test "../tests/**/*.test.js" -c ./mcr.config.js -- --test-name-pattern="my test" --test-reporter=spec
+# 也支持将命令放在初始分隔符后：
+mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=spec
+```
+命令行指定的测试目标会**覆盖**配置中的 `test`，而不是追加；未指定命令行目标时才使用配置。命令行指定目标时可以不使用配置文件。原有 MCR 参数（如 `-c`、`-r`、`-o`、`--lcov`）可以放在目标之前或之后。Node runner 参数请放在 `--` 后，原样透传，不作为 MCR 参数或目标覆盖项解析。建议为 glob 加引号，避免 shell 提前展开。使用另一种 `mcr [options] -- test ...` 形式时，所有 MCR 参数必须放在第一个 `--` 前，Node runner 参数则放在第二个 `--` 后。
+
+测试目标原样传给 `node --test`。MCR 不检查目标类型或文件是否存在，不展开目录/glob，不解析或标准化路径，不转义特殊字符，也不去重；`node --test` 原生接收测试文件路径或 glob 形式的位置参数，而不是 JavaScript 配置对象。MCR 配置中的字符串表示一个这样的参数（不会按空格拆分），字符串数组表示多个按原顺序传递的参数；`null` 仅是 MCR 跳过测试的默认值，不会传给 Node。测试发现、匹配、参数解释及错误行为均交给 Node。相对路径以当前工作目录为基准，而不是配置文件目录。不承诺直接指定目录会递归发现测试；递归匹配请使用 `"../tests/**/*.test.js"` 等 glob，行为以当前 Node 版本的原生支持为准。TypeScript 执行能力取决于 Node 版本或 `--import tsx` 等加载器。
+
+`test` 默认为 `null`；未指定命令行目标，且 `test` 未配置或为 `null`、空字符串、`[]` 时跳过测试，也不生成报告。MCR 仅判断是否提供了目标，无效或未匹配目标由 Node 自行处理。如果没有产生覆盖率数据且无法生成报告，命令仍会在报告生成阶段失败。显式指定的配置文件不存在或配置加载失败时，也会失败退出，不会静默跳过测试。测试失败仍生成覆盖率报告，并保留非零退出状态；报告生成失败同样非零退出。支持现有覆盖率配置和 CLI hooks，可按需通过过滤器排除测试文件。**`test` 配置在其他 CLI 命令和 API 调用中均不生效**，包括 `merge` 和 `generate()`。
 
 - `merge`: 直接合并 `inputDir` 中的原始覆盖率数据并生成合并报告，无需启动子进程。
 ```sh
@@ -948,6 +975,8 @@ mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverag
     - [AVA](#ava)
 
 ## Config File
+MCR 3.x 中，显式指定的配置不存在，或找到的配置加载失败（包括 JSON 解析、模块语法及初始化错误）时，`loadConfig()` 会直接抛出异常，所有 CLI 命令也会非零退出，不再需要 `strict` 参数。未指定自定义配置且找不到默认配置时，仍使用已有选项继续执行。
+
 根据以下优先级加载配置文件
 - 自定义配置文件（如果没有指定则加载后面的默认配置文件）:
     - CLI: `mcr --config <my-config-file-path>`
@@ -1222,7 +1251,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# Node.js v18.19.0 +
+# MCR 3.x: Node.js >= 22.12.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1314,7 +1343,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 22+（推荐的开发版本）
+- 推荐使用最新 Node.js 24 LTS 开发；包的最低运行版本为 22.12.0。开发工具可能要求高于最低运行版本的补丁版本。
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

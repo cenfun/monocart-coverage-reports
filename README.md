@@ -66,7 +66,9 @@
 * [Thanks](#thanks)
 
 ## Usage
-> [Node.js 22+](https://nodejs.org/) is recommended and is the actively maintained target.
+> **MCR 3.x requires [Node.js >= 22.12.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
+
+**Upgrading from 2.x:** Upgrade Node.js before installing MCR 3.x. Node.js 18, 20 and versions of 22 earlier than 22.12.0 are no longer supported. If you cannot upgrade Node.js, keep a verified compatible 2.x release and its dependency lockfile; not every 2.x dependency combination supports older Node.js versions. Existing coverage APIs and report options remain available; `mcr test` is a new optional command.
 - Install
 ```sh
 npm install monocart-coverage-reports
@@ -631,7 +633,7 @@ const coverageOptions = {
 ```
 
 ### Using `outputFilter` to filter final files
-> **Version requirement:** `outputFilter` is a new option for the next minor release, **v2.14.0**. It is not supported in v2.13.x or earlier.
+> **Version requirement:** `outputFilter` is introduced in **v3.0.0**. It is not supported in v2.13.x or earlier.
 
 **Choose one filtering approach.** `outputFilter` and the existing `entryFilter` + `sourceFilter` approach serve the same purpose: deciding which files appear in the report. They are alternatives, not additional filters you need to configure together. The combined `filter` option is shorthand for `entryFilter` + `sourceFilter`; it does not configure `outputFilter`.
 
@@ -910,9 +912,10 @@ The options below are only available when using the CLI (`mcr <command>`):
 | Option | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | Custom config file path |
-| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. Requires Node.js `>= 18.19` |
+| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. |
 | `--require` | `string` | `null` | Preload CJS module via `NODE_OPTIONS` |
-| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). Requires Node.js `>= 20.6` |
+| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). |
+| `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.12.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](#hooks) |
 
@@ -923,15 +926,39 @@ For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), s
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Requires Node.js `>= 18.19`.
+- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions.
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Requires `process.loadEnvFile`, added in Node.js `20.6`.
+- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Uses `process.loadEnvFile`, available on all supported Node.js versions.
 ```sh
 mcr --env .env.test node ./test.js
 ```
+
+- `test`: run tests with the built-in Node.js test runner and automatically generate coverage reports. Requires Node.js **>= 22.12.0**. Configure targets in `mcr.config.js`:
+```js
+module.exports = {
+    // Test file paths or glob patterns accepted by node --test
+    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
+    reports: ['v8', 'console-summary'],
+    outputDir: './coverage-reports'
+};
+```
+```sh
+mcr test
+mcr test "../tests/**/*.test.js" -c ./mcr.config.js
+mcr test "../tests/**/*.test.js" -r v8,console-summary
+mcr test ./test/first.test.js ./test/second.test.js
+mcr test "../tests/**/*.test.js" -c ./mcr.config.js -- --test-name-pattern="my test" --test-reporter=spec
+# The command can also follow an initial separator:
+mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=spec
+```
+Positional targets override (rather than append to) the config `test` option. If no positional targets are given, the config option is used. A config file is not required when targets are supplied on the command line. Existing MCR options such as `-c`, `-r`, `-o` and `--lcov` can appear before or after targets. Put Node runner options after `--`; those arguments are forwarded unchanged, not parsed as MCR options or target overrides. Quote globs to prevent shell expansion. In the alternative `mcr [options] -- test ...` form, put all MCR options before the first `--`; a second `--` separates Node runner options.
+
+Targets are passed unchanged to `node --test`. MCR does not check their types or filesystem existence, expand directories/globs, resolve or normalize paths, escape special characters, or deduplicate targets. `node --test` accepts positional test file paths or glob patterns, not a JavaScript configuration object. In MCR config, a string represents one such argument (it is not split on spaces), and a string array represents multiple arguments forwarded in their original order. `null` is only MCR\'s skip default and is never passed to Node. Node handles discovery, matching, interpretation and errors. Relative paths use the current working directory, not the config file directory. A bare directory is not promised to trigger recursive discovery; use a glob such as `"../tests/**/*.test.js"` for recursive matching, following the installed Node version\'s native behavior. TypeScript execution depends on your Node version or a loader such as `--import tsx`.
+
+`test` defaults to `null`; when no positional targets are supplied, `null`, an omitted value, an empty string or `[]` skips tests without generating a report. MCR only checks whether targets were supplied; invalid or unmatched targets are left to Node. If no coverage data is produced and no report can be generated, the command fails at report generation. Missing explicit config files and failed config loading also fail the command rather than silently skipping tests. Test failures still produce coverage reports and retain a non-zero exit status; report generation failures also fail the command. Existing coverage options and CLI hooks are supported. Use coverage filters to exclude test files if needed. **The `test` option has no effect on other CLI commands or API calls**, including `merge` and `generate()`.
 
 - `merge`: merge raw coverage data from `inputDir`(s) and generate merged reports directly, without running a child process.
 ```sh
@@ -945,6 +972,8 @@ See [Merge Coverage Reports](#merge-coverage-reports).
     - [AVA](#ava)
 
 ## Config File
+In MCR 3.x, `loadConfig()` throws if an explicitly requested config does not exist or a discovered config fails to load (including JSON parsing, module syntax and startup errors). All CLI commands exit with a non-zero status for these errors. No `strict` option is needed. If no custom config is requested and no default config is found, execution continues with existing options.
+
 Loading config file by priority:
 - Custom config file:
     - CLI: `mcr --config <my-config-file-path>`
@@ -1218,7 +1247,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# Node.js v18.19.0 +
+# MCR 3.x: Node.js >= 22.12.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1309,7 +1338,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 22+ (recommended development version)
+- Latest Node.js 24 LTS recommended for development; minimum package runtime is 22.12.0. Development tools may require a newer patch than the minimum runtime.
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

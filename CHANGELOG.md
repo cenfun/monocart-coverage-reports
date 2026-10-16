@@ -1,5 +1,17 @@
 ## Changelog
 
+- 3.0.0
+  - **Breaking Changes**
+    - require Node.js >= 22.12.0
+    - `loadConfig()` throws on missing explicit configs or loading errors
+  - **Features**
+    - add `outputFilter` to filter final V8 results by `sourcePath`, including converted Istanbul reports (#132)
+    - add `mcr test` with the native Node.js test runner and automatic coverage reports
+    - support config/CLI test targets and Node runner arguments after `--`
+  - **Bug Fixes**
+    - generate coverage after failed tests and preserve test/report failure exit codes
+    - preserve config error details and original causes, including non-Error throws
+
 - 2.13.2
   - fixed source-map detection after regular expressions containing quotes (#131)
   - fixed source-map fallback for invalid annotations without changing V8 offsets (#129)
