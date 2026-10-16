@@ -322,6 +322,14 @@ declare namespace MCR {
             [pattern: string]: boolean;
         } | ((sourcePath: string) => boolean);
 
+        /** (V8 only) Filter final files after sourcemap conversion and adding untested files.
+         * Applies to V8 reports and converted Istanbul reports. Defaults to null (disabled).
+         * Strings and object keys match sourcePath using the same rules as entryFilter and sourceFilter.
+         */
+        outputFilter?: string | {
+            [pattern: string]: boolean;
+        } | ((entry: CoverageFile) => boolean) | null;
+
         /**
          * The combined filter for entryFilter and sourceFilter
          */
