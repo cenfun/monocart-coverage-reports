@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-"""Generate the 1200x630 Open Graph image for the Monocart Coverage Reports docs site.
-
-Pillow-only and portable: the monocart logomark is loaded from the
-pre-rendered og-logo.png next to this script (no SVG rasterizer needed).
-Fonts are looked up in FONT_DIR or common DejaVu paths.
-
-Usage: python3 scripts/template/make-og-image.py
-"""
+"""Generate the 1200x630 Open Graph image for the Monocart Coverage Reports docs site."""
+# Pillow-only and portable: the monocart logomark is loaded from the
+# pre-rendered og-logo.png next to this script (no SVG rasterizer needed).
+# Fonts are looked up in FONT_DIR or common DejaVu paths.
+# Usage: python3 scripts/template/make-og-image.py
 import os
 import sys
 
