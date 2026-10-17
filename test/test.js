@@ -1,20 +1,13 @@
-import { spawn } from 'node:child_process';
+import { execa } from 'execa';
 import { Util } from '../lib/utils/util.js';
 
 
-const executeNpmRun = (item) => {
-
-    return new Promise((resolve) => {
-        const worker = spawn(`npm run ${item}`, {
-            shell: true,
-            stdio: 'inherit'
-        });
-
-        worker.on('close', (code) => {
-            resolve(code);
-        });
-
+const executeNpmRun = async (item) => {
+    const result = await execa('npm', ['run', item], {
+        stdio: 'inherit',
+        reject: false
     });
+    return result.exitCode ?? 1;
 };
 
 const test = async (type) => {

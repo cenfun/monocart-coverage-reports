@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
 import {
-    execSync, spawn, spawnSync
+    execFileSync, spawn, spawnSync
 } from 'node:child_process';
 import assert from 'node:assert';
 import EC from 'eight-colors';
@@ -37,9 +37,9 @@ const coverageOptions = {
 // mock start koa server
 const startKoaProcess = (inspectPort, serverPort) => {
     console.log('start koa server ...');
-    const cp = spawn(`node --inspect=${inspectPort} ./test/mock/node/lib/koa.js`, {
+    const cp = spawn(process.execPath, [`--inspect=${inspectPort}`, './test/mock/node/lib/koa.js'], {
         stdio: 'inherit',
-        shell: true
+        shell: false
     });
 
     return new Promise((resolve) => {
@@ -103,7 +103,7 @@ const killSubProcess = (cp) => {
     // On Windows, we always call `taskkill` no matter signal.
     if (process.platform === 'win32') {
         try {
-            execSync(`taskkill /pid ${cp.pid} /T /F /FI "MEMUSAGE gt 0"`, {
+            execFileSync('taskkill', ['/pid', String(cp.pid), '/T', '/F', '/FI', 'MEMUSAGE gt 0'], {
                 stdio: 'ignore'
             });
         } catch (e) {

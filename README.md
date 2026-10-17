@@ -908,6 +908,8 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 - CLI Options
 
+Commands are executed with Execa's default options, without enabling shell mode. Pass the executable and its arguments separately, for example `mcr node "./my app.js"`; do not quote an entire command as a single argument. Argument boundaries are preserved: MCR does not expand environment variables or globs, or interpret pipes, redirections, `&&` or other shell syntax. Move command sequences into a script instead. Use `mcr [options] -- executable ...args` to keep child options separate from MCR options. Execa handles platform-specific command execution, including escaped batch-file invocation through `cmd.exe` when needed on Windows.
+
 The options below are only available when using the CLI (`mcr <command>`):
 
 | Option | Type | Default | Description |

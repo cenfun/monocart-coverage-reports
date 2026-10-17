@@ -1,6 +1,6 @@
 import EC from 'eight-colors';
 
-import { foregroundChild } from 'foreground-child';
+import { execa } from 'execa';
 
 import { MCR } from '../lib/index.js';
 const dir = '.temp/v8-coverage-fgc';
@@ -39,17 +39,18 @@ const generate = async () => {
 
 };
 
-const test = () => {
+const test = async () => {
     process.env.NODE_V8_COVERAGE = dir;
 
-    // NOT work in github actions
-    foregroundChild('node ./test/test-node-env.js', {
-        shell: true
-    }, async () => {
-        await generate();
-
-        return process.exitCode;
+    const result = await execa(process.execPath, ['./test/test-node-env.js'], {
+        stdio: 'inherit',
+        reject: false
     });
+    await generate();
+    process.exitCode = result.exitCode ?? 1;
 };
 
-test();
+test().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+});

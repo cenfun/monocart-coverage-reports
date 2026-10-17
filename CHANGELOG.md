@@ -6,6 +6,7 @@
     - migrate to ESM only; replace the callable `require('monocart-coverage-reports')` entry with default/named imports, or dynamic `import()` from CommonJS
     - use `export default` in ESM config files; rename existing CommonJS configs to `.cjs` (still supported)
     - `loadConfig()` throws on missing explicit configs or loading errors
+    - replace `foreground-child` with `execa` for CLI command execution, preserving argument boundaries without enabling shell mode; shell command strings, pipes and redirections are no longer interpreted by MCR
   - **Features**
     - use synchronous `module.registerHooks()` for source capture, including CommonJS modules loaded through `require()` and `createRequire()`
     - add `outputFilter` to filter final V8 results by `sourcePath`, including converted Istanbul reports (#132)

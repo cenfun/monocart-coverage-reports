@@ -129,7 +129,7 @@ describe('config loading errors', function() {
 
     [
         ['merge'],
-        [JSON.stringify(process.execPath), 'run.cjs']
+        [process.execPath, 'run.cjs']
     ].forEach((command) => {
         [false, true].forEach((broken) => {
             it(`fails ${command[0]} for ${broken ? 'broken' : 'missing'} config without executing children`, () => {

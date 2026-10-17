@@ -222,7 +222,7 @@ describe('mcr test', function() {
         configure('tests/**/*.test.cjs', `
             onStart: (coverage) => require('fs').writeFileSync('started', coverage.options.test),
             onReady: (coverage, dir, subprocess) => {
-                if (!subprocess.pid || !require('fs').existsSync(dir)) throw new Error('invalid onReady arguments');
+                if (!(subprocess instanceof require('node:child_process').ChildProcess) || !subprocess.pid || !require('fs').existsSync(dir)) throw new Error('invalid onReady arguments');
                 require('fs').writeFileSync('ready', 'yes');
             },
             onEnd: () => require('fs').writeFileSync('ended', 'yes')
@@ -244,9 +244,50 @@ describe('mcr test', function() {
         assert.equal(fs.existsSync(path.join(outputDir, '.v8-coverage')), false);
     });
 
+    it('preserves ordinary command arguments without shell interpretation', () => {
+        configure(null);
+        write('capture command.cjs', `
+            require('./subject.cjs')(true);
+            require('fs').writeFileSync('arguments.json', JSON.stringify(process.argv.slice(2)));
+        `);
+        const args = [
+            'with spaces',
+            '',
+            '"quoted"',
+            "'single quoted'",
+            'back\\slash\\',
+            '$HOME',
+            '%PATH%',
+            '*.cjs',
+            '&&',
+            '|',
+            '>',
+            ';',
+            'value & echo injected > injected.txt'
+        ];
+        const result = run(['--', process.execPath, 'capture command.cjs', ... args]);
+        assert.equal(result.status, 0, result.stdout + result.stderr);
+        assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root, 'arguments.json'), 'utf8')), args);
+        assert.equal(fs.existsSync(path.join(root, 'injected.txt')), false);
+        checkReport();
+    });
+    it('retains an ordinary command failure even when a hook resets exitCode', () => {
+        configure(null, 'onEnd: () => { process.exitCode = 0; }');
+        write('failure.cjs', "require('./subject.cjs')(true); process.exitCode = 7;");
+        const result = run([process.execPath, 'failure.cjs']);
+        assert.equal(result.status, 7, result.stdout + result.stderr);
+        checkReport();
+    });
+    it('fails and cleans up when an ordinary command cannot start', () => {
+        configure(null);
+        const result = run(['mcr-command-that-does-not-exist']);
+        assert.notEqual(result.status, 0);
+        assert.match(result.stdout + result.stderr, /ENOENT|not recognized|not found/i);
+        assert.equal(fs.existsSync(path.join(outputDir, '.v8-coverage')), false);
+    });
     it('ignores test for ordinary commands and merge', () => {
         configure('missing/**/*.test.cjs');
-        const result = run([JSON.stringify(process.execPath), '-e', '"require(\'./subject.cjs\')(true)"']);
+        const result = run([process.execPath, '-e', "require('./subject.cjs')(true)"]);
         assert.equal(result.status, 0, result.stdout + result.stderr);
         checkReport();
         write('src/uncovered.cjs', 'module.exports = 42;');

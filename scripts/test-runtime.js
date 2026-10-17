@@ -65,7 +65,7 @@ const main = async () => {
     assert.ok(report);
     assertReport(apiDir);
 
-    runNode([cli, JSON.stringify(process.execPath), 'run.cjs', '-o', 'command']);
+    runNode([cli, process.execPath, 'run.cjs', '-o', 'command']);
     assertReport(path.join(root, 'command'));
     runNode([cli, 'test']);
     assertReport(path.join(root, 'reports'));
