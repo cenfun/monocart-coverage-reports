@@ -63,6 +63,7 @@ def load_font(size, bold=False):
 
 
 def main():
+    """Render the 1200x630 Open Graph image and write it to og-image.png."""
     here = os.path.dirname(os.path.abspath(__file__))
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
