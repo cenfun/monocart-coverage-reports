@@ -115,7 +115,6 @@ For more information, see [Command Line](#command-line)
 | `dataDir` | `string` | `null` | Coverage data directory loaded automatically in `generate()` — alternative to `addFromDir()`. |
 | `entryFilter` | `string \| object \| function` | `null` | (V8 only) Filter V8 entries by url. See [Filtering Results](#filtering-results). |
 | `sourceFilter` | `string \| object \| function` | `null` | (V8 only) Filter sources unpacked from sourcemaps. |
-| `outputFilter` | `string \| object \| function` | `null` | (V8 only) Filter final sources after discovery phase. |
 | `filter` | `string \| object \| function` | `null` | Combined filter replacing both `entryFilter` and `sourceFilter`. |
 | `sourcePath` | `object \| function` | `null` | Rewrite source paths; see [Resolve `sourcePath`](#resolve-sourcepath-for-the-source-files). |
 | `all` | `string \| string[] \| object` | `null` | Include untested files as empty coverage. See [Adding Empty Coverage](#adding-empty-coverage-for-untested-files). |
