@@ -31,6 +31,7 @@
 * [多进程支持](#multiprocessing-support)
 * [如何使用CLI命令行](#command-line)
 * [如何加载配置文件](#config-file)
+* [使用 `mcr test` 运行测试](#run-tests-with-mcr-test)
 * [如何合并覆盖率报告](#merge-coverage-reports)
     - [自动合并](#automatic-merging)
     - [手动合并](#manual-merging)
@@ -997,6 +998,40 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 ```
 
 > 未指定自定义路径时，MCR 会从当前工作目录向上查找默认配置文件（通过 [`find-up`](https://github.com/sindresorhus/find-up)）。不在搜索路径内的文件会被忽略
+
+## Run Tests with `mcr test`
+
+**MCR 3.x 重要更新：** 使用内置的 [Node.js 测试 runner](https://nodejs.org/docs/latest/api/test.html)，一条命令即可运行测试并自动生成覆盖率报告。需要 **Node.js >= 22.15.0**。
+
+安装 MCR 后，直接指定测试文件即可运行，无需配置文件：
+
+```sh
+npm install --save-dev monocart-coverage-reports
+npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
+```
+
+此命令会运行匹配的测试，在终端打印覆盖率摘要，并将 V8 HTML 报告写入 `./coverage-reports/index.html`。请为 glob 加引号，让 Node.js 而不是 shell 处理匹配。
+
+对于需要反复执行的测试，可将测试目标和覆盖率选项保存到 `mcr.config.js`（ESM；需在 `package.json` 设置 `"type": "module"`，或将配置命名为 `mcr.config.mjs`）：
+
+```js
+export default {
+    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
+    reports: ['v8', 'console-summary'],
+    outputDir: './coverage-reports'
+};
+```
+
+```sh
+# 运行配置中的测试目标
+npx mcr test
+# 覆盖配置中的测试目标，并在 -- 后透传 Node.js 测试 runner 参数
+npx mcr test "./test/unit/**/*.test.js" -- --test-reporter=spec
+```
+
+命令行指定的目标会替换配置中的 `test`。两者均未提供时，`mcr test` 会跳过测试且不生成报告。测试失败仍会生成覆盖率报告，并以非零状态退出。
+
+完整的目标规则、参数透传和错误处理说明见[命令行](#command-line)。原有覆盖率 API 和其他 CLI 命令仍可使用，参见[用法](#usage)。
 
 ## Merge Coverage Reports
 以下这些使用场景可能需要使用合并覆盖率报告：

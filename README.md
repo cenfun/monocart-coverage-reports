@@ -31,6 +31,7 @@
 * [Multiprocessing Support](#multiprocessing-support)
 * [Command Line](#command-line)
 * [Config File](#config-file)
+* [Run Tests with `mcr test`](#run-tests-with-mcr-test)
 * [Merge Coverage Reports](#merge-coverage-reports)
     - [Automatic Merging](#automatic-merging)
     - [Manual Merging](#manual-merging)
@@ -994,6 +995,40 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 ```
 
 > If no custom path is given, MCR walks up from the current working directory to find the default config file (via [`find-up`](https://github.com/sindresorhus/find-up)). Files outside the search path will be ignored.
+
+## Run Tests with `mcr test`
+
+**New in MCR 3.x:** Run tests with the built-in [Node.js test runner](https://nodejs.org/docs/latest/api/test.html) and automatically generate coverage reports with one command. Requires **Node.js >= 22.15.0**.
+
+Install MCR and run your test files directly — no config file is required:
+
+```sh
+npm install --save-dev monocart-coverage-reports
+npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
+```
+
+This runs the matching tests, prints a coverage summary in the terminal, and writes the V8 HTML report to `./coverage-reports/index.html`. Quote glob patterns so Node.js, rather than your shell, handles matching.
+
+For repeated runs, save the test targets and coverage options in `mcr.config.js` (ESM; use `"type": "module"` in `package.json`, or name the config `mcr.config.mjs`):
+
+```js
+export default {
+    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
+    reports: ['v8', 'console-summary'],
+    outputDir: './coverage-reports'
+};
+```
+
+```sh
+# Run the targets from the config
+npx mcr test
+# Override the configured targets and forward Node.js test runner options after --
+npx mcr test "./test/unit/**/*.test.js" -- --test-reporter=spec
+```
+
+Command-line targets replace the config's `test` option. Without either, `mcr test` skips tests and does not generate a report. Test failures still generate coverage reports and return a non-zero exit status.
+
+See [Command Line](#command-line) for full target, option forwarding and error-handling details. Existing coverage APIs and other CLI commands remain available; see [Usage](#usage).
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:
