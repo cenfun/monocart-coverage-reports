@@ -14,6 +14,7 @@ const inputOptions = {
         }),
         rollupTypescript({
             tsconfig: path.resolve('test/tsconfig.json'),
+            include: ['test/mock/src/**/*.ts'],
             sourceMap: true,
             inlineSources: true
         })
