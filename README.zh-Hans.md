@@ -1,3 +1,5 @@
+![Monocart Coverage Reports](./assets/og-image.png)
+
 # Monocart Coverage Reports
 
 [![npm](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)

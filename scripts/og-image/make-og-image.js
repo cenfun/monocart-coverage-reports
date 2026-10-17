@@ -13,7 +13,7 @@ const main = async () => {
     const html = template
         .replace('{placeholder_logo}', `data:image/svg+xml;base64,${logo.toString('base64')}`)
         .replace('{placeholder_link_icon}', linkIcon);
-    const outputPath = path.resolve(templateDir, 'og-image.png');
+    const outputPath = path.resolve(templateDir, '../../assets/og-image.png');
 
     const browser = await chromium.launch();
     try {
