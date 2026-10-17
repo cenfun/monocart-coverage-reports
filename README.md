@@ -66,9 +66,9 @@
 * [Thanks](#thanks)
 
 ## Usage
-> **MCR 3.x requires [Node.js >= 22.12.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
+> **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
 
-**Upgrading from 2.x:** Upgrade Node.js before installing MCR 3.x. Node.js 18, 20 and versions of 22 earlier than 22.12.0 are no longer supported. If you cannot upgrade Node.js, keep a verified compatible 2.x release and its dependency lockfile; not every 2.x dependency combination supports older Node.js versions. Existing coverage APIs and report options remain available; `mcr test` is a new optional command.
+**Upgrading from 2.x:** Upgrade Node.js before installing MCR 3.x. Node.js 18, 20 and versions of 22 earlier than 22.15.0 are no longer supported. If you cannot upgrade Node.js, keep a verified compatible 2.x release and its dependency lockfile; not every 2.x dependency combination supports older Node.js versions. Existing coverage APIs and report options remain available; `mcr test` is a new optional command.
 **ESM only:** Use `import MCR from 'monocart-coverage-reports'` or `import { MCR, CoverageReport } from 'monocart-coverage-reports'`. The default `MCR` export also exposes all other API exports as properties (for example, `MCR.CoverageReport`). In Node.js, use `"type": "module"` in your `package.json` or a `.mjs` file. From CommonJS, use `const { MCR } = await import('monocart-coverage-reports')` inside an async function; the old callable `require(...)` entry is no longer provided. The CLI can still cover CommonJS programs and load `.cjs` configuration files. Use `export default` in ESM configuration files (or rename existing CommonJS configs to `.cjs`).
 - Install
 ```sh
@@ -916,7 +916,7 @@ The options below are only available when using the CLI (`mcr <command>`):
 | `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. |
 | `--require` | `string` | `null` | Preload CJS module via `NODE_OPTIONS` |
 | `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). |
-| `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.12.0` |
+| `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.15.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](#hooks) |
 
@@ -937,7 +937,7 @@ mcr --import tsx node ./test.ts
 mcr --env .env.test node ./test.js
 ```
 
-- `test`: run tests with the built-in Node.js test runner and automatically generate coverage reports. Requires Node.js **>= 22.12.0**. Configure targets in `mcr.config.js`:
+- `test`: run tests with the built-in Node.js test runner and automatically generate coverage reports. Requires Node.js **>= 22.15.0**. Configure targets in `mcr.config.js`:
 ```js
 export default {
     // Test file paths or glob patterns accepted by node --test
@@ -1248,7 +1248,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# MCR 3.x: Node.js >= 22.12.0
+# MCR 3.x: Node.js >= 22.15.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1339,7 +1339,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Latest Node.js 24 LTS recommended for development; minimum package runtime is 22.12.0. Development tools may require a newer patch than the minimum runtime.
+- Latest Node.js 24 LTS recommended for development; minimum package runtime is 22.15.0. Development tools may require a newer patch than the minimum runtime.
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

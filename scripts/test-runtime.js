@@ -31,7 +31,7 @@ const assertReport = (dir) => {
 };
 
 const main = async () => {
-    assert.equal(pkg.engines.node, '>=22.12.0');
+    assert.equal(pkg.engines.node, '>=22.15.0');
     assert.equal(runNode([cli, '--version']), pkg.version);
     runNode(['--input-type=module', '-e', `
         import { MCR, CoverageReport } from 'monocart-coverage-reports';

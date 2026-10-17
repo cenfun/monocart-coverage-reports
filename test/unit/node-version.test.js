@@ -6,7 +6,7 @@ import lock from '../../package-lock.json' with { type: 'json' };
 
 describe('Node.js runtime metadata', () => {
     it('keeps package and lockfile release metadata consistent', () => {
-        assert.equal(pkg.engines.node, '>=22.12.0');
+        assert.equal(pkg.engines.node, '>=22.15.0');
         assert.equal(lock.version, pkg.version);
         assert.equal(lock.packages[''].version, pkg.version);
         assert.deepEqual(lock.packages[''].engines, pkg.engines);

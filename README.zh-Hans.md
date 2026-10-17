@@ -66,9 +66,9 @@
 * [感谢](#thanks)
 
 ## Usage
-> **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.12.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
+> **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.15.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
 
-**从 2.x 升级：** 请先升级 Node.js，再安装 MCR 3.x。不再支持 Node.js 18、20，以及低于 22.12.0 的 Node.js 22。若暂时无法升级 Node.js，请保留已验证兼容的 2.x 版本及其依赖锁文件；并非所有 2.x 依赖组合都兼容旧版 Node.js。现有覆盖率 API 和报告配置继续保留，`mcr test` 是新增的可选命令。
+**从 2.x 升级：** 请先升级 Node.js，再安装 MCR 3.x。不再支持 Node.js 18、20，以及低于 22.15.0 的 Node.js 22。若暂时无法升级 Node.js，请保留已验证兼容的 2.x 版本及其依赖锁文件；并非所有 2.x 依赖组合都兼容旧版 Node.js。现有覆盖率 API 和报告配置继续保留，`mcr test` 是新增的可选命令。
 - 安装
 ```sh
 npm install monocart-coverage-reports
@@ -919,7 +919,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 | `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。|
 | `--require` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 CJS 模块 |
 | `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。|
-| `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.12.0` |
+| `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.15.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](#hooks) |
 
@@ -940,7 +940,7 @@ mcr --import tsx node ./test.ts
 mcr --env .env.test node ./test.js
 ```
 
-- `test`: 使用 Node.js 自带的测试 runner 运行测试，并自动生成覆盖率报告。需要 Node.js **>= 22.12.0**。在 `mcr.config.js` 中指定测试目标：
+- `test`: 使用 Node.js 自带的测试 runner 运行测试，并自动生成覆盖率报告。需要 Node.js **>= 22.15.0**。在 `mcr.config.js` 中指定测试目标：
 ```js
 export default {
     // node --test 原生接受的测试文件路径或 glob
@@ -1252,7 +1252,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# MCR 3.x: Node.js >= 22.12.0
+# MCR 3.x: Node.js >= 22.15.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1344,7 +1344,7 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- 推荐使用最新 Node.js 24 LTS 开发；包的最低运行版本为 22.12.0。开发工具可能要求高于最低运行版本的补丁版本。
+- 推荐使用最新 Node.js 24 LTS 开发；包的最低运行版本为 22.15.0。开发工具可能要求高于最低运行版本的补丁版本。
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

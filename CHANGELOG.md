@@ -2,11 +2,12 @@
 
 - 3.0.0
   - **Breaking Changes**
-    - require Node.js >= 22.12.0
+    - require Node.js >= 22.15.0
     - migrate to ESM only; replace the callable `require('monocart-coverage-reports')` entry with default/named imports, or dynamic `import()` from CommonJS
     - use `export default` in ESM config files; rename existing CommonJS configs to `.cjs` (still supported)
     - `loadConfig()` throws on missing explicit configs or loading errors
   - **Features**
+    - use synchronous `module.registerHooks()` for source capture, including CommonJS modules loaded through `require()` and `createRequire()`
     - add `outputFilter` to filter final V8 results by `sourcePath`, including converted Istanbul reports (#132)
     - add `mcr test` with the native Node.js test runner and automatic coverage reports
     - support config/CLI test targets and Node runner arguments after `--`

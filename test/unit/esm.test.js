@@ -106,10 +106,7 @@ describe('ESM package', function() {
                 const sources = fs.readdirSync(coverageDir).filter((name) => name.startsWith('source-')).map((name) => {
                     return JSON.parse(fs.readFileSync(path.join(coverageDir, name), 'utf8'));
                 });
-                if (extension === 'mjs') {
-                    assert.ok(sources.some((entry) => entry.url === pathToFileURL(subject).href && entry.source === source));
-                }
-                // Node may return null source for CommonJS in async load hooks.
+                assert.ok(sources.some((entry) => entry.url === pathToFileURL(subject).href && entry.source === source));
                 const coverage = fs.readdirSync(coverageDir).filter((name) => name.startsWith('coverage-')).flatMap((name) => {
                     return JSON.parse(fs.readFileSync(path.join(coverageDir, name), 'utf8')).result;
                 });
