@@ -40,10 +40,10 @@ const buildDocs = () => {
     // ship the social preview image into the built docs site (OG/Twitter cards)
     const ogImageSrc = path.resolve(import.meta.dirname, 'template/og-image.png');
     const ogImageDst = path.resolve(docsDir, 'og-image.png');
-    if (fs.existsSync(ogImageSrc)) {
+    try {
         fs.copyFileSync(ogImageSrc, ogImageDst);
         console.log('copied template/og-image.png -> docs/og-image.png');
-    } else {
+    } catch (err) {
         console.warn('template/og-image.png not found; skip social preview copy');
     }
 
