@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import * as acorn from 'acorn';
-import { convertSourceMap } from '../../lib/packages/monocart-coverage-vendor.js';
+import convertSourceMap from 'convert-source-map';
 import { collectSourceMaps } from '../../lib/converter/collect-source-maps.js';
 import { MCR } from '../../lib/index.js';
 
