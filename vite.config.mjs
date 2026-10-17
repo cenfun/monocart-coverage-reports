@@ -83,14 +83,18 @@ function buildEndPlugin() {
             };
 
             // Build the dependencies shared by the Node.js runtime into one
-            // CommonJS file. Files under lib require this bundle directly.
+            // ESM file. Files under lib import this bundle directly.
             const vendorPath = path.resolve(packagesDir, 'monocart-coverage-vendor.js');
             const vendorBuild = await esbuild({
                 entryPoints: [path.resolve(import.meta.dirname, 'src/vendor/index.js')],
                 outfile: vendorPath,
                 bundle: true,
                 platform: 'node',
-                format: 'cjs',
+                format: 'esm',
+                // Bundled CommonJS dependencies still require Node built-ins.
+                banner: {
+                    js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);"
+                },
                 minify: true,
                 sourcemap: false,
                 metafile: true
@@ -110,7 +114,7 @@ function buildEndPlugin() {
                 template: fs.readFileSync(templatePath, 'utf8'),
                 'monocart-coverage-app': createScriptLoader(fs.readFileSync(appPath, 'utf8'))
             };
-            fs.writeFileSync(assetsPath, `module.exports = ${JSON.stringify(assetsMap, null, 4)};`);
+            fs.writeFileSync(assetsPath, `const assetsMap = ${JSON.stringify(assetsMap, null, 4)};\nexport { assetsMap };\n`);
             logBuilt(assetsPath);
         }
     };

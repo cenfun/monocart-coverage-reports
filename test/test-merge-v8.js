@@ -1,5 +1,5 @@
-const fs = require('fs');
-const MCR = require('../');
+import fs from 'node:fs';
+import { MCR } from '../lib/index.js';
 const coverageOptions = {
     // logging: 'debug',
     reports: [

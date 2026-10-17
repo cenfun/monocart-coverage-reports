@@ -1,7 +1,8 @@
-const assert = require('assert');
-const { spawnSync } = require('child_process');
-const pkg = require('../../package.json');
-const lock = require('../../package-lock.json');
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert';
+import { spawnSync } from 'node:child_process';
+import pkg from '../../package.json' with { type: 'json' };
+import lock from '../../package-lock.json' with { type: 'json' };
 
 describe('Node.js runtime metadata', () => {
     it('keeps package and lockfile release metadata consistent', () => {
@@ -12,7 +13,7 @@ describe('Node.js runtime metadata', () => {
     });
 
     it('reports the package version through the CLI', () => {
-        const result = spawnSync(process.execPath, [require.resolve('../../lib/cli.js'), '--version'], {
+        const result = spawnSync(process.execPath, [fileURLToPath(import.meta.resolve('../../lib/cli.js')), '--version'], {
             encoding: 'utf8', timeout: 10000
         });
         assert.ifError(result.error);

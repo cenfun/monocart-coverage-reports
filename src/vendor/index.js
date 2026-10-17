@@ -13,7 +13,10 @@ import WebSocket from 'ws';
 
 import { minimatch } from 'minimatch';
 
-import diffSequence from 'diff-sequences';
+import diffSequenceModule from 'diff-sequences';
+
+// This CommonJS dependency exposes its function as exports.default.
+const diffSequence = diffSequenceModule.default || diffSequenceModule;
 
 import { findUpSync } from 'find-up';
 

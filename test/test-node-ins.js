@@ -1,12 +1,12 @@
-const fs = require('fs');
-const { Session } = require('inspector');
-const { promisify } = require('util');
-const { fileURLToPath } = require('url');
+import fs from 'node:fs';
+import { Session } from 'node:inspector';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -91,7 +91,7 @@ const generate = async () => {
     const postSession = await startV8Coverage();
 
     // =====================================================
-    require('./specs/node.test.js');
+    await import('./specs/node.test.js');
     // =====================================================
 
     await collectV8Coverage(postSession);

@@ -1,10 +1,10 @@
-const { chromium } = require('playwright');
-const EC = require('eight-colors');
+import { chromium } from 'playwright';
+import EC from 'eight-colors';
 
-const serve = require('./serve.js');
+import serve from './serve.js';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 const coverageOptions = {
     // logging: 'debug',
     reports: [

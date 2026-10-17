@@ -1,12 +1,12 @@
-const assert = require('assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const { pathToFileURL } = require('url');
-const acorn = require('acorn');
-const { convertSourceMap } = require('../../lib/packages/monocart-coverage-vendor.js');
-const { collectSourceMaps } = require('../../lib/converter/collect-source-maps.js');
-const MCR = require('../../lib/index.js');
+import assert from 'node:assert';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import * as acorn from 'acorn';
+import { convertSourceMap } from '../../lib/packages/monocart-coverage-vendor.js';
+import { collectSourceMaps } from '../../lib/converter/collect-source-maps.js';
+import { MCR } from '../../lib/index.js';
 
 const embedded = [
     'function css(v, map) {',

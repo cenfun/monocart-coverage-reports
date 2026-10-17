@@ -69,13 +69,14 @@
 > **MCR 3.x requires [Node.js >= 22.12.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
 
 **Upgrading from 2.x:** Upgrade Node.js before installing MCR 3.x. Node.js 18, 20 and versions of 22 earlier than 22.12.0 are no longer supported. If you cannot upgrade Node.js, keep a verified compatible 2.x release and its dependency lockfile; not every 2.x dependency combination supports older Node.js versions. Existing coverage APIs and report options remain available; `mcr test` is a new optional command.
+**ESM only:** Use `import MCR from 'monocart-coverage-reports'` or `import { MCR, CoverageReport } from 'monocart-coverage-reports'`. The default `MCR` export also exposes all other API exports as properties (for example, `MCR.CoverageReport`). In Node.js, use `"type": "module"` in your `package.json` or a `.mjs` file. From CommonJS, use `const { MCR } = await import('monocart-coverage-reports')` inside an async function; the old callable `require(...)` entry is no longer provided. The CLI can still cover CommonJS programs and load `.cjs` configuration files. Use `export default` in ESM configuration files (or rename existing CommonJS configs to `.cjs`).
 - Install
 ```sh
 npm install monocart-coverage-reports
 ```
 - API
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
@@ -233,7 +234,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
 ### Multiple Reports:
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
@@ -428,7 +429,7 @@ getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
 
 - Work with node debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const client = await MCR.CDPClient({
     port: 9229
 });
@@ -439,8 +440,8 @@ const coverageData = await client.stopJSCoverage();
 
 - Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
 ```js
-const { chromium } = require('playwright');
-const MCR = require('monocart-coverage-reports');
+import { chromium } from 'playwright';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await chromium.launch();
 const page = await browser.newPage();
 const session = await page.context().newCDPSession(page);
@@ -456,8 +457,8 @@ const coverageData = await client.stopCoverage();
 
 - Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
 ```js
-const puppeteer = require('puppeteer');
-const MCR = require('monocart-coverage-reports');
+import puppeteer from 'puppeteer';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await puppeteer.launch({});
 const page = await browser.newPage();
 const session = await page.target().createCDPSession();
@@ -473,8 +474,8 @@ const coverageData = await client.stopCoverage();
 
 - Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
 ```js
-const { Builder, Browser } = require('selenium-webdriver');
-const MCR = require('monocart-coverage-reports');
+import { Builder, Browser } from 'selenium-webdriver';
+import { MCR } from 'monocart-coverage-reports';
 const driver = await new Builder().forBrowser(Browser.CHROME).build();
 const pageCdpConnection = await driver.createCDPConnection('page');
 const session = new MCR.WSSession(pageCdpConnection._wsConnection);
@@ -696,7 +697,7 @@ const coverageOptions = {
 ```
 Normalize the full path of the file:
 ```js
-const path = require("path")
+import path from 'node:path';
 
 // MCR coverage options
 const coverageOptions = {
@@ -737,8 +738,8 @@ const coverageOptions = {
 ```
 We can also compile these untested files, such as .ts, .jsx, or .vue, etc., so that they can be analyzed by the default AST parser, thus get more coverage metric data.
 ```js
-const path = require("path");
-const swc = require("@swc/core");
+import path from 'node:path';
+import swc from "@swc/core";
 const coverageOptions = {
     all: {
         dir: ['./src'],
@@ -767,7 +768,7 @@ const coverageOptions = {
 ### `onEnd` — after the report is generated
 Typical use case: enforce coverage thresholds.
 ```js
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 const coverageOptions = {
     name: 'My Coverage Report',
     outputDir: './coverage-reports',
@@ -811,7 +812,7 @@ Only available when using `mcr <command>`:
 - `onReady(coverageReport, nodeV8CoverageDir, subprocess)` — runs after the child exits, before MCR reads coverage from `nodeV8CoverageDir`. Useful when the child hasn't finished flushing coverage data and needs to be waited on.
 ```js
 // mcr.config.js
-module.exports = {
+export default {
     onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
         // wait for something, or pre-process the raw files
     }
@@ -857,8 +858,8 @@ function uncovered() {
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 - Main process, before the start of testing
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 // clean previous cache before the start of testing
 // unless the running environment is new and no cache
@@ -867,16 +868,16 @@ mcr.cleanCache();
 
 - Sub process 1, testing stage 1
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData1);
 ```
 
 - Sub process 2, testing stage 2
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData2);
 ```
@@ -884,8 +885,8 @@ await mcr.add(coverageData2);
 - Main process, after the completion of testing
 ```js
 // generate coverage reports after the completion of testing
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.generate();
 ```
@@ -938,7 +939,7 @@ mcr --env .env.test node ./test.js
 
 - `test`: run tests with the built-in Node.js test runner and automatically generate coverage reports. Requires Node.js **>= 22.12.0**. Configure targets in `mcr.config.js`:
 ```js
-module.exports = {
+export default {
     // Test file paths or glob patterns accepted by node --test
     test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
     reports: ['v8', 'console-summary'],
@@ -1030,8 +1031,8 @@ const coverageOptions = {
 - Then create a script `merge-coverage.js` to generate a merged report with option `inputDir`.
 ```js
 // merge-coverage.js
-const fs = require('fs');
-const { CoverageReport } = require('monocart-coverage-reports');
+import fs from 'fs';
+import { CoverageReport } from 'monocart-coverage-reports';
 const inputDir = [
     './coverage-reports/unit/raw',
     './coverage-reports/e2e/raw'

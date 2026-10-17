@@ -1,5 +1,5 @@
-const { spawn } = require('node:child_process');
-const Util = require('../lib/utils/util.js');
+import { spawn } from 'node:child_process';
+import { Util } from '../lib/utils/util.js';
 
 
 const executeNpmRun = (item) => {

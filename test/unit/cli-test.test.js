@@ -1,11 +1,12 @@
-const assert = require('assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const { spawnSync } = require('child_process');
-const MCR = require('../../lib/index.js');
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { MCR } from '../../lib/index.js';
 
-const cliPath = require.resolve('../../lib/cli.js');
+const cliPath = fileURLToPath(import.meta.resolve('../../lib/cli.js'));
 
 describe('mcr test', function() {
     this.timeout(30000);

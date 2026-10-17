@@ -1,16 +1,18 @@
-const EC = require('eight-colors');
-const webpack = require('webpack');
+import * as esbuild from 'esbuild';
+import { rollup } from 'rollup';
+import EC from 'eight-colors';
+import webpack from 'webpack';
 
-const Util = require('../../lib/utils/util.js');
+import { Util } from '../../lib/utils/util.js';
 
 // istanbul requires building on server for right file path (relative)
-const webpackConfIstanbul = require('./webpack.config-istanbul.js');
-const webpackConfV8 = require('./webpack.config-v8.js');
-const webpackConfNode = require('./webpack.config-node.js');
-const webpackConfSwc = require('./webpack.config-swc.js');
+import webpackConfIstanbul from './webpack.config-istanbul.js';
+import webpackConfV8 from './webpack.config-v8.js';
+import webpackConfNode from './webpack.config-node.js';
+import webpackConfSwc from './webpack.config-swc.js';
 
-const esbuildConf = require('./esbuild.config.js');
-const rollupConf = require('./rollup.config.js');
+import esbuildConf from './esbuild.config.js';
+import rollupConf from './rollup.config.js';
 
 const startWebpack = function(conf) {
     return new Promise(function(resolve) {
@@ -61,7 +63,6 @@ const runWebpackNode = async () => {
 };
 
 const runEsbuild = async () => {
-    const esbuild = require('esbuild');
     await esbuild.build(esbuildConf).catch((err) => {
         EC.logRed(err);
     });
@@ -69,7 +70,6 @@ const runEsbuild = async () => {
 };
 
 const runRollup = async () => {
-    const { rollup } = require('rollup');
 
     let bundle;
     try {

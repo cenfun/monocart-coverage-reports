@@ -1,12 +1,12 @@
 
-const path = require('path');
-const http = require('http');
-const EC = require('eight-colors');
-const KSR = require('koa-static-resolver');
-const Koa = require('koa');
+import path from 'node:path';
+import http from 'node:http';
+import EC from 'eight-colors';
+import KSR from 'koa-static-resolver';
+import Koa from 'koa';
 
 const serve = (port, mockName) => {
-    const mockDir = path.resolve(__dirname, 'mock', mockName);
+    const mockDir = path.resolve(import.meta.dirname, 'mock', mockName);
     console.log('serve mock dir', mockName);
 
     const app = new Koa();
@@ -36,4 +36,4 @@ const serve = (port, mockName) => {
 
 };
 
-module.exports = serve;
+export default serve;

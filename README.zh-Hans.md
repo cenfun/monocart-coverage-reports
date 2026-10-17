@@ -73,9 +73,10 @@
 ```sh
 npm install monocart-coverage-reports
 ```
+> **仅支持 ESM：** 使用默认导入 `import MCR from 'monocart-coverage-reports'` 或命名导入 `import { MCR, CoverageReport } from 'monocart-coverage-reports'`。默认导出的 `MCR` 也包含其他所有 API 导出，例如 `MCR.CoverageReport`。Node.js 项目请设置 `"type": "module"`，或使用 `.mjs` 文件。CommonJS 项目可在异步函数中使用 `const { MCR } = await import('monocart-coverage-reports')`；不再提供可直接调用的 `require(...)` 入口。CLI 仍支持覆盖 CommonJS 程序及加载 `.cjs` 配置。ESM 配置使用 `export default`，已有 CommonJS 配置可改名为 `.cjs`。
 - API
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
@@ -234,7 +235,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 ### Multiple Reports:
 如何配置多个报告
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
@@ -432,7 +433,7 @@ getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
 
 - 结合使用Node调试端口`--inspect=9229` 或者浏览器调试端口 `--remote-debugging-port=9229`
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const client = await MCR.CDPClient({
     port: 9229
 });
@@ -443,8 +444,8 @@ const coverageData = await client.stopJSCoverage();
 
 - 结合使用 [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
 ```js
-const { chromium } = require('playwright');
-const MCR = require('monocart-coverage-reports');
+import { chromium } from 'playwright';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await chromium.launch();
 const page = await browser.newPage();
 const session = await page.context().newCDPSession(page);
@@ -460,8 +461,8 @@ const coverageData = await client.stopCoverage();
 
 - 结合使用 [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
 ```js
-const puppeteer = require('puppeteer');
-const MCR = require('monocart-coverage-reports');
+import puppeteer from 'puppeteer';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await puppeteer.launch({});
 const page = await browser.newPage();
 const session = await page.target().createCDPSession();
@@ -477,8 +478,8 @@ const coverageData = await client.stopCoverage();
 
 - 结合使用 [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (仅支持Chrome/Edge浏览器)
 ```js
-const { Builder, Browser } = require('selenium-webdriver');
-const MCR = require('monocart-coverage-reports');
+import { Builder, Browser } from 'selenium-webdriver';
+import { MCR } from 'monocart-coverage-reports';
 const driver = await new Builder().forBrowser(Browser.CHROME).build();
 const pageCdpConnection = await driver.createCDPConnection('page');
 const session = new MCR.WSSession(pageCdpConnection._wsConnection);
@@ -699,7 +700,7 @@ const coverageOptions = {
 ```
 解决文件路径不完整的问题：
 ```js
-const path = require("path")
+import path from 'node:path';
 
 // MCR coverage options
 const coverageOptions = {
@@ -740,8 +741,8 @@ const coverageOptions = {
 ```
 我们可能需要编译.ts, .jsx, .vue等等这样的文件, 这样才能被默认的AST解析器解析，以得到更多的覆盖率指标的数据
 ```js
-const path = require("path");
-const swc = require("@swc/core");
+import path from 'node:path';
+import swc from "@swc/core";
 const coverageOptions = {
     all: {
         dir: ['./src'],
@@ -770,7 +771,7 @@ const coverageOptions = {
 ### `onEnd` — 报告生成后触发
 典型用法：检测覆盖率是否达标，低于 threshold 时抛错退出。
 ```js
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 const coverageOptions = {
     name: 'My Coverage Report',
     outputDir: './coverage-reports',
@@ -814,7 +815,7 @@ const coverageOptions = {
 - `onReady(coverageReport, nodeV8CoverageDir, subprocess)` — 子进程退出后、MCR 读取 `nodeV8CoverageDir` 之前触发。用于子进程尚未写完覆盖数据需要等待的场景
 ```js
 // mcr.config.js
-module.exports = {
+export default {
     onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
         // 等待某个信号，或先对 raw 文件做一些预处理
     }
@@ -860,8 +861,8 @@ function uncovered() {
 > 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](#debug-for-coverage-and-sourcemap)，或者使用了`raw`报告
 - 主进程，初始化，清理之前的缓存
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 // clean previous cache before the start of testing
 // unless the running environment is new and no cache
@@ -870,16 +871,16 @@ mcr.cleanCache();
 
 - 子进程1, 测试业务1
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData1);
 ```
 
 - 子进程2, 测试业务2
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData2);
 ```
@@ -887,8 +888,8 @@ await mcr.add(coverageData2);
 - 主进程，所有测试完成之后
 ```js
 // generate coverage reports after the completion of testing
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.generate();
 ```
@@ -941,7 +942,7 @@ mcr --env .env.test node ./test.js
 
 - `test`: 使用 Node.js 自带的测试 runner 运行测试，并自动生成覆盖率报告。需要 Node.js **>= 22.12.0**。在 `mcr.config.js` 中指定测试目标：
 ```js
-module.exports = {
+export default {
     // node --test 原生接受的测试文件路径或 glob
     test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
     reports: ['v8', 'console-summary'],
@@ -1032,8 +1033,8 @@ const coverageOptions = {
 - 然后创建一个`merge-coverage.js`文件，使用`inputDir`参数导入`raw`数据，来生成合并的覆盖率报告.
 ```js
 // merge-coverage.js
-const fs = require('fs');
-const { CoverageReport } = require('monocart-coverage-reports');
+import fs from 'fs';
+import { CoverageReport } from 'monocart-coverage-reports';
 const inputDir = [
     './coverage-reports/unit/raw',
     './coverage-reports/e2e/raw'

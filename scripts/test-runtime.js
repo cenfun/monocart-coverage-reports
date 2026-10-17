@@ -1,17 +1,18 @@
 // Run against the checkout by default, or an installed package in a separate
 // project. Only built-ins and MCR's production dependencies are required.
-const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const os = require('node:os');
-const path = require('node:path');
-const { createRequire } = require('node:module');
-const { spawnSync } = require('node:child_process');
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
+import { spawnSync } from 'node:child_process';
 
 const projectDir = path.resolve(process.argv[2] || process.cwd());
 const projectRequire = createRequire(path.join(projectDir, 'package.json'));
 const pkg = projectRequire('monocart-coverage-reports/package.json');
 const packageDir = path.dirname(projectRequire.resolve('monocart-coverage-reports/package.json'));
-const MCR = projectRequire('monocart-coverage-reports');
+const { MCR } = await import(pathToFileURL(projectRequire.resolve('monocart-coverage-reports')));
 const cli = path.resolve(packageDir, pkg.bin.mcr);
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr-runtime-'));
 
@@ -33,7 +34,7 @@ const main = async () => {
     assert.equal(pkg.engines.node, '>=22.12.0');
     assert.equal(runNode([cli, '--version']), pkg.version);
     runNode(['--input-type=module', '-e', `
-        import MCR, { CoverageReport } from 'monocart-coverage-reports';
+        import { MCR, CoverageReport } from 'monocart-coverage-reports';
         if (!(MCR() instanceof CoverageReport)) throw new Error('Invalid ESM exports');
     `], projectDir);
 

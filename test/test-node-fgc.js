@@ -1,11 +1,11 @@
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const { foregroundChild } = require('foreground-child');
+import { foregroundChild } from 'foreground-child';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 const dir = '.temp/v8-coverage-fgc';
 
-const checkSnapshot = require('./check-snapshot.js');
+import checkSnapshot from './check-snapshot.js';
 const generate = async () => {
 
     const coverageOptions = {

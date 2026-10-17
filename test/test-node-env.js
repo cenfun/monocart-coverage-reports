@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'node:fs';
 
 // remove previous coverage files
 const dir = process.env.NODE_V8_COVERAGE;
@@ -15,5 +15,5 @@ if (fs.existsSync(dir)) {
 }
 
 // =====================================================
-require('./specs/node.test.js');
+await import('./specs/node.test.js');
 // =====================================================

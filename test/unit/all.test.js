@@ -1,8 +1,8 @@
-const assert = require('assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const MCR = require('../../lib/index.js');
+import assert from 'node:assert';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { MCR } from '../../lib/index.js';
 
 describe('all without coverage data', () => {
     let root;

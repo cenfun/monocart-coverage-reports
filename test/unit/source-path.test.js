@@ -1,6 +1,6 @@
 const platform = process.platform;
-const assert = require('assert');
-const { normalizeSourcePath } = require('../../lib/utils/source-path.js');
+import assert from 'node:assert';
+import { normalizeSourcePath } from '../../lib/utils/source-path.js';
 
 it('normalizeSourcePath', () => {
 
@@ -69,6 +69,6 @@ it('normalizeSourcePath', () => {
     assert.equal(normalizeSourcePath('/root/dir/x.js', '/root'), 'dir/x.js');
     assert.equal(normalizeSourcePath('/root/dir1/y.js', '/root/dir2'), 'dir1/y.js');
     assert.equal(normalizeSourcePath('/root/z.js', '/other'), 'root/z.js');
-    assert.equal(normalizeSourcePath('dist/zz.js', __dirname), 'dist/zz.js');
+    assert.equal(normalizeSourcePath('dist/zz.js', import.meta.dirname), 'dist/zz.js');
 
 });

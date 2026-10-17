@@ -1,9 +1,9 @@
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 const CDPClient = MCR.CDPClient;
 
-const checkSnapshot = require('./check-snapshot.js');
+import checkSnapshot from './check-snapshot.js';
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -57,7 +57,7 @@ const generate = async () => {
     await client.startJSCoverage();
 
     // =====================================================
-    require('./specs/node.test.js');
+    await import('./specs/node.test.js');
     // =====================================================
 
     const coverageData = await client.stopJSCoverage();

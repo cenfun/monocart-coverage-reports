@@ -622,4 +622,27 @@ declare namespace MCR {
 /** create coverage report */
 declare function MCR(options?: MCR.CoverageReportOptions): MCR.CoverageReport;
 
-export = MCR;
+export { MCR as default, MCR };
+export import V8CoverageEntry = MCR.V8CoverageEntry;
+export import Watermarks = MCR.Watermarks;
+export import ReportDescription = MCR.ReportDescription;
+export import AddedResults = MCR.AddedResults;
+export import MetricsSummary = MCR.MetricsSummary;
+export import CoverageSummary = MCR.CoverageSummary;
+export import CoverageRange = MCR.CoverageRange;
+export import IgnoredRange = MCR.IgnoredRange;
+export import CoverageFile = MCR.CoverageFile;
+export import CoverageResults = MCR.CoverageResults;
+export import LoggingType = MCR.LoggingType;
+export import CoverageReportOptions = MCR.CoverageReportOptions;
+export import McrCliOptions = MCR.McrCliOptions;
+export import CoverageSnapshot = MCR.CoverageSnapshot;
+export type CoverageClient = MCR.CoverageClient;
+export import CDPSession = MCR.CDPSession;
+export import CDPOptions = MCR.CDPOptions;
+export import CoverageReport = MCR.CoverageReport;
+export import getSnapshot = MCR.getSnapshot;
+export import diffSnapshot = MCR.diffSnapshot;
+export import WSSession = MCR.WSSession;
+export import CDPClient = MCR.CDPClient;
+export import Util = MCR.Util;

@@ -1,7 +1,7 @@
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 const generate = async () => {
 
     const dir = '.temp/v8-coverage-env';

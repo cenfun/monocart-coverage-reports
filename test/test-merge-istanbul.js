@@ -1,6 +1,6 @@
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 
 const coverageOptions = {
     // logging: 'debug',

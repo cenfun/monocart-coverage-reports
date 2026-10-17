@@ -1,10 +1,10 @@
 // https://eslint.org/docs/rules/
 
-const plus = require('eslint-config-plus');
-const vue = require('eslint-plugin-vue');
+import plus from 'eslint-config-plus';
+import vue from 'eslint-plugin-vue';
 
 // https://eslint.org/docs/latest/use/configure/configuration-files
-module.exports = [
+export default [
     {
         ignores: [
             'lib/packages/',

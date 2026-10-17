@@ -1,13 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
 
-const Util = require('../lib/utils/util.js');
+import { Util } from '../lib/utils/util.js';
 
 const buildDocs = () => {
 
     console.log('build docs ...');
 
-    const docsDir = path.resolve(__dirname, '../docs');
+    const docsDir = path.resolve(import.meta.dirname, '../docs');
     const list = fs.readdirSync(docsDir, {
         withFileTypes: true
     });
@@ -24,7 +24,7 @@ const buildDocs = () => {
 
     html.push('</ul>');
 
-    const markdownTemplate = fs.readFileSync(path.resolve(__dirname, 'template/markdown.html'), {
+    const markdownTemplate = fs.readFileSync(path.resolve(import.meta.dirname, 'template/markdown.html'), {
         encoding: 'utf-8'
     });
 
@@ -33,7 +33,7 @@ const buildDocs = () => {
         placeholder_content: html.join('')
     });
 
-    fs.writeFileSync(path.resolve(__dirname, '../docs/index.html'), content);
+    fs.writeFileSync(path.resolve(import.meta.dirname, '../docs/index.html'), content);
 
     console.log('generated docs/index.html');
 

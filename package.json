@@ -2,6 +2,7 @@
     "name": "monocart-coverage-reports",
     "version": "2.13.2",
     "description": "A code coverage tool to generate native V8 reports or Istanbul reports.",
+    "type": "module",
     "main": "./lib/index.js",
     "bin": {
         "mcr": "./lib/cli.js"
@@ -9,13 +10,9 @@
     "exports": {
         ".": {
             "types": "./lib/index.d.ts",
-            "import": "./lib/index.mjs",
-            "require": "./lib/index.js"
+            "default": "./lib/index.js"
         },
-        "./register": {
-            "import": "./lib/register/register.mjs",
-            "require": "./lib/register/register.js"
-        },
+        "./register": "./lib/register/register.js",
         "./converter": "./lib/converter/converter.js",
         "./util": "./lib/utils/util.js",
         "./package.json": "./package.json"
@@ -30,7 +27,8 @@
         "postbuild": "npm run build-test",
         "build-test": "node ./test/build/build-test.js",
         "test-unit": "mocha --parallel test/unit/*.test.js",
-        "test-runtime": "node ./scripts/test-runtime.cjs",
+        "test-types": "tsc -p test/types/tsconfig.json",
+        "test-runtime": "node ./scripts/test-runtime.js",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",
         "test-node-ins": "node ./test/test-node-ins.js",
@@ -60,7 +58,7 @@
         "test-cp": "npx mcr node test/test-cp.mjs --outputDir .temp/test-cp",
         "test-all": "node ./test/test.js",
         "test-pr": "node --inspect=9230 ./test/test-pr.js",
-        "test": "npm run test-unit && npx mcr npm run test-all -c test/mcr.config.mcr.js && node ./scripts/docs.js",
+        "test": "npm run test-unit && npm run test-types && npx mcr npm run test-all -c test/mcr.config.mcr.js && node ./scripts/docs.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",

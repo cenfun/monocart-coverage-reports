@@ -1,4 +1,4 @@
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 
 const coverageOptions = {
     // logging: 'debug',

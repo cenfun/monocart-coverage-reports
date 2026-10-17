@@ -1,18 +1,18 @@
-const fs = require('fs');
-const path = require('path');
-const net = require('net');
-const {
+import fs from 'node:fs';
+import path from 'node:path';
+import net from 'node:net';
+import {
     execSync, spawn, spawnSync
-} = require('child_process');
-const assert = require('assert');
-const EC = require('eight-colors');
+} from 'node:child_process';
+import assert from 'node:assert';
+import EC from 'eight-colors';
 
-const Util = require('../lib/utils/util.js');
+import { Util } from '../lib/utils/util.js';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 const CDPClient = MCR.CDPClient;
 
-const checkSnapshot = require('./check-snapshot.js');
+import checkSnapshot from './check-snapshot.js';
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],

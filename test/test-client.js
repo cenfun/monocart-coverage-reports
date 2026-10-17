@@ -1,10 +1,10 @@
-const EC = require('eight-colors');
-const { chromium } = require('playwright');
-const puppeteer = require('puppeteer');
+import EC from 'eight-colors';
+import { chromium } from 'playwright';
+import puppeteer from 'puppeteer';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 
-const checkSnapshot = require('./check-snapshot.js');
+import checkSnapshot from './check-snapshot.js';
 
 const coverageOptions = {
     // logging: 'debug',

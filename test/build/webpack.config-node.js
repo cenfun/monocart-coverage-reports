@@ -1,5 +1,5 @@
-const path = require('path');
-module.exports = {
+import path from 'node:path';
+export default {
     mode: 'development',
 
     devtool: 'source-map',
@@ -15,6 +15,7 @@ module.exports = {
     module: {
         rules: [{
             test: /\.js$/,
+            type: 'javascript/auto',
             use: {
                 loader: 'babel-loader'
             }

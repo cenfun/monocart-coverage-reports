@@ -1,7 +1,7 @@
-const { CDPClient, CoverageReport } = require('../');
+import { CDPClient, CoverageReport } from '../lib/index.js';
 
-const github = require('@actions/github');
-const core = require('@actions/core');
+import * as github from '@actions/github';
+import * as core from '@actions/core';
 
 const getPullRequestChanges = async () => {
 
@@ -112,7 +112,7 @@ const test = async () => {
     await client.startJSCoverage();
 
     // =====================================================
-    require('./specs/node.test.js');
+    await import('./specs/node.test.js');
     // =====================================================
 
     const coverageData = await client.stopJSCoverage();

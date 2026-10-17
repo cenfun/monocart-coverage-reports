@@ -1,5 +1,5 @@
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 
 // esbuild's metafile lists the actual files in the bundle (including nested
 // node_modules), unlike package.json's list of direct dependencies.
@@ -59,6 +59,6 @@ function generateVendorLicense(metafile, rootDir, outputPath) {
     ].join('\n'));
 }
 
-module.exports = {
+export default {
     generateVendorLicense
 };

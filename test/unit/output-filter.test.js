@@ -1,10 +1,11 @@
-const assert = require('assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const { spawnSync } = require('child_process');
-const MCR = require('../../lib/index.js');
-const defaultOptions = require('../../lib/default/options.js');
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { MCR } from '../../lib/index.js';
+import { defaultOptions } from '../../lib/default/options.js';
 
 const createEntry = (url, source, count = 1) => ({
     url,
@@ -183,7 +184,7 @@ describe('outputFilter', () => {
             const configPath = path.join(root, 'mcr.config.cjs');
             fs.writeFileSync(configPath, 'module.exports = {};\n');
             const result = spawnSync(process.execPath, [
-                require.resolve('../../lib/cli.js'),
+                fileURLToPath(import.meta.resolve('../../lib/cli.js')),
                 'merge',
                 '--config',
                 configPath,
@@ -219,7 +220,9 @@ describe('outputFilter', () => {
                 }
                 return load.call(this, name, ...args);
             };
-            require(${JSON.stringify(require.resolve('../../lib/index.js'))});
+            import(${JSON.stringify(import.meta.resolve('../../lib/index.js'))}).catch((error) => {
+                console.error(error); process.exitCode = 1;
+            });
         `], {
             encoding: 'utf8'
         });
