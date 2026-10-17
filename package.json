@@ -68,7 +68,8 @@
     },
     "files": [
         "lib",
-        "README.zh-Hans.md"
+        "README.zh-Hans.md",
+        "migrate-to-3.md"
     ],
     "license": "MIT",
     "repository": {

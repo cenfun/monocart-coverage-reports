@@ -69,8 +69,8 @@
 ## Usage
 > **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
 
-**Upgrading from 2.x:** Upgrade Node.js before installing MCR 3.x. Node.js 18, 20 and versions of 22 earlier than 22.15.0 are no longer supported. If you cannot upgrade Node.js, keep a verified compatible 2.x release and its dependency lockfile; not every 2.x dependency combination supports older Node.js versions. Existing coverage APIs and report options remain available; `mcr test` is a new optional command.
-**ESM only:** Use `import MCR from 'monocart-coverage-reports'` or `import { MCR, CoverageReport } from 'monocart-coverage-reports'`. The default `MCR` export also exposes all other API exports as properties (for example, `MCR.CoverageReport`). In Node.js, use `"type": "module"` in your `package.json` or a `.mjs` file. From CommonJS, use `const { MCR } = await import('monocart-coverage-reports')` inside an async function; the old callable `require(...)` entry is no longer provided. The CLI can still cover CommonJS programs and load `.cjs` configuration files. Use `export default` in ESM configuration files (or rename existing CommonJS configs to `.cjs`).
+**Upgrading from 2.x:** See the [3.x migration guide](migrate-to-3.md).
+
 - Install
 ```sh
 npm install monocart-coverage-reports

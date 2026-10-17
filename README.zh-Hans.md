@@ -69,12 +69,12 @@
 ## Usage
 > **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.15.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
 
-**从 2.x 升级：** 请先升级 Node.js，再安装 MCR 3.x。不再支持 Node.js 18、20，以及低于 22.15.0 的 Node.js 22。若暂时无法升级 Node.js，请保留已验证兼容的 2.x 版本及其依赖锁文件；并非所有 2.x 依赖组合都兼容旧版 Node.js。现有覆盖率 API 和报告配置继续保留，`mcr test` 是新增的可选命令。
+**从 2.x 升级：** 请参阅 [3.x 迁移指南](migrate-to-3.md)。
+
 - 安装
 ```sh
 npm install monocart-coverage-reports
 ```
-> **仅支持 ESM：** 使用默认导入 `import MCR from 'monocart-coverage-reports'` 或命名导入 `import { MCR, CoverageReport } from 'monocart-coverage-reports'`。默认导出的 `MCR` 也包含其他所有 API 导出，例如 `MCR.CoverageReport`。Node.js 项目请设置 `"type": "module"`，或使用 `.mjs` 文件。CommonJS 项目可在异步函数中使用 `const { MCR } = await import('monocart-coverage-reports')`；不再提供可直接调用的 `require(...)` 入口。CLI 仍支持覆盖 CommonJS 程序及加载 `.cjs` 配置。ESM 配置使用 `export default`，已有 CommonJS 配置可改名为 `.cjs`。
 - API
 ```js
 import { MCR } from 'monocart-coverage-reports';
