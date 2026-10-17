@@ -131,7 +131,7 @@ For more information, see [Command Line](#command-line)
 | `watermarks` | `[number, number] \| object` | `[50, 80]` | Low/high thresholds (percent). Accepts per-metric object like `{ bytes:[50,80], lines:[50,80] }`. |
 | `clean` | `boolean` | `true` | Clean previous reports in `outputDir` before generating (the `.cache` dir is preserved unless `cleanCache` is also `true`). |
 | `cleanCache` | `boolean` | `false` | Clean the cache dir on start. When both `clean` and `cleanCache` are `false`, cached coverage data from previous runs is preserved and can be reused across processes. |
-| `gc` | `number` | `null` | Memory threshold in MB; force GC at critical stages when RSS exceeds it. Useful for very large data sets, see [JavaScript heap out of memory](#javascript-heap-out-of-memory). |
+| `gc` | `number` | `null` | Memory threshold in MB; force GC at critical stages when JavaScript heap usage (`heapUsed`) exceeds it. Useful for very large data sets, see [JavaScript heap out of memory](#javascript-heap-out-of-memory). |
 | `sourceMap` | `boolean` | `false` | Save source/sourcemap files to cache for debugging (requires `logging: "debug"`). |
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | Custom sourcemap loader (e.g. from a build cache). Call `defaultResolver(url)` to fall back. |
 | `onEntry` | `(entry) => void \| Promise<void>` | `null` | (V8 only) Per-entry hook; see [Hooks](#hooks). |
@@ -407,6 +407,9 @@ Possible solutions:
     - see [Command Line](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
+
+`timeout` controls HTTP discovery and WebSocket connection deadlines (default: 10000ms). `requestTimeout` controls each CDP command on built-in WebSocket sessions (default: 30000ms). Set either to `0` to disable its deadline. Custom Playwright/Puppeteer sessions manage their own command timeouts. For custom sockets, use `new MCR.WSSession(ws, { timeout: 30000 })`.
+
 - `CDPClient` available APIs
 ```js
 startJSCoverage: () => Promise<void>;

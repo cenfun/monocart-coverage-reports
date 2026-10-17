@@ -3,8 +3,6 @@ import { rollup } from 'rollup';
 import EC from 'eight-colors';
 import webpack from 'webpack';
 
-import { Util } from '../../lib/utils/util.js';
-
 // istanbul requires building on server for right file path (relative)
 import webpackConfIstanbul from './webpack.config-istanbul.js';
 import webpackConfV8 from './webpack.config-v8.js';
@@ -102,13 +100,7 @@ const build = async () => {
 
     await runEsbuild();
 
-    // rollup: The minimal required Node version is now 18.0.0
-    const nv = process.versions.node;
-    if (Util.cmpVersion(nv, '18') < 0) {
-        EC.logYellow(`Ignore build rollup - node ${nv} < 18`);
-    } else {
-        await runRollup();
-    }
+    await runRollup();
 
     await runSwc();
 

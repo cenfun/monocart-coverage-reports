@@ -131,7 +131,7 @@ mcr node my-app.js -r v8,console-details
 | `watermarks` | `[number, number] \| object` | `[50, 80]` | 覆盖率高/低阈值百分比。也支持按指标配置：`{ bytes:[50,80], lines:[50,80] }`。 |
 | `clean` | `boolean` | `true` | 生成报告前清理 `outputDir` 中的旧报告（`.cache` 目录在 `cleanCache` 也为 `true` 时才会被清理）。 |
 | `cleanCache` | `boolean` | `false` | 启动时清理缓存目录。当 `clean` 和 `cleanCache` 都为 `false` 时，之前运行的缓存数据会保留，可在多进程间复用。 |
-| `gc` | `number` | `null` | 内存阈值（MB），在关键阶段若 RSS 超过阈值则强制触发 GC，适用于超大数据集，参见 [JavaScript heap out of memory](#javascript-heap-out-of-memory)。 |
+| `gc` | `number` | `null` | 内存阈值（MB），在关键阶段若 JavaScript 堆内存使用量（`heapUsed`）超过阈值则强制触发 GC，适用于超大数据集，参见 [JavaScript heap out of memory](#javascript-heap-out-of-memory)。 |
 | `sourceMap` | `boolean` | `false` | 将源文件和 sourcemap 也保存到 cache 便于调试（需要 `logging: "debug"`）。 |
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | 自定义 sourcemap 加载逻辑（例如从构建缓存中读取），可调用 `defaultResolver(url)` 回退到默认解析。 |
 | `onEntry` | `(entry) => void \| Promise<void>` | `null` | （仅 V8）每个入口文件处理前触发，参见 [Hooks](#hooks)。 |
@@ -410,6 +410,9 @@ const coverageData = [... jsCoverage.map((it) => {
     - 如果是子进程，可参见 [命令行](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
+
+`timeout` 控制 HTTP 调试目标发现和 WebSocket 连接的超时（默认 10000ms）；`requestTimeout` 控制内置 WebSocket 会话中每条 CDP 命令的超时（默认 30000ms）。设为 `0` 可禁用相应超时。外部 Playwright/Puppeteer 会话自行管理命令超时。自定义 socket 可使用 `new MCR.WSSession(ws, { timeout: 30000 })`。
+
 - `CDPClient`为`MCR`提供的内置接口类，用来更便捷的处理覆盖率相关数据，所有的API如下
 ```js
 // 开始和停止并收集JS的覆盖率数据

@@ -413,7 +413,7 @@ declare namespace MCR {
         cleanCache?: boolean;
 
         /**
-         * {number} gc threshold
+         * {number} JavaScript heapUsed threshold in MB
          * for example: sets gc to 1024 means that force gc when the memory > 1024M at certain critical stages
          * https://nodejs.org/docs/latest/api/v8.html#v8setflagsfromstringflags
          */
@@ -586,7 +586,8 @@ declare namespace MCR {
 
     /** custom websocket CDPSession */
     export class WSSession implements CDPSession {
-        constructor(ws: any);
+        /** Request timeout defaults to 30000ms; 0 disables the deadline. */
+        constructor(ws: any, options?: { timeout?: number });
         send: (method: string, params?: any) => Promise<any>;
         on: (type: string, handler: (e: any) => void) => void;
         detach: () => Promise<void>;
@@ -607,8 +608,10 @@ declare namespace MCR {
         target?: (targets: any) => any;
         /** websocket options */
         ws?: any;
-        /** timeout, defaults to 10 * 1000 */
+        /** HTTP discovery / WebSocket connection timeout, defaults to 10000ms; 0 disables it. */
         timeout?: number;
+        /** Per-command timeout for built-in WebSocket sessions, defaults to 30000ms; 0 disables it. */
+        requestTimeout?: number;
     }
 
     export function CDPClient(cdpOptions: CDPOptions): Promise<CoverageClient | undefined>;

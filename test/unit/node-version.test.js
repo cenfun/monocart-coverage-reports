@@ -19,5 +19,6 @@ describe('Node.js runtime metadata', () => {
         assert.ifError(result.error);
         assert.equal(result.status, 0, result.stderr);
         assert.equal(result.stdout.trim(), pkg.version);
-    });
+    // Allow the child-process deadline to expire before Mocha's, even in parallel runs.
+    }).timeout(15000);
 });

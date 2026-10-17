@@ -16,8 +16,9 @@ void [defaultReport, defaultSnapshot, defaultDiff, defaultClient, defaultSession
 const entries: V8CoverageEntry[] = [];
 void factoryReport.add(entries);
 void classReport.loadConfig();
-void CDPClient({ port: 9229 });
-void WSSession;
+void CDPClient({ port: 9229, timeout: 10000, requestTimeout: 30000 });
+const createSession = (ws: any) => new WSSession(ws, { timeout: 0 });
+void createSession;
 Util.initLoggingLevel('off');
 
 async function checkResults() {
