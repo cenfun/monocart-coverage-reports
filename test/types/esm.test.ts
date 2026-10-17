@@ -1,5 +1,5 @@
 import DefaultMCR, {
-    MCR, CoverageReport, getSnapshot, diffSnapshot, CDPClient, WSSession, Util,
+    MCR, CoverageReport, CoverageClient, getSnapshot, diffSnapshot, CDPClient, WSSession, Util,
     type CoverageReportOptions, type CoverageResults, type V8CoverageEntry
 } from 'monocart-coverage-reports';
 
@@ -12,7 +12,10 @@ const defaultDiff: typeof diffSnapshot = DefaultMCR.diffSnapshot;
 const defaultClient: typeof CDPClient = DefaultMCR.CDPClient;
 const defaultSession: typeof WSSession = DefaultMCR.WSSession;
 const defaultUtil: typeof Util = DefaultMCR.Util;
-void [defaultReport, defaultSnapshot, defaultDiff, defaultClient, defaultSession, defaultUtil];
+// named export keeps both the type and the constructor value
+const clientConstructor: typeof MCR.CoverageClient = CoverageClient;
+const defaultClientConstructor: typeof CoverageClient = DefaultMCR.CoverageClient;
+void [defaultReport, defaultSnapshot, defaultDiff, defaultClient, defaultSession, defaultUtil, clientConstructor, defaultClientConstructor];
 const entries: V8CoverageEntry[] = [];
 void factoryReport.add(entries);
 void classReport.loadConfig();
