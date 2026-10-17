@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Generate the 1200x630 Open Graph image for the Monocart Coverage Reports docs site.
+"""Generate the 1200x630 Open Graph image for the Monocart Coverage Reports docs site.
 
 Pillow-only and portable: the monocart logomark is loaded from the
 pre-rendered og-logo.png next to this script (no SVG rasterizer needed).
