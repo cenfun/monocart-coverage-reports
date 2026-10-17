@@ -38,13 +38,13 @@ const buildDocs = () => {
     console.log('generated docs/index.html');
 
     // ship the social preview image into the built docs site (OG/Twitter cards)
-    const ogImageSrc = path.resolve(import.meta.dirname, 'template/og-image.png');
+    const ogImageSrc = path.resolve(import.meta.dirname, 'og-image/og-image.png');
     const ogImageDst = path.resolve(docsDir, 'og-image.png');
     try {
         fs.copyFileSync(ogImageSrc, ogImageDst);
-        console.log('copied template/og-image.png -> docs/og-image.png');
+        console.log('copied og-image/og-image.png -> docs/og-image.png');
     } catch (err) {
-        console.warn('template/og-image.png not found; skip social preview copy');
+        console.warn('og-image/og-image.png not found; skip social preview copy');
     }
 
 };

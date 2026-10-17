@@ -27,6 +27,7 @@
     - avoid intermediate arrays when finding enclosing covered blocks
     - initialize GC only on demand without installing host globals, and skip unnecessary memory sampling
   - **Maintenance**
+    - add Open Graph/Twitter Card metadata and a social preview image to the docs site, with a Playwright-based image generator (#133)
     - remove obsolete Node.js version checks from test builds
 
 For 2.x and 1.x changelogs, see [GitHub Releases](https://github.com/cenfun/monocart-coverage-reports/releases).

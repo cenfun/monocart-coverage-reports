@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Monocart Coverage Reports v3.x — social preview</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            width: 1200px;
+            height: 630px;
+            margin: 0;
+            border-top: 8px solid #d2691e;
+            background: #fff;
+            color: #24292e;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 230px 1fr;
+            align-items: center;
+            gap: 36px;
+            min-height: 240px;
+            margin-bottom: 28px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 46px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 230px;
+            height: 230px;
+        }
+
+        .brand {
+            font-size: 38px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+        }
+
+        .version {
+            margin-left: auto;
+            padding: 9px 18px;
+            border: 1px solid #edc8ab;
+            border-radius: 24px;
+            background: #fff5eb;
+            color: #a54e12;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        main {
+            margin: 32px 64px 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 44px;
+            line-height: 54px;
+            letter-spacing: -1.2px;
+        }
+
+        h1 span {
+            color: #a54e12;
+        }
+
+        .compatibility {
+            margin: 12px 0 0;
+            color: #57606a;
+            font-size: 23px;
+            line-height: 32px;
+        }
+
+        .tagline {
+            margin: 18px 0 0;
+            color: #57606a;
+            font-size: 23px;
+            line-height: 32px;
+        }
+
+        .command {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 126px;
+            padding: 24px 32px;
+            border: 1px solid #303b48;
+            border-radius: 16px;
+            background: #18212b;
+            color: #f6f8fa;
+        }
+
+        .command-label {
+            margin-bottom: 10px;
+            color: #f5bd8f;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1.6px;
+        }
+
+        code {
+            font-family: Consolas, 'Liberation Mono', monospace;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .prompt {
+            color: #7ee787;
+        }
+
+        .workflow {
+            padding-left: 32px;
+            border-left: 1px solid #44505d;
+            font-size: 23px;
+            line-height: 32px;
+        }
+
+        .workflow strong {
+            color: #7ee787;
+        }
+
+        .features {
+            display: flex;
+            gap: 14px;
+            margin-top: 23px;
+            color: #57606a;
+            font-size: 21px;
+            line-height: 28px;
+        }
+
+        .features span {
+            padding: 7px 18px;
+            border: 1px solid #d0d7de;
+            border-radius: 22px;
+            background: #f6f8fa;
+            white-space: nowrap;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 76px;
+            flex-shrink: 0;
+            margin-top: auto;
+            padding: 0 64px;
+            border-top: 1px solid #e5e9ed;
+            background: #f6f8fa;
+            color: #57606a;
+            font-size: 24px;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .link-icon,
+        .link-icon svg {
+            display: block;
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="hero" aria-label="Monocart Coverage Reports">
+            <img class="logo" src="{placeholder_logo}" alt="Monocart" width="230" height="230">
+            <div>
+                <header>
+                    <div class="brand">Monocart Coverage Reports</div>
+                    <div class="version">v3.x</div>
+                </header>
+                <h1>Rich native <span>V8 coverage reports.</span></h1>
+                <p class="compatibility">15+ built-in reports · Istanbul reports · Custom reports</p>
+                <p class="tagline">JavaScript &amp; CSS coverage. Native byte-level metrics.</p>
+            </div>
+        </section>
+        <section class="command" aria-label="Test command">
+            <div>
+                <div class="command-label">SINCE v3.0.0</div>
+                <code><span class="prompt">$</span> mcr test "*.test.js"</code>
+            </div>
+            <div class="workflow">Built-in Node.js test runner · <strong>node --test</strong><br>Automatic V8 coverage reports</div>
+        </section>
+        <div class="features">
+            <span>AI Agent Skills</span>
+            <span>Browser &amp; Node.js</span>
+            <span>Source maps</span>
+            <span>Merge Coverage</span>
+            <span>CI integration</span>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-link">
+            <span class="link-icon" aria-hidden="true">{placeholder_link_icon}</span>
+            <span>github.com/cenfun/monocart-coverage-reports</span>
+        </div>
+    </footer>
+</body>
+</html>
