@@ -135,7 +135,9 @@ Pending WebSocket commands now reject on disconnect or detach, and CDP protocol 
 
 You do not need to rewrite calls to `MCR(options)`, `new CoverageReport()`, `add()`, `addFromDir()` or `generate()` solely for this upgrade.
 
-Existing report and filter options remain available, including `reports`, `entryFilter`, `sourceFilter`, `filter`, `sourcePath` and `all`. The CLI can still cover CommonJS programs, and custom reporters can remain CommonJS when their file extension/package scope identifies them as such.
+Existing report and filter options remain available, including `reports`, `entryFilter`, `sourceFilter`, `filter`, `sourcePath` and `all`. The CLI can still cover CommonJS programs, and custom reporters can remain CommonJS when their file extension/package scope identifies them as such. Local Istanbul reporter paths retain CommonJS resolution, including omitted `.js` extensions and directory entries (`package.json` `main` or `index.js`); local V8/`both` reporter paths should use explicit file extensions.
+
+Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(context)`, while V8 and `both` reporters implement `generate(reportData)`. The `both` type accepts results from either input format, distinguished by `reportData.type`; it does not receive simultaneous `v8Data` and `istanbulData` properties. See [Custom Reporter](README.md#available-reports) for examples.
 
 - `mcr test` is a new **optional** command; you do not have to replace your existing test runner.
 - `outputFilter` is a new **optional** filter, disabled by default. You do not have to replace `entryFilter` / `sourceFilter` with it.

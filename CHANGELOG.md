@@ -18,6 +18,7 @@
   - **Bug Fixes**
     - generate coverage after failed tests and preserve test/report failure exit codes
     - preserve config error details and original causes, including non-Error throws
+    - preserve CommonJS path resolution for local Istanbul custom reporters, including extensionless paths and directory entries
     - propagate concurrency task failures and drain in-flight work before queue cleanup
     - settle HTTP requests on timeout, cancellation or premature response closure and release their connections
     - retry localhost requests through IPv4 only on connection refusal, not on HTTP errors, JSON parsing failures, timeouts or cancellation
@@ -30,5 +31,6 @@
   - **Maintenance**
     - add Open Graph/Twitter Card metadata and a social preview image to the docs site, with a Playwright-based image generator (#133)
     - remove obsolete Node.js version checks from test builds
+    - clarify custom reporter interfaces and the meaning of the `both` report type in English and Chinese docs
 
 For 2.x and 1.x changelogs, see [GitHub Releases](https://github.com/cenfun/monocart-coverage-reports/releases).

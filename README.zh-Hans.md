@@ -243,10 +243,12 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
     - V8自定义报告
     > 例子: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
-    `type` 选项决定报告接收的覆盖率数据格式：
-    - `'istanbul'` — 报告接收 Istanbul 格式的覆盖率数据（`coverageResults.istanbulData`）。
-    - `'v8'` — 报告接收原生 V8 格式的覆盖率数据（`coverageResults.v8Data`）。
-    - `'both'` — 报告同时接收两种格式，可通过 `coverageResults.v8Data` 和 `coverageResults.istanbulData` 访问。
+    `type` 选项决定报告接口及执行时机：
+    - `'istanbul'` — 使用 Istanbul 报告接口：先调用 `new Reporter(reportOptions)`，再调用 `execute(context)`。context 提供 Istanbul 报告树和源码查找能力。V8 输入会先转换为 Istanbul 覆盖率数据。
+    - `'v8'`（默认值）— 对 V8 输入，先调用 `new Reporter(reportOptions, globalOptions)`，再调用 `await generate(reportData)`。`reportData` 是 V8 覆盖率结果，包含 `type`、`summary` 和 `files`；每个文件包含 V8 覆盖范围和汇总。
+    - `'both'` — 对 V8 或 Istanbul 输入均使用上述 `generate(reportData)` 接口。请检查 `reportData.type`，按对应的结果结构处理。它**不会**同时提供两份原始格式的数据，结果中不存在 `v8Data` 或 `istanbulData` 属性。
+
+    支持 CommonJS 和 ESM 报告。Istanbul 本地报告路径保留 CommonJS 解析规则，支持省略 `.js` 扩展名和目录入口（`package.json` 的 `main` 或 `index.js`）。V8/`both` 本地报告路径请使用明确的文件扩展名。
 
 ### Multiple Reports:
 如何配置多个报告

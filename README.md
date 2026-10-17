@@ -243,10 +243,12 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
     - V8 custom reporter
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
-    The `type` option determines which coverage format the reporter receives:
-    - `'istanbul'` — the reporter receives Istanbul-format coverage data (`coverageResults.istanbulData`).
-    - `'v8'` — the reporter receives native V8-format coverage data (`coverageResults.v8Data`).
-    - `'both'` — the reporter receives both formats, accessible via `coverageResults.v8Data` and `coverageResults.istanbulData`.
+    The `type` option selects the reporter interface and when it runs:
+    - `'istanbul'` — uses the Istanbul reporter interface: `new Reporter(reportOptions)` followed by `execute(context)`. The context provides Istanbul report trees and source lookup. V8 input is converted to Istanbul coverage first.
+    - `'v8'` (default) — uses `new Reporter(reportOptions, globalOptions)` followed by `await generate(reportData)` for V8 input. `reportData` is the V8 coverage result, with `type`, `summary` and `files`; each file contains V8 ranges and summaries.
+    - `'both'` — uses the same `generate(reportData)` interface for either V8 or Istanbul input. Check `reportData.type` to handle the corresponding result structure. This does **not** supply both raw formats together; there are no `v8Data` or `istanbulData` properties.
+
+    CommonJS and ESM reporters are supported. Local Istanbul reporter paths retain CommonJS resolution for omitted `.js` extensions and directories (`package.json` `main` or `index.js`). Use explicit file extensions for local V8/`both` reporter paths.
 
 ### Multiple Reports:
 ```js
