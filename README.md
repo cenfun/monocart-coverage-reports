@@ -103,6 +103,21 @@ mcr node my-app.js -r v8,console-details
 ```
 For more information, see [Command Line](#command-line)
 
+## AI Agent Skill
+
+The reusable [Monocart Coverage Reports skill](skills/monocart-coverage-reports/SKILL.md) helps AI coding agents collect coverage, configure the CLI, debug sourcemaps and filters, merge raw reports, and enforce CI thresholds. It uses a main `SKILL.md` with task-specific references loaded on demand, including version checks for 2.x/3.x differences.
+
+The npm package includes `skills/monocart-coverage-reports/`. Copy this **entire directory**, including `references/`, into your agent's supported skills location, or ask the agent to read `SKILL.md` directly. Installing MCR does not automatically register the skill or modify agent settings. The instructions are in English; requests and responses can use any language.
+
+From the host project root, locate the installed skill and package manifest (older releases may not include the skill):
+
+```sh
+node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
+node -p "require.resolve('monocart-coverage-reports/package.json')"
+```
+
+Read the resolved skill, then follow its relative reference links. Use the installed package's runtime, API, and version requirements rather than assuming all examples apply to older releases. These commands resolve files; they do not import Markdown as JavaScript.
+
 ## Options
 - Default options: [lib/default/options.js](./lib/default/options.js)
 - Options declaration see `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)

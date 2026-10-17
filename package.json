@@ -15,7 +15,8 @@
         "./register": "./lib/register/register.js",
         "./converter": "./lib/converter/converter.js",
         "./util": "./lib/utils/util.js",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./skills/*": "./skills/*"
     },
     "types": "./lib/index.d.ts",
     "engines": {
@@ -69,7 +70,8 @@
     "files": [
         "lib",
         "README.zh-Hans.md",
-        "migrate-to-3.md"
+        "migrate-to-3.md",
+        "skills"
     ],
     "license": "MIT",
     "repository": {

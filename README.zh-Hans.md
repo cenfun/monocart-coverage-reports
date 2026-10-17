@@ -103,6 +103,21 @@ mcr node my-app.js -r v8,console-details
 ```
 参见 [命令行](#command-line)
 
+## AI Agent Skill
+
+项目提供可复用的 [Monocart Coverage Reports 技能](skills/monocart-coverage-reports/SKILL.md)，帮助 AI coding agent 采集覆盖率、配置 CLI、排查 sourcemap 和过滤问题、合并 raw 报告及设置 CI 阈值。结构为主 `SKILL.md` 加按需加载的专题参考文档，并明确区分 2.x/3.x 的版本要求。
+
+npm 包包含 `skills/monocart-coverage-reports/`。请将**整个目录**（包括 `references/`）复制到 agent 支持的 skills 目录，或直接让 agent 读取 `SKILL.md`。安装 MCR 不会自动注册技能或修改 agent 配置。技能说明使用英文，但提问和回复可以使用中文或其他语言。
+
+在使用 MCR 的项目根目录中定位已安装的技能和包配置（旧版本可能尚未包含技能）：
+
+```sh
+node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
+node -p "require.resolve('monocart-coverage-reports/package.json')"
+```
+
+读取定位到的技能文件，再按相对链接读取专题文档。请以已安装包的运行时、API 和版本要求为准，不要假设所有示例都适用于旧版本。以上命令用于定位文件，不是将 Markdown 作为 JavaScript 导入。
+
 ## Options
 - 默认选项: [lib/default/options.js](./lib/default/options.js)
 - 选项的类型描述，见 `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
