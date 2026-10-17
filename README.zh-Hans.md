@@ -961,29 +961,7 @@ mcr --import tsx node ./test.ts
 mcr --env .env.test node ./test.js
 ```
 
-- `test`: 使用 Node.js 自带的测试 runner 运行测试，并自动生成覆盖率报告。需要 Node.js **>= 22.15.0**。在 `mcr.config.js` 中指定测试目标：
-```js
-export default {
-    // node --test 原生接受的测试文件路径或 glob
-    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
-    reports: ['v8', 'console-summary'],
-    outputDir: './coverage-reports'
-};
-```
-```sh
-mcr test
-mcr test "../tests/**/*.test.js" -c ./mcr.config.js
-mcr test "../tests/**/*.test.js" -r v8,console-summary
-mcr test ./test/first.test.js ./test/second.test.js
-mcr test "../tests/**/*.test.js" -c ./mcr.config.js -- --test-name-pattern="my test" --test-reporter=spec
-# 也支持将命令放在初始分隔符后：
-mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=spec
-```
-命令行指定的测试目标会**覆盖**配置中的 `test`，而不是追加；未指定命令行目标时才使用配置。命令行指定目标时可以不使用配置文件。原有 MCR 参数（如 `-c`、`-r`、`-o`、`--lcov`）可以放在目标之前或之后。Node runner 参数请放在 `--` 后，原样透传，不作为 MCR 参数或目标覆盖项解析。建议为 glob 加引号，避免 shell 提前展开。使用另一种 `mcr [options] -- test ...` 形式时，所有 MCR 参数必须放在第一个 `--` 前，Node runner 参数则放在第二个 `--` 后。
-
-测试目标原样传给 `node --test`。MCR 不检查目标类型或文件是否存在，不展开目录/glob，不解析或标准化路径，不转义特殊字符，也不去重；`node --test` 原生接收测试文件路径或 glob 形式的位置参数，而不是 JavaScript 配置对象。MCR 配置中的字符串表示一个这样的参数（不会按空格拆分），字符串数组表示多个按原顺序传递的参数；`null` 仅是 MCR 跳过测试的默认值，不会传给 Node。测试发现、匹配、参数解释及错误行为均交给 Node。相对路径以当前工作目录为基准，而不是配置文件目录。不承诺直接指定目录会递归发现测试；递归匹配请使用 `"../tests/**/*.test.js"` 等 glob，行为以当前 Node 版本的原生支持为准。TypeScript 执行能力取决于 Node 版本或 `--import tsx` 等加载器。
-
-`test` 默认为 `null`；未指定命令行目标，且 `test` 未配置或为 `null`、空字符串、`[]` 时跳过测试，也不生成报告。MCR 仅判断是否提供了目标，无效或未匹配目标由 Node 自行处理。如果没有产生覆盖率数据且无法生成报告，命令仍会在报告生成阶段失败。显式指定的配置文件不存在或配置加载失败时，也会失败退出，不会静默跳过测试。测试失败仍生成覆盖率报告，并保留非零退出状态；报告生成失败同样非零退出。支持现有覆盖率配置和 CLI hooks，可按需通过过滤器排除测试文件。**`test` 配置在其他 CLI 命令和 API 调用中均不生效**，包括 `merge` 和 `generate()`。
+- `test`：运行 Node.js 测试并生成覆盖率报告，参见[使用 `mcr test` 运行测试](#run-tests-with-mcr-test)。
 
 - `merge`: 直接合并 `inputDir` 中的原始覆盖率数据并生成合并报告，无需启动子进程。
 ```sh
@@ -1042,11 +1020,30 @@ export default {
 npx mcr test
 # 覆盖配置中的测试目标，并在 -- 后透传 Node.js 测试 runner 参数
 npx mcr test "./test/unit/**/*.test.js" -- --test-reporter=spec
+
+# 显式指定配置文件
+npx mcr test "../tests/**/*.test.js" -c ./mcr.config.js
+
+# 在命令行选择报告
+npx mcr test "../tests/**/*.test.js" -r v8,console-summary
+
+# 运行多个测试文件
+npx mcr test ./test/first.test.js ./test/second.test.js
+
+# 按测试名称筛选，并指定 reporter
+npx mcr test "../tests/**/*.test.js" -c ./mcr.config.js -- --test-name-pattern="my test" --test-reporter=spec
+
+# 将 test 命令放在初始分隔符后
+npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=spec
 ```
 
-命令行指定的目标会替换配置中的 `test`。两者均未提供时，`mcr test` 会跳过测试且不生成报告。测试失败仍会生成覆盖率报告，并以非零状态退出。
+命令行指定的测试目标会**覆盖**配置中的 `test`，而不是追加；未指定命令行目标时才使用配置。命令行指定目标时可以不使用配置文件。原有 MCR 参数（如 `-c`、`-r`、`-o`、`--lcov`）可以放在目标之前或之后。Node runner 参数请放在 `--` 后，原样透传，不作为 MCR 参数或目标覆盖项解析。建议为 glob 加引号，避免 shell 提前展开。使用另一种 `mcr [options] -- test ...` 形式时，所有 MCR 参数必须放在第一个 `--` 前，Node runner 参数则放在第二个 `--` 后。
 
-完整的目标规则、参数透传和错误处理说明见[命令行](#command-line)。原有覆盖率 API 和其他 CLI 命令仍可使用，参见[用法](#usage)。
+测试目标原样传给 `node --test`。MCR 不检查目标类型或文件是否存在，不展开目录/glob，不解析或标准化路径，不转义特殊字符，也不去重；`node --test` 原生接收测试文件路径或 glob 形式的位置参数，而不是 JavaScript 配置对象。MCR 配置中的字符串表示一个这样的参数（不会按空格拆分），字符串数组表示多个按原顺序传递的参数；`null` 仅是 MCR 跳过测试的默认值，不会传给 Node。测试发现、匹配、参数解释及错误行为均交给 Node。相对路径以当前工作目录为基准，而不是配置文件目录。不承诺直接指定目录会递归发现测试；递归匹配请使用 `"../tests/**/*.test.js"` 等 glob，行为以当前 Node 版本的原生支持为准。TypeScript 执行能力取决于 Node 版本或 `--import tsx` 等加载器。
+
+`test` 默认为 `null`；未指定命令行目标，且 `test` 未配置或为 `null`、空字符串、`[]` 时跳过测试，也不生成报告。MCR 仅判断是否提供了目标，无效或未匹配目标由 Node 自行处理。如果没有产生覆盖率数据且无法生成报告，命令仍会在报告生成阶段失败。显式指定的配置文件不存在或配置加载失败时，也会失败退出，不会静默跳过测试。测试失败仍生成覆盖率报告，并保留非零退出状态；报告生成失败同样非零退出。支持现有覆盖率配置和 CLI hooks，可按需通过过滤器排除测试文件。**`test` 配置在其他 CLI 命令和 API 调用中均不生效**，包括 `merge` 和 `generate()`。
+
+其他 CLI 选项参见[命令行](#command-line)。
 
 ## Merge Coverage Reports
 以下这些使用场景可能需要使用合并覆盖率报告：

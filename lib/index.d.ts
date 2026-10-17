@@ -551,6 +551,9 @@ declare namespace MCR {
     //=====================================================================================================
 
     export class CoverageClient {
+        /** Best-effort command: logs failures at debug level and resolves to null instead of rejecting. */
+        safeSend: (method: string, params?: any) => Promise<any>;
+
         /** start js coverage */
         startJSCoverage: () => Promise<void>;
         /** stop and return js coverage */
