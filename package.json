@@ -85,7 +85,8 @@
         "istanbul-lib-report": "^3.0.1",
         "istanbul-reports": "^3.2.0",
         "lz-utils": "^2.1.1",
-        "monocart-locator": "^1.0.6"
+        "monocart-locator": "^1.0.6",
+        "@jridgewell/trace-mapping": "^0.3.31"
     },
     "devDependencies": {
         "@actions/core": "^3.0.1",
