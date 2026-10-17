@@ -96,6 +96,7 @@ function buildEndPlugin() {
                     js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);"
                 },
                 minify: true,
+                legalComments: 'none',
                 sourcemap: false,
                 metafile: true
             });
