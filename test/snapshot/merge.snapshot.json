@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "75.80 %",
+        "bytes": "75.45 %",
         "statements": "78.37 %",
         "branches": "60.07 %",
         "functions": "72.73 %",
-        "lines": "65.20 %"
+        "lines": "64.53 %"
     },
     "files": {
         "my-vm-filename.js": {
@@ -169,6 +169,24 @@
             "bytes": "90.81 %",
             "uncoveredLines": "16-18",
             "extras": "1b,3b,5b,7b,11b,15b,19b,23b,25b"
+        },
+        "test/mock/src/css/component.module.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "3b,8b"
+        },
+        "test/mock/src/css/main.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-4",
+            "extras": "5b"
         },
         "test/mock/src/ignore/ignore.js": {
             "functions": "100.00 %",
