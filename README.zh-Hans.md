@@ -1,5 +1,3 @@
-![Monocart Coverage Reports](./assets/og-image.png)
-
 # Monocart Coverage Reports
 
 [![npm](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
@@ -1422,3 +1420,6 @@ npm run eol
 ## Thanks
 - [@bcoe](https://github.com/bcoe)
 - [@edumserrano](https://github.com/edumserrano)
+
+
+![Monocart Coverage Reports](./assets/og-image.png)
