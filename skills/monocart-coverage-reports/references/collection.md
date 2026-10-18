@@ -1,6 +1,6 @@
 # Coverage collection recipes
 
-Examples use ESM (`.mjs`, or `.js` under `"type": "module"`) and the current 3.x runtime contract. Reuse installed browser/test tools; do not install every collector. MCR itself is a Node-side library, not a browser import.
+Examples use ESM (`.mjs`, or `.js` under `"type": "module"`) and the MCR 3.x runtime contract. Reuse installed browser/test tools; do not install every collector. MCR itself is a Node-side library, not a browser import.
 
 ## Choose the input
 

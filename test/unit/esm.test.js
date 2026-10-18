@@ -73,7 +73,9 @@ describe('ESM package', function() {
     });
 
     it('exposes a usable CoverageClient constructor through named and factory exports', () => {
-        const session = { send: async () => ({}) };
+        const session = {
+            send: () => Promise.resolve({})
+        };
         const client = new CoverageClient(session);
         assert.equal(client.session, session);
         assert.ok(client instanceof DefaultMCR.CoverageClient);

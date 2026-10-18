@@ -63,7 +63,8 @@
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
-        "lint": "eslint src/ --fix && stylelint src/**/*.scss",
+        "lint": "eslint src/ test/unit/ --fix && stylelint src/**/*.scss && npm run lint:readme",
+        "lint:readme": "node ./scripts/lint-readme.js",
         "version": "npm run build",
         "publish": "node ./scripts/publish.js"
     },

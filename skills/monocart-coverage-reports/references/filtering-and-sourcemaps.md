@@ -55,7 +55,7 @@ export default {
 
 An entry may be `dist/main.js` but contain the desired `src/*` sources. Filtering entries to `**/src/**` would discard that bundle before its sources can be recovered.
 
-Alternative final-file selection, **not supported by published 2.13.x**:
+Alternative final-file selection:
 
 ```js
 // output-filter.config.mjs
@@ -128,26 +128,29 @@ const options = {
 For TS/JSX/Vue sources that the JS AST parser cannot directly parse, use an appropriate transformer already present in the host. Example for **TypeScript without JSX**, if `@swc/core` is installed:
 
 ```js
-import path from 'node:path';
+// untested-typescript.config.mjs
+import { fileURLToPath } from 'node:url';
 import { transform } from '@swc/core';
 
-const options = {
+export default {
     all: {
         dir: './src',
         filter: '**/*.ts',
         transformer: async (entry) => {
             const { code, map } = await transform(entry.source, {
-                filename: path.basename(entry.url),
+                filename: fileURLToPath(entry.url),
                 sourceMaps: true,
                 isModule: true,
                 jsc: { parser: { syntax: 'typescript' } }
             });
             entry.source = code;
-            entry.sourceMap = map;
+            entry.sourceMap = JSON.parse(map);
         }
     }
 };
 ```
+
+SWC returns its map as a JSON string; parse it before assigning `entry.sourceMap`. Preserve the full filename so different directories' `index.ts` files retain distinct source paths. Use a consistent `baseDir` when generating or merging.
 
 Use the matching JSX/TSX or Vue compiler for those languages; this is not a universal `.vue` transformer. `all.transformer` handles untested sources; `onEntry` is the separate per-collected-V8-entry hook. Preserve sources/maps/offsets consistently when transforming collected data.
 

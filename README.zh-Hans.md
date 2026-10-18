@@ -81,7 +81,7 @@ import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ["v8", "console-details"],
+    reports: ['v8', 'console-details'],
     cleanCache: true
 });
 await mcr.add(coverageData);
@@ -105,7 +105,7 @@ mcr node my-app.js -r v8,console-details
 
 ## AI Agent Skill
 
-项目提供可复用的 [Monocart Coverage Reports 技能](skills/monocart-coverage-reports/SKILL.md)，帮助 AI coding agent 采集覆盖率、配置 CLI、排查 sourcemap 和过滤问题、合并 raw 报告及设置 CI 阈值。结构为主 `SKILL.md` 加按需加载的专题参考文档，并明确区分 2.x/3.x 的版本要求。
+项目提供可复用的 [Monocart Coverage Reports 技能](skills/monocart-coverage-reports/SKILL.md)，帮助 AI coding agent 采集覆盖率、配置 CLI、排查 sourcemap 和过滤问题、合并 raw 报告及设置 CI 阈值。结构为主 `SKILL.md` 加按需加载的专题参考文档，仅面向 MCR 3.x，并检查其运行环境要求。
 
 npm 包包含 `skills/monocart-coverage-reports/`。请将**整个目录**（包括 `references/`）复制到 agent 支持的 skills 目录，或直接让 agent 读取 `SKILL.md`。安装 MCR 不会自动注册技能或修改 agent 配置。技能说明使用英文，但提问和回复可以使用中文或其他语言。
 
@@ -222,7 +222,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
 - 自定义报告
     ```js
-    {
+    const coverageOptions = {
         reports: [
             [path.resolve('./test/custom-istanbul-reporter.js'), {
                 type: 'istanbul',
@@ -236,7 +236,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
                 type: 'both'
             }]
         ]
-    }
+    };
     ```
     - Istanbul自定义报告
     > 例子: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
@@ -270,15 +270,15 @@ const coverageOptions = {
 
         // custom reports
         // Specify reporter name with the NPM package
-        ["custom-reporter-1"],
-        ["custom-reporter-2", {
-            type: "istanbul",
-            key: "value"
+        ['custom-reporter-1'],
+        ['custom-reporter-2', {
+            type: 'istanbul',
+            key: 'value'
         }],
         // Specify reporter name with local path
         ['/absolute/path/to/custom-reporter.js']
     ]
-}
+};
 const mcr = MCR(coverageOptions);
 ```
 
@@ -346,7 +346,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -375,7 +375,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -432,24 +432,26 @@ const coverageData = [... jsCoverage.map((it) => {
 `timeout` 控制 HTTP 调试目标发现和 WebSocket 连接的超时（默认 10000ms）；`requestTimeout` 控制内置 WebSocket 会话中每条 CDP 命令的超时（默认 30000ms）。设为 `0` 可禁用相应超时。外部 Playwright/Puppeteer 会话自行管理命令超时。自定义 socket 可使用 `new MCR.WSSession(ws, { timeout: 30000 })`。
 
 - `CDPClient`为`MCR`提供的内置接口类，用来更便捷的处理覆盖率相关数据，所有的API如下
-```js
-// 开始和停止并收集JS的覆盖率数据
-startJSCoverage: () => Promise<void>;
-stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+```ts
+interface CoverageClient {
+    // 开始和停止并收集JS的覆盖率数据
+    startJSCoverage: () => Promise<void>;
+    stopJSCoverage: () => Promise<V8CoverageEntry[]>;
 
-// 开始和停止并收集CSS的覆盖率数据，支持匿名文件(比如style里的css)
-startCSSCoverage: () => Promise<void>;
-stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+    // 开始和停止并收集CSS的覆盖率数据，支持匿名文件(比如style里的css)
+    startCSSCoverage: () => Promise<void>;
+    stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
 
-// 开始和停止并收集JS和CSS的覆盖率数据
-startCoverage: () => Promise<void>;
-stopCoverage: () => Promise<V8CoverageEntry[]>;
+    // 开始和停止并收集JS和CSS的覆盖率数据
+    startCoverage: () => Promise<void>;
+    stopCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** 如果开启了NODE_V8_COVERAGE，这个接口用来手动保存当前覆盖率数据 */
-writeCoverage: () => Promise<string>;
+    /** 如果开启了NODE_V8_COVERAGE，这个接口用来手动保存当前覆盖率数据 */
+    writeCoverage: () => Promise<string>;
 
-/** 收集istanbul覆盖率数据 */
-getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+    /** 收集istanbul覆盖率数据 */
+    getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+}
 ```
 
 - 结合使用Node调试端口`--inspect=9229` 或者浏览器调试端口 `--remote-debugging-port=9229`
@@ -476,7 +478,7 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
@@ -493,7 +495,7 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
@@ -506,7 +508,7 @@ const pageCdpConnection = await driver.createCDPConnection('page');
 const session = new MCR.WSSession(pageCdpConnection._wsConnection);
 const client = await MCR.CDPClient({
     session
-})
+});
 ```
 
 ### V8 Coverage Data API
@@ -514,7 +516,7 @@ const client = await MCR.CDPClient({
 - [Playwright的覆盖率接口](https://playwright.dev/docs/api/class-coverage)
 - [Puppeteer的覆盖率接口](https://pptr.dev/api/puppeteer.coverage)
 - [DevTools Protocol的覆盖率接口](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) 参见 [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) 和 [v8-coverage](https://github.com/bcoe/v8-coverage)
-```js
+```ts
 // Coverage data for a source range.
 export interface CoverageRange {
     // JavaScript script source offset for the range start.
@@ -603,15 +605,15 @@ export type V8CoverageData = ScriptCoverage[];
 过滤可以使用函数:
 ```js
 const coverageOptions = {
-    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    entryFilter: (entry) => entry.url.indexOf('main.js') !== -1,
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
 也可以使用便捷的[`minimatch`](https://github.com/isaacs/minimatch)来匹配（推荐）:
 ```js
 const coverageOptions = {
-    entryFilter: "**/main.js",
-    sourceFilter: "**/src/**"
+    entryFilter: '**/main.js',
+    sourceFilter: '**/src/**'
 };
 ```
 支持多个匹配:
@@ -636,10 +638,17 @@ mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}"
 ```js
 const coverageOptions = {
     entryFilter: (entry) => {
-        if (minimatch(entry.url, '**/node_modules/**')) { return false; }
-        if (minimatch(entry.url, '**/vendor.js')) { return false; }
-        if (minimatch(entry.url, '**/src/**')) { return true; }
-        return false; // else unmatched
+        if (minimatch(entry.url, '**/node_modules/**')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/vendor.js')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/src/**')) {
+            return true;
+        }
+        // else unmatched
+        return false;
     }
 };
 ```
@@ -714,7 +723,7 @@ const coverageOptions = {
 ```js
 const coverageOptions = {
     sourcePath: {
-        'my-dist-file1/': '', 
+        'my-dist-file1/': '',
         'my-dist-file2/': ''
     }
 };
@@ -725,23 +734,23 @@ import path from 'node:path';
 
 // MCR coverage options
 const coverageOptions = {
-    sourcePath: (filePath, info)=> {
+    sourcePath: (filePath, info) => {
         if (!filePath.includes('/') && info.distFile) {
             return `${path.dirname(info.distFile)}/${filePath}`;
         }
         return filePath;
     }
-}
+};
 ```
 
 ## Adding Empty Coverage for Untested Files
 默认，未测试的文件不会包含在覆盖率报告中。使用 `all` 选项可将它们以 0% 覆盖率加入报告。即使没有收集到任何覆盖率数据，也会为匹配的未测试文件生成 V8 报告。
 ```js
 const coverageOptions = {
-    all: './src',
+    all: './src'
 
     // 支持多个目录
-    all: ['./src', './lib'],
+    // all: ['./src', './lib']
 };
 ```
 未测试的文件也适用于`sourceFilter`过滤器. 而且也可以指定自己的`filter`过滤器 (可以返回文件类型来支持js或css的覆盖率格式):
@@ -754,30 +763,29 @@ const coverageOptions = {
             '**/ignored-*.js': false,
             '**/*.html': false,
             // empty css coverage
-            '**/*.scss': "css",
+            '**/*.scss': 'css',
             '**/*': true
         }
     }
 };
 ```
-我们可能需要编译.ts, .jsx, .vue等等这样的文件, 这样才能被默认的AST解析器解析，以得到更多的覆盖率指标的数据
+可以将未测试的文件转换成 JavaScript，以便进行 AST 分析。以下示例仅处理**不含 JSX 的 TypeScript**，并假定已安装 `@swc/core`。JSX/TSX 或 Vue 应使用匹配的编译器和解析器，这不是通用转换器。保留完整文件路径，避免不同目录下的同名文件冲突；SWC 返回的 sourcemap 是 JSON 字符串，赋值前需要解析。
 ```js
-import path from 'node:path';
-import swc from "@swc/core";
+import { fileURLToPath } from 'node:url';
+import { transform } from '@swc/core';
 const coverageOptions = {
     all: {
         dir: ['./src'],
+        filter: '**/*.ts',
         transformer: async (entry) => {
-            const { code, map } = await swc.transform(entry.source, {
-                filename: path.basename(entry.url),
+            const { code, map } = await transform(entry.source, {
+                filename: fileURLToPath(entry.url),
                 sourceMaps: true,
                 isModule: true,
                 jsc: {
                     parser: {
-                        syntax: "typescript",
-                        jsx: true
-                    },
-                    transform: {}
+                        syntax: 'typescript'
+                    }
                 }
             });
             entry.source = code;
@@ -790,35 +798,44 @@ const coverageOptions = {
 ## Hooks
 
 ### `onEnd` — 报告生成后触发
-典型用法：检测覆盖率是否达标，低于 threshold 时抛错退出。
+典型用法：检测覆盖率是否达标，失败时抛错，让 API 调用方处理异常、CLI 返回非零状态；不要使用 `process.exit()` 提前中断清理。
 ```js
-import EC from 'eight-colors';
+const getCoverageError = (metric, summary, minimum) => {
+    if (!summary || !(summary.total > 0)) {
+        return `${metric}: missing or empty coverage`;
+    }
+    const { pct } = summary;
+    if (typeof pct !== 'number' || !Number.isFinite(pct) || pct < minimum) {
+        return `${metric}: ${pct}%, required ${minimum}%`;
+    }
+    return '';
+};
 const coverageOptions = {
     name: 'My Coverage Report',
     outputDir: './coverage-reports',
     onEnd: (coverageResults) => {
+        if (!coverageResults) {
+            throw new Error('No coverage results');
+        }
         const thresholds = {
             bytes: 80,
             lines: 60
         };
-        console.log('check thresholds ...', thresholds);
         const errors = [];
-        const { summary } = coverageResults;
-        Object.keys(thresholds).forEach((k) => {
-            const pct = summary[k].pct;
-            if (pct < thresholds[k]) {
-                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
+        for (const [metric, minimum] of Object.entries(thresholds)) {
+            const error = getCoverageError(metric, coverageResults.summary?.[metric], minimum);
+            if (error) {
+                errors.push(error);
             }
-        });
+        }
         if (errors.length) {
-            const errMsg = errors.join('\n');
-            console.log(EC.red(errMsg));
-            // throw new Error(errMsg);
-            // process.exit(1);
+            throw new Error(errors.join('\n'));
         }
     }
-}
+};
 ```
+
+本示例拒绝缺失或总数为零的指标；如果某项指标允许为空，应明确调整策略。没有可用输入时，`generate()` 可能直接返回 `undefined` 而不调用 `onEnd`。API 调用方必须检查返回值；普通 CLI 流程应使用干净的输出目录，并验证本次生成的非空报告。参见 [严格 CI 示例](skills/monocart-coverage-reports/references/reports-and-ci.md#reject-stale-reports-and-missing-collection-in-ci)。
 
 ### `onEntry` — 每个V8入口在处理前触发（仅V8）
 可以在进入AST解析前改写 entry（例如对非标准语法的源码做预编译），参见 [Unparsable source](#unparsable-source)
@@ -844,6 +861,8 @@ export default {
 ```
 
 ## Ignoring Uncovered Codes
+<!-- readme-lint-disable -->
+
 使用特定的注释，以`v8 ignore `开头可以忽略未覆盖的代码:
 - 忽略开始到结束
 ```js
@@ -877,6 +896,8 @@ function uncovered() {
 /* node:coverage enable */
 ```
 - 可以设置 `v8Ignore: false` 完全禁用基于注释的忽略机制。
+
+<!-- readme-lint-enable -->
 
 ## Multiprocessing Support
 > 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](#debug-for-coverage-and-sourcemap)，或者使用了`raw`报告
@@ -1066,12 +1087,12 @@ npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=sp
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
-    outputDir: "./coverage-reports/unit",
+    outputDir: './coverage-reports/unit',
     reports: [
         ['raw', {
             // relative path will be "./coverage-reports/unit/raw"
             // defaults to raw
-            outputDir: "raw"
+            outputDir: 'raw'
         }],
         ['v8'],
         ['console-details']
@@ -1107,7 +1128,7 @@ const coverageOptions = {
         '**/node_modules/**': false,
         '**/src/**': true
     },
-    
+
     sourcePath: (filePath, info) => {
         // Unify the file path for the same files
         // For example, the file index.js has different paths:
@@ -1121,7 +1142,7 @@ const coverageOptions = {
         ['v8'],
         ['console-details']
     ],
-    
+
     onEnd: () => {
         // remove the raw files if no longer needed
         // inputDir.forEach((p) => {
@@ -1151,7 +1172,7 @@ await new CoverageReport(coverageOptions).generate();
 > 常见问题
 ### Unexpected coverage
 覆盖率看起来不正确，多数情况是因为sourcemap转换的问题导致的. 可以先尝试设置构建工具的 `minify=false` 也就是不要压缩代码来解决。下面来看看sourcemap存在问题的具体原因：
-```js
+```text
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
@@ -1167,21 +1188,21 @@ const a = tf ? 'true' : 'false';
 ### Unparsable source
 源码无法解析问题。由上面我们知道`MCR`通过分析源码的AST获取更多指标的覆盖率信息，但源码如果不是标准的 ECMAScript，比如`ts`, `jsx`这些，那么分析的时候就会报错，此时我们可以手动来编译这些文件（可行但不推荐）.
 ```js
-import * as fs from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as TsNode from 'ts-node';
 const coverageOptions = {
-    onEntry: async (entry) => {
-        const filePath = fileURLToPath(entry.url)
-        const originalSource = fs.readFileSync(filePath).toString("utf-8");
+    onEntry: (entry) => {
+        const filePath = fileURLToPath(entry.url);
+        const originalSource = fs.readFileSync(filePath).toString('utf-8');
         const fileName = path.basename(filePath);
         const tn = TsNode.create({});
         const source = tn.compile(originalSource, fileName);
         entry.fake = false;
         entry.source = source;
     }
-}
+};
 ```
 
 ### JavaScript heap out of memory
@@ -1222,7 +1243,7 @@ const coverageOptions = {
 
 - 使用环境变量`MCR_LOG_TIME`显示时间日志
 ```js
-process.env.MCR_LOG_TIME = true
+process.env.MCR_LOG_TIME = true;
 ```
 
 ## Integration with Any Testing Framework
@@ -1327,7 +1348,7 @@ mcr ava
 - Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     reports: [
         ['codecov']
     ]
@@ -1347,7 +1368,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1365,7 +1386,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1405,10 +1426,18 @@ npm install
 npx playwright install --with-deps
 
 npm run build
+npm run lint
 npm run test
 
 npm run dev
 ```
+README 中的 JavaScript 示例通过 `npm run lint:readme` 和 `npm run lint` 使用项目的 ESLint 配置检查。仅针对省略上下文的片段关闭 `no-undef` 和 `no-unused-vars`，语法、代码风格及其他正确性规则保持启用。TypeScript 声明使用 `ts` 代码块，示意图使用 `text`。刻意保留非标准格式的演示可继续使用 `js` 高亮，并在区域前后分别添加独占一行的 `<!-- readme-lint-disable -->` 和 `<!-- readme-lint-enable -->` 隐藏注释；该区域不参与 lint 和自动修复。标记必须配对且不能嵌套，代码块内部出现的标记仅视为演示文本。
+
+```sh
+npm run lint:readme
+npm run lint:readme -- --fix
+```
+
 - Refreshing `eol=lf` for snapshot of test (Windows)
 ```sh
 git add . -u

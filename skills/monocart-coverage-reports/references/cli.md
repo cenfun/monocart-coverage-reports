@@ -1,6 +1,6 @@
-# CLI, configuration, and migration
+# CLI and configuration
 
-These examples target current checkout / 3.x behavior (Node.js >= 22.15.0). `mcr test` is new in 3.x. Verify the installed release before using it.
+These recipes support MCR 3.x only (Node.js >= 22.15.0). Verify the installed major version and runtime before using them.
 
 ## Executable and argument boundaries
 
@@ -87,10 +87,9 @@ export default {
 
 Hooks may be async. Use `onReady` for a concrete flush/readiness condition when necessary, not an arbitrary permanent delay. API integrations manage their own process lifecycle; they do not receive CLI-only hooks automatically. Preserve test/child failures even if cleanup or reporting also fails.
 
-## Upgrade from 2.x
+## API use in CommonJS hosts
 
-1. Upgrade local/CI/container and relevant child Node runtimes to >=22.15.0 only with approval; otherwise retain a verified compatible 2.x dependency **and lockfile**.
-2. Replace callable `require()` API usage with ESM import, or dynamic import in a CommonJS async entry:
+MCR 3.x uses ESM, but a CommonJS host can use dynamic import without converting its entire application:
 
 ```js
 // coverage.cjs
@@ -106,10 +105,4 @@ main().catch((error) => {
 });
 ```
 
-3. Ensure TypeScript output does not compile imports back into the old callable `require()`. Secondary `/util` and `/converter` entries have **named exports**, not defaults.
-4. Keep `.cjs` configs, or convert/rename deliberately. Fix explicit paths and handle config errors.
-5. Replace whole-command strings and shell-dependent argument composition; check failure exit behavior.
-6. Review remote sourcemap HTTP deadlines (30000 ms default), CDP discovery (10000 ms), and command deadlines (30000 ms); adjust only for observed needs.
-7. Regenerate representative reports, comparing mapped files, summaries, thresholds, and merges. `mcr test` and `outputFilter` are optional additions, not mandatory rewrites.
-
-The package's `migrate-to-3.md` contains the complete migration contract. The transitional checkout's manifest version can lag implementation; do not infer that a published 2.13.x release supports these changes.
+Use ESM-aware TypeScript module settings and verify emitted JavaScript. Secondary `/util` and `/converter` entries provide **named exports**, not defaults. These recipes do not cover other major versions; approved upgrades should follow the package's `migrate-to-3.md`.

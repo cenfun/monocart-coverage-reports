@@ -15,7 +15,7 @@ Resolve the manifest's `types` relative to its package directory (current path: 
 
 Current exports: main API, `/register` source-capture preload, `/converter` and `/util` named exports, `/package.json`, and `/skills/*` file resolution. Use the high-level API unless a task explicitly requires lower-level conversion.
 
-## Checkout source map
+## Checkout navigation
 
 Paths below are relative to the repository root and are generally **not shipped in npm** except `lib/`.
 
@@ -50,6 +50,6 @@ For a focused Mocha test: `npx mocha test/unit/config.test.js`. Browser/integrat
 
 Avoid unrelated generated changes. `npm run lint` currently includes `--fix`; inspect its scope before invoking it. Do not edit generated `lib/packages/*`, `lib/assets.js`, `dist/`, `docs/`, or snapshots just to hide a source defect; use the project's build/generation workflow when those artifacts genuinely need updating.
 
-When changing public behavior, align implementation, `lib/index.d.ts`, default options, English/Chinese docs, migration notes where applicable, and focused tests. Avoid asserting 3.x-only capabilities solely from this checkout's transitional `2.13.2` manifest. Validate installed package behavior separately when release compatibility matters.
+When changing public behavior, align implementation, `lib/index.d.ts`, default options, English/Chinese docs, migration notes where applicable, and focused tests. This skill supports MCR 3.x only. Validate the installed package separately when release compatibility matters; do not infer support for other major versions from these recipes.
 
 For changes to this skill, verify relative Markdown links, public resolution of `SKILL.md`, npm pack inclusion of **all** references, and any executable examples affected by the API change.

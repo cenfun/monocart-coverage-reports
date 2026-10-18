@@ -15,6 +15,8 @@
     - add `mcr test` with the native Node.js test runner and automatic coverage reports
     - support config/CLI test targets and Node runner arguments after `--`
     - add configurable CDP command timeouts (`requestTimeout`, default 30000ms; `0` disables the deadline)
+    - expose `CoverageClient` as a named export and as `MCR.CoverageClient`
+    - ship an AI agent skill for MCR 3.x with collection, filtering, reporting, and validated CI/shard-merging recipes
   - **Bug Fixes**
     - generate coverage after failed tests and preserve test/report failure exit codes
     - preserve config error details and original causes, including non-Error throws
@@ -32,5 +34,7 @@
     - add Open Graph/Twitter Card metadata and a social preview image to the docs site, with a Playwright-based image generator (#133)
     - remove obsolete Node.js version checks from test builds
     - clarify custom reporter interfaces and the meaning of the `both` report type in English and Chinese docs
+    - align English/Chinese TypeScript transformation and strict threshold examples
+    - lint README JavaScript examples with the project ESLint rules via `lint:readme`, including autofix and paired exclusion markers that preserve highlighting for nonstandard demonstrations
 
 For 2.x and 1.x changelogs, see [GitHub Releases](https://github.com/cenfun/monocart-coverage-reports/releases).

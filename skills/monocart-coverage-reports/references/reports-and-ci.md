@@ -132,28 +132,61 @@ The relative raw directory becomes `coverage-reports/shard-1/raw`. Upload/downlo
 
 ```js
 // merge-coverage.mjs
+import fs from 'node:fs';
+import path from 'node:path';
 import { MCR } from 'monocart-coverage-reports';
 
+const inputDir = [
+    './downloaded/shard-1/raw',
+    './downloaded/shard-2/raw'
+];
+// Check all expected shards BEFORE generation can clean old output.
+for (const dir of inputDir) {
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+        throw new Error(`Missing coverage shard: ${dir}`);
+    }
+    const coverageFiles = fs.readdirSync(dir).filter((name) =>
+        name.startsWith('coverage-') && name.endsWith('.json'));
+    let hasData = false;
+    for (const name of coverageFiles) {
+        const coverage = JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
+        if (coverage.type === 'v8' && Array.isArray(coverage.data)) {
+            hasData ||= coverage.data.length > 0;
+            for (const entry of coverage.data) {
+                const sourceFile = path.join(dir, `source-${entry.id}.json`);
+                const source = JSON.parse(fs.readFileSync(sourceFile, 'utf8'));
+                if (source.id !== entry.id || typeof source.source !== 'string') {
+                    throw new Error(`Invalid raw source: ${sourceFile}`);
+                }
+            }
+        } else if (coverage.type === 'istanbul' && coverage.data &&
+            typeof coverage.data === 'object' && !Array.isArray(coverage.data)) {
+            hasData ||= Object.keys(coverage.data).length > 0;
+        } else {
+            throw new Error(`Invalid raw coverage: ${dir}/${name}`);
+        }
+    }
+    if (!hasData) throw new Error(`Empty coverage shard: ${dir}`);
+}
+
 const report = MCR({
-    inputDir: [
-        './downloaded/shard-1/raw',
-        './downloaded/shard-2/raw'
-    ],
+    inputDir,
     outputDir: './coverage-reports/merged',
     reports: ['v8', 'lcovonly', 'console-summary'],
     cleanCache: true
 });
 const results = await report.generate();
-if (!results) throw new Error('No merged coverage generated');
+if (!results || !results.files.length) throw new Error('No merged coverage generated');
 ```
 
-CLI equivalent:
+CLI merge syntax (does **not** perform the preflight above; prefer the validated script in CI):
 
 ```sh
 npx mcr merge --inputDir "./downloaded/shard-1/raw,./downloaded/shard-2/raw" --outputDir ./coverage-reports/merged -r v8,lcovonly,console-summary
 ```
 
-- Validate **every expected input** before merging: missing directories may be skipped, so one successful report does not prove all shards contributed.
+- Derive the expected shard list from the CI matrix, not only the directories that happened to download. The script rejects missing/empty shards, malformed coverage, and missing/invalid V8 source files; a successful merge alone does not prove all shards contributed.
+- For independently built artifacts, record and compare source revision/build identifiers and shard IDs before merging; directory checks alone cannot prove the builds match.
 - Keep output separate from inputs; default cleaning must not remove downloaded artifacts. Apply the same path normalization/source revision across jobs.
 - HTML, `v8-json`, LCOV, and `json-summary` are not substitutes for MCR raw input. Do not average percentages.
 - Do not assume arbitrary V8 and Istanbul datasets can be mixed in one run. Prefer consistent raw formats or verify the installed release's mixed-format handling with a targeted fixture.

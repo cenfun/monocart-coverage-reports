@@ -16,10 +16,12 @@ describe('all without coverage data', () => {
     });
 
     afterEach(() => {
-        fs.rmSync(root, { recursive: true, force: true });
+        fs.rmSync(root, {
+            recursive: true, force: true
+        });
     });
 
-    for (const reportName of ['v8-json', 'json-summary']) {
+    ['v8-json', 'json-summary'].forEach((reportName) => {
         it(`includes untested files with no coverage input (${reportName})`, async () => {
             const inputDir = path.join(root, 'empty-input');
             fs.mkdirSync(inputDir);
@@ -39,12 +41,14 @@ describe('all without coverage data', () => {
             const reportFile = reportName === 'v8-json' ? 'coverage-report.json' : 'coverage-summary.json';
             assert.ok(fs.existsSync(path.join(outputDir, reportFile)));
         });
-    }
+    });
 
     it('permits an empty report when all has no matching files', async () => {
         const result = await MCR({
             logging: 'off',
-            all: { dir: srcDir, filter: () => false },
+            all: {
+                dir: srcDir, filter: () => false
+            },
             outputDir: path.join(root, 'reports'),
             reports: ['v8-json']
         }).generate();
@@ -54,9 +58,11 @@ describe('all without coverage data', () => {
 
     it('preserves the no-data behavior without all', async () => {
         const outputDir = path.join(root, 'reports');
-        const result = await MCR({ logging: 'off', outputDir }).generate();
+        const result = await MCR({
+            logging: 'off', outputDir
+        }).generate();
 
-        assert.equal(result, undefined);
+        assert.equal(typeof result, 'undefined');
         assert.equal(fs.existsSync(outputDir), false);
     });
 });

@@ -81,7 +81,7 @@ import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ["v8", "console-details"],
+    reports: ['v8', 'console-details'],
     cleanCache: true
 });
 await mcr.add(coverageData);
@@ -105,7 +105,7 @@ For more information, see [Command Line](#command-line)
 
 ## AI Agent Skill
 
-The reusable [Monocart Coverage Reports skill](skills/monocart-coverage-reports/SKILL.md) helps AI coding agents collect coverage, configure the CLI, debug sourcemaps and filters, merge raw reports, and enforce CI thresholds. It uses a main `SKILL.md` with task-specific references loaded on demand, including version checks for 2.x/3.x differences.
+The reusable [Monocart Coverage Reports skill](skills/monocart-coverage-reports/SKILL.md) helps AI coding agents collect coverage, configure the CLI, debug sourcemaps and filters, merge raw reports, and enforce CI thresholds. It uses a main `SKILL.md` with task-specific references loaded on demand, targeting MCR 3.x only and checking its runtime requirements.
 
 The npm package includes `skills/monocart-coverage-reports/`. Copy this **entire directory**, including `references/`, into your agent's supported skills location, or ask the agent to read `SKILL.md` directly. Installing MCR does not automatically register the skill or modify agent settings. The instructions are in English; requests and responses can use any language.
 
@@ -222,7 +222,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
 - Custom Reporter
     ```js
-    {
+    const coverageOptions = {
         reports: [
             [path.resolve('./test/custom-istanbul-reporter.js'), {
                 type: 'istanbul',
@@ -236,7 +236,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
                 type: 'both'
             }]
         ]
-    }
+    };
     ```
     - Istanbul custom reporter
     > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
@@ -269,15 +269,15 @@ const coverageOptions = {
 
         // custom reports
         // Specify reporter name with the NPM package
-        ["custom-reporter-1"],
-        ["custom-reporter-2", {
-            type: "istanbul",
-            key: "value"
+        ['custom-reporter-1'],
+        ['custom-reporter-2', {
+            type: 'istanbul',
+            key: 'value'
         }],
         // Specify reporter name with local path
         ['/absolute/path/to/custom-reporter.js']
     ]
-}
+};
 const mcr = MCR(coverageOptions);
 ```
 
@@ -344,7 +344,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -372,7 +372,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -429,23 +429,25 @@ Possible solutions:
 `timeout` controls HTTP discovery and WebSocket connection deadlines (default: 10000ms). `requestTimeout` controls each CDP command on built-in WebSocket sessions (default: 30000ms). Set either to `0` to disable its deadline. Custom Playwright/Puppeteer sessions manage their own command timeouts. For custom sockets, use `new MCR.WSSession(ws, { timeout: 30000 })`.
 
 - `CDPClient` available APIs
-```js
-startJSCoverage: () => Promise<void>;
-stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+```ts
+interface CoverageClient {
+    startJSCoverage: () => Promise<void>;
+    stopJSCoverage: () => Promise<V8CoverageEntry[]>;
 
-startCSSCoverage: () => Promise<void>;
-stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+    startCSSCoverage: () => Promise<void>;
+    stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** start both js and css coverage */
-startCoverage: () => Promise<void>;
-/** stop and return both js and css coverage */
-stopCoverage: () => Promise<V8CoverageEntry[]>;
+    /** start both js and css coverage */
+    startCoverage: () => Promise<void>;
+    /** stop and return both js and css coverage */
+    stopCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
-writeCoverage: () => Promise<string>;
+    /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
+    writeCoverage: () => Promise<string>;
 
-/** get istanbul coverage data */
-getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+    /** get istanbul coverage data */
+    getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+}
 ```
 
 - Work with node debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`
@@ -472,7 +474,7 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
@@ -489,7 +491,7 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
@@ -502,7 +504,7 @@ const pageCdpConnection = await driver.createCDPConnection('page');
 const session = new MCR.WSSession(pageCdpConnection._wsConnection);
 const client = await MCR.CDPClient({
     session
-})
+});
 ```
 
 ### V8 Coverage Data API
@@ -510,7 +512,7 @@ const client = await MCR.CDPClient({
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
 - [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
-```js
+```ts
 // Coverage data for a source range.
 export interface CoverageRange {
     // JavaScript script source offset for the range start.
@@ -599,15 +601,15 @@ We can use `sourceFilter` to filter the source files. For example, we should rem
 For example:
 ```js
 const coverageOptions = {
-    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    entryFilter: (entry) => entry.url.indexOf('main.js') !== -1,
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
 Or using [`minimatch`](https://github.com/isaacs/minimatch) pattern:
 ```js
 const coverageOptions = {
-    entryFilter: "**/main.js",
-    sourceFilter: "**/src/**"
+    entryFilter: '**/main.js',
+    sourceFilter: '**/src/**'
 };
 ```
 Support multiple patterns:
@@ -632,10 +634,17 @@ Note, those patterns will be transformed to a function, and the order of the pat
 ```js
 const coverageOptions = {
     entryFilter: (entry) => {
-        if (minimatch(entry.url, '**/node_modules/**')) { return false; }
-        if (minimatch(entry.url, '**/vendor.js')) { return false; }
-        if (minimatch(entry.url, '**/src/**')) { return true; }
-        return false; // else unmatched
+        if (minimatch(entry.url, '**/node_modules/**')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/vendor.js')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/src/**')) {
+            return true;
+        }
+        // else unmatched
+        return false;
     }
 };
 ```
@@ -711,7 +720,7 @@ It also supports simple key/value replacement:
 ```js
 const coverageOptions = {
     sourcePath: {
-        'my-dist-file1/': '', 
+        'my-dist-file1/': '',
         'my-dist-file2/': ''
     }
 };
@@ -722,23 +731,23 @@ import path from 'node:path';
 
 // MCR coverage options
 const coverageOptions = {
-    sourcePath: (filePath, info)=> {
+    sourcePath: (filePath, info) => {
         if (!filePath.includes('/') && info.distFile) {
             return `${path.dirname(info.distFile)}/${filePath}`;
         }
         return filePath;
     }
-}
+};
 ```
 
 ## Adding Empty Coverage for Untested Files
 By default the untested files will not be included in the coverage report. Use `all` to include them with 0% coverage. This also works when no coverage data has been collected: a V8 report is generated from the matching untested files.
 ```js
 const coverageOptions = {
-    all: './src',
+    all: './src'
 
     // or multiple dirs
-    all: ['./src', './lib'],
+    // all: ['./src', './lib']
 };
 ```
 The untested files will apply to the `sourceFilter`. And it also supports additional `filter` (return the file type for js or css coverage):
@@ -751,30 +760,29 @@ const coverageOptions = {
             '**/ignored-*.js': false,
             '**/*.html': false,
             // empty css coverage
-            '**/*.scss': "css",
+            '**/*.scss': 'css',
             '**/*': true
         }
     }
 };
 ```
-We can also compile these untested files, such as .ts, .jsx, or .vue, etc., so that they can be analyzed by the default AST parser, thus get more coverage metric data.
+Untested files can be transformed into JavaScript for AST analysis. This example handles **TypeScript without JSX** and assumes `@swc/core` is installed. Use an appropriate compiler/parser for JSX/TSX or Vue; this is not a universal transformer. Preserve the full filename to keep same-basename files in different directories distinct, and parse SWC's JSON map before assigning it.
 ```js
-import path from 'node:path';
-import swc from "@swc/core";
+import { fileURLToPath } from 'node:url';
+import { transform } from '@swc/core';
 const coverageOptions = {
     all: {
         dir: ['./src'],
+        filter: '**/*.ts',
         transformer: async (entry) => {
-            const { code, map } = await swc.transform(entry.source, {
-                filename: path.basename(entry.url),
+            const { code, map } = await transform(entry.source, {
+                filename: fileURLToPath(entry.url),
                 sourceMaps: true,
                 isModule: true,
                 jsc: {
                     parser: {
-                        syntax: "typescript",
-                        jsx: true
-                    },
-                    transform: {}
+                        syntax: 'typescript'
+                    }
                 }
             });
             entry.source = code;
@@ -787,35 +795,44 @@ const coverageOptions = {
 ## Hooks
 
 ### `onEnd` — after the report is generated
-Typical use case: enforce coverage thresholds.
+Typical use case: enforce coverage thresholds. Throw on failure so API callers can handle the error and the CLI exits nonzero, without forcing `process.exit()` before cleanup finishes.
 ```js
-import EC from 'eight-colors';
+const getCoverageError = (metric, summary, minimum) => {
+    if (!summary || !(summary.total > 0)) {
+        return `${metric}: missing or empty coverage`;
+    }
+    const { pct } = summary;
+    if (typeof pct !== 'number' || !Number.isFinite(pct) || pct < minimum) {
+        return `${metric}: ${pct}%, required ${minimum}%`;
+    }
+    return '';
+};
 const coverageOptions = {
     name: 'My Coverage Report',
     outputDir: './coverage-reports',
     onEnd: (coverageResults) => {
+        if (!coverageResults) {
+            throw new Error('No coverage results');
+        }
         const thresholds = {
             bytes: 80,
             lines: 60
         };
-        console.log('check thresholds ...', thresholds);
         const errors = [];
-        const { summary } = coverageResults;
-        Object.keys(thresholds).forEach((k) => {
-            const pct = summary[k].pct;
-            if (pct < thresholds[k]) {
-                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
+        for (const [metric, minimum] of Object.entries(thresholds)) {
+            const error = getCoverageError(metric, coverageResults.summary?.[metric], minimum);
+            if (error) {
+                errors.push(error);
             }
-        });
+        }
         if (errors.length) {
-            const errMsg = errors.join('\n');
-            console.log(EC.red(errMsg));
-            // throw new Error(errMsg);
-            // process.exit(1);
+            throw new Error(errors.join('\n'));
         }
     }
-}
+};
 ```
+
+This policy rejects missing/zero-total metrics; adapt it explicitly if a metric is legitimately empty. With no usable input, `generate()` may return `undefined` without calling `onEnd`. API callers must check that result; ordinary CLI workflows should use a fresh output directory and verify a newly generated nonempty report. See the [strict CI recipes](skills/monocart-coverage-reports/references/reports-and-ci.md#reject-stale-reports-and-missing-collection-in-ci).
 
 ### `onEntry` — before each V8 entry is processed (V8 only)
 Use this to mutate the entry (for example, transform non-standard sources into valid ECMAScript before the AST parser runs). See [Unparsable source](#unparsable-source).
@@ -841,6 +858,8 @@ export default {
 ```
 
 ## Ignoring Uncovered Codes
+<!-- readme-lint-disable -->
+
 To ignore codes, use the special comment which starts with `v8 ignore `:
 - Ignoring all until stop
 ```js
@@ -874,6 +893,8 @@ function uncovered() {
 /* node:coverage enable */
 ```
 - To disable comment-based ignoring entirely, set `v8Ignore: false`.
+
+<!-- readme-lint-enable -->
 
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
@@ -1064,12 +1085,12 @@ First, using the `raw` report to export the original coverage data to the specif
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
-    outputDir: "./coverage-reports/unit",
+    outputDir: './coverage-reports/unit',
     reports: [
         ['raw', {
             // relative path will be "./coverage-reports/unit/raw"
             // defaults to raw
-            outputDir: "raw"
+            outputDir: 'raw'
         }],
         ['v8'],
         ['console-details']
@@ -1105,7 +1126,7 @@ const coverageOptions = {
         '**/node_modules/**': false,
         '**/src/**': true
     },
-    
+
     sourcePath: (filePath, info) => {
         // Unify the file path for the same files
         // For example, the file index.js has different paths:
@@ -1119,7 +1140,7 @@ const coverageOptions = {
         ['v8'],
         ['console-details']
     ],
-    
+
     onEnd: () => {
         // remove the raw files if no longer needed
         // inputDir.forEach((p) => {
@@ -1148,7 +1169,7 @@ see example: [merge-code-coverage](https://github.com/cenfun/merge-code-coverage
 ## Common issues
 ### Unexpected coverage
 In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the configuration of build tools. Let's take a look at an example:
-```js
+```text
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
@@ -1164,21 +1185,21 @@ How `MCR` Works:
 ### Unparsable source
 It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example `ts`, `jsx` and so on. There is a option to fix it, which is to manually compile the source code for these files.
 ```js
-import * as fs from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as TsNode from 'ts-node';
 const coverageOptions = {
-    onEntry: async (entry) => {
-        const filePath = fileURLToPath(entry.url)
-        const originalSource = fs.readFileSync(filePath).toString("utf-8");
+    onEntry: (entry) => {
+        const filePath = fileURLToPath(entry.url);
+        const originalSource = fs.readFileSync(filePath).toString('utf-8');
         const fileName = path.basename(filePath);
         const tn = TsNode.create({});
         const source = tn.compile(originalSource, fileName);
         entry.fake = false;
         entry.source = source;
     }
-}
+};
 ```
 
 ### JavaScript heap out of memory
@@ -1219,7 +1240,7 @@ const coverageOptions = {
 
 - Show time logs with env `MCR_LOG_TIME`
 ```js
-process.env.MCR_LOG_TIME = true
+process.env.MCR_LOG_TIME = true;
 ```
 
 ## Integration with Any Testing Framework
@@ -1322,7 +1343,7 @@ mcr ava
 - Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     reports: [
         ['codecov']
     ]
@@ -1342,7 +1363,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1360,7 +1381,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1400,10 +1421,18 @@ npm install
 npx playwright install --with-deps
 
 npm run build
+npm run lint
 npm run test
 
 npm run dev
 ```
+README JavaScript examples are checked with the project's ESLint configuration via `npm run lint:readme` and `npm run lint`. Only `no-undef` and `no-unused-vars` are disabled for snippets that omit surrounding context; syntax, style, and other correctness rules remain enabled. Use `ts` fences for TypeScript declarations and `text` for diagrams. For intentionally nonstandard syntax demonstrations, keep `js` highlighting and wrap the region in standalone `<!-- readme-lint-disable -->` / `<!-- readme-lint-enable -->` comments. Such regions are neither linted nor autofixed. Markers must be paired and cannot be nested; markers inside code fences are treated as example text.
+
+```sh
+npm run lint:readme
+npm run lint:readme -- --fix
+```
+
 - Refreshing `eol=lf` for snapshot of test (Windows)
 ```sh
 git add . -u
