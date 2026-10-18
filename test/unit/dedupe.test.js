@@ -1,5 +1,6 @@
-const assert = require('assert');
-const { dedupeFlatRanges, dedupeCountRanges } = require('../../lib/utils/dedupe.js');
+import { it } from 'node:test';
+import assert from 'node:assert';
+import { dedupeFlatRanges, dedupeCountRanges } from '../../lib/utils/dedupe.js';
 
 it('dedupeFlatRanges', () => {
 

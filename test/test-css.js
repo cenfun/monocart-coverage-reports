@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const { chromium } = require('playwright');
-const EC = require('eight-colors');
+import fs from 'node:fs';
+import path from 'node:path';
+import { chromium } from 'playwright';
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 // v8 and lcov
 const coverageOptions = {
     // logging: 'debug',

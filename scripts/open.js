@@ -1,10 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-
-const openUrl = async (p) => {
-    const open = await import('open');
-    await open.default(p);
-};
+import fs from 'node:fs';
+import path from 'node:path';
+import open from 'open';
 
 const main = async () => {
     const list = fs.readdirSync(path.resolve('docs'), {
@@ -14,7 +10,7 @@ const main = async () => {
         if (item.isDirectory()) {
             const indexPath = path.resolve('docs', item.name, 'index.html');
             if (fs.existsSync(indexPath)) {
-                await openUrl(indexPath);
+                await open(indexPath);
             }
         }
     }

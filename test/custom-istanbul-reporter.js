@@ -1,7 +1,7 @@
 // https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib
-const { ReportBase } = require('istanbul-lib-report');
+import istanbulLibReport from 'istanbul-lib-report';
 
-module.exports = class CustomReporter extends ReportBase {
+export default class CustomReporter extends istanbulLibReport.ReportBase {
     constructor(opts) {
         super();
         console.log('custom istanbul reporter', opts);
@@ -17,4 +17,4 @@ module.exports = class CustomReporter extends ReportBase {
         this.contentWriter.println('End of custom coverage report');
         this.contentWriter.close();
     }
-};
+}

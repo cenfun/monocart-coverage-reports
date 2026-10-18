@@ -1,11 +1,11 @@
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const { foregroundChild } = require('foreground-child');
+import { execa } from 'execa';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 const dir = '.temp/v8-coverage-fgc';
 
-const checkSnapshot = require('./check-snapshot.js');
+import checkSnapshot from './check-snapshot.js';
 const generate = async () => {
 
     const coverageOptions = {
@@ -39,17 +39,18 @@ const generate = async () => {
 
 };
 
-const test = () => {
+const test = async () => {
     process.env.NODE_V8_COVERAGE = dir;
 
-    // NOT work in github actions
-    foregroundChild('node ./test/test-node-env.js', {
-        shell: true
-    }, async () => {
-        await generate();
-
-        return process.exitCode;
+    const result = await execa(process.execPath, ['./test/test-node-env.js'], {
+        stdio: 'inherit',
+        reject: false
     });
+    await generate();
+    process.exitCode = result.exitCode ?? 1;
 };
 
-test();
+test().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+});

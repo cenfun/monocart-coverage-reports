@@ -1,11 +1,26 @@
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 
-// esbuild's metafile lists the actual files in the bundle (including nested
-// node_modules), unlike package.json's list of direct dependencies.
+// Only emitted vendor code needs aggregated notices. metafile.inputs also
+// includes files that were parsed but entirely removed by tree shaking;
+// output.inputs identifies the files that actually contributed bytes.
+// External/direct runtime dependencies retain their own package licenses.
+const getBundledInputs = (outputs) => {
+    const bundledInputs = new Set();
+    for (const output of Object.values(outputs)) {
+        for (const [input, { bytesInOutput }] of Object.entries(output.inputs)) {
+            if (bytesInOutput > 0) {
+                bundledInputs.add(input);
+            }
+        }
+    }
+    return bundledInputs;
+};
+
 function generateVendorLicense(metafile, rootDir, outputPath) {
+    rootDir = path.resolve(rootDir);
     const packages = new Map();
-    for (const input of Object.keys(metafile.inputs)) {
+    for (const input of getBundledInputs(metafile.outputs)) {
         let dir = path.dirname(path.resolve(rootDir, input));
         while (dir !== rootDir && dir !== path.dirname(dir)) {
             const manifestPath = path.join(dir, 'package.json');
@@ -59,6 +74,6 @@ function generateVendorLicense(metafile, rootDir, outputPath) {
     ].join('\n'));
 }
 
-module.exports = {
+export default {
     generateVendorLicense
 };

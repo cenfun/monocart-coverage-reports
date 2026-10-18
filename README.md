@@ -31,6 +31,7 @@
 * [Multiprocessing Support](#multiprocessing-support)
 * [Command Line](#command-line)
 * [Config File](#config-file)
+* [Run Tests with `mcr test`](#run-tests-with-mcr-test)
 * [Merge Coverage Reports](#merge-coverage-reports)
     - [Automatic Merging](#automatic-merging)
     - [Manual Merging](#manual-merging)
@@ -66,18 +67,21 @@
 * [Thanks](#thanks)
 
 ## Usage
-> [Node.js 22+](https://nodejs.org/) is recommended and is the actively maintained target.
+> **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
+
+**Upgrading from 2.x:** See the [3.x migration guide](migrate-to-3.md).
+
 - Install
 ```sh
 npm install monocart-coverage-reports
 ```
 - API
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ["v8", "console-details"],
+    reports: ['v8', 'console-details'],
     cleanCache: true
 });
 await mcr.add(coverageData);
@@ -99,6 +103,21 @@ mcr node my-app.js -r v8,console-details
 ```
 For more information, see [Command Line](#command-line)
 
+## AI Agent Skill
+
+The reusable [Monocart Coverage Reports skill](skills/monocart-coverage-reports/SKILL.md) helps AI coding agents collect coverage, configure the CLI, debug sourcemaps and filters, merge raw reports, and enforce CI thresholds. It uses a main `SKILL.md` with task-specific references loaded on demand, targeting MCR 3.x only and checking its runtime requirements.
+
+The npm package includes `skills/monocart-coverage-reports/`. Copy this **entire directory**, including `references/`, into your agent's supported skills location, or ask the agent to read `SKILL.md` directly. Installing MCR does not automatically register the skill or modify agent settings. The instructions are in English; requests and responses can use any language.
+
+From the host project root, locate the installed skill and package manifest (older releases may not include the skill):
+
+```sh
+node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
+node -p "require.resolve('monocart-coverage-reports/package.json')"
+```
+
+Read the resolved skill, then follow its relative reference links. Use the installed package's runtime, API, and version requirements rather than assuming all examples apply to older releases. These commands resolve files; they do not import Markdown as JavaScript.
+
 ## Options
 - Default options: [lib/default/options.js](./lib/default/options.js)
 - Options declaration see `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
@@ -115,6 +134,7 @@ For more information, see [Command Line](#command-line)
 | `dataDir` | `string` | `null` | Coverage data directory loaded automatically in `generate()` — alternative to `addFromDir()`. |
 | `entryFilter` | `string \| object \| function` | `null` | (V8 only) Filter V8 entries by url. See [Filtering Results](#filtering-results). |
 | `sourceFilter` | `string \| object \| function` | `null` | (V8 only) Filter sources unpacked from sourcemaps. |
+| `outputFilter` | `string \| object \| function` | `null` | (V8 only) Filter final files by `sourcePath` after sourcemap conversion. See [Filtering Results](#filtering-results). |
 | `filter` | `string \| object \| function` | `null` | Combined filter replacing both `entryFilter` and `sourceFilter`. |
 | `sourcePath` | `object \| function` | `null` | Rewrite source paths; see [Resolve `sourcePath`](#resolve-sourcepath-for-the-source-files). |
 | `all` | `string \| string[] \| object` | `null` | Include untested files as empty coverage. See [Adding Empty Coverage](#adding-empty-coverage-for-untested-files). |
@@ -127,7 +147,7 @@ For more information, see [Command Line](#command-line)
 | `watermarks` | `[number, number] \| object` | `[50, 80]` | Low/high thresholds (percent). Accepts per-metric object like `{ bytes:[50,80], lines:[50,80] }`. |
 | `clean` | `boolean` | `true` | Clean previous reports in `outputDir` before generating (the `.cache` dir is preserved unless `cleanCache` is also `true`). |
 | `cleanCache` | `boolean` | `false` | Clean the cache dir on start. When both `clean` and `cleanCache` are `false`, cached coverage data from previous runs is preserved and can be reused across processes. |
-| `gc` | `number` | `null` | Memory threshold in MB; force GC at critical stages when RSS exceeds it. Useful for very large data sets, see [JavaScript heap out of memory](#javascript-heap-out-of-memory). |
+| `gc` | `number` | `null` | Memory threshold in MB; force GC at critical stages when JavaScript heap usage (`heapUsed`) exceeds it. Useful for very large data sets, see [JavaScript heap out of memory](#javascript-heap-out-of-memory). |
 | `sourceMap` | `boolean` | `false` | Save source/sourcemap files to cache for debugging (requires `logging: "debug"`). |
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | Custom sourcemap loader (e.g. from a build cache). Call `defaultResolver(url)` to fall back. |
 | `onEntry` | `(entry) => void \| Promise<void>` | `null` | (V8 only) Per-entry hook; see [Hooks](#hooks). |
@@ -202,7 +222,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
 - Custom Reporter
     ```js
-    {
+    const coverageOptions = {
         reports: [
             [path.resolve('./test/custom-istanbul-reporter.js'), {
                 type: 'istanbul',
@@ -216,21 +236,23 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
                 type: 'both'
             }]
         ]
-    }
+    };
     ```
     - Istanbul custom reporter
     > example: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
     - V8 custom reporter
     > example: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
-    The `type` option determines which coverage format the reporter receives:
-    - `'istanbul'` — the reporter receives Istanbul-format coverage data (`coverageResults.istanbulData`).
-    - `'v8'` — the reporter receives native V8-format coverage data (`coverageResults.v8Data`).
-    - `'both'` — the reporter receives both formats, accessible via `coverageResults.v8Data` and `coverageResults.istanbulData`.
+    The `type` option selects the reporter interface and when it runs:
+    - `'istanbul'` — uses the Istanbul reporter interface: `new Reporter(reportOptions)` followed by `execute(context)`. The context provides Istanbul report trees and source lookup. V8 input is converted to Istanbul coverage first.
+    - `'v8'` (default) — uses `new Reporter(reportOptions, globalOptions)` followed by `await generate(reportData)` for V8 input. `reportData` is the V8 coverage result, with `type`, `summary` and `files`; each file contains V8 ranges and summaries.
+    - `'both'` — uses the same `generate(reportData)` interface for either V8 or Istanbul input. Check `reportData.type` to handle the corresponding result structure. This does **not** supply both raw formats together; there are no `v8Data` or `istanbulData` properties.
+
+    Reporters are loaded with native ESM `import()`. Use `export default Reporter` for ESM; Node's built-in interoperability also accepts CommonJS `module.exports = Reporter` (use `.cjs` inside an ESM project). Local paths must include the file extension; extensionless paths and directory entries are not resolved. No separate CommonJS loader is provided. Reporter loading and initialization errors reject report generation instead of silently skipping the reporter.
 
 ### Multiple Reports:
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
@@ -247,15 +269,15 @@ const coverageOptions = {
 
         // custom reports
         // Specify reporter name with the NPM package
-        ["custom-reporter-1"],
-        ["custom-reporter-2", {
-            type: "istanbul",
-            key: "value"
+        ['custom-reporter-1'],
+        ['custom-reporter-2', {
+            type: 'istanbul',
+            key: 'value'
         }],
         // Specify reporter name with local path
         ['/absolute/path/to/custom-reporter.js']
     ]
-}
+};
 const mcr = MCR(coverageOptions);
 ```
 
@@ -322,7 +344,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -350,7 +372,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -403,29 +425,34 @@ Possible solutions:
     - see [Command Line](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
+
+`timeout` controls HTTP discovery and WebSocket connection deadlines (default: 10000ms). `requestTimeout` controls each CDP command on built-in WebSocket sessions (default: 30000ms). Set either to `0` to disable its deadline. Custom Playwright/Puppeteer sessions manage their own command timeouts. For custom sockets, use `new MCR.WSSession(ws, { timeout: 30000 })`.
+
 - `CDPClient` available APIs
-```js
-startJSCoverage: () => Promise<void>;
-stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+```ts
+interface CoverageClient {
+    startJSCoverage: () => Promise<void>;
+    stopJSCoverage: () => Promise<V8CoverageEntry[]>;
 
-startCSSCoverage: () => Promise<void>;
-stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+    startCSSCoverage: () => Promise<void>;
+    stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** start both js and css coverage */
-startCoverage: () => Promise<void>;
-/** stop and return both js and css coverage */
-stopCoverage: () => Promise<V8CoverageEntry[]>;
+    /** start both js and css coverage */
+    startCoverage: () => Promise<void>;
+    /** stop and return both js and css coverage */
+    stopCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
-writeCoverage: () => Promise<string>;
+    /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
+    writeCoverage: () => Promise<string>;
 
-/** get istanbul coverage data */
-getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+    /** get istanbul coverage data */
+    getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+}
 ```
 
 - Work with node debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const client = await MCR.CDPClient({
     port: 9229
 });
@@ -436,8 +463,8 @@ const coverageData = await client.stopJSCoverage();
 
 - Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
 ```js
-const { chromium } = require('playwright');
-const MCR = require('monocart-coverage-reports');
+import { chromium } from 'playwright';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await chromium.launch();
 const page = await browser.newPage();
 const session = await page.context().newCDPSession(page);
@@ -447,14 +474,14 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
 - Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
 ```js
-const puppeteer = require('puppeteer');
-const MCR = require('monocart-coverage-reports');
+import puppeteer from 'puppeteer';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await puppeteer.launch({});
 const page = await browser.newPage();
 const session = await page.target().createCDPSession();
@@ -464,20 +491,20 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
 - Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
 ```js
-const { Builder, Browser } = require('selenium-webdriver');
-const MCR = require('monocart-coverage-reports');
+import { Builder, Browser } from 'selenium-webdriver';
+import { MCR } from 'monocart-coverage-reports';
 const driver = await new Builder().forBrowser(Browser.CHROME).build();
 const pageCdpConnection = await driver.createCDPConnection('page');
 const session = new MCR.WSSession(pageCdpConnection._wsConnection);
 const client = await MCR.CDPClient({
     session
-})
+});
 ```
 
 ### V8 Coverage Data API
@@ -485,7 +512,7 @@ const client = await MCR.CDPClient({
 - [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
 - [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
 - [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
-```js
+```ts
 // Coverage data for a source range.
 export interface CoverageRange {
     // JavaScript script source offset for the range start.
@@ -574,15 +601,15 @@ We can use `sourceFilter` to filter the source files. For example, we should rem
 For example:
 ```js
 const coverageOptions = {
-    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    entryFilter: (entry) => entry.url.indexOf('main.js') !== -1,
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
 Or using [`minimatch`](https://github.com/isaacs/minimatch) pattern:
 ```js
 const coverageOptions = {
-    entryFilter: "**/main.js",
-    sourceFilter: "**/src/**"
+    entryFilter: '**/main.js',
+    sourceFilter: '**/src/**'
 };
 ```
 Support multiple patterns:
@@ -607,10 +634,17 @@ Note, those patterns will be transformed to a function, and the order of the pat
 ```js
 const coverageOptions = {
     entryFilter: (entry) => {
-        if (minimatch(entry.url, '**/node_modules/**')) { return false; }
-        if (minimatch(entry.url, '**/vendor.js')) { return false; }
-        if (minimatch(entry.url, '**/src/**')) { return true; }
-        return false; // else unmatched
+        if (minimatch(entry.url, '**/node_modules/**')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/vendor.js')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/src/**')) {
+            return true;
+        }
+        // else unmatched
+        return false;
     }
 };
 ```
@@ -628,6 +662,42 @@ const coverageOptions = {
     }
 };
 ```
+
+### Using `outputFilter` to filter final files
+> **Version requirement:** `outputFilter` is introduced in **v3.0.0**. It is not supported in v2.13.x or earlier.
+
+**Choose one filtering approach.** `outputFilter` and the existing `entryFilter` + `sourceFilter` approach serve the same purpose: deciding which files appear in the report. They are alternatives, not additional filters you need to configure together. The combined `filter` option is shorthand for `entryFilter` + `sourceFilter`; it does not configure `outputFilter`.
+
+| Approach | When and what it filters | Advantages | Trade-offs |
+| :-- | :-- | :-- | :-- |
+| `entryFilter` + `sourceFilter` (or `filter`) | Filters inputs during discovery: `entryFilter` matches entry URLs, and `sourceFilter` matches source paths as sourcemaps are unpacked. | Excludes unwanted files earlier, avoiding unnecessary downstream processing. Prefer this approach for better performance, especially with large projects or bundles. | Requires understanding entry files versus sourcemap sources and configuring both stages. Excluding a bundle via `entryFilter` also removes any desired sources inside it. |
+| `outputFilter` | Filters final files by `sourcePath` after sourcemap conversion, merging and adding untested files (`all`), immediately before report generation. | Simpler configuration: use one filter against the final file list, without distinguishing entries from unpacked sources. | Unwanted files are still discovered and processed before being discarded. This does not save their earlier processing cost and can increase generation time and memory usage, especially when many files will ultimately be excluded. |
+
+**Recommendation:** use input filtering (`entryFilter` + `sourceFilter`, or `filter`) when performance matters. Choose `outputFilter` when simpler configuration and filtering the final results are more important, and the extra processing cost is acceptable. If switching to `outputFilter`, remove the old input filters for the same scope: output filtering cannot restore files already excluded during input filtering.
+
+For V8 input, `outputFilter` filters both V8 reports and converted Istanbul reports. It defaults to `null` (disabled).
+
+Like `entryFilter` and `sourceFilter`, it supports strings and ordered pattern objects (the first matching pattern wins; unmatched files are excluded). Patterns match the final `sourcePath`, including any `sourcePath` rewrites. A function receives the final file entry, not a path string.
+
+```js
+const coverageOptions = {
+    outputFilter: {
+        '**/node_modules/**': false,
+        '**/src/**': true
+    }
+};
+// Alternatively:
+// outputFilter: '**/src/**'
+// outputFilter: (entry) => entry.sourcePath.startsWith('src/')
+```
+
+CLI examples (quote patterns to prevent shell expansion):
+```sh
+mcr merge --inputDir ./raw --outputFilter "**/src/**"
+mcr merge --inputDir ./raw --outputFilter "{'**/node_modules/**':false,'**/src/**':true}"
+```
+
+`outputFilter` does not change raw coverage exports and does not apply to Istanbul input.
 
 ## Resolve `sourcePath` for the Source Files
 If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
@@ -650,34 +720,34 @@ It also supports simple key/value replacement:
 ```js
 const coverageOptions = {
     sourcePath: {
-        'my-dist-file1/': '', 
+        'my-dist-file1/': '',
         'my-dist-file2/': ''
     }
 };
 ```
 Normalize the full path of the file:
 ```js
-const path = require("path")
+import path from 'node:path';
 
 // MCR coverage options
 const coverageOptions = {
-    sourcePath: (filePath, info)=> {
+    sourcePath: (filePath, info) => {
         if (!filePath.includes('/') && info.distFile) {
             return `${path.dirname(info.distFile)}/${filePath}`;
         }
         return filePath;
     }
-}
+};
 ```
 
 ## Adding Empty Coverage for Untested Files
 By default the untested files will not be included in the coverage report. Use `all` to include them with 0% coverage. This also works when no coverage data has been collected: a V8 report is generated from the matching untested files.
 ```js
 const coverageOptions = {
-    all: './src',
+    all: './src'
 
     // or multiple dirs
-    all: ['./src', './lib'],
+    // all: ['./src', './lib']
 };
 ```
 The untested files will apply to the `sourceFilter`. And it also supports additional `filter` (return the file type for js or css coverage):
@@ -690,30 +760,29 @@ const coverageOptions = {
             '**/ignored-*.js': false,
             '**/*.html': false,
             // empty css coverage
-            '**/*.scss': "css",
+            '**/*.scss': 'css',
             '**/*': true
         }
     }
 };
 ```
-We can also compile these untested files, such as .ts, .jsx, or .vue, etc., so that they can be analyzed by the default AST parser, thus get more coverage metric data.
+Untested files can be transformed into JavaScript for AST analysis. This example handles **TypeScript without JSX** and assumes `@swc/core` is installed. Use an appropriate compiler/parser for JSX/TSX or Vue; this is not a universal transformer. Preserve the full filename to keep same-basename files in different directories distinct, and parse SWC's JSON map before assigning it.
 ```js
-const path = require("path");
-const swc = require("@swc/core");
+import { fileURLToPath } from 'node:url';
+import { transform } from '@swc/core';
 const coverageOptions = {
     all: {
         dir: ['./src'],
+        filter: '**/*.ts',
         transformer: async (entry) => {
-            const { code, map } = await swc.transform(entry.source, {
-                filename: path.basename(entry.url),
+            const { code, map } = await transform(entry.source, {
+                filename: fileURLToPath(entry.url),
                 sourceMaps: true,
                 isModule: true,
                 jsc: {
                     parser: {
-                        syntax: "typescript",
-                        jsx: true
-                    },
-                    transform: {}
+                        syntax: 'typescript'
+                    }
                 }
             });
             entry.source = code;
@@ -726,35 +795,44 @@ const coverageOptions = {
 ## Hooks
 
 ### `onEnd` — after the report is generated
-Typical use case: enforce coverage thresholds.
+Typical use case: enforce coverage thresholds. Throw on failure so API callers can handle the error and the CLI exits nonzero, without forcing `process.exit()` before cleanup finishes.
 ```js
-const EC = require('eight-colors');
+const getCoverageError = (metric, summary, minimum) => {
+    if (!summary || !(summary.total > 0)) {
+        return `${metric}: missing or empty coverage`;
+    }
+    const { pct } = summary;
+    if (typeof pct !== 'number' || !Number.isFinite(pct) || pct < minimum) {
+        return `${metric}: ${pct}%, required ${minimum}%`;
+    }
+    return '';
+};
 const coverageOptions = {
     name: 'My Coverage Report',
     outputDir: './coverage-reports',
     onEnd: (coverageResults) => {
+        if (!coverageResults) {
+            throw new Error('No coverage results');
+        }
         const thresholds = {
             bytes: 80,
             lines: 60
         };
-        console.log('check thresholds ...', thresholds);
         const errors = [];
-        const { summary } = coverageResults;
-        Object.keys(thresholds).forEach((k) => {
-            const pct = summary[k].pct;
-            if (pct < thresholds[k]) {
-                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
+        for (const [metric, minimum] of Object.entries(thresholds)) {
+            const error = getCoverageError(metric, coverageResults.summary?.[metric], minimum);
+            if (error) {
+                errors.push(error);
             }
-        });
+        }
         if (errors.length) {
-            const errMsg = errors.join('\n');
-            console.log(EC.red(errMsg));
-            // throw new Error(errMsg);
-            // process.exit(1);
+            throw new Error(errors.join('\n'));
         }
     }
-}
+};
 ```
+
+This policy rejects missing/zero-total metrics; adapt it explicitly if a metric is legitimately empty. With no usable input, `generate()` may return `undefined` without calling `onEnd`. API callers must check that result; ordinary CLI workflows should use a fresh output directory and verify a newly generated nonempty report. See the [strict CI recipes](skills/monocart-coverage-reports/references/reports-and-ci.md#reject-stale-reports-and-missing-collection-in-ci).
 
 ### `onEntry` — before each V8 entry is processed (V8 only)
 Use this to mutate the entry (for example, transform non-standard sources into valid ECMAScript before the AST parser runs). See [Unparsable source](#unparsable-source).
@@ -772,7 +850,7 @@ Only available when using `mcr <command>`:
 - `onReady(coverageReport, nodeV8CoverageDir, subprocess)` — runs after the child exits, before MCR reads coverage from `nodeV8CoverageDir`. Useful when the child hasn't finished flushing coverage data and needs to be waited on.
 ```js
 // mcr.config.js
-module.exports = {
+export default {
     onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
         // wait for something, or pre-process the raw files
     }
@@ -780,6 +858,8 @@ module.exports = {
 ```
 
 ## Ignoring Uncovered Codes
+<!-- readme-lint-disable -->
+
 To ignore codes, use the special comment which starts with `v8 ignore `:
 - Ignoring all until stop
 ```js
@@ -814,12 +894,14 @@ function uncovered() {
 ```
 - To disable comment-based ignoring entirely, set `v8Ignore: false`.
 
+<!-- readme-lint-enable -->
+
 ## Multiprocessing Support
 > The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](#debug-for-coverage-and-sourcemap)
 - Main process, before the start of testing
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 // clean previous cache before the start of testing
 // unless the running environment is new and no cache
@@ -828,16 +910,16 @@ mcr.cleanCache();
 
 - Sub process 1, testing stage 1
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData1);
 ```
 
 - Sub process 2, testing stage 2
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData2);
 ```
@@ -845,8 +927,8 @@ await mcr.add(coverageData2);
 - Main process, after the completion of testing
 ```js
 // generate coverage reports after the completion of testing
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.generate();
 ```
@@ -868,14 +950,17 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 - CLI Options
 
+Commands are executed with Execa's default options, without enabling shell mode. Pass the executable and its arguments separately, for example `mcr node "./my app.js"`; do not quote an entire command as a single argument. Argument boundaries are preserved: MCR does not expand environment variables or globs, or interpret pipes, redirections, `&&` or other shell syntax. Move command sequences into a script instead. Use `mcr [options] -- executable ...args` to keep child options separate from MCR options. Execa handles platform-specific command execution, including escaped batch-file invocation through `cmd.exe` when needed on Windows.
+
 The options below are only available when using the CLI (`mcr <command>`):
 
 | Option | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | Custom config file path |
-| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. Requires Node.js `>= 18.19` |
-| `--require` | `string` | `null` | Preload CJS module via `NODE_OPTIONS` |
-| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). Requires Node.js `>= 20.6` |
+| `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. |
+| `--require` | `string` | `null` | Deprecated alias for `--import`; uses ESM loading, not CommonJS resolution |
+| `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). |
+| `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.15.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](#hooks) |
 
@@ -886,15 +971,17 @@ For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), s
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Requires Node.js `>= 18.19`.
+- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Requires `process.loadEnvFile`, added in Node.js `20.6`.
+- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Uses `process.loadEnvFile`, available on all supported Node.js versions.
 ```sh
 mcr --env .env.test node ./test.js
 ```
+
+- `test`: run Node.js tests and generate coverage reports. See [Run Tests with `mcr test`](#run-tests-with-mcr-test).
 
 - `merge`: merge raw coverage data from `inputDir`(s) and generate merged reports directly, without running a child process.
 ```sh
@@ -908,6 +995,8 @@ See [Merge Coverage Reports](#merge-coverage-reports).
     - [AVA](#ava)
 
 ## Config File
+In MCR 3.x, `loadConfig()` throws if an explicitly requested config does not exist or a discovered config fails to load (including JSON parsing, module syntax and startup errors). All CLI commands exit with a non-zero status for these errors. No `strict` option is needed. If no custom config is requested and no default config is found, execution continues with existing options.
+
 Loading config file by priority:
 - Custom config file:
     - CLI: `mcr --config <my-config-file-path>`
@@ -922,6 +1011,59 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 ```
 
 > If no custom path is given, MCR walks up from the current working directory to find the default config file (via [`find-up`](https://github.com/sindresorhus/find-up)). Files outside the search path will be ignored.
+
+## Run Tests with `mcr test`
+
+**New in MCR 3.x:** Run tests with the built-in [Node.js test runner](https://nodejs.org/docs/latest/api/test.html) and automatically generate coverage reports with one command. Requires **Node.js >= 22.15.0**.
+
+Install MCR and run your test files directly — no config file is required:
+
+```sh
+npm install --save-dev monocart-coverage-reports
+npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
+```
+
+This runs the matching tests, prints a coverage summary in the terminal, and writes the V8 HTML report to `./coverage-reports/index.html`. Quote glob patterns so Node.js, rather than your shell, handles matching.
+
+For repeated runs, save the test targets and coverage options in `mcr.config.js` (ESM; use `"type": "module"` in `package.json`, or name the config `mcr.config.mjs`):
+
+```js
+export default {
+    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
+    reports: ['v8', 'console-summary'],
+    outputDir: './coverage-reports'
+};
+```
+
+```sh
+# Run the targets from the config
+npx mcr test
+# Override the configured targets and forward Node.js test runner options after --
+npx mcr test "./test/unit/**/*.test.js" -- --test-reporter=spec
+
+# Use an explicit config file
+npx mcr test "../tests/**/*.test.js" -c ./mcr.config.js
+
+# Choose reports from the command line
+npx mcr test "../tests/**/*.test.js" -r v8,console-summary
+
+# Run multiple test files
+npx mcr test ./test/first.test.js ./test/second.test.js
+
+# Filter test names and select a reporter
+npx mcr test "../tests/**/*.test.js" -c ./mcr.config.js -- --test-name-pattern="my test" --test-reporter=spec
+
+# Place the test command after an initial separator
+npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=spec
+```
+
+Positional targets override (rather than append to) the config `test` option. If no positional targets are given, the config option is used. A config file is not required when targets are supplied on the command line. Existing MCR options such as `-c`, `-r`, `-o` and `--lcov` can appear before or after targets. Put Node runner options after `--`; those arguments are forwarded unchanged, not parsed as MCR options or target overrides. Quote globs to prevent shell expansion. In the alternative `mcr [options] -- test ...` form, put all MCR options before the first `--`; a second `--` separates Node runner options.
+
+Targets are passed unchanged to `node --test`. MCR does not check their types or filesystem existence, expand directories/globs, resolve or normalize paths, escape special characters, or deduplicate targets. `node --test` accepts positional test file paths or glob patterns, not a JavaScript configuration object. In MCR config, a string represents one such argument (it is not split on spaces), and a string array represents multiple arguments forwarded in their original order. `null` is only MCR's skip default and is never passed to Node. Node handles discovery, matching, interpretation and errors. Relative paths use the current working directory, not the config file directory. A bare directory is not promised to trigger recursive discovery; use a glob such as `"../tests/**/*.test.js"` for recursive matching, following the installed Node version's native behavior. TypeScript execution depends on your Node version or a loader such as `--import tsx`.
+
+`test` defaults to `null`; when no positional targets are supplied, `null`, an omitted value, an empty string or `[]` skips tests without generating a report. MCR only checks whether targets were supplied; invalid or unmatched targets are left to Node. If no coverage data is produced and no report can be generated, the command fails at report generation. Missing explicit config files and failed config loading also fail the command rather than silently skipping tests. Test failures still produce coverage reports and retain a non-zero exit status; report generation failures also fail the command. Existing coverage options and CLI hooks are supported. Use coverage filters to exclude test files if needed. **The `test` option has no effect on other CLI commands or API calls**, including `merge` and `generate()`.
+
+See [Command Line](#command-line) for other CLI options.
 
 ## Merge Coverage Reports
 The following usage scenarios may require merging coverage reports:
@@ -943,12 +1085,12 @@ First, using the `raw` report to export the original coverage data to the specif
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
-    outputDir: "./coverage-reports/unit",
+    outputDir: './coverage-reports/unit',
     reports: [
         ['raw', {
             // relative path will be "./coverage-reports/unit/raw"
             // defaults to raw
-            outputDir: "raw"
+            outputDir: 'raw'
         }],
         ['v8'],
         ['console-details']
@@ -964,8 +1106,8 @@ const coverageOptions = {
 - Then create a script `merge-coverage.js` to generate a merged report with option `inputDir`.
 ```js
 // merge-coverage.js
-const fs = require('fs');
-const { CoverageReport } = require('monocart-coverage-reports');
+import fs from 'fs';
+import { CoverageReport } from 'monocart-coverage-reports';
 const inputDir = [
     './coverage-reports/unit/raw',
     './coverage-reports/e2e/raw'
@@ -984,7 +1126,7 @@ const coverageOptions = {
         '**/node_modules/**': false,
         '**/src/**': true
     },
-    
+
     sourcePath: (filePath, info) => {
         // Unify the file path for the same files
         // For example, the file index.js has different paths:
@@ -998,7 +1140,7 @@ const coverageOptions = {
         ['v8'],
         ['console-details']
     ],
-    
+
     onEnd: () => {
         // remove the raw files if no longer needed
         // inputDir.forEach((p) => {
@@ -1027,7 +1169,7 @@ see example: [merge-code-coverage](https://github.com/cenfun/merge-code-coverage
 ## Common issues
 ### Unexpected coverage
 In most cases, it happens when the coverage of the generated code is converted to the coverage of the original code through a sourcemap. In other words, it's an issue with the sourcemap. Most of the time, we can solve this by setting `minify` to `false` in the configuration of build tools. Let's take a look at an example:
-```js
+```text
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
@@ -1043,21 +1185,21 @@ How `MCR` Works:
 ### Unparsable source
 It happens during the parsing of the source code into AST, if the source code is not in the standard ECMAScript. For example `ts`, `jsx` and so on. There is a option to fix it, which is to manually compile the source code for these files.
 ```js
-import * as fs from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as TsNode from 'ts-node';
 const coverageOptions = {
-    onEntry: async (entry) => {
-        const filePath = fileURLToPath(entry.url)
-        const originalSource = fs.readFileSync(filePath).toString("utf-8");
+    onEntry: (entry) => {
+        const filePath = fileURLToPath(entry.url);
+        const originalSource = fs.readFileSync(filePath).toString('utf-8');
         const fileName = path.basename(filePath);
         const tn = TsNode.create({});
         const source = tn.compile(originalSource, fileName);
         entry.fake = false;
         entry.source = source;
     }
-}
+};
 ```
 
 ### JavaScript heap out of memory
@@ -1098,7 +1240,7 @@ const coverageOptions = {
 
 - Show time logs with env `MCR_LOG_TIME`
 ```js
-process.env.MCR_LOG_TIME = true
+process.env.MCR_LOG_TIME = true;
 ```
 
 ## Integration with Any Testing Framework
@@ -1181,7 +1323,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# Node.js v18.19.0 +
+# MCR 3.x: Node.js >= 22.15.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1201,7 +1343,7 @@ mcr ava
 - Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     reports: [
         ['codecov']
     ]
@@ -1221,7 +1363,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1239,7 +1381,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1272,17 +1414,25 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 22+ (recommended development version)
+- Latest Node.js 24 LTS recommended for development; minimum package runtime is 22.15.0. Development tools may require a newer patch than the minimum runtime.
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install
 npx playwright install --with-deps
 
 npm run build
+npm run lint
 npm run test
 
 npm run dev
 ```
+README JavaScript examples are checked with the project's ESLint configuration via `npm run lint:readme` and `npm run lint`. Only `no-undef` and `no-unused-vars` are disabled for snippets that omit surrounding context; syntax, style, and other correctness rules remain enabled. Use `ts` fences for TypeScript declarations and `text` for diagrams. For intentionally nonstandard syntax demonstrations, keep `js` highlighting and wrap the region in standalone `<!-- readme-lint-disable -->` / `<!-- readme-lint-enable -->` comments. Such regions are neither linted nor autofixed. Markers must be paired and cannot be nested; markers inside code fences are treated as example text.
+
+```sh
+npm run lint:readme
+npm run lint:readme -- --fix
+```
+
 - Refreshing `eol=lf` for snapshot of test (Windows)
 ```sh
 git add . -u
@@ -1294,3 +1444,6 @@ npm run eol
 ## Thanks
 - [@bcoe](https://github.com/bcoe)
 - [@edumserrano](https://github.com/edumserrano)
+
+
+![Monocart Coverage Reports](./assets/og-image.png)

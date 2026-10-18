@@ -1,14 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const { Session } = require('inspector');
-const { promisify } = require('util');
-const { fileURLToPath } = require('url');
-const { Script, createContext } = require('vm');
+import { createRequire } from 'node:module';
+import fs from 'node:fs';
+import path from 'node:path';
+import { Session } from 'node:inspector';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
+import { Script, createContext } from 'node:vm';
 
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 
 const coverageOptions = {
     // logging: 'debug',
@@ -248,18 +249,17 @@ function useless() {
 
     const compiledFunction = runScript[EVAL_RESULT_VARIABLE];
 
+    // This fixture deliberately executes a CommonJS module inside a VM.
+    const vmModule = {
+        exports: {}
+    };
     compiledFunction.call(
-        module.exports,
-        // module object
-        module,
-        // module exports
-        module.exports,
-        // require implementation
-        module.require,
-        // __dirname
-        module.path,
-        // __filename
-        module.filename
+        vmModule.exports,
+        vmModule,
+        vmModule.exports,
+        createRequire(filename),
+        import.meta.dirname,
+        import.meta.filename
     );
 
     // console.log(files);

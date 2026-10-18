@@ -1,12 +1,13 @@
-const assert = require('assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const { pathToFileURL } = require('url');
-const acorn = require('acorn');
-const { convertSourceMap } = require('../../lib/packages/monocart-coverage-vendor.js');
-const { collectSourceMaps } = require('../../lib/converter/collect-source-maps.js');
-const MCR = require('../../lib/index.js');
+import { describe, it } from 'node:test';
+import assert from 'node:assert';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import * as acorn from 'acorn';
+import convertSourceMap from 'convert-source-map';
+import { collectSourceMaps } from '../../lib/converter/collect-source-maps.js';
+import { MCR } from '../../lib/index.js';
 
 const embedded = [
     'function css(v, map) {',
@@ -398,7 +399,9 @@ describe('source map candidate fallback', () => {
         ]);
         assert.deepEqual(sourceData.sourceMap.sources, map.sources);
     });
+});
 
+describe('source map validation', () => {
     it('falls back when a map references a source index outside its sources array', async () => {
         const source = 'const a = 1;\n//# sourceMappingURL=good.js.map\n//# sourceMappingURL=bad.js.map\n';
         const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr-map-index-'));
@@ -607,13 +610,12 @@ describe('source map candidate fallback', () => {
     });
 
     it('skips empty inline maps with or without sourcesContent', async () => {
-        for (const sourcesContent of [undefined, []]) {
+        for (const optionalContent of [{}, {
+            sourcesContent: []
+        }]) {
             const emptyMap = {
-                version: 3, sources: [], names: [], mappings: ''
+                version: 3, sources: [], names: [], mappings: '', ... optionalContent
             };
-            if (sourcesContent) {
-                emptyMap.sourcesContent = sourcesContent;
-            }
             const emptyInline = convertSourceMap.fromObject(emptyMap).toComment();
             const { sourceData, sourcemapList } = await collect(`${inline}\n${emptyInline}\n`);
             assert.deepEqual(sourceData.sourceMap.sources, map.sources);
@@ -645,11 +647,17 @@ describe('source map candidate fallback', () => {
 
     it('skips fully empty indexed maps but keeps one with a useful section', async () => {
         const emptySection = {
-            offset: { line: 0, column: 0 },
-            map: { version: 3, sources: [], names: [], mappings: '' }
+            offset: {
+                line: 0, column: 0
+            },
+            map: {
+                version: 3, sources: [], names: [], mappings: ''
+            }
         };
         for (const sections of [[], [emptySection]]) {
-            const emptyIndexed = convertSourceMap.fromObject({ version: 3, sections }).toComment();
+            const emptyIndexed = convertSourceMap.fromObject({
+                version: 3, sections
+            }).toComment();
             const { sourceData } = await collect(`${inline}\n${emptyIndexed}\n`);
             assert.deepEqual(sourceData.sourceMap.sources, map.sources);
         }
@@ -657,7 +665,9 @@ describe('source map candidate fallback', () => {
         const indexedMap = {
             version: 3,
             sections: [emptySection, {
-                offset: { line: 1, column: 0 },
+                offset: {
+                    line: 1, column: 0
+                },
                 map
             }]
         };

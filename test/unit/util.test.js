@@ -1,7 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert');
-const Util = require('../../lib/utils/util.js');
+import { it } from 'node:test';
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert';
+import { Util } from '../../lib/utils/util.js';
 
 it('Util.cmpVersion', () => {
     assert.ok(Util.cmpVersion('14.0.0', '18') < 0);

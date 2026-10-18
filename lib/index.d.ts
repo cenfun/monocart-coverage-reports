@@ -322,6 +322,14 @@ declare namespace MCR {
             [pattern: string]: boolean;
         } | ((sourcePath: string) => boolean);
 
+        /** (V8 only) Filter final files after sourcemap conversion and adding untested files.
+         * Applies to V8 reports and converted Istanbul reports. Defaults to null (disabled).
+         * Strings and object keys match sourcePath using the same rules as entryFilter and sourceFilter.
+         */
+        outputFilter?: string | {
+            [pattern: string]: boolean;
+        } | ((entry: CoverageFile) => boolean) | null;
+
         /**
          * The combined filter for entryFilter and sourceFilter
          */
@@ -405,7 +413,7 @@ declare namespace MCR {
         cleanCache?: boolean;
 
         /**
-         * {number} gc threshold
+         * {number} JavaScript heapUsed threshold in MB
          * for example: sets gc to 1024 means that force gc when the memory > 1024M at certain critical stages
          * https://nodejs.org/docs/latest/api/v8.html#v8setflagsfromstringflags
          */
@@ -431,6 +439,15 @@ declare namespace MCR {
     }
 
     export interface McrCliOptions extends CoverageReportOptions {
+
+        /** Only used by `mcr test`. Test file paths or glob patterns accepted by node --test.
+         * A string is one positional argument; an array supplies multiple arguments unchanged.
+         * Node handles parsing and discovery relative to cwd; null is not passed to Node.
+         * Positional CLI targets override this option.
+         * Defaults to null (skip tests unless CLI targets are supplied).
+         * Requires Node.js >= 22.15.0. Ignored by other commands and the API.
+         */
+        test?: string | string[] | null;
 
         /** (CLI only) {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => void | Promise<void>;
@@ -479,6 +496,8 @@ declare namespace MCR {
         /** load config file. 
          * 
          * @param configFile custom config file path
+         * Throws if a custom config is missing or a discovered config fails to load.
+         * If no custom config is specified and no default config is found, returns normally.
          * 
          * Supports loading default config file if no custom config specified: 
             'mcr.config.js',
@@ -532,6 +551,9 @@ declare namespace MCR {
     //=====================================================================================================
 
     export class CoverageClient {
+        /** Best-effort command: logs failures at debug level and resolves to null instead of rejecting. */
+        safeSend: (method: string, params?: any) => Promise<any>;
+
         /** start js coverage */
         startJSCoverage: () => Promise<void>;
         /** stop and return js coverage */
@@ -567,7 +589,8 @@ declare namespace MCR {
 
     /** custom websocket CDPSession */
     export class WSSession implements CDPSession {
-        constructor(ws: any);
+        /** Request timeout defaults to 30000ms; 0 disables the deadline. */
+        constructor(ws: any, options?: { timeout?: number });
         send: (method: string, params?: any) => Promise<any>;
         on: (type: string, handler: (e: any) => void) => void;
         detach: () => Promise<void>;
@@ -588,8 +611,10 @@ declare namespace MCR {
         target?: (targets: any) => any;
         /** websocket options */
         ws?: any;
-        /** timeout, defaults to 10 * 1000 */
+        /** HTTP discovery / WebSocket connection timeout, defaults to 10000ms; 0 disables it. */
         timeout?: number;
+        /** Per-command timeout for built-in WebSocket sessions, defaults to 30000ms; 0 disables it. */
+        requestTimeout?: number;
     }
 
     export function CDPClient(cdpOptions: CDPOptions): Promise<CoverageClient | undefined>;
@@ -603,4 +628,27 @@ declare namespace MCR {
 /** create coverage report */
 declare function MCR(options?: MCR.CoverageReportOptions): MCR.CoverageReport;
 
-export = MCR;
+export { MCR as default, MCR };
+export import V8CoverageEntry = MCR.V8CoverageEntry;
+export import Watermarks = MCR.Watermarks;
+export import ReportDescription = MCR.ReportDescription;
+export import AddedResults = MCR.AddedResults;
+export import MetricsSummary = MCR.MetricsSummary;
+export import CoverageSummary = MCR.CoverageSummary;
+export import CoverageRange = MCR.CoverageRange;
+export import IgnoredRange = MCR.IgnoredRange;
+export import CoverageFile = MCR.CoverageFile;
+export import CoverageResults = MCR.CoverageResults;
+export import LoggingType = MCR.LoggingType;
+export import CoverageReportOptions = MCR.CoverageReportOptions;
+export import McrCliOptions = MCR.McrCliOptions;
+export import CoverageSnapshot = MCR.CoverageSnapshot;
+export import CoverageClient = MCR.CoverageClient;
+export import CDPSession = MCR.CDPSession;
+export import CDPOptions = MCR.CDPOptions;
+export import CoverageReport = MCR.CoverageReport;
+export import getSnapshot = MCR.getSnapshot;
+export import diffSnapshot = MCR.diffSnapshot;
+export import WSSession = MCR.WSSession;
+export import CDPClient = MCR.CDPClient;
+export import Util = MCR.Util;

@@ -1,11 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const EC = require('eight-colors');
-const { getSnapshot, diffSnapshot } = require('../lib/');
+import fs from 'node:fs';
+import path from 'node:path';
+import EC from 'eight-colors';
+import { getSnapshot, diffSnapshot } from '../lib/index.js';
 
-module.exports = function(coverageResults) {
+export default function(coverageResults) {
 
-    const snapDir = path.resolve(__dirname, 'snapshot');
+    const snapDir = path.resolve(import.meta.dirname, 'snapshot');
     if (!fs.existsSync(snapDir)) {
         fs.mkdirSync(snapDir, {
             recursive: true
@@ -39,4 +39,4 @@ module.exports = function(coverageResults) {
         EC.logGreen(`✅ Snapshot matched: ${snapName}`);
     }
 
-};
+}
