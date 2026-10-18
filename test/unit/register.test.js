@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -8,8 +11,9 @@ import { load } from '../../lib/register/hooks.js';
 
 const source = 'module.exports = 42;\n//# sourceMappingURL=subject.js.map\n';
 
-describe('synchronous coverage hooks', function() {
-    this.timeout(15000);
+describe('synchronous coverage hooks', {
+    timeout: 15000
+}, () => {
     let root;
     let previousCoverageDir;
 

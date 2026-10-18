@@ -1,3 +1,4 @@
+import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -7,16 +8,15 @@ import { fileURLToPath } from 'node:url';
 
 const cli = fileURLToPath(import.meta.resolve('../../lib/cli.js'));
 
-describe('CLI signal handling', function() {
-    this.timeout(15000);
+describe('CLI signal handling', {
+    timeout: 15000
+}, () => {
 
     for (const signal of ['SIGINT', 'SIGTERM']) {
-        it(`finishes coverage and retains ${signal} after the child exits gracefully`, async function() {
-            // Windows process.kill() forcibly terminates the parent instead of
-            // delivering a catchable POSIX signal.
-            if (process.platform === 'win32') {
-                this.skip();
-            }
+        it(`finishes coverage and retains ${signal} after the child exits gracefully`, {
+            // Windows cannot deliver catchable POSIX signals with process.kill().
+            skip: process.platform === 'win32'
+        }, async () => {
             const root = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr-signal-'));
             fs.writeFileSync(path.join(root, 'subject.cjs'), 'module.exports = (v) => v ? 42 : 0;');
             fs.writeFileSync(path.join(root, 'child.cjs'), `

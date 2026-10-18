@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -129,12 +132,12 @@ describe('Dirent file traversal', () => {
         assert.deepEqual(names, ['a.js']);
     });
 
-    it('does not follow directory symlinks', function() {
+    it('does not follow directory symlinks', (t) => {
         try {
             fs.symlinkSync(path.join(root, 'nested'), path.join(root, 'linked'), 'junction');
         } catch (error) {
             if (['EPERM', 'EACCES', 'ENOTSUP'].includes(error.code)) {
-                this.skip();
+                t.skip();
                 return;
             }
             throw error;

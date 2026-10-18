@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { spawnSync } from 'node:child_process';
@@ -60,8 +63,9 @@ const emitBackgroundEvents = (ws) => {
 
 // The child process makes unexpected background rejections fatal even if the
 // test runner installs its own unhandledRejection listener.
-describe('CoverageClient best-effort requests', function() {
-    this.timeout(10000);
+describe('CoverageClient best-effort requests', {
+    timeout: 10000
+}, () => {
     let originalLogDebug;
     let logs;
 

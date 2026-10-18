@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -7,8 +10,9 @@ import { fileURLToPath } from 'node:url';
 
 const cli = fileURLToPath(import.meta.resolve('../../lib/cli.js'));
 
-describe('CLI native ESM preloads', function() {
-    this.timeout(15000);
+describe('CLI native ESM preloads', {
+    timeout: 15000
+}, () => {
     let root;
     const write = (name, content) => {
         const file = path.join(root, name);
@@ -18,8 +22,13 @@ describe('CLI native ESM preloads', function() {
         fs.writeFileSync(file, content);
     };
     const run = (option, preload) => {
+        // Let the nested CLI start an independent Node test runner.
+        const env = {
+            ... process.env
+        };
+        delete env.NODE_TEST_CONTEXT;
         const result = spawnSync(process.execPath, [cli, option, preload, 'test'], {
-            cwd: root, encoding: 'utf8', timeout: 10000
+            cwd: root, env, encoding: 'utf8', timeout: 10000
         });
         assert.ifError(result.error);
         assert.equal(result.status, 0, result.stdout + result.stderr);

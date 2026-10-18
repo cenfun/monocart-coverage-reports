@@ -1,3 +1,4 @@
+import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -13,8 +14,9 @@ import * as converter from 'monocart-coverage-reports/converter';
 import { Util as publicUtil } from 'monocart-coverage-reports/util';
 import pkg from 'monocart-coverage-reports/package.json' with { type: 'json' };
 
-describe('ESM package', function() {
-    this.timeout(15000);
+describe('ESM package', {
+    timeout: 15000
+}, () => {
 
     it('publishes one native ESM entry', () => {
         assert.equal(pkg.type, 'module');

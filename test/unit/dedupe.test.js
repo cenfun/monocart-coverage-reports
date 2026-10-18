@@ -1,3 +1,4 @@
+import { it } from 'node:test';
 import assert from 'node:assert';
 import { dedupeFlatRanges, dedupeCountRanges } from '../../lib/utils/dedupe.js';
 

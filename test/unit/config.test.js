@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert';
 import fs from 'node:fs';
@@ -9,8 +12,9 @@ import { MCR } from '../../lib/index.js';
 const cli = fileURLToPath(import.meta.resolve('../../lib/cli.js'));
 const entry = import.meta.resolve('../../lib/index.js');
 
-describe('config loading errors', function() {
-    this.timeout(15000);
+describe('config loading errors', {
+    timeout: 15000
+}, () => {
     let root;
 
     const write = (name, content) => {

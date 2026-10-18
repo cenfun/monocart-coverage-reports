@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert';
 import fs from 'node:fs';
@@ -8,8 +11,23 @@ import { MCR } from '../../lib/index.js';
 
 const cliPath = fileURLToPath(import.meta.resolve('../../lib/cli.js'));
 
-describe('mcr test', function() {
-    this.timeout(30000);
+const runCLI = (args, cwd, env) => {
+    // This is an independent runner, not a child managed by node:test.
+    const childEnv = {
+        ... env
+    };
+    delete childEnv.NODE_TEST_CONTEXT;
+    const result = spawnSync(process.execPath, [cliPath, ... args], {
+        cwd, env: childEnv, encoding: 'utf8', timeout: 20000
+    });
+    assert.ifError(result.error);
+    return result;
+};
+
+describe('mcr test', {
+    // node:test applies this deadline to the whole suite, not each test.
+    timeout: 120000
+}, () => {
     let root;
     let outputDir;
 
@@ -27,13 +45,7 @@ describe('mcr test', function() {
             ${extra}
         };`);
     };
-    const run = (args = ['test'], cwd = root, env = process.env) => {
-        const result = spawnSync(process.execPath, [cliPath, ... args], {
-            cwd, env, encoding: 'utf8', timeout: 20000
-        });
-        assert.ifError(result.error);
-        return result;
-    };
+    const run = (args = ['test'], cwd = root, env = process.env) => runCLI(args, cwd, env);
     const checkReport = () => {
         const data = JSON.parse(fs.readFileSync(path.join(outputDir, 'coverage-report.json'), 'utf8'));
         assert.equal(data.files.length, 1);

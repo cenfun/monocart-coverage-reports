@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter, once } from 'node:events';
 import http from 'node:http';
@@ -171,8 +174,9 @@ describe('WebSocket session lifecycle', () => {
     });
 });
 
-describe('CDP connection cleanup', function() {
-    this.timeout(5000);
+describe('CDP connection cleanup', {
+    timeout: 5000
+}, () => {
     let server;
     let originalLogError;
     let sockets;

@@ -46,7 +46,7 @@ npm run test-types
 npm run test-runtime
 ```
 
-For a focused Mocha test: `npx mocha test/unit/config.test.js`. Browser/integration scripts may require downloaded browsers, built fixtures, local servers, and more time; inspect the relevant script before running it. `npm run build` invokes `postbuild` and builds test fixtures. `npm test` also runs integration/report generation and documentation generation; it is not a lightweight unit-only check.
+Unit tests run directly with `node:test`, independently of the MCR CLI and coverage pipeline. For a focused test: `node --test test/unit/config.test.js`. Run `npm run test-unit-coverage` separately to collect coverage through `mcr test`; reports are written to `.temp/coverage-unit/`. For focused coverage: `node ./lib/cli.js test -c test/mcr.config.unit.js test/unit/config.test.js`. Browser/integration scripts may require downloaded browsers, built fixtures, local servers, and more time; inspect the relevant script before running it. `npm run build` invokes `postbuild` and builds test fixtures. `npm test` also runs integration/report generation and documentation generation; it is not a lightweight unit-only check.
 
 Avoid unrelated generated changes. `npm run lint` currently includes `--fix`; inspect its scope before invoking it. Do not edit generated `lib/packages/*`, `lib/assets.js`, `dist/`, `docs/`, or snapshots just to hide a source defect; use the project's build/generation workflow when those artifacts genuinely need updating.
 

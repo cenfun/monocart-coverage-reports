@@ -1,3 +1,6 @@
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -27,8 +30,9 @@ const run = (blocked, code) => {
     assert.equal(result.status, 0, result.stdout + result.stderr);
 };
 
-describe('lazy runtime dependencies', function() {
-    this.timeout(20000);
+describe('lazy runtime dependencies', {
+    timeout: 20000
+}, () => {
     let root;
     beforeEach(() => {
         root = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr-lazy-'));

@@ -1,3 +1,4 @@
+import { it } from 'node:test';
 const platform = process.platform;
 import assert from 'node:assert';
 import { normalizeSourcePath } from '../../lib/utils/source-path.js';
