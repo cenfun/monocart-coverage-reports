@@ -248,7 +248,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
     - `'v8'` (default) — uses `new Reporter(reportOptions, globalOptions)` followed by `await generate(reportData)` for V8 input. `reportData` is the V8 coverage result, with `type`, `summary` and `files`; each file contains V8 ranges and summaries.
     - `'both'` — uses the same `generate(reportData)` interface for either V8 or Istanbul input. Check `reportData.type` to handle the corresponding result structure. This does **not** supply both raw formats together; there are no `v8Data` or `istanbulData` properties.
 
-    CommonJS and ESM reporters are supported. Local Istanbul reporter paths retain CommonJS resolution for omitted `.js` extensions and directories (`package.json` `main` or `index.js`). Use explicit file extensions for local V8/`both` reporter paths.
+    Reporters are loaded with native ESM `import()`. Use `export default Reporter` for ESM; Node's built-in interoperability also accepts CommonJS `module.exports = Reporter` (use `.cjs` inside an ESM project). Local paths must include the file extension; extensionless paths and directory entries are not resolved. No separate CommonJS loader is provided. Reporter loading and initialization errors reject report generation instead of silently skipping the reporter.
 
 ### Multiple Reports:
 ```js
@@ -958,7 +958,7 @@ The options below are only available when using the CLI (`mcr <command>`):
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | Custom config file path |
 | `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. |
-| `--require` | `string` | `null` | Preload CJS module via `NODE_OPTIONS` |
+| `--require` | `string` | `null` | Deprecated alias for `--import`; uses ESM loading, not CommonJS resolution |
 | `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). |
 | `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.15.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](#hooks) |
@@ -971,7 +971,7 @@ For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), s
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions.
+- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
 ```sh
 mcr --import tsx node ./test.ts
 ```

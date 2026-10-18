@@ -51,6 +51,8 @@ main().catch((error) => {
 
 If a wrapper previously loaded MCR synchronously, dynamic import may require changing that wrapper's initialization API to be asynchronous.
 
+CLI preloads also use native ESM loading. Prefer `--import`; `--require` is now a deprecated alias that uses the same `import()`/Node `--import` path, not CommonJS resolution or `require` export conditions. Local preload paths require explicit file extensions; package names resolve from MCR's module location. Require-only package exports must provide an import-compatible entry or be replaced with an explicit file path.
+
 ### TypeScript and secondary entry points
 
 Replace `import MCR = require('monocart-coverage-reports')` with ESM imports. Check your module settings and emitted JavaScript so the build does not turn the import back into the old callable `require()` entry.
@@ -135,7 +137,21 @@ Pending WebSocket commands now reject on disconnect or detach, and CDP protocol 
 
 You do not need to rewrite calls to `MCR(options)`, `new CoverageReport()`, `add()`, `addFromDir()` or `generate()` solely for this upgrade.
 
-Existing report and filter options remain available, including `reports`, `entryFilter`, `sourceFilter`, `filter`, `sourcePath` and `all`. The CLI can still cover CommonJS programs, and custom reporters can remain CommonJS when their file extension/package scope identifies them as such. Local Istanbul reporter paths retain CommonJS resolution, including omitted `.js` extensions and directory entries (`package.json` `main` or `index.js`); local V8/`both` reporter paths should use explicit file extensions.
+Existing report and filter options remain available, including `reports`, `entryFilter`, `sourceFilter`, `filter`, `sourcePath` and `all`. The CLI can still cover CommonJS programs, and custom reporters can remain CommonJS when their file extension/package scope identifies them as such. All reporters use native ESM `import()` resolution. Local paths must include the file extension; CommonJS extension and directory fallbacks are not provided. Export reporter classes with `export default Reporter` in ESM. CJS `module.exports = Reporter` remains usable through Node's built-in import interoperability; no separate CJS loader is provided. Reporter loading and initialization failures now reject report generation, including V8/`both` reporters that previously logged the failure and continued.
+
+### Update local reporter paths
+
+Relative reporter file paths must start with `./` or `../` and include the file extension. They are resolved from the current working directory, not the config file directory. Absolute paths and `file:` URLs are also accepted.
+
+```js
+// Before: a local path without an explicit relative prefix
+reports: [['test/custom-v8-reporter.js', { type: 'v8' }]]
+
+// After
+reports: [['./test/custom-v8-reporter.js', { type: 'v8' }]]
+```
+
+Names without a relative prefix, such as `test/custom-v8-reporter.js`, are treated as package specifiers, not local file paths. The old V8/`both` reporter fallback to a local file path has been removed; such paths may now fail with `ERR_MODULE_NOT_FOUND`. Actual package names can remain unchanged when their entry points support native ESM import resolution.
 
 Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(context)`, while V8 and `both` reporters implement `generate(reportData)`. The `both` type accepts results from either input format, distinguished by `reportData.type`; it does not receive simultaneous `v8Data` and `istanbulData` properties. See [Custom Reporter](README.md#available-reports) for examples.
 
@@ -148,6 +164,7 @@ Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(
 - [ ] Update CommonJS/TypeScript imports and any synchronous wrappers.
 - [ ] Check imports from `/util` and `/converter`.
 - [ ] Check config module formats and explicit config paths.
+- [ ] Update local reporter paths to use `./` or `../` and explicit file extensions, or use absolute paths / `file:` URLs.
 - [ ] Fix config loading errors and await `loadConfig()` where used.
 - [ ] Replace whole-command CLI strings and review shell-dependent commands.
 - [ ] Verify test/report failures produce the expected CI exit status.

@@ -248,7 +248,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
     - `'v8'`（默认值）— 对 V8 输入，先调用 `new Reporter(reportOptions, globalOptions)`，再调用 `await generate(reportData)`。`reportData` 是 V8 覆盖率结果，包含 `type`、`summary` 和 `files`；每个文件包含 V8 覆盖范围和汇总。
     - `'both'` — 对 V8 或 Istanbul 输入均使用上述 `generate(reportData)` 接口。请检查 `reportData.type`，按对应的结果结构处理。它**不会**同时提供两份原始格式的数据，结果中不存在 `v8Data` 或 `istanbulData` 属性。
 
-    支持 CommonJS 和 ESM 报告。Istanbul 本地报告路径保留 CommonJS 解析规则，支持省略 `.js` 扩展名和目录入口（`package.json` 的 `main` 或 `index.js`）。V8/`both` 本地报告路径请使用明确的文件扩展名。
+    报告统一使用原生 ESM `import()` 加载。ESM 报告使用 `export default Reporter`；通过 Node 内置互操作，也可加载 `module.exports = Reporter` 的 CommonJS 报告（在 ESM 项目中使用 `.cjs`）。本地路径必须明确指定文件扩展名，不补全扩展名、不解析目录入口，不提供独立的 CommonJS 加载器。报告加载或初始化失败会使报告生成失败，不会静默跳过。
 
 ### Multiple Reports:
 如何配置多个报告
@@ -961,7 +961,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | 自定义配置文件路径 |
 | `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。|
-| `--require` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 CJS 模块 |
+| `--require` | `string` | `null` | `--import` 的已弃用别名；使用 ESM 加载，不使用 CommonJS 解析 |
 | `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。|
 | `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.15.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](#hooks) |
@@ -974,7 +974,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。在所有受支持的 Node.js 版本中均可用
+- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
 ```sh
 mcr --import tsx node ./test.ts
 ```

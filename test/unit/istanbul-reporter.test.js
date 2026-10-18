@@ -55,31 +55,28 @@ describe('Istanbul custom reporter resolution', () => {
         await generate(name);
     });
 
-    it('resolves an extensionless CommonJS reporter path', async () => {
-        const name = path.join(root, 'reporter');
-        fs.writeFileSync(`${name}.js`, reporterSource);
-        await generate(name);
-    });
-
-    it('resolves an extensionless relative CommonJS reporter path', async () => {
-        const name = path.join(root, 'reporter');
-        fs.writeFileSync(`${name}.js`, reporterSource);
+    it('imports a relative CommonJS reporter with an explicit extension', async () => {
+        const name = path.join(root, 'reporter.js');
+        fs.writeFileSync(name, reporterSource);
         await generate(`./${path.relative(process.cwd(), name)}`);
     });
 
-    it('resolves a CommonJS reporter directory with index.js', async () => {
+    it('does not add CommonJS extension resolution', async () => {
         const name = path.join(root, 'reporter');
-        fs.mkdirSync(name);
-        fs.writeFileSync(path.join(name, 'index.js'), reporterSource);
-        await generate(name);
+        fs.writeFileSync(`${name}.js`, reporterSource);
+        await assert.rejects(generate(name), {
+            code: 'ERR_MODULE_NOT_FOUND'
+        });
     });
 
-    it('resolves a reporter directory through package.json main', async () => {
+    it('does not add CommonJS directory resolution', async () => {
         const name = path.join(root, 'reporter');
         fs.mkdirSync(name);
-        fs.writeFileSync(path.join(name, 'package.json'), '{"main":"custom.cjs"}');
-        fs.writeFileSync(path.join(name, 'custom.cjs'), reporterSource);
-        await generate(name);
+        fs.writeFileSync(path.join(name, 'package.json'), '{"main":"index.cjs"}');
+        fs.writeFileSync(path.join(name, 'index.cjs'), reporterSource);
+        await assert.rejects(generate(name), {
+            code: 'ERR_UNSUPPORTED_DIR_IMPORT'
+        });
     });
 
     it('continues to load an ESM reporter', async () => {
@@ -97,12 +94,12 @@ describe('Istanbul custom reporter resolution', () => {
         await generate(name);
     });
 
-    ['v8', 'istanbul'].forEach((type) => {
-        it(`passes ${type} results, not two raw data formats, to a both reporter`, async () => {
-            const name = path.join(root, 'both.mjs');
+    [['v8', 'mjs'], ['v8', 'cjs'], ['istanbul', 'mjs'], ['istanbul', 'cjs']].forEach(([type, extension]) => {
+        it(`passes ${type} results, not two raw data formats, to a ${extension} both reporter`, async () => {
+            const name = path.join(root, `both.${extension}`);
             const outputFile = path.join(root, 'both.json');
-            fs.writeFileSync(name, `import fs from 'node:fs';
-                export default class Reporter {
+            const moduleHeader = extension === 'mjs' ? "import fs from 'node:fs'; export default" : "const fs = require('node:fs'); module.exports =";
+            fs.writeFileSync(name, `${moduleHeader} class Reporter {
                     constructor(options, globalOptions) {
                         this.options = options;
                         if (!globalOptions.outputDir) throw new Error('Missing global options');
@@ -153,7 +150,7 @@ describe('Istanbul custom reporter resolution', () => {
 
     it('rejects a missing local reporter', async () => {
         await assert.rejects(generate(path.join(root, 'missing')), {
-            code: 'MODULE_NOT_FOUND'
+            code: 'ERR_MODULE_NOT_FOUND'
         });
     });
 

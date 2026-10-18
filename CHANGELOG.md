@@ -7,6 +7,8 @@
     - migrate to ESM only; replace the callable `require('monocart-coverage-reports')` entry with default/named imports, or dynamic `import()` from CommonJS
     - use `export default` in ESM config files; rename existing CommonJS configs to `.cjs` (still supported)
     - `loadConfig()` throws on missing explicit configs or loading errors
+    - load external reporters and CLI preloads with native ESM `import()` only; CJS interoperability is handled by Node without a separate loader; local file extensions are required and `--require` is a deprecated alias for `--import`
+    - require `./` or `../` prefixes for relative reporter file paths, with explicit file extensions; names such as `test/custom-v8-reporter.js` are treated as package specifiers instead of falling back to local files; absolute paths and `file:` URLs remain supported
     - replace `foreground-child` with `execa` for CLI command execution, preserving argument boundaries without enabling shell mode; shell command strings, pipes and redirections are no longer interpreted by MCR
     - apply a default 30000ms total deadline to HTTP helper requests; `timeout` covers both response headers and body transfer, and `0` disables the deadline
   - **Features**
@@ -20,7 +22,8 @@
   - **Bug Fixes**
     - generate coverage after failed tests and preserve test/report failure exit codes
     - preserve config error details and original causes, including non-Error throws
-    - preserve CommonJS path resolution for local Istanbul custom reporters, including extensionless paths and directory entries
+    - propagate V8/`both` custom reporter loading and initialization failures instead of silently skipping the reporter
+    - normalize local CLI preload paths and escape paths in `NODE_OPTIONS`
     - propagate concurrency task failures and drain in-flight work before queue cleanup
     - settle HTTP requests on timeout, cancellation or premature response closure and release their connections
     - retry localhost requests through IPv4 only on connection refusal, not on HTTP errors, JSON parsing failures, timeouts or cancellation
