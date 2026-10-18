@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://coverage-v8/./test/mock/src/css/component.module.css","webpack://coverage-v8/./test/mock/src/css/main.css"],"names":[],"mappings":"AAAA;EACE,UAAU;AACZ;;ACFA;EACE,SAAS;EACT,UAAU;AACZ","file":"withSourceMap.css","sourcesContent":[".covered {\n  color: red;\n}\n","body {\n  margin: 0;\n  padding: 0;\n}\n"]}

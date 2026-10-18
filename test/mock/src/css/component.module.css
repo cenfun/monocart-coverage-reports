@@ -1,0 +1,7 @@
+.covered {
+    color: red;
+
+    [data="uncovered"] {
+        color: blue;
+    }
+}
