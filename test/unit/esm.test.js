@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parse } from 'acorn';
 import DefaultMCR, {
     MCR,
-    CoverageReport, getSnapshot, diffSnapshot, WSSession, CDPClient, Util
+    CoverageReport, CoverageClient, getSnapshot, diffSnapshot, WSSession, CDPClient, Util
 } from 'monocart-coverage-reports';
 import * as converter from 'monocart-coverage-reports/converter';
 import { Util as publicUtil } from 'monocart-coverage-reports/util';
@@ -64,12 +64,20 @@ describe('ESM package', function() {
             }
         }
         for (const [name, value] of Object.entries({
-            CoverageReport, getSnapshot, diffSnapshot, WSSession, CDPClient, Util
+            CoverageReport, CoverageClient, getSnapshot, diffSnapshot, WSSession, CDPClient, Util
         })) {
             assert.equal(MCR[name], value);
         }
         assert.equal(publicUtil, Util);
         assert.equal(typeof converter.convertV8List, 'function');
+    });
+
+    it('exposes a usable CoverageClient constructor through named and factory exports', () => {
+        const session = { send: async () => ({}) };
+        const client = new CoverageClient(session);
+        assert.equal(client.session, session);
+        assert.ok(client instanceof DefaultMCR.CoverageClient);
+        assert.ok(new MCR.CoverageClient(session) instanceof CoverageClient);
     });
 
     it('supports dynamic import from CommonJS consumers', () => {
