@@ -2,6 +2,7 @@
     "name": "monocart-coverage-reports",
     "version": "2.13.2",
     "description": "A code coverage tool to generate native V8 reports or Istanbul reports.",
+    "type": "module",
     "main": "./lib/index.js",
     "bin": {
         "mcr": "./lib/cli.js"
@@ -9,16 +10,13 @@
     "exports": {
         ".": {
             "types": "./lib/index.d.ts",
-            "import": "./lib/index.mjs",
-            "require": "./lib/index.js"
+            "default": "./lib/index.js"
         },
-        "./register": {
-            "import": "./lib/register/register.mjs",
-            "require": "./lib/register/register.js"
-        },
+        "./register": "./lib/register/register.js",
         "./converter": "./lib/converter/converter.js",
         "./util": "./lib/utils/util.js",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./skills/*": "./skills/*"
     },
     "types": "./lib/index.d.ts",
     "scripts": {
@@ -26,7 +24,10 @@
         "build": "vite build",
         "postbuild": "npm run build-test",
         "build-test": "node ./test/build/build-test.js",
-        "test-unit": "mocha --parallel test/unit/*.test.js",
+        "test-unit": "node --test \"test/unit/*.test.js\"",
+        "test-unit-coverage": "node ./lib/cli.js test -c test/mcr.config.unit.js",
+        "test-types": "tsc -p test/types/tsconfig.json",
+        "test-runtime": "node ./scripts/test-runtime.js",
         "test-node-env": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-env node ./test/test-node-env.js && node ./test/generate-report.js",
         "test-node-api": "cross-env NODE_V8_COVERAGE=.temp/v8-coverage-api node ./test/test-node-api.js",
         "test-node-ins": "node ./test/test-node-ins.js",
@@ -56,17 +57,20 @@
         "test-cp": "npx mcr node test/test-cp.mjs --outputDir .temp/test-cp",
         "test-all": "node ./test/test.js",
         "test-pr": "node --inspect=9230 ./test/test-pr.js",
-        "test": "npm run test-unit && npx mcr npm run test-all -c test/mcr.config.mcr.js && node ./scripts/docs.js",
+        "test": "npm run test-unit && npm run test-types && npx mcr npm run test-all -c test/mcr.config.mcr.js && node ./scripts/docs.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
-        "lint": "eslint src/ --fix && stylelint src/**/*.scss",
+        "lint": "eslint src/ test/unit/ --fix && stylelint src/**/*.scss && npm run lint:readme",
+        "lint:readme": "node ./scripts/lint-readme.js",
         "version": "npm run build",
         "publish": "node ./scripts/publish.js"
     },
     "files": [
         "lib",
-        "README.zh-Hans.md"
+        "README.zh-Hans.md",
+        "migrate-to-3.md",
+        "skills"
     ],
     "license": "MIT",
     "repository": {
@@ -74,59 +78,58 @@
         "url": "git+https://github.com/cenfun/monocart-coverage-reports.git"
     },
     "dependencies": {
+        "@jridgewell/sourcemap-codec": "^1.6.0",
         "acorn": "^8.19.0",
         "acorn-loose": "^8.5.2",
         "acorn-walk": "^8.3.5",
         "commander": "^15.0.0",
         "console-grid": "^2.2.4",
+        "convert-source-map": "^2.0.0",
         "eight-colors": "^1.3.3",
-        "foreground-child": "^4.0.3",
+        "execa": "^10.2.0",
         "istanbul-lib-coverage": "^3.2.2",
         "istanbul-lib-report": "^3.0.1",
         "istanbul-reports": "^3.2.0",
         "lz-utils": "^2.1.1",
-        "monocart-locator": "^1.0.6"
+        "monocart-locator": "^1.0.6",
+        "node-stream-zip": "^1.16.0",
+        "ws": "^8.22.0",
+        "yazl": "^3.3.1"
     },
     "devDependencies": {
         "@actions/core": "^3.0.1",
         "@actions/github": "^9.1.1",
-        "@jridgewell/sourcemap-codec": "^1.6.0",
         "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
         "@rollup/plugin-commonjs": "^29.0.3",
         "@rollup/plugin-typescript": "^12.3.0",
-        "@swc/core": "^1.16.13",
-        "@types/node": "^26.6.4",
-        "@vitejs/plugin-vue": "^6.0.9",
+        "@swc/core": "^1.16.18",
+        "@types/node": "^26.6.5",
+        "@vitejs/plugin-vue": "^6.0.10",
         "async-tick": "^1.0.2",
         "axios": "^1.20.0",
         "babel-loader": "^10.1.1",
         "babel-plugin-istanbul": "^8.0.0",
-        "convert-source-map": "^2.0.0",
         "cross-env": "^10.1.0",
         "diff-sequences": "^29.6.3",
         "eight-colors": "^1.3.3",
         "esbuild": "^0.28.2",
-        "eslint": "^10.12.0",
+        "eslint": "^10.13.0",
         "eslint-config-plus": "^2.1.0",
         "eslint-plugin-html": "^8.2.1",
         "eslint-plugin-vue": "^10.11.1",
-        "execa": "^10.0.1",
         "find-up": "^8.0.0",
-        "foreground-child": "^4.0.3",
         "koa": "^3.2.1",
         "koa-static-resolver": "^1.0.7",
         "minimatch": "^10.2.6",
-        "mocha": "^12.0.3",
         "monocart-code-viewer": "^1.2.0",
         "monocart-formatter": "^3.0.1",
-        "node-stream-zip": "^1.16.0",
         "open": "^11.0.4",
-        "playwright": "^1.63.0",
-        "postcss": "^8.5.29",
-        "puppeteer": "^25.12.0",
-        "rollup": "^4.64.0",
+        "playwright": "^1.64.1",
+        "postcss": "^8.5.30",
+        "puppeteer": "^25.14.0",
+        "rollup": "^4.64.9",
         "rollup-plugin-visualizer": "^7.1.1",
-        "sass": "^1.105.1",
+        "sass": "^1.105.2",
         "stylelint": "^17.16.0",
         "stylelint-config-plus": "^1.2.0",
         "supports-color": "^11.0.0",
@@ -134,14 +137,15 @@
         "ts-loader": "^9.6.2",
         "tslib": "^2.8.1",
         "tsx": "^4.23.15",
-        "turbogrid": "^3.4.1",
+        "turbogrid": "^3.4.2",
         "typescript": "^6.0.3",
-        "vine-ui": "^4.1.0",
-        "vite": "^8.3.3",
+        "vine-ui": "^4.2.0",
+        "vite": "^8.3.4",
         "vite-plugin-css-injected-by-js": "^5.0.2",
-        "webpack": "^5.111.1",
-        "ws": "^8.22.0",
-        "yazl": "^3.3.1"
+        "webpack": "^5.112.0"
+    },
+    "engines": {
+        "node": ">=22.15.0"
     },
     "allowScripts": {
         "puppeteer@25.8.0": true

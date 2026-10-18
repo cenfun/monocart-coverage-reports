@@ -31,6 +31,7 @@
 * [多进程支持](#multiprocessing-support)
 * [如何使用CLI命令行](#command-line)
 * [如何加载配置文件](#config-file)
+* [使用 `mcr test` 运行测试](#run-tests-with-mcr-test)
 * [如何合并覆盖率报告](#merge-coverage-reports)
     - [自动合并](#automatic-merging)
     - [手动合并](#manual-merging)
@@ -66,18 +67,21 @@
 * [感谢](#thanks)
 
 ## Usage
-> 推荐使用 [Node.js 22+](https://nodejs.org/)，项目将其作为持续维护的目标版本。
+> **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.15.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
+
+**从 2.x 升级：** 请参阅 [3.x 迁移指南](migrate-to-3.md)。
+
 - 安装
 ```sh
 npm install monocart-coverage-reports
 ```
 - API
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
     name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ["v8", "console-details"],
+    reports: ['v8', 'console-details'],
     cleanCache: true
 });
 await mcr.add(coverageData);
@@ -99,6 +103,21 @@ mcr node my-app.js -r v8,console-details
 ```
 参见 [命令行](#command-line)
 
+## AI Agent Skill
+
+项目提供可复用的 [Monocart Coverage Reports 技能](skills/monocart-coverage-reports/SKILL.md)，帮助 AI coding agent 采集覆盖率、配置 CLI、排查 sourcemap 和过滤问题、合并 raw 报告及设置 CI 阈值。结构为主 `SKILL.md` 加按需加载的专题参考文档，仅面向 MCR 3.x，并检查其运行环境要求。
+
+npm 包包含 `skills/monocart-coverage-reports/`。请将**整个目录**（包括 `references/`）复制到 agent 支持的 skills 目录，或直接让 agent 读取 `SKILL.md`。安装 MCR 不会自动注册技能或修改 agent 配置。技能说明使用英文，但提问和回复可以使用中文或其他语言。
+
+在使用 MCR 的项目根目录中定位已安装的技能和包配置（旧版本可能尚未包含技能）：
+
+```sh
+node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
+node -p "require.resolve('monocart-coverage-reports/package.json')"
+```
+
+读取定位到的技能文件，再按相对链接读取专题文档。请以已安装包的运行时、API 和版本要求为准，不要假设所有示例都适用于旧版本。以上命令用于定位文件，不是将 Markdown 作为 JavaScript 导入。
+
 ## Options
 - 默认选项: [lib/default/options.js](./lib/default/options.js)
 - 选项的类型描述，见 `CoverageReportOptions` [lib/index.d.ts](./lib/index.d.ts)
@@ -115,6 +134,7 @@ mcr node my-app.js -r v8,console-details
 | `dataDir` | `string` | `null` | `generate()` 阶段自动加载的覆盖率数据目录，作为 `addFromDir()` 的替代。 |
 | `entryFilter` | `string \| object \| function` | `null` | （仅 V8）按 URL 过滤入口文件，参见 [过滤V8覆盖率数据](#filtering-results)。 |
 | `sourceFilter` | `string \| object \| function` | `null` | （仅 V8）过滤从 sourcemap 解包出的源文件。 |
+| `outputFilter` | `string \| object \| function` | `null` | （仅 V8）在 sourcemap 转换后，按最终 `sourcePath` 过滤文件。参见 [过滤V8覆盖率数据](#filtering-results)。 |
 | `filter` | `string \| object \| function` | `null` | 合并 `entryFilter` 和 `sourceFilter` 的统一过滤器。 |
 | `sourcePath` | `object \| function` | `null` | 修改源文件路径，参见 [使用 `sourcePath`](#resolve-sourcepath-for-the-source-files)。 |
 | `all` | `string \| string[] \| object` | `null` | 为未测试文件添加空覆盖率，参见 [为未测试的文件添加空的覆盖率报告](#adding-empty-coverage-for-untested-files)。 |
@@ -127,7 +147,7 @@ mcr node my-app.js -r v8,console-details
 | `watermarks` | `[number, number] \| object` | `[50, 80]` | 覆盖率高/低阈值百分比。也支持按指标配置：`{ bytes:[50,80], lines:[50,80] }`。 |
 | `clean` | `boolean` | `true` | 生成报告前清理 `outputDir` 中的旧报告（`.cache` 目录在 `cleanCache` 也为 `true` 时才会被清理）。 |
 | `cleanCache` | `boolean` | `false` | 启动时清理缓存目录。当 `clean` 和 `cleanCache` 都为 `false` 时，之前运行的缓存数据会保留，可在多进程间复用。 |
-| `gc` | `number` | `null` | 内存阈值（MB），在关键阶段若 RSS 超过阈值则强制触发 GC，适用于超大数据集，参见 [JavaScript heap out of memory](#javascript-heap-out-of-memory)。 |
+| `gc` | `number` | `null` | 内存阈值（MB），在关键阶段若 JavaScript 堆内存使用量（`heapUsed`）超过阈值则强制触发 GC，适用于超大数据集，参见 [JavaScript heap out of memory](#javascript-heap-out-of-memory)。 |
 | `sourceMap` | `boolean` | `false` | 将源文件和 sourcemap 也保存到 cache 便于调试（需要 `logging: "debug"`）。 |
 | `sourceMapResolver` | `(url, defaultResolver) => Promise<string \| object>` | `null` | 自定义 sourcemap 加载逻辑（例如从构建缓存中读取），可调用 `defaultResolver(url)` 回退到默认解析。 |
 | `onEntry` | `(entry) => void \| Promise<void>` | `null` | （仅 V8）每个入口文件处理前触发，参见 [Hooks](#hooks)。 |
@@ -202,7 +222,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
 - 自定义报告
     ```js
-    {
+    const coverageOptions = {
         reports: [
             [path.resolve('./test/custom-istanbul-reporter.js'), {
                 type: 'istanbul',
@@ -216,22 +236,24 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
                 type: 'both'
             }]
         ]
-    }
+    };
     ```
     - Istanbul自定义报告
     > 例子: [./test/custom-istanbul-reporter.js](./test/custom-istanbul-reporter.js), see [istanbul built-in reporters' implementation](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) for reference.
     - V8自定义报告
     > 例子: [./test/custom-v8-reporter.js](./test/custom-v8-reporter.js)
 
-    `type` 选项决定报告接收的覆盖率数据格式：
-    - `'istanbul'` — 报告接收 Istanbul 格式的覆盖率数据（`coverageResults.istanbulData`）。
-    - `'v8'` — 报告接收原生 V8 格式的覆盖率数据（`coverageResults.v8Data`）。
-    - `'both'` — 报告同时接收两种格式，可通过 `coverageResults.v8Data` 和 `coverageResults.istanbulData` 访问。
+    `type` 选项决定报告接口及执行时机：
+    - `'istanbul'` — 使用 Istanbul 报告接口：先调用 `new Reporter(reportOptions)`，再调用 `execute(context)`。context 提供 Istanbul 报告树和源码查找能力。V8 输入会先转换为 Istanbul 覆盖率数据。
+    - `'v8'`（默认值）— 对 V8 输入，先调用 `new Reporter(reportOptions, globalOptions)`，再调用 `await generate(reportData)`。`reportData` 是 V8 覆盖率结果，包含 `type`、`summary` 和 `files`；每个文件包含 V8 覆盖范围和汇总。
+    - `'both'` — 对 V8 或 Istanbul 输入均使用上述 `generate(reportData)` 接口。请检查 `reportData.type`，按对应的结果结构处理。它**不会**同时提供两份原始格式的数据，结果中不存在 `v8Data` 或 `istanbulData` 属性。
+
+    报告统一使用原生 ESM `import()` 加载。ESM 报告使用 `export default Reporter`；通过 Node 内置互操作，也可加载 `module.exports = Reporter` 的 CommonJS 报告（在 ESM 项目中使用 `.cjs`）。本地路径必须明确指定文件扩展名，不补全扩展名、不解析目录入口，不提供独立的 CommonJS 加载器。报告加载或初始化失败会使报告生成失败，不会静默跳过。
 
 ### Multiple Reports:
 如何配置多个报告
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const coverageOptions = {
     outputDir: './coverage-reports',
     reports: [
@@ -248,15 +270,15 @@ const coverageOptions = {
 
         // custom reports
         // Specify reporter name with the NPM package
-        ["custom-reporter-1"],
-        ["custom-reporter-2", {
-            type: "istanbul",
-            key: "value"
+        ['custom-reporter-1'],
+        ['custom-reporter-2', {
+            type: 'istanbul',
+            key: 'value'
         }],
         // Specify reporter name with local path
         ['/absolute/path/to/custom-reporter.js']
     ]
-}
+};
 const mcr = MCR(coverageOptions);
 ```
 
@@ -324,7 +346,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -353,7 +375,7 @@ await Promise.all([
     })
 ]);
 
-await page.goto("your page url");
+await page.goto('your page url');
 
 const [jsCoverage, cssCoverage] = await Promise.all([
     page.coverage.stopJSCoverage(),
@@ -406,30 +428,35 @@ const coverageData = [... jsCoverage.map((it) => {
     - 如果是子进程，可参见 [命令行](#command-line)
 
 ### Collecting V8 Coverage Data with `CDPClient` API
+
+`timeout` 控制 HTTP 调试目标发现和 WebSocket 连接的超时（默认 10000ms）；`requestTimeout` 控制内置 WebSocket 会话中每条 CDP 命令的超时（默认 30000ms）。设为 `0` 可禁用相应超时。外部 Playwright/Puppeteer 会话自行管理命令超时。自定义 socket 可使用 `new MCR.WSSession(ws, { timeout: 30000 })`。
+
 - `CDPClient`为`MCR`提供的内置接口类，用来更便捷的处理覆盖率相关数据，所有的API如下
-```js
-// 开始和停止并收集JS的覆盖率数据
-startJSCoverage: () => Promise<void>;
-stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+```ts
+interface CoverageClient {
+    // 开始和停止并收集JS的覆盖率数据
+    startJSCoverage: () => Promise<void>;
+    stopJSCoverage: () => Promise<V8CoverageEntry[]>;
 
-// 开始和停止并收集CSS的覆盖率数据，支持匿名文件(比如style里的css)
-startCSSCoverage: () => Promise<void>;
-stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+    // 开始和停止并收集CSS的覆盖率数据，支持匿名文件(比如style里的css)
+    startCSSCoverage: () => Promise<void>;
+    stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
 
-// 开始和停止并收集JS和CSS的覆盖率数据
-startCoverage: () => Promise<void>;
-stopCoverage: () => Promise<V8CoverageEntry[]>;
+    // 开始和停止并收集JS和CSS的覆盖率数据
+    startCoverage: () => Promise<void>;
+    stopCoverage: () => Promise<V8CoverageEntry[]>;
 
-/** 如果开启了NODE_V8_COVERAGE，这个接口用来手动保存当前覆盖率数据 */
-writeCoverage: () => Promise<string>;
+    /** 如果开启了NODE_V8_COVERAGE，这个接口用来手动保存当前覆盖率数据 */
+    writeCoverage: () => Promise<string>;
 
-/** 收集istanbul覆盖率数据 */
-getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+    /** 收集istanbul覆盖率数据 */
+    getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
+}
 ```
 
 - 结合使用Node调试端口`--inspect=9229` 或者浏览器调试端口 `--remote-debugging-port=9229`
 ```js
-const MCR = require('monocart-coverage-reports');
+import { MCR } from 'monocart-coverage-reports';
 const client = await MCR.CDPClient({
     port: 9229
 });
@@ -440,8 +467,8 @@ const coverageData = await client.stopJSCoverage();
 
 - 结合使用 [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
 ```js
-const { chromium } = require('playwright');
-const MCR = require('monocart-coverage-reports');
+import { chromium } from 'playwright';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await chromium.launch();
 const page = await browser.newPage();
 const session = await page.context().newCDPSession(page);
@@ -451,14 +478,14 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
 - 结合使用 [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
 ```js
-const puppeteer = require('puppeteer');
-const MCR = require('monocart-coverage-reports');
+import puppeteer from 'puppeteer';
+import { MCR } from 'monocart-coverage-reports';
 const browser = await puppeteer.launch({});
 const page = await browser.newPage();
 const session = await page.target().createCDPSession();
@@ -468,20 +495,20 @@ const client = await MCR.CDPClient({
 // both js and css coverage
 await client.startCoverage();
 // run your test page here
-await page.goto("your page url");
+await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
 - 结合使用 [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (仅支持Chrome/Edge浏览器)
 ```js
-const { Builder, Browser } = require('selenium-webdriver');
-const MCR = require('monocart-coverage-reports');
+import { Builder, Browser } from 'selenium-webdriver';
+import { MCR } from 'monocart-coverage-reports';
 const driver = await new Builder().forBrowser(Browser.CHROME).build();
 const pageCdpConnection = await driver.createCDPConnection('page');
 const session = new MCR.WSSession(pageCdpConnection._wsConnection);
 const client = await MCR.CDPClient({
     session
-})
+});
 ```
 
 ### V8 Coverage Data API
@@ -489,7 +516,7 @@ const client = await MCR.CDPClient({
 - [Playwright的覆盖率接口](https://playwright.dev/docs/api/class-coverage)
 - [Puppeteer的覆盖率接口](https://pptr.dev/api/puppeteer.coverage)
 - [DevTools Protocol的覆盖率接口](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) 参见 [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) 和 [v8-coverage](https://github.com/bcoe/v8-coverage)
-```js
+```ts
 // Coverage data for a source range.
 export interface CoverageRange {
     // JavaScript script source offset for the range start.
@@ -578,15 +605,15 @@ export type V8CoverageData = ScriptCoverage[];
 过滤可以使用函数:
 ```js
 const coverageOptions = {
-    entryFilter: (entry) => entry.url.indexOf("main.js") !== -1,
+    entryFilter: (entry) => entry.url.indexOf('main.js') !== -1,
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1
 };
 ```
 也可以使用便捷的[`minimatch`](https://github.com/isaacs/minimatch)来匹配（推荐）:
 ```js
 const coverageOptions = {
-    entryFilter: "**/main.js",
-    sourceFilter: "**/src/**"
+    entryFilter: '**/main.js',
+    sourceFilter: '**/src/**'
 };
 ```
 支持多个匹配:
@@ -611,10 +638,17 @@ mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}"
 ```js
 const coverageOptions = {
     entryFilter: (entry) => {
-        if (minimatch(entry.url, '**/node_modules/**')) { return false; }
-        if (minimatch(entry.url, '**/vendor.js')) { return false; }
-        if (minimatch(entry.url, '**/src/**')) { return true; }
-        return false; // else unmatched
+        if (minimatch(entry.url, '**/node_modules/**')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/vendor.js')) {
+            return false;
+        }
+        if (minimatch(entry.url, '**/src/**')) {
+            return true;
+        }
+        // else unmatched
+        return false;
     }
 };
 ```
@@ -632,6 +666,42 @@ const coverageOptions = {
     }
 };
 ```
+
+### 使用 `outputFilter` 过滤最终文件
+> **版本要求：** `outputFilter` 是 **v3.0.0** 新增的选项，v2.13.x 及更早版本不支持。
+
+**两套过滤方案选一套即可，不要混淆。** `outputFilter` 与已有的 `entryFilter` + `sourceFilter` 都用于决定报告中保留哪些文件，功能重叠，是两种替代方案，而不是必须叠加配置的过滤器。合并选项 `filter` 只是 `entryFilter` + `sourceFilter` 的简写，不会配置 `outputFilter`。
+
+| 方案 | 过滤时机和对象 | 优点 | 代价与注意事项 |
+| :-- | :-- | :-- | :-- |
+| `entryFilter` + `sourceFilter`（或 `filter`） | 从输入端过滤：在发现入口文件时，`entryFilter` 按 URL 过滤；在 sourcemap 解包源文件时，`sourceFilter` 按源路径过滤。 | 尽早排除不需要的文件，减少后续无效处理，性能更高。大型项目或 bundle 较多时，优先推荐此方案。 | 需要区分入口文件和 sourcemap 源文件，并配置两个阶段的规则。如果通过 `entryFilter` 排除整个 bundle，其中需要保留的源文件也会一起丢失。 |
+| `outputFilter` | 从输出结果过滤：在 sourcemap 转换、合并和添加未测试文件（`all`）完成后、生成报告前，按最终 `sourcePath` 过滤。 | 配置更简单，一套规则直接面向最终文件列表，无需区分入口文件和解包后的源文件。 | 不需要的文件在被丢弃前仍会经历前期发现和处理，无法节省这些开销。当最终排除的文件较多时，可能带来明显的生成耗时和内存开销，存在性能问题。 |
+
+**选择建议：** 优先考虑性能时，使用输入过滤方案（`entryFilter` + `sourceFilter`，或 `filter`）；更看重配置简单、希望直接过滤最终结果，且可以接受额外处理成本时，选择 `outputFilter`。切换到 `outputFilter` 时，应移除同一范围的旧输入过滤配置：输入阶段已经排除的文件，无法通过输出过滤恢复。
+
+对于 V8 输入，`outputFilter` 同时作用于 V8 报告和转换后的 Istanbul 报告。默认值为 `null`，不启用过滤。
+
+它与 `entryFilter` 和 `sourceFilter` 使用相同的字符串和有序对象匹配规则：按顺序返回第一个匹配项的值，未匹配的文件不保留。匹配目标是经过 `sourcePath` 改写后的最终路径。函数形式接收最终文件对象，而不是路径字符串。
+
+```js
+const coverageOptions = {
+    outputFilter: {
+        '**/node_modules/**': false,
+        '**/src/**': true
+    }
+};
+// 也可以使用：
+// outputFilter: '**/src/**'
+// outputFilter: (entry) => entry.sourcePath.startsWith('src/')
+```
+
+命令行示例（使用引号避免 shell 展开匹配规则）：
+```sh
+mcr merge --inputDir ./raw --outputFilter "**/src/**"
+mcr merge --inputDir ./raw --outputFilter "{'**/node_modules/**':false,'**/src/**':true}"
+```
+
+`outputFilter` 不改变 raw 原始覆盖率导出，也不适用于 Istanbul 格式的输入数据。
 
 ## Resolve `sourcePath` for the Source Files
 当一个文件从sourcemap解包，它的路径可能是个虚拟路径, 此时可以使用`sourcePath`选项来修改文件路径。比如，我们测试了多个dist包的入口文件，它们的源文件可能包含了一些共同的文件，但路径可能不同，如果我们需要相同的文件覆盖率数据可以自动合并，那么需要使用`sourcePath`来统一这些相同文件的路径
@@ -653,34 +723,34 @@ const coverageOptions = {
 ```js
 const coverageOptions = {
     sourcePath: {
-        'my-dist-file1/': '', 
+        'my-dist-file1/': '',
         'my-dist-file2/': ''
     }
 };
 ```
 解决文件路径不完整的问题：
 ```js
-const path = require("path")
+import path from 'node:path';
 
 // MCR coverage options
 const coverageOptions = {
-    sourcePath: (filePath, info)=> {
+    sourcePath: (filePath, info) => {
         if (!filePath.includes('/') && info.distFile) {
             return `${path.dirname(info.distFile)}/${filePath}`;
         }
         return filePath;
     }
-}
+};
 ```
 
 ## Adding Empty Coverage for Untested Files
 默认，未测试的文件不会包含在覆盖率报告中。使用 `all` 选项可将它们以 0% 覆盖率加入报告。即使没有收集到任何覆盖率数据，也会为匹配的未测试文件生成 V8 报告。
 ```js
 const coverageOptions = {
-    all: './src',
+    all: './src'
 
     // 支持多个目录
-    all: ['./src', './lib'],
+    // all: ['./src', './lib']
 };
 ```
 未测试的文件也适用于`sourceFilter`过滤器. 而且也可以指定自己的`filter`过滤器 (可以返回文件类型来支持js或css的覆盖率格式):
@@ -693,30 +763,29 @@ const coverageOptions = {
             '**/ignored-*.js': false,
             '**/*.html': false,
             // empty css coverage
-            '**/*.scss': "css",
+            '**/*.scss': 'css',
             '**/*': true
         }
     }
 };
 ```
-我们可能需要编译.ts, .jsx, .vue等等这样的文件, 这样才能被默认的AST解析器解析，以得到更多的覆盖率指标的数据
+可以将未测试的文件转换成 JavaScript，以便进行 AST 分析。以下示例仅处理**不含 JSX 的 TypeScript**，并假定已安装 `@swc/core`。JSX/TSX 或 Vue 应使用匹配的编译器和解析器，这不是通用转换器。保留完整文件路径，避免不同目录下的同名文件冲突；SWC 返回的 sourcemap 是 JSON 字符串，赋值前需要解析。
 ```js
-const path = require("path");
-const swc = require("@swc/core");
+import { fileURLToPath } from 'node:url';
+import { transform } from '@swc/core';
 const coverageOptions = {
     all: {
         dir: ['./src'],
+        filter: '**/*.ts',
         transformer: async (entry) => {
-            const { code, map } = await swc.transform(entry.source, {
-                filename: path.basename(entry.url),
+            const { code, map } = await transform(entry.source, {
+                filename: fileURLToPath(entry.url),
                 sourceMaps: true,
                 isModule: true,
                 jsc: {
                     parser: {
-                        syntax: "typescript",
-                        jsx: true
-                    },
-                    transform: {}
+                        syntax: 'typescript'
+                    }
                 }
             });
             entry.source = code;
@@ -729,35 +798,44 @@ const coverageOptions = {
 ## Hooks
 
 ### `onEnd` — 报告生成后触发
-典型用法：检测覆盖率是否达标，低于 threshold 时抛错退出。
+典型用法：检测覆盖率是否达标，失败时抛错，让 API 调用方处理异常、CLI 返回非零状态；不要使用 `process.exit()` 提前中断清理。
 ```js
-const EC = require('eight-colors');
+const getCoverageError = (metric, summary, minimum) => {
+    if (!summary || !(summary.total > 0)) {
+        return `${metric}: missing or empty coverage`;
+    }
+    const { pct } = summary;
+    if (typeof pct !== 'number' || !Number.isFinite(pct) || pct < minimum) {
+        return `${metric}: ${pct}%, required ${minimum}%`;
+    }
+    return '';
+};
 const coverageOptions = {
     name: 'My Coverage Report',
     outputDir: './coverage-reports',
     onEnd: (coverageResults) => {
+        if (!coverageResults) {
+            throw new Error('No coverage results');
+        }
         const thresholds = {
             bytes: 80,
             lines: 60
         };
-        console.log('check thresholds ...', thresholds);
         const errors = [];
-        const { summary } = coverageResults;
-        Object.keys(thresholds).forEach((k) => {
-            const pct = summary[k].pct;
-            if (pct < thresholds[k]) {
-                errors.push(`Coverage threshold for ${k} (${pct} %) not met: ${thresholds[k]} %`);
+        for (const [metric, minimum] of Object.entries(thresholds)) {
+            const error = getCoverageError(metric, coverageResults.summary?.[metric], minimum);
+            if (error) {
+                errors.push(error);
             }
-        });
+        }
         if (errors.length) {
-            const errMsg = errors.join('\n');
-            console.log(EC.red(errMsg));
-            // throw new Error(errMsg);
-            // process.exit(1);
+            throw new Error(errors.join('\n'));
         }
     }
-}
+};
 ```
+
+本示例拒绝缺失或总数为零的指标；如果某项指标允许为空，应明确调整策略。没有可用输入时，`generate()` 可能直接返回 `undefined` 而不调用 `onEnd`。API 调用方必须检查返回值；普通 CLI 流程应使用干净的输出目录，并验证本次生成的非空报告。参见 [严格 CI 示例](skills/monocart-coverage-reports/references/reports-and-ci.md#reject-stale-reports-and-missing-collection-in-ci)。
 
 ### `onEntry` — 每个V8入口在处理前触发（仅V8）
 可以在进入AST解析前改写 entry（例如对非标准语法的源码做预编译），参见 [Unparsable source](#unparsable-source)
@@ -775,7 +853,7 @@ const coverageOptions = {
 - `onReady(coverageReport, nodeV8CoverageDir, subprocess)` — 子进程退出后、MCR 读取 `nodeV8CoverageDir` 之前触发。用于子进程尚未写完覆盖数据需要等待的场景
 ```js
 // mcr.config.js
-module.exports = {
+export default {
     onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
         // 等待某个信号，或先对 raw 文件做一些预处理
     }
@@ -783,6 +861,8 @@ module.exports = {
 ```
 
 ## Ignoring Uncovered Codes
+<!-- readme-lint-disable -->
+
 使用特定的注释，以`v8 ignore `开头可以忽略未覆盖的代码:
 - 忽略开始到结束
 ```js
@@ -817,12 +897,14 @@ function uncovered() {
 ```
 - 可以设置 `v8Ignore: false` 完全禁用基于注释的忽略机制。
 
+<!-- readme-lint-enable -->
+
 ## Multiprocessing Support
 > 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](#debug-for-coverage-and-sourcemap)，或者使用了`raw`报告
 - 主进程，初始化，清理之前的缓存
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 // clean previous cache before the start of testing
 // unless the running environment is new and no cache
@@ -831,16 +913,16 @@ mcr.cleanCache();
 
 - 子进程1, 测试业务1
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData1);
 ```
 
 - 子进程2, 测试业务2
 ```js
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.add(coverageData2);
 ```
@@ -848,8 +930,8 @@ await mcr.add(coverageData2);
 - 主进程，所有测试完成之后
 ```js
 // generate coverage reports after the completion of testing
-const MCR = require('monocart-coverage-reports');
-const coverageOptions = require('path-to/same-options.js');
+import { MCR } from 'monocart-coverage-reports';
+import coverageOptions from 'path-to/same-options.js';
 const mcr = MCR(coverageOptions);
 await mcr.generate();
 ```
@@ -871,14 +953,17 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 - CLI 选项
 
+命令使用 Execa 的默认选项执行，不主动开启 shell 模式。请分别传入可执行文件及参数，例如 `mcr node "./my app.js"`，不要把整条命令作为一个带引号的参数传入。MCR 保留参数边界，不展开环境变量或 glob，也不解析管道、重定向、`&&` 等 shell 语法；组合命令请放入脚本。使用 `mcr [options] -- executable ...args` 可以避免子命令参数被当作 MCR 参数解析。平台相关的命令执行由 Execa 处理，包括在 Windows 下按需通过 `cmd.exe` 调用批处理文件并转义参数。
+
 以下选项仅在 CLI 模式（`mcr <command>`）下可用：
 
 | 选项 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `-c, --config` | `string` | — | 自定义配置文件路径 |
-| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。需要 Node.js `>= 18.19` |
-| `--require` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 CJS 模块 |
-| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。需要 Node.js `>= 20.6` |
+| `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。|
+| `--require` | `string` | `null` | `--import` 的已弃用别名；使用 ESM 加载，不使用 CommonJS 解析 |
+| `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。|
+| `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.15.0` |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](#hooks) |
 
@@ -889,15 +974,17 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。要求 Node.js `>= 18.19`
+- `--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。依赖 `process.loadEnvFile`，Node.js `20.6` 起支持
+- `--env [path]`: 子进程启动前从 dotenv 文件加载环境变量（默认 `.env`）。使用 `process.loadEnvFile`，在所有受支持的 Node.js 版本中均可用
 ```sh
 mcr --env .env.test node ./test.js
 ```
+
+- `test`：运行 Node.js 测试并生成覆盖率报告，参见[使用 `mcr test` 运行测试](#run-tests-with-mcr-test)。
 
 - `merge`: 直接合并 `inputDir` 中的原始覆盖率数据并生成合并报告，无需启动子进程。
 ```sh
@@ -911,6 +998,8 @@ mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverag
     - [AVA](#ava)
 
 ## Config File
+MCR 3.x 中，显式指定的配置不存在，或找到的配置加载失败（包括 JSON 解析、模块语法及初始化错误）时，`loadConfig()` 会直接抛出异常，所有 CLI 命令也会非零退出，不再需要 `strict` 参数。未指定自定义配置且找不到默认配置时，仍使用已有选项继续执行。
+
 根据以下优先级加载配置文件
 - 自定义配置文件（如果没有指定则加载后面的默认配置文件）:
     - CLI: `mcr --config <my-config-file-path>`
@@ -925,6 +1014,59 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 ```
 
 > 未指定自定义路径时，MCR 会从当前工作目录向上查找默认配置文件（通过 [`find-up`](https://github.com/sindresorhus/find-up)）。不在搜索路径内的文件会被忽略
+
+## Run Tests with `mcr test`
+
+**MCR 3.x 重要更新：** 使用内置的 [Node.js 测试 runner](https://nodejs.org/docs/latest/api/test.html)，一条命令即可运行测试并自动生成覆盖率报告。需要 **Node.js >= 22.15.0**。
+
+安装 MCR 后，直接指定测试文件即可运行，无需配置文件：
+
+```sh
+npm install --save-dev monocart-coverage-reports
+npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
+```
+
+此命令会运行匹配的测试，在终端打印覆盖率摘要，并将 V8 HTML 报告写入 `./coverage-reports/index.html`。请为 glob 加引号，让 Node.js 而不是 shell 处理匹配。
+
+对于需要反复执行的测试，可将测试目标和覆盖率选项保存到 `mcr.config.js`（ESM；需在 `package.json` 设置 `"type": "module"`，或将配置命名为 `mcr.config.mjs`）：
+
+```js
+export default {
+    test: ['./test/unit/**/*.test.js', './test/integration/**/*.test.js'],
+    reports: ['v8', 'console-summary'],
+    outputDir: './coverage-reports'
+};
+```
+
+```sh
+# 运行配置中的测试目标
+npx mcr test
+# 覆盖配置中的测试目标，并在 -- 后透传 Node.js 测试 runner 参数
+npx mcr test "./test/unit/**/*.test.js" -- --test-reporter=spec
+
+# 显式指定配置文件
+npx mcr test "../tests/**/*.test.js" -c ./mcr.config.js
+
+# 在命令行选择报告
+npx mcr test "../tests/**/*.test.js" -r v8,console-summary
+
+# 运行多个测试文件
+npx mcr test ./test/first.test.js ./test/second.test.js
+
+# 按测试名称筛选，并指定 reporter
+npx mcr test "../tests/**/*.test.js" -c ./mcr.config.js -- --test-name-pattern="my test" --test-reporter=spec
+
+# 将 test 命令放在初始分隔符后
+npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=spec
+```
+
+命令行指定的测试目标会**覆盖**配置中的 `test`，而不是追加；未指定命令行目标时才使用配置。命令行指定目标时可以不使用配置文件。原有 MCR 参数（如 `-c`、`-r`、`-o`、`--lcov`）可以放在目标之前或之后。Node runner 参数请放在 `--` 后，原样透传，不作为 MCR 参数或目标覆盖项解析。建议为 glob 加引号，避免 shell 提前展开。使用另一种 `mcr [options] -- test ...` 形式时，所有 MCR 参数必须放在第一个 `--` 前，Node runner 参数则放在第二个 `--` 后。
+
+测试目标原样传给 `node --test`。MCR 不检查目标类型或文件是否存在，不展开目录/glob，不解析或标准化路径，不转义特殊字符，也不去重；`node --test` 原生接收测试文件路径或 glob 形式的位置参数，而不是 JavaScript 配置对象。MCR 配置中的字符串表示一个这样的参数（不会按空格拆分），字符串数组表示多个按原顺序传递的参数；`null` 仅是 MCR 跳过测试的默认值，不会传给 Node。测试发现、匹配、参数解释及错误行为均交给 Node。相对路径以当前工作目录为基准，而不是配置文件目录。不承诺直接指定目录会递归发现测试；递归匹配请使用 `"../tests/**/*.test.js"` 等 glob，行为以当前 Node 版本的原生支持为准。TypeScript 执行能力取决于 Node 版本或 `--import tsx` 等加载器。
+
+`test` 默认为 `null`；未指定命令行目标，且 `test` 未配置或为 `null`、空字符串、`[]` 时跳过测试，也不生成报告。MCR 仅判断是否提供了目标，无效或未匹配目标由 Node 自行处理。如果没有产生覆盖率数据且无法生成报告，命令仍会在报告生成阶段失败。显式指定的配置文件不存在或配置加载失败时，也会失败退出，不会静默跳过测试。测试失败仍生成覆盖率报告，并保留非零退出状态；报告生成失败同样非零退出。支持现有覆盖率配置和 CLI hooks，可按需通过过滤器排除测试文件。**`test` 配置在其他 CLI 命令和 API 调用中均不生效**，包括 `merge` 和 `generate()`。
+
+其他 CLI 选项参见[命令行](#command-line)。
 
 ## Merge Coverage Reports
 以下这些使用场景可能需要使用合并覆盖率报告：
@@ -945,12 +1087,12 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 ```js
 const coverageOptions = {
     name: 'My Unit Test Coverage Report',
-    outputDir: "./coverage-reports/unit",
+    outputDir: './coverage-reports/unit',
     reports: [
         ['raw', {
             // relative path will be "./coverage-reports/unit/raw"
             // defaults to raw
-            outputDir: "raw"
+            outputDir: 'raw'
         }],
         ['v8'],
         ['console-details']
@@ -966,8 +1108,8 @@ const coverageOptions = {
 - 然后创建一个`merge-coverage.js`文件，使用`inputDir`参数导入`raw`数据，来生成合并的覆盖率报告.
 ```js
 // merge-coverage.js
-const fs = require('fs');
-const { CoverageReport } = require('monocart-coverage-reports');
+import fs from 'fs';
+import { CoverageReport } from 'monocart-coverage-reports';
 const inputDir = [
     './coverage-reports/unit/raw',
     './coverage-reports/e2e/raw'
@@ -986,7 +1128,7 @@ const coverageOptions = {
         '**/node_modules/**': false,
         '**/src/**': true
     },
-    
+
     sourcePath: (filePath, info) => {
         // Unify the file path for the same files
         // For example, the file index.js has different paths:
@@ -1000,7 +1142,7 @@ const coverageOptions = {
         ['v8'],
         ['console-details']
     ],
-    
+
     onEnd: () => {
         // remove the raw files if no longer needed
         // inputDir.forEach((p) => {
@@ -1030,7 +1172,7 @@ await new CoverageReport(coverageOptions).generate();
 > 常见问题
 ### Unexpected coverage
 覆盖率看起来不正确，多数情况是因为sourcemap转换的问题导致的. 可以先尝试设置构建工具的 `minify=false` 也就是不要压缩代码来解决。下面来看看sourcemap存在问题的具体原因：
-```js
+```text
 const a = tf ? 'true' : 'false';
                ^     ^  ^
               m1     p  m2
@@ -1046,21 +1188,21 @@ const a = tf ? 'true' : 'false';
 ### Unparsable source
 源码无法解析问题。由上面我们知道`MCR`通过分析源码的AST获取更多指标的覆盖率信息，但源码如果不是标准的 ECMAScript，比如`ts`, `jsx`这些，那么分析的时候就会报错，此时我们可以手动来编译这些文件（可行但不推荐）.
 ```js
-import * as fs from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as TsNode from 'ts-node';
 const coverageOptions = {
-    onEntry: async (entry) => {
-        const filePath = fileURLToPath(entry.url)
-        const originalSource = fs.readFileSync(filePath).toString("utf-8");
+    onEntry: (entry) => {
+        const filePath = fileURLToPath(entry.url);
+        const originalSource = fs.readFileSync(filePath).toString('utf-8');
         const fileName = path.basename(filePath);
         const tn = TsNode.create({});
         const source = tn.compile(originalSource, fileName);
         entry.fake = false;
         entry.source = source;
     }
-}
+};
 ```
 
 ### JavaScript heap out of memory
@@ -1101,7 +1243,7 @@ const coverageOptions = {
 
 - 使用环境变量`MCR_LOG_TIME`显示时间日志
 ```js
-process.env.MCR_LOG_TIME = true
+process.env.MCR_LOG_TIME = true;
 ```
 
 ## Integration with Any Testing Framework
@@ -1185,7 +1327,7 @@ mcr mocha ./test/**/*.js
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# Node.js v18.19.0 +
+# MCR 3.x: Node.js >= 22.15.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
@@ -1206,7 +1348,7 @@ mcr ava
 - Supports native `codecov` built-in report ([specification](https://docs.codecov.com/docs/codecov-custom-coverage-format))
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     reports: [
         ['codecov']
     ]
@@ -1226,7 +1368,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1244,7 +1386,7 @@ const coverageOptions = {
 - Using `lcov` report:
 ```js
 const coverageOptions = {
-    outputDir: "./coverage-reports",
+    outputDir: './coverage-reports',
     lcov: true
 };
 ```
@@ -1277,17 +1419,25 @@ const coverageOptions = {
 ```
 
 ## Contributing
-- Node.js 22+（推荐的开发版本）
+- 推荐使用最新 Node.js 24 LTS 开发；包的最低运行版本为 22.15.0。开发工具可能要求高于最低运行版本的补丁版本。
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install
 npx playwright install --with-deps
 
 npm run build
+npm run lint
 npm run test
 
 npm run dev
 ```
+README 中的 JavaScript 示例通过 `npm run lint:readme` 和 `npm run lint` 使用项目的 ESLint 配置检查。仅针对省略上下文的片段关闭 `no-undef` 和 `no-unused-vars`，语法、代码风格及其他正确性规则保持启用。TypeScript 声明使用 `ts` 代码块，示意图使用 `text`。刻意保留非标准格式的演示可继续使用 `js` 高亮，并在区域前后分别添加独占一行的 `<!-- readme-lint-disable -->` 和 `<!-- readme-lint-enable -->` 隐藏注释；该区域不参与 lint 和自动修复。标记必须配对且不能嵌套，代码块内部出现的标记仅视为演示文本。
+
+```sh
+npm run lint:readme
+npm run lint:readme -- --fix
+```
+
 - Refreshing `eol=lf` for snapshot of test (Windows)
 ```sh
 git add . -u
@@ -1299,3 +1449,6 @@ npm run eol
 ## Thanks
 - [@bcoe](https://github.com/bcoe)
 - [@edumserrano](https://github.com/edumserrano)
+
+
+![Monocart Coverage Reports](./assets/og-image.png)

@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [22, 24]
+        node-version: [22, 24, 26]
 
     runs-on: ubuntu-latest
     name: Test Node ${{ matrix.node-version }}
@@ -37,6 +37,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          check-latest: true
           cache: ''
       - run: npm install
       - run: npx playwright install --with-deps

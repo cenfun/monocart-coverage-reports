@@ -1,8 +1,8 @@
-const { chromium } = require('playwright');
-const EC = require('eight-colors');
+import { chromium } from 'playwright';
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],

@@ -1,13 +1,13 @@
-const fs = require('fs');
-const { Session } = require('inspector');
-const { promisify } = require('util');
-const { fileURLToPath } = require('url');
-const { chromium } = require('playwright');
+import fs from 'node:fs';
+import { Session } from 'node:inspector';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
 
-const EC = require('eight-colors');
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 const coverageOptions = {
     // logging: 'debug',
     // watermarks: [60, 90],
@@ -154,7 +154,7 @@ const testNode = async () => {
 
     // import lib after v8 coverage started
     // test dist with sourcemap
-    const { component, branch } = require('./mock/node/dist/coverage-node.js');
+    const { component, branch } = (await import('./mock/node/dist/coverage-node.js')).default;
 
     component(3);
     branch();

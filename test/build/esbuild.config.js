@@ -1,8 +1,8 @@
-const path = require('path');
+import path from 'node:path';
 const entry = path.resolve('test/mock/src/index.js');
 const outfile = path.resolve('test/mock/esbuild/dist/coverage-esbuild.js');
 
-module.exports = {
+export default {
     entryPoints: [entry],
     outfile: outfile,
     sourcemap: true,

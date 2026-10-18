@@ -82,20 +82,34 @@ function buildEndPlugin() {
                 console.log(`built ${path.relative(import.meta.dirname, filePath)} ${EC.yellow(`${size} kB`)}`);
             };
 
-            // Build the dependencies shared by the Node.js runtime into one
-            // CommonJS file. Files under lib require this bundle directly.
+            // Aggregate small dependency graphs into two feature bundles.
+            // Standalone runtime packages are imported directly by lib.
             const vendorPath = path.resolve(packagesDir, 'monocart-coverage-vendor.js');
             const vendorBuild = await esbuild({
-                entryPoints: [path.resolve(import.meta.dirname, 'src/vendor/index.js')],
-                outfile: vendorPath,
+                entryPoints: Object.fromEntries(Object.entries({
+                    vendor: 'index',
+                    converter: 'converter'
+                }).map(([name, entry]) => [
+                    `monocart-coverage-${name}`, path.resolve(import.meta.dirname, `src/vendor/${entry}.js`)
+                ])),
+                outdir: packagesDir,
+                splitting: true,
+                chunkNames: 'chunks/[name]-[hash]',
                 bundle: true,
                 platform: 'node',
-                format: 'cjs',
+                format: 'esm',
+                // Bundled CommonJS dependencies still require Node built-ins.
+                banner: {
+                    js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);"
+                },
                 minify: true,
+                legalComments: 'none',
                 sourcemap: false,
                 metafile: true
             });
-            logBuilt(vendorPath);
+            for (const output of Object.keys(vendorBuild.metafile.outputs)) {
+                logBuilt(path.resolve(output));
+            }
             const vendorLicensePath = `${vendorPath}.LICENSE`;
             vendorLicense.generateVendorLicense(vendorBuild.metafile, import.meta.dirname, vendorLicensePath);
             logBuilt(vendorLicensePath);
@@ -110,7 +124,7 @@ function buildEndPlugin() {
                 template: fs.readFileSync(templatePath, 'utf8'),
                 'monocart-coverage-app': createScriptLoader(fs.readFileSync(appPath, 'utf8'))
             };
-            fs.writeFileSync(assetsPath, `module.exports = ${JSON.stringify(assetsMap, null, 4)};`);
+            fs.writeFileSync(assetsPath, `const assetsMap = ${JSON.stringify(assetsMap, null, 4)};\nexport { assetsMap };\n`);
             logBuilt(assetsPath);
         }
     };

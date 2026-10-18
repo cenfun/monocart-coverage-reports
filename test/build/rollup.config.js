@@ -1,6 +1,6 @@
-const path = require('path');
-const rollupTypescript = require('@rollup/plugin-typescript');
-const rollupCommonJs = require('@rollup/plugin-commonjs');
+import path from 'node:path';
+import rollupTypescript from '@rollup/plugin-typescript';
+import rollupCommonJs from '@rollup/plugin-commonjs';
 
 const entry = path.resolve('test/mock/src/index.js');
 
@@ -14,6 +14,7 @@ const inputOptions = {
         }),
         rollupTypescript({
             tsconfig: path.resolve('test/tsconfig.json'),
+            include: ['test/mock/src/**/*.ts'],
             sourceMap: true,
             inlineSources: true
         })
@@ -28,7 +29,7 @@ const outputOptions = {
 };
 
 
-module.exports = {
+export default {
     input: inputOptions,
     output: outputOptions
 };

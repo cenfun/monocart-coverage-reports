@@ -1,9 +1,9 @@
-const { chromium } = require('playwright');
-const EC = require('eight-colors');
+import { chromium } from 'playwright';
+import EC from 'eight-colors';
 
-const serve = require('./serve.js');
+import serve from './serve.js';
 
-const MCR = require('../');
+import { MCR } from '../lib/index.js';
 
 // v8 and istanbul reports
 const multipleReportsOptions = {

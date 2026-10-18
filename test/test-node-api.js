@@ -1,9 +1,9 @@
-const fs = require('fs');
-const v8 = require('v8');
-const EC = require('eight-colors');
+import fs from 'node:fs';
+import v8 from 'node:v8';
+import EC from 'eight-colors';
 
-const MCR = require('../');
-const checkSnapshot = require('./check-snapshot.js');
+import { MCR } from '../lib/index.js';
+import checkSnapshot from './check-snapshot.js';
 const dir = process.env.NODE_V8_COVERAGE;
 
 const coverageOptions = {
@@ -52,7 +52,7 @@ const main = async () => {
     }
 
     // =====================================================
-    require('./specs/node.test.js');
+    await import('./specs/node.test.js');
     // =====================================================
 
     v8.takeCoverage();

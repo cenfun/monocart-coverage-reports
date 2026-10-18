@@ -27,12 +27,13 @@ jobs:
       - run: npm run build
         env:
           FORCE_COLOR: true
+      - run: npm pack
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: artifact
-          path: ./lib
+          path: ./*.tgz
 
   coverage:
     needs: build
@@ -50,13 +51,14 @@ jobs:
           check-latest: true
 
       - run: npm ci
-      - run: npm i monocart-coverage-reports@latest
 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: artifact
-          path: ./node_modules/monocart-coverage-reports/lib
+          path: ./
+
+      - run: npm install ./monocart-coverage-reports-*.tgz
 
       - name: Show CPU and Memory
         run: lscpu && free -h

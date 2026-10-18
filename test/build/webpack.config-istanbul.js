@@ -1,5 +1,5 @@
-const path = require('path');
-module.exports = {
+import path from 'node:path';
+export default {
     mode: 'development',
 
     devtool: 'source-map',

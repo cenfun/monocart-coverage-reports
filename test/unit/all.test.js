@@ -1,8 +1,11 @@
-const assert = require('assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const MCR = require('../../lib/index.js');
+import {
+    describe, it, beforeEach, afterEach
+} from 'node:test';
+import assert from 'node:assert';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { MCR } from '../../lib/index.js';
 
 describe('all without coverage data', () => {
     let root;
@@ -16,10 +19,12 @@ describe('all without coverage data', () => {
     });
 
     afterEach(() => {
-        fs.rmSync(root, { recursive: true, force: true });
+        fs.rmSync(root, {
+            recursive: true, force: true
+        });
     });
 
-    for (const reportName of ['v8-json', 'json-summary']) {
+    ['v8-json', 'json-summary'].forEach((reportName) => {
         it(`includes untested files with no coverage input (${reportName})`, async () => {
             const inputDir = path.join(root, 'empty-input');
             fs.mkdirSync(inputDir);
@@ -39,12 +44,14 @@ describe('all without coverage data', () => {
             const reportFile = reportName === 'v8-json' ? 'coverage-report.json' : 'coverage-summary.json';
             assert.ok(fs.existsSync(path.join(outputDir, reportFile)));
         });
-    }
+    });
 
     it('permits an empty report when all has no matching files', async () => {
         const result = await MCR({
             logging: 'off',
-            all: { dir: srcDir, filter: () => false },
+            all: {
+                dir: srcDir, filter: () => false
+            },
             outputDir: path.join(root, 'reports'),
             reports: ['v8-json']
         }).generate();
@@ -54,9 +61,11 @@ describe('all without coverage data', () => {
 
     it('preserves the no-data behavior without all', async () => {
         const outputDir = path.join(root, 'reports');
-        const result = await MCR({ logging: 'off', outputDir }).generate();
+        const result = await MCR({
+            logging: 'off', outputDir
+        }).generate();
 
-        assert.equal(result, undefined);
+        assert.equal(typeof result, 'undefined');
         assert.equal(fs.existsSync(outputDir), false);
     });
 });

@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
 
-module.exports = class CustomV8Reporter {
+export default class CustomV8Reporter {
     constructor(options, globalOptions) {
         this.outputDir = globalOptions.outputDir;
         this.outputFile = options.outputFile || 'custom.json';
@@ -18,4 +18,4 @@ module.exports = class CustomV8Reporter {
 
     }
 
-};
+}

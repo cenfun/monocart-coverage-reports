@@ -1,5 +1,5 @@
-const checkSnapshot = require('./check-snapshot.js');
-module.exports = {
+import checkSnapshot from './check-snapshot.js';
+export default {
 
     // logging: 'debug',
 
