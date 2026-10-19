@@ -94,8 +94,7 @@
         "monocart-locator": "^1.0.6",
         "node-stream-zip": "^1.16.0",
         "ws": "^8.22.0",
-        "yazl": "^3.3.1",
-        "@jridgewell/trace-mapping": "^0.3.31"
+        "yazl": "^3.3.1"
     },
     "devDependencies": {
         "@actions/core": "^3.0.1",
