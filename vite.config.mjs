@@ -93,8 +93,7 @@ function buildEndPlugin() {
                     `monocart-coverage-${name}`, path.resolve(import.meta.dirname, `src/vendor/${entry}.js`)
                 ])),
                 outdir: packagesDir,
-                splitting: true,
-                chunkNames: 'chunks/[name]-[hash]',
+                splitting: false,
                 bundle: true,
                 platform: 'node',
                 format: 'esm',
