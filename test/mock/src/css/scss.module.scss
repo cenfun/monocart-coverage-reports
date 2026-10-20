@@ -1,0 +1,8 @@
+@use 'utils' as *;
+@use 'colors';
+
+.covered {
+  background-color: colors.get-color("primary");
+
+  @include clearfix;
+}

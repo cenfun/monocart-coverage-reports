@@ -139,7 +139,8 @@ const test = async () => {
         './test/mock/v8/index.html',
         './test/mock/v8/dist/coverage-v8.js',
         './test/mock/css/style.css',
-        './test/mock/css/withSourceMap.css'
+        './test/mock/css/withSourceMap.css',
+        './test/mock/css/inline.css'
     ];
     for (const filePath of fileList) {
         const content = fs.readFileSync(filePath).toString('utf-8');
