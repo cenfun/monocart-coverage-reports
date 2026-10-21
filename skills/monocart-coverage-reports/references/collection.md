@@ -15,6 +15,8 @@ Examples use ESM (`.mjs`, or `.js` under `"type": "module"`) and the MCR 3.x run
 
 Do not assume Chromium V8 coverage works in Firefox/WebKit or that it automatically covers every browser context, page, worker, or remote backend. Explicitly collect the runtimes/targets the task requires.
 
+For test suites, prefer the [Playwright Test fixture and lifecycle in MCR best practices](best-practices.md#3-browser-playwright-test--mcr), or its `monocart-reporter` alternative. The standalone script below is for custom collection outside a runner.
+
 ## Playwright Chromium: complete standalone script
 
 Assumes the application's test server is already running at `APP_URL` (or the local default). Prefer the host's existing server lifecycle and readiness checks.

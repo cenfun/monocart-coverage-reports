@@ -13,6 +13,7 @@
 > JS代码覆盖率工具，用来生成原生的[V8](https://v8.dev/blog/javascript-code-coverage)或者[Istanbul](https://istanbul.js.org/)代码覆盖率报告
 
 * [用法](#usage)
+* [最佳实践](#best-practices)
 * [选项配置](#options)
 * [所有支持的报告类型](#available-reports)
 * [比较两种报告](#compare-reports)
@@ -102,6 +103,18 @@ await mcr.loadConfig();
 mcr node my-app.js -r v8,console-details
 ```
 参见 [命令行](#command-line)
+
+## Best Practices
+
+为新项目建立测试方案时，优先使用无需插桩的原生覆盖率采集：
+
+| 测试目标 | 推荐方案 | 职责划分 |
+| --- | --- | --- |
+| Node.js 端 | **Node.js 原生 test runner + `mcr test`** | `node:test` 执行测试断言；MCR 自动采集 JavaScript 原生 V8 覆盖率并生成报告。 |
+| 浏览器端 | **Playwright Test + MCR** | Playwright 执行测试断言；自动 fixture 采集 Chromium JS/CSS 覆盖率；MCR 合并并生成报告。 |
+| 浏览器端，需要统一测试报告 | **Playwright Test + [monocart-reporter](https://github.com/cenfun/monocart-reporter#code-coverage-report)** | reporter 已集成 MCR；配置其 coverage 选项，并由 fixture 提交覆盖率数据，统一管理测试报告和覆盖率报告。 |
+
+详细配置步骤和示例见[最佳实践指南](skills/monocart-coverage-reports/references/best-practices.md)。
 
 ## AI Agent Skill
 
@@ -358,7 +371,7 @@ const [jsCoverage, cssCoverage] = await Promise.all([
 const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
-使用 `@playwright/test` 的 [`Automatic fixtures`](https://playwright.dev/docs/test-fixtures#automatic-fixtures)收集覆盖率数据, 见例子: [fixtures.ts](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.ts)
+Playwright Test 自动 fixture 参见完整 [playwright-coverage 示例](https://github.com/cenfun/playwright-coverage)中的 [fixtures.js](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.js)，接入方式见[最佳实践指南](skills/monocart-coverage-reports/references/best-practices.md#complete-project-example)。
 参见例子 [./test/test-v8.js](./test/test-v8.js), [css](./test/test-css.js)
 
 

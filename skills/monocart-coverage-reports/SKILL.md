@@ -1,6 +1,6 @@
 ---
 name: monocart-coverage-reports
-description: Collect, generate, merge, and debug JavaScript, TypeScript, and CSS code coverage with monocart-coverage-reports (MCR) 3.x. Use for Node.js tests and mcr test, native V8 or Istanbul coverage, Playwright/Puppeteer Chromium coverage, CLI/configuration, sourcemaps, filters, untested files, CI reports and thresholds, and shard merging. Also applies to Chinese requests about Monocart、代码覆盖率、覆盖率报告、覆盖率合并、覆盖率过滤和源码映射.
+description: Collect, generate, merge, and debug JavaScript, TypeScript, and CSS code coverage with monocart-coverage-reports (MCR) 3.x. Use for Node.js tests and mcr test, native V8 or Istanbul coverage, Playwright/Puppeteer Chromium coverage, CLI/configuration, sourcemaps, filters, untested files, CI reports and thresholds, shard merging, and testing best practices. Also applies to Chinese requests about Monocart、MCR 最佳实践、代码覆盖率、覆盖率报告、覆盖率合并、覆盖率过滤和源码映射.
 ---
 
 # Coverage with Monocart Coverage Reports 3.x
@@ -23,7 +23,7 @@ Read the manifest for version, engines, exports, and types. Resolve bundled link
 ## Workflow and reference routing
 
 1. Inspect the host's scripts, runtime, MCR version, module format, and CI. Identify the desired source scope, reports, and parallel/sharded runs.
-2. Choose **one collection path**. Reuse the existing runner (`mcr -c mcr.config.mjs -- npm run test:unit`); use the quick start below only when a small Node task lacks a setup. Read [collection.md](references/collection.md) for browser/CDP, manual Node capture, or Istanbul data.
+2. Choose **one collection path**. For a new Node.js test setup, prefer **`node:test` + `mcr test`**; for browser tests, prefer **Playwright Test + MCR**, or **Playwright Test + monocart-reporter** (already integrates MCR). Read [MCR best practices](references/best-practices.md) when choosing a setup or implementing browser test fixtures. Reuse an existing runner (`mcr -c mcr.config.mjs -- npm run test:unit`) rather than forcing migration. Read [collection.md](references/collection.md) for browser/CDP, manual Node capture, or Istanbul data.
 3. Confirm sources/maps match the **exact tested build**. Choose input filtering (`entryFilter` + `sourceFilter`, or `filter`) for early exclusion/performance, or `outputFilter` for simpler final-path selection at the cost of processing unwanted inputs. Do not stack strategies automatically; output filtering cannot restore discarded inputs. Read [filtering-and-sourcemaps.md](references/filtering-and-sourcemaps.md) for examples, untested files, ignores, and debugging.
 4. Read [cli.md](references/cli.md) for config, argument boundaries, Node runner options, and hooks.
 5. Read [reports-and-ci.md](references/reports-and-ci.md) for thresholds, stale-result prevention, raw exports, validated shard merging, and snapshots.

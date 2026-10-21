@@ -13,6 +13,7 @@
 > A JavaScript code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
 * [Usage](#usage)
+* [Best Practices](#best-practices)
 * [Options](#options)
 * [Available Reports](#available-reports)
 * [Compare Reports](#compare-reports)
@@ -102,6 +103,18 @@ For more information, see [Multiprocessing Support](#multiprocessing-support)
 mcr node my-app.js -r v8,console-details
 ```
 For more information, see [Command Line](#command-line)
+
+## Best Practices
+
+For new test setups, prefer native coverage collection without an instrumentation step:
+
+| Target | Recommended setup | Responsibility |
+| --- | --- | --- |
+| Node.js | **Node.js native test runner + `mcr test`** | `node:test` runs assertions; MCR automatically collects native V8 JavaScript coverage and generates reports. |
+| Browser | **Playwright Test + MCR** | Playwright runs assertions; automatic fixtures collect Chromium JS/CSS coverage; MCR merges it and generates reports. |
+| Browser with integrated test reporting | **Playwright Test + [monocart-reporter](https://github.com/cenfun/monocart-reporter#code-coverage-report)** | The reporter already integrates MCR; configure its coverage option and submit coverage from fixtures for unified test and coverage reporting. |
+
+For detailed setup instructions and examples, see the [best-practices guide](skills/monocart-coverage-reports/references/best-practices.md).
 
 ## AI Agent Skill
 
@@ -356,7 +369,7 @@ const [jsCoverage, cssCoverage] = await Promise.all([
 const coverageData = [... jsCoverage, ... cssCoverage];
 
 ```
-Collect coverage with `@playwright/test` [`Automatic fixtures`](https://playwright.dev/docs/test-fixtures#automatic-fixtures), see example: [fixtures.ts](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.ts)
+For Playwright Test automatic fixtures, see [fixtures.js](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.js) in the complete [playwright-coverage example](https://github.com/cenfun/playwright-coverage). The [best-practices guide](skills/monocart-coverage-reports/references/best-practices.md#complete-project-example) explains the integration.
 For more examples, see [./test/test-v8.js](./test/test-v8.js), [css](./test/test-css.js)
 
 
