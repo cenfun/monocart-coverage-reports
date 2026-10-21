@@ -17,7 +17,7 @@ Current exports: main API, `/register` source-capture preload, `/converter` and 
 
 ## Checkout navigation
 
-Paths below are relative to the repository root and are generally **not shipped in npm** except `lib/`.
+Paths below are relative to the repository root and are generally **not shipped in npm** except `lib/`. When working in a source checkout, read its root `AGENTS.md` first for shared development rules and command side effects. That file is checkout-only; do not require it when using the installed skill.
 
 | Task | Read first | Related validation / examples |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ Paths below are relative to the repository root and are generally **not shipped 
 | Filters and normalized paths | `lib/utils/util.js`, `lib/utils/source-path.js`, `lib/generate.js` | `test/unit/output-filter.test.js`, `test/unit/source-path.test.js` |
 | Native V8/Istanbul generation | `lib/v8/v8.js`, `lib/istanbul/istanbul.js`, `lib/reports/` | `test/test-v8-and-istanbul.js`, custom reporter examples under `test/` |
 | Snapshots | `lib/utils/snapshot.js` | `test/check-snapshot.js`, `test/snapshot/` |
-| Report UI | `src/app/`, `src/vendor/`, `vite.config.mjs` | `npm run dev`, `npm run build` |
+| HTML assets and report UI | `lib/assets.js`, `lib/default/template.html`, `src/app/`, `src/vendor/`, `vite.config.mjs` | `npm run dev`, `npm run build`, `npm run test-runtime` |
 | Runtime compatibility / upgrade | `migrate-to-3.md`, `scripts/test-runtime.js` | `test/unit/node-version.test.js` |
 
 ## Development validation
@@ -48,7 +48,11 @@ npm run test-runtime
 
 Unit tests run directly with `node:test`, independently of the MCR CLI and coverage pipeline. For a focused test: `node --test test/unit/config.test.js`. Run `npm run test-unit-coverage` separately to collect coverage through `mcr test`; reports are written to `.temp/coverage-unit/`. For focused coverage: `node ./lib/cli.js test -c test/mcr.config.unit.js test/unit/config.test.js`. Browser/integration scripts may require downloaded browsers, built fixtures, local servers, and more time; inspect the relevant script before running it. `npm run build` invokes `postbuild` and builds test fixtures. `npm test` also runs integration/report generation and documentation generation; it is not a lightweight unit-only check.
 
-Avoid unrelated generated changes. `npm run lint` currently includes `--fix`; inspect its scope before invoking it. Do not edit generated `lib/packages/*`, `lib/assets.js`, `dist/`, `docs/`, or snapshots just to hide a source defect; use the project's build/generation workflow when those artifacts genuinely need updating.
+A fresh checkout needs `npm run build` to generate `lib/packages/` before tests that import these bundles. Rebuild after changing UI, template, or vendor-entry source.
+
+Avoid unrelated generated changes. `npm run lint` currently includes `--fix`; inspect its scope before invoking it. Use `npx --no-install eslint src/ test/unit/` for the usual scope without fixes, and explicit paths for other changed source. Do not hand-edit generated `lib/packages/*`, `dist/`, `docs/`, or `test/mock/*/dist/`; use the build/generation workflow. `lib/assets.js` is handwritten runtime source, not generated output. Snapshot baseline changes must be intentional and reviewed, never a way to hide a defect.
+
+Do not use `npm run eol` for validation: it removes the index and runs a hard reset. `npm run test:snap` overwrites baselines. `npm run publish` prepares a release through `npm version`, including its build hook and commit/tag creation; obtain explicit approval before release preparation or external writes.
 
 When changing public behavior, align implementation, `lib/index.d.ts`, default options, English/Chinese docs, migration notes where applicable, and focused tests. This skill supports MCR 3.x only. Validate the installed package separately when release compatibility matters; do not infer support for other major versions from these recipes.
 
