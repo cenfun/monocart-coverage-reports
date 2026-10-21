@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "48.33 %",
+        "bytes": "51.82 %",
         "statements": "",
         "branches": "",
         "functions": "",
-        "lines": "38.57 %"
+        "lines": "65.32 %"
     },
     "files": {
         "anonymous/style1.css": {
@@ -52,6 +52,96 @@
             "bytes": "46.91 %",
             "uncoveredLines": "5",
             "extras": "1c,2c,3c,4c,6c,7c"
+        },
+        "test/mock/src/css/less.less": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "3b,7b,10b"
+        },
+        "test/mock/src/css/main.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "5b"
+        },
+        "test/mock/src/css/postcss.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "4b"
+        },
+        "test/mock/src/css/scss.scss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "3b,6b,9b"
+        },
+        "test/mock/src/css/sss.sss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "3b,6b,8b"
+        },
+        "test/mock/src/css/styl.styl": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "3b,6b,8b"
+        },
+        "test/mock/src/css/utils.less": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "8b"
+        },
+        "test/mock/src/css/utils.scss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "8b"
+        },
+        "test/mock/src/css/utils.sss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "6b"
+        },
+        "test/mock/src/css/utils.styl": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "100.00 %",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "6b"
         }
     }
 }

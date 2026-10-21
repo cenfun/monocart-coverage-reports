@@ -1,9 +1,11 @@
 .covered {
-    background-color: red;
+  background-color: red;
 }
 .covered::after {
     content: "";
     display: table;
     clear: both;
 }
-/*# sourceMappingURL=inline.css.map */
+
+
+/*# sourceMappingURL=sss.css.map*/

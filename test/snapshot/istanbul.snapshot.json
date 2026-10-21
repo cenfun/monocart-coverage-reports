@@ -103,6 +103,14 @@
             "uncoveredLines": "17,21",
             "extras": ""
         },
+        "css/colors.less": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
         "css/colors.scss": {
             "lines": "0.00 %",
             "functions": "0.00 %",
@@ -111,7 +119,23 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "css/component.module.css": {
+        "css/colors.sss": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/colors.styl": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/less.less": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
@@ -127,7 +151,39 @@
             "uncoveredLines": "",
             "extras": ""
         },
-        "css/scss.module.scss": {
+        "css/postcss.css": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/scss.scss": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/sss.sss": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/styl.styl": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/utils.less": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",
@@ -136,6 +192,22 @@
             "extras": ""
         },
         "css/utils.scss": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/utils.sss": {
+            "lines": "0.00 %",
+            "functions": "0.00 %",
+            "statements": "0.00 %",
+            "branches": "0.00 %",
+            "uncoveredLines": "",
+            "extras": ""
+        },
+        "css/utils.styl": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",

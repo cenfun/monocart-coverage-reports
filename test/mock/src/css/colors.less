@@ -1,0 +1,9 @@
+@theme-colors: {
+  primary: red;
+  secondary: blue;
+};
+
+.get-color(@color-name) {
+  @__key: @color-name;
+  @return: @theme-colors[$@__key];
+}

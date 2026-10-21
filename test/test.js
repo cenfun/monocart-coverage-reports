@@ -32,6 +32,7 @@ const test = async (type) => {
             'test-v8',
             'test-puppeteer',
             'test-css',
+            'test-css-min',
             'test-client',
             'test-minify',
             'test-esbuild',
