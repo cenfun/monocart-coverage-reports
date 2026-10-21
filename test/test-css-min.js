@@ -34,7 +34,8 @@ const test = async (serverUrl) => {
         './test/mock/css/postcss.min.css',
         './test/mock/css/scss.min.css',
         './test/mock/css/less.min.css',
-        './test/mock/css/sss.min.css'
+        './test/mock/css/sss.min.css',
+        './test/mock/css/styl.min.css'
     ];
     for (const filePath of fileList) {
         const content = fs.readFileSync(filePath, 'utf-8');
