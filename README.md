@@ -1258,6 +1258,23 @@ const coverageOptions = {
 process.env.MCR_LOG_TIME = true;
 ```
 
+### CSS coverage issues
+
+#### Source map can be inaccurate after minification
+CSS minifiers (like Lightning CSS, esbuild, or cssnano) can fail to generate accurate source maps for the optimized output.
+Because V8 tracks coverage via exact byte-offsets, these imprecise source maps make it impossible for the reporter to trace back to the original selector.
+
+If the source map could not be correctly mapped, the reporter will fall back to the dist file to show at least some meaningful coverage.
+
+**Disable CSS minification** to ensure that the generated source maps maintain a flawless mapping with accurate coordinates.
+
+#### V8 covered the whole block
+
+V8 tracks CSS coverage solely based on the root-level tokens it executes.
+This means if a root selector (for example, a media query or nested selector) is matched, V8 marks the entire character range of that block as 100% covered.
+
+Use [postcss-atomic-selectors](https://www.npmjs.com/package/postcss-atomic-selectors) as a potential workaround till v8 supports nested coverage blocks.
+
 ## Integration with Any Testing Framework
 - API
     - Collecting coverage data when any stage of the test is completed, and adding the coverage data to the coverage reporter. `await mcr.add(coverageData)`

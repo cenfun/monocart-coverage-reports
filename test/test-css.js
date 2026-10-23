@@ -32,10 +32,15 @@ const test = async (serverUrl) => {
     const fileList = [
         './test/mock/css/index.html',
         './test/mock/minify/with-map/bootstrap-reboot.min.css',
-        './test/mock/css/style.css'
+        './test/mock/css/style.css',
+        './test/mock/css/postcss.css',
+        './test/mock/css/scss.css',
+        './test/mock/css/less.css',
+        './test/mock/css/sss.css',
+        './test/mock/css/styl.css'
     ];
     for (const filePath of fileList) {
-        const content = fs.readFileSync(filePath).toString('utf-8');
+        const content = fs.readFileSync(filePath, 'utf-8');
         const extname = path.extname(filePath);
         if (extname === '.html') {
             await page.setContent(content);

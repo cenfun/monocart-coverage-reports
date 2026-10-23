@@ -1,0 +1,9 @@
+.covered {
+    background-color: red;
+}
+.covered::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/*# sourceMappingURL=scss.css.map */

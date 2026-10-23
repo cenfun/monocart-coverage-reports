@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "75.80 %",
+        "bytes": "71.95 %",
         "statements": "78.37 %",
         "branches": "60.07 %",
         "functions": "72.73 %",
-        "lines": "65.20 %"
+        "lines": "60.57 %"
     },
     "files": {
         "my-vm-filename.js": {
@@ -169,6 +169,132 @@
             "bytes": "90.81 %",
             "uncoveredLines": "16-18",
             "extras": "1b,3b,5b,7b,11b,15b,19b,23b,25b"
+        },
+        "test/mock/src/css/colors.less": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-9",
+            "extras": "5b,10b"
+        },
+        "test/mock/src/css/colors.scss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "50.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1,8-10",
+            "extras": "2b,7b,11b"
+        },
+        "test/mock/src/css/colors.sss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-2",
+            "extras": ""
+        },
+        "test/mock/src/css/colors.styl": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "5b,8b"
+        },
+        "test/mock/src/css/less.less": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-9",
+            "extras": "3b,7b,10b"
+        },
+        "test/mock/src/css/main.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-4",
+            "extras": "5b"
+        },
+        "test/mock/src/css/postcss.css": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "3b,8b"
+        },
+        "test/mock/src/css/scss.scss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-8",
+            "extras": "3b,6b,9b"
+        },
+        "test/mock/src/css/sss.sss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "3b,6b,8b"
+        },
+        "test/mock/src/css/styl.styl": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "3b,6b,8b"
+        },
+        "test/mock/src/css/utils.less": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "8b"
+        },
+        "test/mock/src/css/utils.scss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-7",
+            "extras": "8b"
+        },
+        "test/mock/src/css/utils.sss": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-5",
+            "extras": "6b"
+        },
+        "test/mock/src/css/utils.styl": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "1-5",
+            "extras": "6b"
         },
         "test/mock/src/ignore/ignore.js": {
             "functions": "100.00 %",

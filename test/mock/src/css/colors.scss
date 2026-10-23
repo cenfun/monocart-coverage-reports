@@ -1,0 +1,10 @@
+@use "sass:map";
+
+$theme-colors: (
+  "primary": red,
+  "secondary": blue,
+);
+
+@function get-color($color-name) {
+  @return map.get($theme-colors, $color-name);
+}
