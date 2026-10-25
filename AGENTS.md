@@ -56,11 +56,11 @@ Run commands from the repository root. Start with the narrowest relevant check.
 Important constraints:
 
 - A fresh checkout needs `npm run build` before tests that import generated `lib/packages/` bundles. Build again after UI, template, or vendor-entry changes.
-- Browser integrations need browser binaries and built fixtures. Inspect the chosen script and `.github/workflows/ci.yml` first. Do not download browsers silently.
+- Browser integrations need browser binaries and built fixtures. Playwright and Puppeteer browsers are not installed automatically; install them explicitly with `npx playwright install --with-deps` and `npx puppeteer browsers install chrome`. Inspect the chosen script and `.github/workflows/ci.yml` first. Do not download browsers silently.
 - `npm run lint` includes ESLint `--fix`; it changes files. It does not lint all handwritten `lib/` source. Use explicit paths for changed files.
 - `npm run test:snap` sets `TEST_SNAPSHOT=true` and overwrites baselines. Do not use it as routine validation.
 - `npm run eol` removes the index and runs `git reset --hard HEAD`. **Never use it for formatting or validation.**
-- `npm run publish` prepares a release, changes the version, and creates a commit/tag through `npm version`. It is not a check. Obtain explicit approval before release preparation, publishing, pushing, or deployment.
+- Do not edit the `version` field in `package.json` or `package-lock.json` manually. `npm run publish patch|minor|major` prepares a release, bumps the version through `npm version`, runs the build so the published package contains matching artifacts, and creates a commit/tag. It is not a check. Obtain explicit approval before release preparation, publishing, pushing, or deployment.
 
 ## Code and documentation conventions
 

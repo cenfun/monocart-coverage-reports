@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { CoverageReport, MCR } from '../../lib/index.js';
-import { normalizeSourcePath } from '../../lib/utils/source-path.js';
+import { normalizeSourcePath, getSourceType } from '../../lib/utils/source-path.js';
 
 it('normalizeSourcePath', () => {
 
@@ -77,6 +77,22 @@ it('normalizeSourcePath', () => {
     assert.equal(normalizeSourcePath('/root/z.js', '/other'), 'root/z.js');
     assert.equal(normalizeSourcePath('dist/zz.js', import.meta.dirname), 'dist/zz.js');
 
+});
+
+it('detects file types case-insensitively', () => {
+    assert.equal(getSourceType('src/a.js'), 'js');
+    assert.equal(getSourceType('src/a.JS'), 'js');
+    assert.equal(getSourceType('src/a.ts'), 'ts');
+    assert.equal(getSourceType('src/a.TS'), 'ts');
+    assert.equal(getSourceType('src/a.css'), 'css');
+    assert.equal(getSourceType('src/a.CSS'), 'css');
+    assert.equal(getSourceType('src/a.scss'), 'scss');
+    assert.equal(getSourceType('src/a.ScSs'), 'scss');
+    assert.equal(getSourceType('src/a.LESS'), 'less');
+    assert.equal(getSourceType('src/a.Stylus'), 'stylus');
+    // no extension or unsupported characters fall back to js
+    assert.equal(getSourceType('src/a'), 'js');
+    assert.equal(getSourceType('src/a.中文'), 'js');
 });
 
 it('preserves malformed URI text without throwing during path normalization', () => {

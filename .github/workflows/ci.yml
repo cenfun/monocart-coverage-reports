@@ -41,6 +41,7 @@ jobs:
           cache: ''
       - run: npm install
       - run: npx playwright install --with-deps
+      - run: npx puppeteer browsers install chrome
       - run: npm run build
       - run: npm run test
         env:

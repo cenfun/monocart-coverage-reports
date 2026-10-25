@@ -374,6 +374,13 @@ For more examples, see [./test/test-v8.js](./test/test-v8.js), [css](./test/test
 
 
 ### Collecting Raw V8 Coverage Data with Puppeteer
+
+> Depending on your package manager, Puppeteer may not download a browser during installation. If no browser is available, install one manually:
+>
+> ```sh
+> npx puppeteer browsers install chrome
+> ```
+
 ```js
 await Promise.all([
     page.coverage.startJSCoverage({
@@ -758,7 +765,7 @@ const coverageOptions = {
 ```
 
 ## Adding Empty Coverage for Untested Files
-By default the untested files will not be included in the coverage report. Use `all` to include them with 0% coverage. This also works when no coverage data has been collected: a V8 report is generated from the matching untested files.
+Untested files are excluded by default. Use `all` to include them with 0% coverage, even when no coverage data was collected. For the same original source, real V8 coverage takes precedence over empty entries.
 ```js
 const coverageOptions = {
     all: './src'
@@ -1262,20 +1269,24 @@ process.env.MCR_LOG_TIME = true;
 
 ### CSS coverage issues
 
+CSS coverage from multiple bundles is merged as a union for each original source.
+
+For preprocessor syntax that `all` cannot parse directly, use `all.transformer` to compile to CSS, set `entry.type = 'css'`, and preserve the sourcemap.
+
+#### Sass mixins and `@include`
+
+Sass `@include` can map a generated rule to non-contiguous source locations. When a rule cannot be reliably mapped, MCR reports the **whole bundle as generated CSS** instead of the preprocessor sources. That bundle's coverage is not merged into the original-source coverage.
+
+#### Line coverage of untested preprocessor sources
+
+Untested files included through `all` have `0%` byte coverage, including sourcemap originals. Lines outside parsed or mapped rules (such as variables or unused mixins) may appear covered; use **bytes** coverage for these files.
+
 #### Source map can be inaccurate after minification
-CSS minifiers (like Lightning CSS, esbuild, or cssnano) can fail to generate accurate source maps for the optimized output.
-Because V8 tracks coverage via exact byte-offsets, these imprecise source maps make it impossible for the reporter to trace back to the original selector.
-
-If the source map could not be correctly mapped, the reporter will fall back to the dist file to show at least some meaningful coverage.
-
-**Disable CSS minification** to ensure that the generated source maps maintain a flawless mapping with accurate coordinates.
+CSS minification can produce imprecise sourcemaps and trigger fallback to generated CSS. If source mapping is inaccurate, try **disabling CSS minification**.
 
 #### V8 covered the whole block
 
-V8 tracks CSS coverage solely based on the root-level tokens it executes.
-This means if a root selector (for example, a media query or nested selector) is matched, V8 marks the entire character range of that block as 100% covered.
-
-Use [postcss-atomic-selectors](https://www.npmjs.com/package/postcss-atomic-selectors) as a potential workaround till v8 supports nested coverage blocks.
+Chromium may mark an entire media query or nested CSS block as covered. Consider [postcss-atomic-selectors](https://www.npmjs.com/package/postcss-atomic-selectors) as a potential workaround.
 
 ## Integration with Any Testing Framework
 - API

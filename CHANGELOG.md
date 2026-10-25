@@ -1,5 +1,14 @@
 ## Changelog
 
+- 3.1.0
+  - **Features**
+    - support CSS sourcemaps for Less, Sass, Stylus, PostCSS and SugarSS, including coverage merging across bundles (#138)
+    - support `.styl`, `.stylus`, `.postcss`, `.pcss` and `.sss` in `all`, and recognize style extensions case-insensitively
+  - **Bug Fixes**
+    - fall back to generated CSS when sourcemaps cannot be reliably mapped, including Sass mixins
+    - fix coverage and report generation for untested files, and prevent empty entries from altering real coverage
+    - tolerate foreign or malformed file URLs and partially missing sourcemap sources without aborting reports (#139, #140)
+
 - 3.0.0
   - [Migration guide: upgrading from 2.x to 3.x](migrate-to-3.md)
   - **Breaking Changes**
@@ -20,7 +29,6 @@
     - expose `CoverageClient` as a named export and as `MCR.CoverageClient`
     - ship an AI agent skill for MCR 3.x with collection, filtering, reporting, and validated CI/shard-merging recipes
   - **Bug Fixes**
-    - tolerate foreign-platform file URLs and malformed URI paths, and preserve usable sourcemaps with partially unavailable sources (#139)
     - generate coverage after failed tests and preserve test/report failure exit codes
     - preserve config error details and original causes, including non-Error throws
     - propagate V8/`both` custom reporter loading and initialization failures instead of silently skipping the reporter

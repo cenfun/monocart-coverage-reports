@@ -376,6 +376,13 @@ Playwright Test 自动 fixture 参见完整 [playwright-coverage 示例](https:/
 
 
 ### Collecting Raw V8 Coverage Data with Puppeteer
+
+> 取决于包管理器配置，Puppeteer 可能不会在安装依赖时下载浏览器。如果没有可用浏览器，请手动安装：
+>
+> ```sh
+> npx puppeteer browsers install chrome
+> ```
+
 使用Puppeteer的覆盖接口收集覆盖率数据，注意Puppeteer默认不会提供原生V8的覆盖率数据，需要设置`includeRawScriptCoverage`
 ```js
 await Promise.all([
@@ -761,7 +768,7 @@ const coverageOptions = {
 ```
 
 ## Adding Empty Coverage for Untested Files
-默认，未测试的文件不会包含在覆盖率报告中。使用 `all` 选项可将它们以 0% 覆盖率加入报告。即使没有收集到任何覆盖率数据，也会为匹配的未测试文件生成 V8 报告。
+默认不包含未测试文件。使用 `all` 可将它们以 0% 覆盖率加入报告，即使没有采集到任何覆盖率数据也可生成报告。同一原始源码的真实 V8 覆盖率优先于空覆盖率条目。
 ```js
 const coverageOptions = {
     all: './src'
@@ -1262,6 +1269,27 @@ const coverageOptions = {
 ```js
 process.env.MCR_LOG_TIME = true;
 ```
+
+### CSS 覆盖率与 sourcemap
+
+多个 bundle 映射到同一原始文件时，CSS 覆盖率取并集。
+
+对于 `all` 无法直接解析的预处理器语法，请使用 `all.transformer` 编译为 CSS，设置 `entry.type = 'css'`，并保留 sourcemap。
+
+#### Sass mixin 与 `@include`
+
+Sass `@include` 可能将一条生成规则映射到不连续的源码位置。规则无法可靠映射时，MCR 会将**整个 bundle 按生成的 CSS 展示**，而不是预处理器源文件；该 bundle 的覆盖率也不会合并到原始源码的覆盖率中。
+
+#### 未测试预处理源文件的行覆盖率
+
+通过 `all` 加入的未测试文件，其字节覆盖率为 `0%`，包括 sourcemap 还原的原始文件。解析或映射规则之外的行（如变量、未使用的 mixin）可能显示为已覆盖；请以 **bytes** 覆盖率为准。
+
+#### 压缩后 sourcemap 可能不准确
+CSS 压缩可能产生不准确的 sourcemap，导致报告回退到生成的 CSS。遇到映射不准确时，可尝试**禁用 CSS 压缩**。
+
+#### V8 会将整个 block 视为已覆盖
+
+Chromium 可能将整个 media query 或嵌套 CSS block 标记为已覆盖。可考虑使用 [postcss-atomic-selectors](https://www.npmjs.com/package/postcss-atomic-selectors) 作为临时解决方案。
 
 ## Integration with Any Testing Framework
 通用集成方案

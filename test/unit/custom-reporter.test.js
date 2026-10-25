@@ -3,10 +3,10 @@ import {
 } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { customReport } from '../../lib/reports/custom.js';
+import { createTempRoot } from './unit-utils.js';
 
 const source = `class Reporter {
     constructor(options, globalOptions) {
@@ -21,7 +21,7 @@ const source = `class Reporter {
 describe('V8/both custom reporter modules', () => {
     let root;
     beforeEach(() => {
-        root = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr custom # '));
+        root = createTempRoot('mcr custom # ');
         fs.writeFileSync(path.join(root, 'package.json'), '{"type":"commonjs"}');
     });
     afterEach(() => fs.rmSync(root, {

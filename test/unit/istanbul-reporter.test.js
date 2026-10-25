@@ -3,10 +3,10 @@ import {
 } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { MCR } from '../../lib/index.js';
+import { createTempRoot } from './unit-utils.js';
 
 const reporterSource = `
     module.exports = class Reporter {
@@ -22,7 +22,7 @@ const reporterSource = `
 describe('Istanbul custom reporter resolution', () => {
     let root;
     beforeEach(() => {
-        root = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr reporter '));
+        root = createTempRoot('mcr reporter ');
         fs.writeFileSync(path.join(root, 'package.json'), '{"type":"commonjs"}');
     });
     afterEach(() => fs.rmSync(root, {
