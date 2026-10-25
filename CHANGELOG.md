@@ -20,6 +20,7 @@
     - expose `CoverageClient` as a named export and as `MCR.CoverageClient`
     - ship an AI agent skill for MCR 3.x with collection, filtering, reporting, and validated CI/shard-merging recipes
   - **Bug Fixes**
+    - tolerate foreign-platform file URLs and malformed URI paths, and preserve usable sourcemaps with partially unavailable sources (#139)
     - generate coverage after failed tests and preserve test/report failure exit codes
     - preserve config error details and original causes, including non-Error throws
     - propagate V8/`both` custom reporter loading and initialization failures instead of silently skipping the reporter

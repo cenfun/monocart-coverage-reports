@@ -75,6 +75,7 @@ Important constraints:
 ## Coverage correctness and safety
 
 - Preserve source text, paths, sourcemaps, and range offsets from the exact tested build. Cover overlapping ranges, empty inputs, and unmapped sources when relevant.
+- Keep report path normalization best-effort and focused on standard paths. Do not accumulate heuristics for every nonstandard, virtual, or foreign-platform path; users can correct special cases with `sourcePath` (using the original `info.url` for V8 sources when needed). Malformed paths must not abort generation before that hook runs. Keep report path rewriting separate from actual source-file loading.
 - Do not hide defects by weakening assertions, excluding sources, adding ignore comments, changing counts, or replacing snapshots.
 - Review snapshot differences before an intentional baseline update. Keep the update scoped and explain the coverage change.
 - Keep collection, reporting, and threshold failures nonzero. A missing report or `generate()` returning `undefined` is not proof of success.

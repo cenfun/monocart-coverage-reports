@@ -80,10 +80,25 @@ describe('compiled filters', () => {
         assert.equal(Util.createFilterHandler(literal, (value) => value)(literal), true);
     });
 
-    it('preserves URI decoding errors when no earlier match succeeds', () => {
+    it('treats undecodable paths as unmatched without breaking raw matches', () => {
         const filter = Util.createFilterHandler('**/*.js', (value) => value);
-        assert.throws(() => filter('bad%uri.txt'), URIError);
+        for (const value of ['bad%uri.txt', 'bad%.txt', 'bad%FF.txt']) {
+            assert.equal(filter(value), false);
+        }
         assert.equal(filter('bad%uri.js'), true);
+        assert.equal(Util.betterMinimatch('src/a%20b.js', '**/a b.js'), true);
+    });
+
+    it('continues ordered rules after decoding fails without swallowing matcher errors', () => {
+        const filter = Util.createFilterHandler({
+            '**/excluded/**': false, '**/*.ts': 'ts', '**': true
+        }, (value) => value);
+        assert.equal(filter('src/bad%ZZ.ts'), 'ts');
+        assert.equal(filter('src/bad%ZZ.txt'), true);
+        assert.equal(filter('excluded/bad%ZZ.ts'), false);
+        assert.throws(() => Util.betterMinimatch('src/a.js', 'unmatched', () => {
+            throw new Error('matcher failed');
+        }), /matcher failed/);
     });
 });
 

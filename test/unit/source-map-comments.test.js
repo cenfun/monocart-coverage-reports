@@ -677,6 +677,131 @@ describe('source map validation', () => {
     });
 });
 
+describe('source maps with partially unavailable sources', () => {
+    it('keeps embedded content and loads local sources after an unreadable file URL', async () => {
+        const root = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr-map-unreadable-'));
+        const foreignUrl = process.platform === 'win32' ? 'file:///home/user/foreign.ts' : 'file://foreign.invalid/share/foreign.ts';
+        try {
+            const localFile = path.join(root, 'local.ts');
+            fs.writeFileSync(localFile, 'const local = 1;');
+            for (const missingUrl of [foreignUrl, 'file:///missing%ZZ.ts']) {
+                const mixedMap = {
+                    version: 3,
+                    sources: [missingUrl, pathToFileURL(localFile).href, 'embedded.ts'],
+                    sourcesContent: [null, null, 'const embedded = 2;'],
+                    names: [],
+                    mappings: 'AAAA;ACAA;ACAA'
+                };
+                const { sourceData, sourcemapList } = await collect(convertSourceMap.fromObject(mixedMap).toComment());
+                assert.deepEqual(sourceData.sourceMap.sources, mixedMap.sources);
+                assert.deepEqual(sourceData.sourceMap.sourcesContent, ['', 'const local = 1;', 'const embedded = 2;']);
+                assert.equal(sourcemapList.length, 1);
+                assert.equal(sourcemapList[0].inline, true);
+            }
+        } finally {
+            fs.rmSync(root, {
+                recursive: true, force: true
+            });
+        }
+    });
+
+    it('still falls back when every source in a candidate map is unreadable', async () => {
+        const missingMap = {
+            version: 3,
+            sources: ['file:///missing%ZZ.ts'],
+            sourcesContent: [null],
+            names: [],
+            mappings: 'AAAA'
+        };
+        const source = `${inline}\n${convertSourceMap.fromObject(missingMap).toComment()}\n`;
+        const { sourceData, sourcemapList } = await collect(source);
+        assert.deepEqual(sourceData.sourceMap.sources, map.sources);
+        assert.deepEqual(sourceData.sourceMap.sourcesContent, map.sourcesContent);
+        assert.equal(sourcemapList.length, 1);
+    });
+
+    it('keeps rejecting an unreadable candidate reused by a caching sourceMapResolver', async () => {
+        const cachedMap = {
+            version: 3,
+            sources: ['file:///missing%ZZ.ts'],
+            sourcesContent: [null],
+            names: [],
+            mappings: 'AAAA'
+        };
+        const source = '//# sourceMappingURL=good.js.map\n//# sourceMappingURL=missing.js.map\n';
+        for (let i = 0; i < 2; i++) {
+            const requested = [];
+            const { sourceData } = await collect(source, {
+                sourceMapResolver: (url) => {
+                    requested.push(url);
+                    return url.endsWith('/missing.js.map') ? cachedMap : map;
+                }
+            });
+            assert.deepEqual(sourceData.sourceMap.sources, map.sources);
+            assert.deepEqual(cachedMap.sourcesContent, [null]);
+            assert.deepEqual(requested, ['http://localhost/missing.js.map', 'http://localhost/good.js.map']);
+        }
+    });
+
+    it('keeps valid empty source content distinct from unavailable content', async () => {
+        const emptySourceMap = {
+            version: 3,
+            sources: ['empty.ts'],
+            sourcesContent: [''],
+            names: [],
+            mappings: 'AAAA'
+        };
+        const { sourceData, sourcemapList } = await collect(convertSourceMap.fromObject(emptySourceMap).toComment());
+        assert.deepEqual(sourceData.sourceMap.sources, ['empty.ts']);
+        assert.deepEqual(sourceData.sourceMap.sourcesContent, ['']);
+        assert.equal(sourcemapList.length, 1);
+    });
+
+    it('generates coverage for retained sources when an inline map has unreadable file URLs', async () => {
+        const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mcr-map-partial-report-'));
+        const foreignUrl = process.platform === 'win32' ? 'file:///home/user/foreign.ts' : 'file://foreign.invalid/share/foreign.ts';
+        const ownSource = 'console.log(3);';
+        const mixedMap = {
+            version: 3,
+            sources: [foreignUrl, 'file:///missing%ZZ.ts', 'src/own.ts'],
+            sourcesContent: [null, null, ownSource],
+            names: [],
+            mappings: 'AAAA;ACAA;ACAA'
+        };
+        const source = `console.log(1);\nconsole.log(2);\n${ownSource}\n${convertSourceMap.fromObject(mixedMap).toComment()}`;
+        try {
+            const report = MCR({
+                logging: 'off',
+                outputDir,
+                reports: ['v8-json', 'json'],
+                sourceFilter: '**/own.ts'
+            });
+            await report.add([{
+                url: 'http://localhost/bundle.js',
+                source,
+                functions: [{
+                    functionName: '',
+                    isBlockCoverage: true,
+                    ranges: [{
+                        startOffset: 0, endOffset: source.length, count: 1
+                    }]
+                }]
+            }]);
+            const result = await report.generate();
+            assert.deepEqual(result.files.map((file) => file.sourcePath), ['src/own.ts']);
+            assert.equal(result.files[0].source, ownSource);
+            assert.ok(fs.existsSync(path.join(outputDir, 'coverage-report.json')));
+            const istanbul = JSON.parse(fs.readFileSync(path.join(outputDir, 'coverage-final.json'), 'utf8'));
+            assert.deepEqual(Object.keys(istanbul), ['src/own.ts']);
+        } finally {
+            fs.rmSync(outputDir, {
+                recursive: true, force: true
+            });
+        }
+    });
+
+});
+
 describe('source map comments after regexp quotes (issue #131)', () => {
     const patterns = [
         ["/'/", 'single quote'],

@@ -734,6 +734,8 @@ const coverageOptions = {
     }
 };
 ```
+内置报告路径规范化采用尽力而为的原则，无法完全兼容所有非标准、虚拟或来自其他操作系统的路径。此类特殊情况应通过 `sourcePath` 自行修正，而不是依赖自动推断。回调接收规范化后的 `filePath`；对于 V8 入口和 sourcemap 源文件，`info.url` 提供报告路径规范化前的原始 URL（sourcemap 存在 `sourceRoot` 时包含该前缀）。它修改的是报告路径，不是读取缺失源码时使用的文件系统路径。
+
 它也支持简单key/value的替换:
 ```js
 const coverageOptions = {
