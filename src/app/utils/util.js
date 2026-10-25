@@ -1,5 +1,13 @@
 import { Util as GridUtil } from 'turbogrid';
 
+const htmlEntities = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+};
+
 const Util = {
     ... GridUtil,
 
@@ -439,6 +447,15 @@ const Util = {
 
     // =============================================================================
     // formatter
+
+    formatUrl: (value) => {
+        if (!value) {
+            return value;
+        }
+        // The same URL is used in both a quoted attribute and HTML text.
+        const escaped = `${value}`.replace(/[&<>"']/g, (char) => htmlEntities[char]);
+        return `<a href="${escaped}" target="_blank">${escaped}</a>`;
+    },
 
     // number
     NF: function(v) {

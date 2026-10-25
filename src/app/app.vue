@@ -825,12 +825,7 @@ const initGrid = () => {
             }
             return v;
         },
-        url: (v) => {
-            if (v) {
-                return `<a href="${v}" target="_blank">${v}</a>`;
-            }
-            return v;
-        }
+        url: Util.formatUrl
     });
     grid.setOption(options);
     grid.setData(getGridData());
