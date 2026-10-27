@@ -28,7 +28,7 @@ describe('ESM package', {
         assert.equal(fs.existsSync(new URL('../../lib/index.mjs', import.meta.url)), false);
     });
 
-    it('uses named exports outside the main entry, including generated packages', () => {
+    it('uses named exports outside protocol entry points, including generated packages', () => {
         const libDir = fileURLToPath(new URL('../../lib/', import.meta.url));
         const files = fs.readdirSync(libDir, {
             recursive: true
@@ -39,7 +39,9 @@ describe('ESM package', {
                 ecmaVersion: 'latest', sourceType: 'module', allowHashBang: true
             });
             if (file !== 'index.js') {
-                assert.equal(ast.body.some((node) => node.type === 'ExportDefaultDeclaration'), false, file);
+                // Node's custom reporter protocol requires a default export.
+                const isNodeTestReporter = file === path.join('test', 'test-reporter.js');
+                assert.equal(ast.body.some((node) => node.type === 'ExportDefaultDeclaration'), isNodeTestReporter, file);
                 assert.equal(ast.body.some((node) => node.type === 'ExportNamedDeclaration' && node.specifiers.some((specifier) => specifier.exported.name === 'default')), false, file);
             }
         }

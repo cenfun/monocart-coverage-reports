@@ -271,6 +271,58 @@ declare namespace MCR {
         files: CoverageFile[];
     };
 
+    export interface TestError {
+        /** Fixed string fields; defaults are "Error" and "" for unavailable/non-string values. */
+        name: string;
+        message: string;
+        /** Own enumerable data properties only: strings, booleans, finite numbers,
+         * and null. BigInts become strings; objects, accessors and unsupported values
+         * are omitted. Missing properties read as undefined. Values may be sensitive.
+         */
+        [key: string]: string | number | boolean | null | undefined;
+    }
+
+    export interface TestResult {
+        name: string;
+        type: "test" | "suite";
+        nesting: number;
+        testNumber: number;
+        file?: string;
+        line?: number;
+        column?: number;
+        /** Duration in milliseconds. */
+        duration: number;
+        status: "passed" | "failed" | "cancelled" | "skipped" | "todo";
+        skip?: string | boolean;
+        todo?: string | boolean;
+        error?: TestError;
+    }
+
+    export interface TestSummary {
+        tests: number;
+        suites: number;
+        passed: number;
+        failed: number;
+        cancelled: number;
+        skipped: number;
+        todo: number;
+        /** Duration in milliseconds. */
+        duration: number;
+        success: boolean;
+    }
+
+    export interface TestResults {
+        /** Unique collection ID, also used in test-results-<id>.json. */
+        id: string;
+        framework: "node:test";
+        /** Whether the runner emitted its final summary (not whether tests passed). */
+        complete: boolean;
+        /** Final runner counts, excluding suites from the test count; null if incomplete. */
+        summary: TestSummary | null;
+        /** Completed test and suite records, including nested tests. */
+        tests: TestResult[];
+    }
+
     export type LoggingType = "off" | "error" | "info" | "debug";
     export interface CoverageReportOptions {
 
@@ -448,6 +500,17 @@ declare namespace MCR {
          * Requires Node.js >= 22.15.0. Ignored by other commands and the API.
          */
         test?: string | string[] | null;
+
+        /** Optional hook for `mcr test`; results are collected even when omitted.
+         * Runs before publishing the test results cache, onReady and coverage generation,
+         * even when assertions fail. Mutate messages/names here to redact persisted raw/debug
+         * results. Hook errors prevent publication of test results but not coverage generation.
+         * Not called for skipped runs.
+         * Missing/invalid reports fail the command without calling this hook. An incomplete
+         * report has complete=false and summary=null, and also fails the command.
+         * Hook errors fail the command but do not prevent coverage generation.
+         */
+        onTestEnd?: (testResults: TestResults) => void | Promise<void>;
 
         /** (CLI only) {function} onStart hook */
         onStart?: (coverageReport: CoverageReport) => void | Promise<void>;
@@ -639,6 +702,10 @@ export import CoverageRange = MCR.CoverageRange;
 export import IgnoredRange = MCR.IgnoredRange;
 export import CoverageFile = MCR.CoverageFile;
 export import CoverageResults = MCR.CoverageResults;
+export import TestError = MCR.TestError;
+export import TestResult = MCR.TestResult;
+export import TestSummary = MCR.TestSummary;
+export import TestResults = MCR.TestResults;
 export import LoggingType = MCR.LoggingType;
 export import CoverageReportOptions = MCR.CoverageReportOptions;
 export import McrCliOptions = MCR.McrCliOptions;

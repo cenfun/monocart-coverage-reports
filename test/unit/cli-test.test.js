@@ -298,7 +298,7 @@ describe('mcr test', {
         assert.equal(fs.existsSync(path.join(outputDir, '.v8-coverage')), false);
     });
     it('ignores test for ordinary commands and merge', () => {
-        configure('missing/**/*.test.cjs');
+        configure('missing/**/*.test.cjs', "onTestEnd: () => { throw new Error('must not run'); }");
         const result = run([process.execPath, '-e', "require('./subject.cjs')(true)"]);
         assert.equal(result.status, 0, result.stdout + result.stderr);
         checkReport();
@@ -308,7 +308,7 @@ describe('mcr test', {
     });
 
     it('ignores test for API generate and rejects missing configs', async () => {
-        configure('missing/**/*.test.cjs');
+        configure('missing/**/*.test.cjs', "onTestEnd: () => { throw new Error('must not run'); }");
         write('src/uncovered.cjs', 'module.exports = 42;');
         const coverage = MCR({
             logging: 'off', outputDir, all: path.join(root, 'src')

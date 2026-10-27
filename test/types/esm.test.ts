@@ -1,9 +1,29 @@
 import DefaultMCR, {
     MCR, CoverageReport, CoverageClient, getSnapshot, diffSnapshot, CDPClient, WSSession, Util,
-    type CoverageReportOptions, type CoverageResults, type V8CoverageEntry
+    type CoverageReportOptions, type CoverageResults, type V8CoverageEntry,
+    type McrCliOptions, type TestResults, type TestResult, type TestSummary, type TestError
 } from 'monocart-coverage-reports';
 
 const options: CoverageReportOptions = { reports: ['v8-json'], logging: 'off' };
+const cliOptions: McrCliOptions = {
+    test: './test/**/*.test.js',
+    onTestEnd: async (results) => {
+        const typedResults: TestResults = results;
+        const namespaceResults: MCR.TestResults = typedResults;
+        const id: string = typedResults.id;
+        const summary: TestSummary | null = typedResults.summary;
+        const test: TestResult | undefined = typedResults.tests[0];
+        const error: TestError | undefined = test?.error;
+        const message: string | undefined = error?.message;
+        const name: string | undefined = error?.name;
+        const extra: string | number | boolean | null | undefined = error?.customField;
+        const typedError: TestError = { name: 'Error', message: 'failed', attempts: 2, retryable: false, value: null };
+        // @ts-expect-error Complex properties are not part of collected errors.
+        typedError.context = {};
+        void [namespaceResults, id, summary, error, message, name, extra, typedError];
+    }
+};
+void cliOptions;
 const factoryReport: MCR.CoverageReport = MCR(options);
 const defaultReport: MCR.CoverageReport = DefaultMCR(options);
 const classReport: CoverageReport = new DefaultMCR.CoverageReport(options);
