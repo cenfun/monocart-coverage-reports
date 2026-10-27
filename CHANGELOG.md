@@ -1,5 +1,10 @@
 ## Changelog
 
+- 3.2.0
+  - **Features**
+    - add `onTestEnd(testResults)` for `mcr test`, with structured test results and TypeScript types
+    - export test results in raw reports and debug caches, with hook-based redaction before publication
+
 - 3.1.0
   - **Features**
     - support CSS sourcemaps for Less, Sass, Stylus, PostCSS and SugarSS, including coverage merging across bundles (#138)
