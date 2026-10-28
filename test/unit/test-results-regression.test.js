@@ -59,6 +59,39 @@ describe('mcr test result regressions', {
         });
     });
 
+    [false, true].forEach((withHook) => {
+        it(`preserves empty skip/todo reasons and matching statuses (hook: ${withHook})`, () => {
+            write('case.test.cjs', `
+                require('./subject.cjs')();
+                const { test } = require('node:test');
+                test('skipped', { skip: '' }, () => {});
+                test('todo passing', { todo: '' }, () => {});
+                test('todo failing', { todo: '' }, () => { throw new Error('not implemented'); });
+                test('passing', { skip: false, todo: false }, () => {});
+            `);
+            if (withHook) {
+                configure("onTestEnd: results => require('fs').writeFileSync('hook-results.json', JSON.stringify(results))");
+            }
+            const result = run();
+            assert.equal(result.status, 0, result.stdout + result.stderr);
+            const results = readResults();
+            assert.deepEqual(results.tests.map((test) => test.status), ['skipped', 'todo', 'todo', 'passed']);
+            assert.equal(results.tests[0].skip, '');
+            assert.equal(results.tests[1].todo, '');
+            assert.equal(results.tests[2].todo, '');
+            assert.equal(results.summary.tests, 4);
+            assert.equal(results.summary.skipped, 1);
+            assert.equal(results.summary.todo, 2);
+            assert.equal(results.summary.passed, 1);
+            assert.equal(results.summary.failed, 0);
+            assert.equal(results.summary.success, true);
+            if (withHook) {
+                const hooked = JSON.parse(fs.readFileSync(path.join(root, 'hook-results.json'), 'utf8'));
+                assert.deepEqual(hooked, results);
+            }
+        });
+    });
+
     ['onReady', 'onEnd'].forEach((hook) => {
         it(`preserves onTestEnd exitCode when ${hook} resets it`, () => {
             configure(`

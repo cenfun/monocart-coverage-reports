@@ -4,6 +4,8 @@
   - **Features**
     - add `onTestEnd(testResults)` for `mcr test`, with structured test results and TypeScript types
     - export test results in raw reports and debug caches, with hook-based redaction before publication
+  - **Bug Fixes**
+    - fix sourcemapped coverage merging for never-run copies, single mappings and range boundaries (#141)
 
 - 3.1.0
   - **Features**

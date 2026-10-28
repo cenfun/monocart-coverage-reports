@@ -158,6 +158,10 @@ Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(
 - `mcr test` is a new **optional** command; you do not have to replace your existing test runner.
 - `outputFilter` is a new **optional** filter, disabled by default. You do not have to replace `entryFilter` / `sourceFilter` with it.
 
+### Review test-result artifacts when upgrading to 3.2.0+
+
+Starting in 3.2.0, `mcr test` always collects structured test results, even without `onTestEnd`. Raw exports (including ZIP) and debug caches can now include `test-results-<id>.json`, containing test names, paths and error strings that may be sensitive. Review existing automatic artifact uploads and retention policies. Use [`onTestEnd`](README.md#ontestend--mcr-test-only) to redact persisted results before publication; terminal output and temporary files already written are not redacted. Raw imports still merge coverage only, not test results. Other commands and API calls do not collect these test results.
+
 ## Migration checklist
 
 - [ ] Upgrade Node.js in local, CI, container and relevant child-process environments.

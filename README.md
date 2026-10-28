@@ -1151,6 +1151,9 @@ The following usage scenarios may require merging coverage reports:
 ### Manual Merging
 If the reports cannot be merged automatically, then here is how to manually merge the reports.  
 First, using the `raw` report to export the original coverage data to the specified directory.
+
+**Before uploading raw/debug artifacts (3.2.0+):** `mcr test` also exports `test-results-<id>.json` in raw reports (including ZIP) and retains it in debug caches, even without a hook. Test names, paths and error strings may contain secrets or personal data. Review artifacts and use [`onTestEnd`](#ontestend--mcr-test-only) to redact persisted test results before publication; this does not redact terminal output or temporary files already written. Raw imports merge coverage only, not test results.
+
 - For example, we have `raw` coverage data from `unit test`, which is output to `./coverage-reports/unit/raw`. Unit test examples:
     - `Jest` + [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage)
     - `Vitest` + [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage)

@@ -128,6 +128,8 @@ const options = {
 };
 ```
 
+**Test-result privacy (3.2.0+):** `mcr test` adds `test-results-<id>.json` to raw exports (including ZIP) and retains it in debug caches, even without `onTestEnd`. Test names, paths and error strings can contain credentials or personal data. Review artifacts before uploading, and use [`onTestEnd`](cli.md#hooks-and-shutdown) to redact persisted results before publication. This does not redact terminal output or temporary files already written. Raw imports merge coverage only; test results are not merged.
+
 The relative raw directory becomes `coverage-reports/shard-1/raw`. Upload/download the **entire** raw directory, including source files. After every required job finishes, merge in a separate output directory:
 
 ```js

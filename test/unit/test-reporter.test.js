@@ -260,6 +260,24 @@ describe('Node test JSON reporter', () => {
         assert.equal(error.cause, error);
     });
 
+    it('recognizes empty skip/todo reasons without treating false as enabled', async () => {
+        for (const key of ['skip', 'todo']) {
+            for (const value of ['', 'reason', true, false]) {
+                for (const error of [null, new Error('test failed')]) {
+                    const results = await collect([completedTest(error, {
+                        [key]: value
+                    })]);
+                    let expected = error ? 'failed' : 'passed';
+                    if (value !== false) {
+                        expected = key === 'skip' ? 'skipped' : 'todo';
+                    }
+                    assert.equal(results.tests[0].status, expected, `${key}: ${String(value)}`);
+                    assert.equal(results.tests[0][key], value);
+                }
+            }
+        }
+    });
+
     it('retains cancellation, skipped and todo states independently of error projection', async () => {
         const cancelled = new Error('parent cancelled');
         cancelled.failureType = 'cancelledByParent';

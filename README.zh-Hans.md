@@ -1153,6 +1153,9 @@ npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=sp
 
 ### Manual Merging
 手动合并覆盖率报告需要使用`raw`报告来导出原始的覆盖率数据到指定的目录
+
+**上传 raw/debug 产物前请注意（3.2.0+）：** 即使未配置 hook，`mcr test` 也会在 raw 报告（包括 ZIP）中导出 `test-results-<id>.json`，并在 debug 缓存中保留该文件。测试名称、路径及错误字符串可能包含凭据或个人信息。请先审查产物，并通过 [`onTestEnd`](#ontestend--仅-mcr-test-可用) 在发布前对正式保存的测试结果脱敏；这不会处理终端输出或已写入的临时文件。导入 raw 数据只合并覆盖率，不会合并测试结果。
+
 - 比如，单元测试保存到`./coverage-reports/unit/raw`，见例子
     - `Jest` + [jest-monocart-coverage](https://github.com/cenfun/jest-monocart-coverage)
     - `Vitest` + [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage)

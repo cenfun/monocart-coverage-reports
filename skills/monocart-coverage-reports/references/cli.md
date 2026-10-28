@@ -76,16 +76,21 @@ export default {
 - `test` is CLI-only and ignored by ordinary commands/API. Existing runners remain supported through `mcr npm run ...`.
 - Test failure still attempts report generation and retains a nonzero exit status. A report-generation failure must fail CI too. Validate both paths.
 
+Starting in **3.2.0**, `mcr test` always collects structured test results, even without `onTestEnd`. Results follow the coverage cache lifecycle: normally cleaned after generation, retained in debug mode, or exported by `raw` (including ZIP). Raw imports merge coverage only, not test results. Test names, paths and error strings may contain secrets; review artifacts before uploading them. Use `onTestEnd` to redact persisted results before publication; this does not redact terminal output or temporary files already written.
+
 ## Hooks and shutdown
 
 | Hook | Scope / timing |
 | --- | --- |
 | `onStart(report)` | CLI child execution, before spawn |
+| `onTestEnd(testResults)` | 3.2.0+, `mcr test` only: after result collection, before publication, `onReady` and coverage generation; awaited even on assertion failure |
 | `onReady(report, nodeV8CoverageDir, subprocess)` | CLI, after child exits, before reading inputs |
 | `onEntry(entry)` | V8 input processing; can mutate entry |
 | `onEnd(results)` | After report generation; suitable for thresholds |
 
 Hooks may be async. Use `onReady` for a concrete flush/readiness condition when necessary, not an arbitrary permanent delay. API integrations manage their own process lifecycle; they do not receive CLI-only hooks automatically. Preserve test/child failures even if cleanup or reporting also fails.
+
+`onTestEnd` is optional and is not called for skipped runs, other commands or API calls. Mutate the result object to sanitize persisted raw/debug data. If it throws, test results are not published, the command fails, and coverage generation is still attempted. Missing/invalid reports fail without invoking the hook; incomplete reports are delivered with `complete: false` and also fail the command. See the [README hook contract](../../../README.md#ontestend--mcr-test-only) for the result schema and storage details. Save separate results outside `outputDir` if subsequent coverage cleanup could remove them.
 
 ## API use in CommonJS hosts
 

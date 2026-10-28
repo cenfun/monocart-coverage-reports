@@ -373,3 +373,112 @@ it('keeps what one bundle left uncovered when another copy of the file never ran
     }), 'the `1` branch is still uncovered');
     assert.ok(file.summary.branches.covered < file.summary.branches.total);
 });
+
+const createSingleMappingBundle = (insideWrapper, trailingSource = '') => {
+    const originalSource = 'globalThis.value++;';
+    const prefix = insideWrapper ? 'function unused(){' : 'function unused(){}';
+    const suffix = insideWrapper ? '} trailing();' : '';
+    const source = prefix + originalSource + suffix + trailingSource;
+    const sources = ['original.js'];
+    const sourcesContent = [originalSource];
+    const mappings = [[prefix.length, 0, 0, 0]];
+    if (trailingSource) {
+        sources.push('trailing.js');
+        sourcesContent.push(trailingSource);
+        mappings.push([source.length - trailingSource.length, 1, 0, 0]);
+    }
+    return {
+        id: 'single-mapping',
+        type: 'js',
+        sourcePath: 'bundle.js',
+        url: 'http://localhost/bundle.js',
+        source,
+        sourceMap: {
+            version: 3,
+            sources,
+            sourcesContent,
+            names: [],
+            // Only the last source on this line gets an added line-end mapping.
+            mappings: encode([mappings])
+        },
+        functions: [{
+            functionName: '',
+            isBlockCoverage: true,
+            ranges: [{
+                startOffset: 0, endOffset: source.length, count: 1
+            }]
+        }, {
+            functionName: 'unused',
+            isBlockCoverage: false,
+            ranges: [{
+                startOffset: 0, endOffset: source.indexOf('}') + 1, count: 0
+            }]
+        }]
+    };
+};
+
+it('does not mark a single mapping at an uncovered wrapper end as uncovered', async () => {
+    const result = await convertV8List([createSingleMappingBundle(false)], {
+        ... defaultOptions
+    });
+    assert.equal(result.v8DataList.length, 1);
+    const [file] = result.v8DataList;
+    assert.equal(file.sourcePath, 'original.js');
+    assert.ok(file.data.bytes.every((range) => range.count > 0));
+    assert.equal(file.summary.lines.total, 1);
+    assert.equal(file.summary.lines.covered, 1);
+});
+
+it('marks a source with a single mapping inside a never-run wrapper as uncovered', async () => {
+    const bundle = createSingleMappingBundle(true);
+    const originalSource = bundle.sourceMap.sourcesContent[0];
+    const result = await convertV8List([bundle], {
+        ... defaultOptions
+    });
+    assert.equal(result.v8DataList.length, 1);
+    const [file] = result.v8DataList;
+    assert.equal(file.sourcePath, 'original.js');
+    assert.deepEqual(file.data.bytes, [{
+        start: 0, end: originalSource.length, count: 0
+    }]);
+    assert.equal(file.summary.lines.total, 1);
+    assert.equal(file.summary.lines.covered, 0);
+});
+
+for (const insideWrapper of [true, false]) {
+    it(`handles a single mapping before another source ${insideWrapper ? 'inside' : 'outside'} a never-run wrapper`, async () => {
+        const bundle = createSingleMappingBundle(insideWrapper, 'globalThis.tail++;');
+        const originalSource = bundle.sourceMap.sourcesContent[0];
+        const result = await convertV8List([bundle], {
+            ... defaultOptions
+        });
+        assert.equal(result.v8DataList.length, 2);
+        const file = result.v8DataList.find((item) => item.sourcePath === 'original.js');
+        assert.ok(file);
+        if (insideWrapper) {
+            assert.deepEqual(file.data.bytes, [{
+                start: 0, end: originalSource.length, count: 0
+            }]);
+        } else {
+            assert.ok(file.data.bytes.every((range) => range.count > 0));
+        }
+        assert.equal(file.summary.lines.total, 1);
+        assert.equal(file.summary.lines.covered, insideWrapper ? 0 : 1);
+        const trailingFile = result.v8DataList.find((item) => item.sourcePath === 'trailing.js');
+        assert.ok(trailingFile);
+        assert.equal(trailingFile.summary.lines.total, 1);
+        assert.equal(trailingFile.summary.lines.covered, 1);
+    });
+}
+
+it('does not infer uncovered bytes for a source without mappings', async () => {
+    const bundle = createSingleMappingBundle(true);
+    bundle.sourceMap.sources.push('unmapped.js');
+    bundle.sourceMap.sourcesContent.push('globalThis.unmapped++;');
+    const result = await convertV8List([bundle], {
+        ... defaultOptions
+    });
+    const file = result.v8DataList.find((item) => item.sourcePath === 'unmapped.js');
+    assert.ok(file);
+    assert.deepEqual(file.data.bytes, []);
+});
