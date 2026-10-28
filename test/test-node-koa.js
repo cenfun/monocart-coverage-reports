@@ -1,9 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
-import {
-    execFileSync, spawn, spawnSync
-} from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import assert from 'node:assert';
 import EC from 'eight-colors';
 
@@ -97,18 +95,43 @@ const startKoaProcess = (inspectPort, serverPort) => {
     });
 };
 
-const killSubProcess = (cp) => {
+const killSubProcess = async (cp) => {
     console.log('kill koa server ...');
 
-    // On Windows, we always call `taskkill` no matter signal.
     if (process.platform === 'win32') {
-        try {
-            execFileSync('taskkill', ['/pid', String(cp.pid), '/T', '/F', '/FI', 'MEMUSAGE gt 0'], {
-                stdio: 'ignore'
-            });
-        } catch (e) {
-        // the process might have already stopped
+        if (cp.exitCode !== null || cp.signalCode !== null) {
+            return;
         }
+
+        // This fixture has no descendants, so avoid taskkill's slow process queries.
+        await new Promise((resolve, reject) => {
+            const cleanup = () => {
+                clearTimeout(timer);
+                cp.off('exit', onExit);
+                cp.off('error', onError);
+            };
+            const onExit = () => {
+                cleanup();
+                resolve();
+            };
+            const onError = (err) => {
+                cleanup();
+                reject(err);
+            };
+            const timer = setTimeout(() => {
+                onError(new Error(`Timed out terminating Koa process ${cp.pid}`));
+            }, 5000);
+
+            cp.once('exit', onExit);
+            cp.once('error', onError);
+            try {
+                if (!cp.kill('SIGKILL')) {
+                    onError(new Error(`Failed to terminate Koa process ${cp.pid}`));
+                }
+            } catch (err) {
+                onError(err);
+            }
+        });
         return;
     }
 
@@ -183,7 +206,7 @@ const generate = async () => {
     if (err) {
         EC.logRed(`failed to request koa url: ${url}`);
         console.log(err);
-        killSubProcess(cp);
+        await killSubProcess(cp);
         process.exit(1);
         return;
     }
@@ -201,7 +224,11 @@ const generate = async () => {
 
     // close debugger
     await client.close();
-    killSubProcess(cp);
+    await killSubProcess(cp);
+
+    if (process.platform === 'win32') {
+        assert(cp.exitCode !== null || cp.signalCode !== null, 'Koa process must exit before generating coverage');
+    }
 
     // check coverage dir
     assert(path.resolve(dir) === v8Dir);
