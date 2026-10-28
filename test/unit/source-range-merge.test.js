@@ -314,3 +314,62 @@ it('merges complementary coverage from two bundles mapped to the same source', a
     });
     assert.ok(Object.keys(result.coverageData['shared.js'].statementMap).length > 0);
 });
+
+// The same source file bundled twice: the first copy ran and left the `1`
+// branch uncovered, the second copy sits in a wrapper function that never ran.
+// The wrapper's own coverage range is all V8 reports for it, and code follows
+// the wrapper on the same line, so nothing marks the whole file as uncovered.
+// Without any range of its own, the second copy must not count as covering
+// what the first copy left uncovered.
+const createNeverRunBundle = (name) => {
+    const prefix = 'function wrapper() {';
+    const suffix = '} trailing();';
+    const source = prefix + sharedSource.trimEnd() + suffix;
+    const wrapperStart = 0;
+    const wrapperEnd = prefix.length + sharedSource.trimEnd().length + 1;
+    return {
+        id: name,
+        type: 'js',
+        sourcePath: `${name}.js`,
+        url: `http://localhost/${name}.js`,
+        source,
+        sourceMap: {
+            version: 3,
+            sources: ['shared.js'],
+            sourcesContent: [sharedSource],
+            names: [],
+            mappings: encode([Array.from({
+                length: sharedSource.trimEnd().length
+            }, (_, column) => [prefix.length + column, 0, 0, column])])
+        },
+        functions: [{
+            functionName: '',
+            isBlockCoverage: true,
+            ranges: [{
+                startOffset: 0, endOffset: source.length, count: 1
+            }]
+        }, {
+            functionName: 'wrapper',
+            isBlockCoverage: true,
+            ranges: [{
+                startOffset: wrapperStart, endOffset: wrapperEnd, count: 0
+            }]
+        }]
+    };
+};
+
+it('keeps what one bundle left uncovered when another copy of the file never ran', async () => {
+    const result = await convertV8List([
+        createBundle('first', '1'), createNeverRunBundle('second')
+    ], {
+        ... defaultOptions
+    });
+    assert.equal(result.v8DataList.length, 1);
+    const [file] = result.v8DataList;
+    assert.equal(file.sourcePath, 'shared.js');
+    const uncoveredAt = sharedSource.indexOf('1');
+    assert.ok(file.data.bytes.some((range) => {
+        return range.count === 0 && range.start <= uncoveredAt && range.end > uncoveredAt;
+    }), 'the `1` branch is still uncovered');
+    assert.ok(file.summary.branches.covered < file.summary.branches.total);
+});
