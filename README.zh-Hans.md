@@ -14,6 +14,7 @@
 
 * [用法](#usage)
 * [最佳实践](#best-practices)
+* [AI Agent Skill](#ai-agent-skill)
 * [选项配置](#options)
 * [所有支持的报告类型](#available-reports)
 * [比较两种报告](#compare-reports)

@@ -14,6 +14,7 @@
 
 * [Usage](#usage)
 * [Best Practices](#best-practices)
+* [AI Agent Skill](#ai-agent-skill)
 * [Options](#options)
 * [Available Reports](#available-reports)
 * [Compare Reports](#compare-reports)
