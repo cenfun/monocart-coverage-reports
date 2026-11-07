@@ -119,20 +119,21 @@ mcr node my-app.js -r v8,console-details
 
 ## AI Agent Skill
 
-使用 AI 辅助开发本仓库源码时，请先阅读 [AGENTS.md](https://github.com/cenfun/monocart-coverage-reports/blob/main/AGENTS.md)，了解源码结构、开发命令、验证流程和安全边界。`.github/copilot-instructions.md` 为 GitHub Copilot 提供可独立使用的核心规则摘要。这些指南仅用于源码仓库，不随 npm 包发布，与下面可复用的集成技能相互独立。
+**可靠的 AI 辅助开发离不开自动化测试。** 测试结果验证代码行为，覆盖率帮助识别测试缺口。通过 **`mcr test`**，AI 编程助手可直接运行 Node.js 测试、采集原生 V8 覆盖率并生成报告，无需插桩。测试与覆盖率反馈支持持续迭代，并可结合 CI/CD 质量门禁，用于 AI 辅助或自主开发。
 
-项目提供可复用的 [Monocart Coverage Reports 技能](skills/monocart-coverage-reports/SKILL.md)，帮助 AI coding agent 采集覆盖率、配置 CLI、排查 sourcemap 和过滤问题、合并 raw 报告及设置 CI 阈值。结构为主 `SKILL.md` 加按需加载的专题参考文档，仅面向 MCR 3.x，并检查其运行环境要求。
+[Monocart Coverage Reports 技能](skills/monocart-coverage-reports/SKILL.md) 指导 AI 配置覆盖率采集和 CLI、排查 sourcemap 问题、合并报告及设置 CI 阈值，适用于 MCR 3.x，专题参考文档按需加载。
 
-npm 包包含 `skills/monocart-coverage-reports/`。请将**整个目录**（包括 `references/`）复制到 agent 支持的 skills 目录，或直接让 agent 读取 `SKILL.md`。安装 MCR 不会自动注册技能或修改 agent 配置。技能说明使用英文，但提问和回复可以使用中文或其他语言。
+技能随 npm 包发布。将**整个 `skills/monocart-coverage-reports/` 目录**（含 `references/`）复制到 AI 工具的技能目录，或让 AI 直接读取 `SKILL.md`。安装 MCR 不会自动注册技能。技能说明使用英文，与 AI 交流可使用任意语言。
 
-在使用 MCR 的项目根目录中定位已安装的技能和包配置（旧版本可能尚未包含技能）：
+在项目根目录定位已安装的技能：
 
 ```sh
 node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
-node -p "require.resolve('monocart-coverage-reports/package.json')"
 ```
 
-读取定位到的技能文件，再按相对链接读取专题文档。请以已安装包的运行时、API 和版本要求为准，不要假设所有示例都适用于旧版本。以上命令用于定位文件，不是将 Markdown 作为 JavaScript 导入。
+按技能中的链接查阅参考文档，并以已安装包的版本和运行环境要求为准。旧版本可能不包含该技能。
+
+开发 MCR 本身时，请参阅 [AGENTS.md](https://github.com/cenfun/monocart-coverage-reports/blob/main/AGENTS.md)。
 
 ## Options
 - 默认选项: [lib/default/options.js](./lib/default/options.js)

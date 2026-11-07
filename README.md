@@ -119,20 +119,21 @@ For detailed setup instructions and examples, see the [best-practices guide](ski
 
 ## AI Agent Skill
 
-For AI-assisted development in a source checkout, start with [AGENTS.md](https://github.com/cenfun/monocart-coverage-reports/blob/main/AGENTS.md). It describes the source layout, development commands, validation, and safety boundaries. `.github/copilot-instructions.md` provides a self-contained summary of the core rules for GitHub Copilot. These checkout-only guides are not included in the npm package and are separate from the reusable integration skill below.
+**Reliable AI-assisted development starts with automated testing.** Test results validate behavior; coverage highlights testing gaps. With **`mcr test`**, AI coding agents can run Node.js tests, collect native V8 coverage, and generate reports without instrumentation. This feedback supports iterative development and CI/CD quality gates, whether an agent assists a developer or works autonomously.
 
-The reusable [Monocart Coverage Reports skill](skills/monocart-coverage-reports/SKILL.md) helps AI coding agents collect coverage, configure the CLI, debug sourcemaps and filters, merge raw reports, and enforce CI thresholds. It uses a main `SKILL.md` with task-specific references loaded on demand, targeting MCR 3.x only and checking its runtime requirements.
+The [Monocart Coverage Reports skill](skills/monocart-coverage-reports/SKILL.md) guides agents through coverage collection, CLI configuration, sourcemap troubleshooting, report merging, and CI thresholds. It targets MCR 3.x and loads task-specific references on demand.
 
-The npm package includes `skills/monocart-coverage-reports/`. Copy this **entire directory**, including `references/`, into your agent's supported skills location, or ask the agent to read `SKILL.md` directly. Installing MCR does not automatically register the skill or modify agent settings. The instructions are in English; requests and responses can use any language.
+The skill ships in the npm package. Copy the **entire `skills/monocart-coverage-reports/` directory**, including `references/`, into your agent's skills directory, or have the agent read `SKILL.md` directly. Installation does not automatically register the skill. The instructions are in English; you can use any language with your agent.
 
-From the host project root, locate the installed skill and package manifest (older releases may not include the skill):
+Locate the installed skill from your project root:
 
 ```sh
 node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
-node -p "require.resolve('monocart-coverage-reports/package.json')"
 ```
 
-Read the resolved skill, then follow its relative reference links. Use the installed package's runtime, API, and version requirements rather than assuming all examples apply to older releases. These commands resolve files; they do not import Markdown as JavaScript.
+Follow the skill's reference links and the installed package's version and runtime requirements. Older releases may not include the skill.
+
+For development of MCR itself, see [AGENTS.md](https://github.com/cenfun/monocart-coverage-reports/blob/main/AGENTS.md).
 
 ## Options
 - Default options: [lib/default/options.js](./lib/default/options.js)
