@@ -1,5 +1,9 @@
 ## Changelog
 
+- 3.2.1
+  - **Bug Fixes**
+    - fix branch coverage counts in class field initializers, avoiding false coverage for uninstantiated classes and preserving initializer execution counts (#142)
+
 - 3.2.0
   - **Features**
     - add `onTestEnd(testResults)` for `mcr test`, with structured test results and TypeScript types
