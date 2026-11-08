@@ -11,6 +11,7 @@ const component = require('./component.js');
 
 const statics = require('./statics.js');
 const closures = require('./closures.js');
+const { Config } = require('./class-fields.js');
 
 function foo(argument) {
     console.log('this is foo');
@@ -119,5 +120,5 @@ init(window._my_stop_key); onload(window._my_something);
 
 
 module.exports = {
-    foo, bar, start
+    foo, bar, start, Config
 };

@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import EC from 'eight-colors';
 
@@ -79,6 +80,21 @@ const coverageOptions = {
     },
 
     onEnd: (coverageResults) => {
+        // Issue #142: the script ran, but Config was never instantiated.
+        const fields = coverageResults.files.find((file) => file.sourcePath === 'test/mock/src/class-fields.js');
+        assert.ok(fields, 'class field fixture is included in the V8 report');
+        assert.equal(fields.summary.branches.total, 4);
+        assert.equal(fields.summary.branches.covered, 0);
+
+        const lcov = fs.readFileSync(path.join(coverageOptions.outputDir, 'lcov.info'), 'utf8');
+        const record = lcov.split('end_of_record').find((item) => item.replace(/\\/g, '/').includes('SF:test/mock/src/class-fields.js\n'));
+        assert.ok(record, 'class field fixture is included in LCOV');
+        assert.match(record, /^BRF:4$/m);
+        assert.match(record, /^BRH:0$/m);
+        assert.deepEqual(record.match(/^BRDA:.*$/gm), [
+            'BRDA:4,0,0,0', 'BRDA:4,0,1,0', 'BRDA:5,1,0,0', 'BRDA:5,1,1,0'
+        ]);
+
         checkSnapshot(coverageResults);
         const thresholds = {
             bytes: 80,
@@ -155,6 +171,8 @@ const test = async () => {
             });
         }
     }
+
+    assert.equal(await page.evaluate(() => typeof window['coverage-v8'].Config), 'function');
 
     await new Promise((resolve) => {
         setTimeout(resolve, 500);

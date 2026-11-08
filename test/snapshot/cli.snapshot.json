@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "51.53 %",
-        "statements": "57.24 %",
-        "branches": "52.42 %",
+        "bytes": "50.76 %",
+        "statements": "56.95 %",
+        "branches": "51.65 %",
         "functions": "51.04 %",
-        "lines": "42.62 %"
+        "lines": "42.27 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -124,6 +124,15 @@
             "bytes": "72.92 %",
             "uncoveredLines": "22-24,30-32,37-38,44-47,51-52,58-64,72-78",
             "extras": "1c,2b,3c,82b,83b,91b"
+        },
+        "test/mock/src/class-fields.js": {
+            "functions": "",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "3-11",
+            "extras": "1c,2c,7b,8c,12b"
         },
         "test/mock/src/closures.js": {
             "functions": "0.00 %",
@@ -329,8 +338,8 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "1-123",
-            "extras": "3b,5b,9b,11b,14b,17b,22b,25b,30b,33b,36b,39b,41b,44b,47b,52b,54b,58b,63b,67b,72b,79b,81b,85b,90b,94b,102b,105b,108b,110b,113b,115b,116b,117c,119b,120b,124b"
+            "uncoveredLines": "1-124",
+            "extras": "3b,5b,9b,11b,15b,18b,23b,26b,31b,34b,37b,40b,42b,45b,48b,53b,55b,59b,64b,68b,73b,80b,82b,86b,91b,95b,103b,106b,109b,111b,114b,116b,117b,118c,120b,121b,125b"
         },
         "test/mock/src/statement.js": {
             "functions": "0.00 %",
