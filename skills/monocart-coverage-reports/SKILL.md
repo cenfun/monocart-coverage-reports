@@ -56,7 +56,7 @@ test('adds positive and negative numbers', () => {
 Install a compatible **3.x** version only if needed, using the host package manager:
 
 ```sh
-npm install --save-dev monocart-coverage-reports@^3
+npm i monocart-coverage-reports@^3 -D
 npx mcr test ./test/add.test.mjs -r v8,console-summary
 ```
 

@@ -73,10 +73,19 @@
 
 **Upgrading from 2.x:** See the [3.x migration guide](migrate-to-3.md).
 
-- Install
+- Install as a dev dependency
 ```sh
-npm install monocart-coverage-reports
+npm i monocart-coverage-reports -D
 ```
+- CLI
+```sh
+# Run tests with the Node.js test runner and collect native V8 coverage
+npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
+# Or run any Node.js command with coverage
+npx mcr node my-app.js -r v8,console-details
+```
+For more information, see [Command Line](#command-line) and [Run Tests with `mcr test`](#run-tests-with-mcr-test)
+
 - API
 ```js
 import { MCR } from 'monocart-coverage-reports';
@@ -98,12 +107,6 @@ await mcr.loadConfig();
 > Both `MCR({...})` and `new CoverageReport()` create the same instance. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
 For more information, see [Multiprocessing Support](#multiprocessing-support)
-
-- CLI
-```sh
-mcr node my-app.js -r v8,console-details
-```
-For more information, see [Command Line](#command-line)
 
 ## Best Practices
 
@@ -1093,7 +1096,7 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 Install MCR and run your test files directly — no config file is required:
 
 ```sh
-npm install --save-dev monocart-coverage-reports
+npm i monocart-coverage-reports -D
 npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
 ```
 

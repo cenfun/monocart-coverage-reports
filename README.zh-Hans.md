@@ -73,10 +73,19 @@
 
 **从 2.x 升级：** 请参阅 [3.x 迁移指南](migrate-to-3.md)。
 
-- 安装
+- 安装为开发依赖
 ```sh
-npm install monocart-coverage-reports
+npm i monocart-coverage-reports -D
 ```
+- CLI
+```sh
+# 使用 Node.js 测试运行器执行测试并采集原生 V8 覆盖率
+npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
+# 或者为任意 Node.js 命令采集覆盖率
+npx mcr node my-app.js -r v8,console-details
+```
+参见[命令行](#command-line)和[使用 `mcr test` 运行测试](#run-tests-with-mcr-test)
+
 - API
 ```js
 import { MCR } from 'monocart-coverage-reports';
@@ -98,12 +107,6 @@ await mcr.loadConfig();
 > `MCR({...})` 和 `new CoverageReport()` 创建的是同一个实例。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
 
 参见 [多进程支持](#multiprocessing-support)
-
-- CLI
-```sh
-mcr node my-app.js -r v8,console-details
-```
-参见 [命令行](#command-line)
 
 ## Best Practices
 
@@ -1096,7 +1099,7 @@ mcr --import tsx -c mcr.config.ts node ./test.js
 安装 MCR 后，直接指定测试文件即可运行，无需配置文件：
 
 ```sh
-npm install --save-dev monocart-coverage-reports
+npm i monocart-coverage-reports -D
 npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
 ```
 

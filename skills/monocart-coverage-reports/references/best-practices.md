@@ -20,7 +20,7 @@ Write tests with `node:test` and `node:assert/strict`. Cover meaningful outputs,
 Install only if needed, using the host package manager:
 
 ```sh
-npm install --save-dev monocart-coverage-reports@^3
+npm i monocart-coverage-reports@^3 -D
 npx mcr test "./test/**/*.test.mjs" -r v8,console-summary
 ```
 
