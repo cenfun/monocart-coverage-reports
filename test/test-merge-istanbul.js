@@ -11,7 +11,7 @@ const coverageOptions = {
 
     // merge from exists raw dirs
     inputDir: [
-        './docs/istanbul/raw',
+        './.temp/site/reports/istanbul/raw',
         '../jest-monocart-coverage/docs/istanbul/raw'
     ],
 
@@ -32,7 +32,7 @@ const coverageOptions = {
         return filePath;
     },
 
-    outputDir: './docs/merge-istanbul'
+    outputDir: './.temp/site/reports/merge-istanbul'
 };
 
 const generate = async () => {

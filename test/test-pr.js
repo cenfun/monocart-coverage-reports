@@ -86,7 +86,7 @@ const test = async () => {
             }],
             ['markdown-details', {
                 // color: 'Tex',
-                baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/pr/#page=',
+                baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/reports/pr/#page=',
                 metrics: ['bytes', 'lines'],
                 filter
             }]
@@ -95,7 +95,7 @@ const test = async () => {
         name: 'My PR Coverage Report',
         assetsPath: '../assets',
 
-        outputDir: './docs/pr',
+        outputDir: './.temp/site/reports/pr',
 
         sourceFilter: {
             '**/src/**': true

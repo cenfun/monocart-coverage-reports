@@ -4,7 +4,7 @@ export default {
 
     name: 'My MCR Coverage Report',
 
-    outputDir: 'docs/mcr',
+    outputDir: '.temp/site/reports/mcr',
 
     reports: [
         'v8',
@@ -17,7 +17,7 @@ export default {
         ['markdown-details', {
             // color: 'Tex',
             maxCols: 50,
-            baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/mcr/#page=',
+            baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/reports/mcr/#page=',
             metrics: ['bytes', 'lines']
         }]
     ],

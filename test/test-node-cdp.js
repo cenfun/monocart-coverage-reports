@@ -13,7 +13,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/node-cdp',
+    outputDir: './.temp/site/reports/node-cdp',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

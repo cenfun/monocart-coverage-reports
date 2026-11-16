@@ -43,7 +43,7 @@ const coverageOptions = {
         return true;
     },
 
-    outputDir: './docs/node-vm',
+    outputDir: './.temp/site/reports/node-vm',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

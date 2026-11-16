@@ -20,6 +20,28 @@ permissions:
 
 jobs:
 
+  documentation:
+    runs-on: ubuntu-latest
+    name: Documentation
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      # No browser downloads or runtime bundle builds are needed for documentation.
+      - run: npm ci --ignore-scripts
+      - run: npm run docs:check
+      - name: Upload documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: ./.temp/site
+          include-hidden-files: true
+          if-no-files-found: error
+
   test:
     strategy:
       fail-fast: false
@@ -39,7 +61,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           check-latest: true
           cache: ''
-      - run: npm install
+      - run: npm ci
       - run: npx playwright install --with-deps
       - run: npx puppeteer browsers install chrome
       - run: npm run build
@@ -51,11 +73,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact-${{ matrix.node-version }}
-          path: ./docs
+          path: |
+            ./.temp/site/reports
+            !./.temp/site/reports/**/.cache/**
+          include-hidden-files: true
+          if-no-files-found: error
 
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: test
+    needs: [test, documentation]
     
     environment:
       name: github-pages
@@ -66,18 +92,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Download artifact
+      - name: Download documentation
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation
+          path: ./.temp/site
+
+      - name: Download reports
         uses: actions/download-artifact@v4
         with:
           name: artifact-22
-          path: ./docs
-
-      - run: ls -al
+          path: ./.temp/site/reports
 
       - name: Generate list using Markdown
         run: |
-          cat docs/mcr/coverage-summary.md >> $GITHUB_STEP_SUMMARY
-          cat docs/mcr/coverage-details.md >> $GITHUB_STEP_SUMMARY
+          cat .temp/site/reports/mcr/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+          cat .temp/site/reports/mcr/coverage-details.md >> $GITHUB_STEP_SUMMARY
         
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarqube-scan-action@master
@@ -89,7 +119,7 @@ jobs:
             -Dsonar.organization=cenfun
             -Dsonar.projectKey=monocart-coverage-reports
             -Dsonar.projectName=monocart-coverage-reports
-            -Dsonar.javascript.lcov.reportPaths=docs/mcr/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=.temp/site/reports/mcr/lcov.info
             -Dsonar.sources=lib
             -Dsonar.tests=test
             -Dsonar.exclusions=test/**,dist/**,docs/**,.temp/**,node_modules/**,lib/packages/**,scripts/og-image/**,scripts/test-runtime.js
@@ -98,13 +128,13 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@v2
         with:
-          files: ./docs/mcr/lcov.info
+          files: ./.temp/site/reports/mcr/lcov.info
       
       - name: Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: ./docs/mcr/lcov.info
+          coverage-reports: ./.temp/site/reports/mcr/lcov.info
       
       - name: Codecov
         uses: codecov/codecov-action@v4
@@ -112,7 +142,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
           disable_search: true
-          files: ${{ github.workspace }}/docs/mcr/codecov.json
+          files: ${{ github.workspace }}/.temp/site/reports/mcr/codecov.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -120,7 +150,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './docs'
+          path: './.temp/site'
           
       - name: Deploy to GitHub Pages
         id: deployment

@@ -18,7 +18,7 @@ const coverageOptions = {
 
     name: 'My V8 Sections Coverage Report',
 
-    outputDir: './docs/sections',
+    outputDir: './.temp/site/reports/sections',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

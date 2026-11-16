@@ -2,9 +2,7 @@
 /node_modules
 /packages/**/dist
 /lib/packages
-/docs/*/.cache
 /test/mock/*/dist
-/docs
 
 /.claude
 

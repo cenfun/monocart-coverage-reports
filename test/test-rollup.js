@@ -20,7 +20,7 @@ const coverageOptions = {
         '**/*': true
     },
 
-    outputDir: './docs/rollup',
+    outputDir: './.temp/site/reports/rollup',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

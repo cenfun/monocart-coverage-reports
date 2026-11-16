@@ -7,6 +7,7 @@ These core rules are self-contained. They do not depend on loading linked files.
 
 - MCR 3.x requires Node.js >= 22.15.0. Use npm and the existing `package-lock.json`; inspect `package.json` before running scripts.
 - Most of `lib/` is handwritten native ESM JavaScript, including `lib/assets.js`. Public declarations are in `lib/index.d.ts`.
+- Tracked bilingual VitePress documentation lives in `docs/`. `npm run docs:check` runs check-only lint and builds to `.temp/site/`, without documentation unit tests; generated reports live under `.temp/site/reports/`. `npm run docs:dev` serves existing reports at `/reports/`; report example lists are maintained in `docs/examples.md` and `docs/zh/examples.md`. No legacy report URLs or redirects are provided.
 - The report UI is Vue/JavaScript in `src/app/`. Vendor entry points are in `src/vendor/`; the build config is `vite.config.mjs`.
 - Match nearby code: four spaces, semicolons, single-quoted JavaScript strings, and `.js` extensions on relative ESM imports. Preserve UTF-8 and LF; coverage ranges depend on source offsets.
 - Keep diffs focused and preserve user changes. Public behavior changes need matching declarations, defaults, English/Chinese docs, and regression tests.
@@ -17,14 +18,14 @@ Run from the checkout root, starting with the narrowest relevant check:
 
 - Focused test: `node --test test/unit/config.test.js` (replace the example path as needed).
 - Unit suite: `npm run test-unit`. Public API/type changes: `npm run test-types`. API/CLI/packaging smoke checks: `npm run test-runtime`.
-- README JavaScript examples: `npm run lint:readme`. Usual JavaScript/Vue lint scope without fixes: `npx --no-install eslint src/ test/unit/`; use explicit paths for other changed source.
+- VitePress source and JavaScript examples in docs/READMEs: `npm run lint:docs` fixes files by default (`-- --no-fix` checks only). `npm run docs:check` uses check-only mode. Markdown fences use the official ESLint Markdown processor; intentional nonstandard examples use `<!-- eslint-skip -->` immediately before a single fence. Usual JavaScript/Vue lint scope without fixes: `npx --no-install eslint src/ test/unit/`; use explicit paths for other changed source.
 - Build with `npm run build` before tests that need missing `lib/packages/` bundles, and after UI, template, or vendor-entry changes. Its `postbuild` also builds test fixtures.
-- `npm test` includes integration coverage and docs generation. Browser tests need built fixtures and browser binaries; install Playwright and Puppeteer browsers explicitly (`npx playwright install --with-deps`, `npx puppeteer browsers install chrome`). Do not download browsers silently.
+- `npm test` includes integration coverage. Browser tests need built fixtures and browser binaries; install Playwright and Puppeteer browsers explicitly (`npx playwright install --with-deps`, `npx puppeteer browsers install chrome`). Do not download browsers silently.
 - Review `git diff --check` and the final diff. Report actual checks and environment limitations; never claim unobserved success.
 
 ## Boundaries and safety
 
-- Do not hand-edit generated `lib/packages/`, `dist/`, `docs/`, or `test/mock/*/dist/`. Edit source and use the build workflow.
+- Do not hand-edit generated `lib/packages/`, `dist/`, `.temp/site/`, VitePress caches, or `test/mock/*/dist/`. `docs/` is editable documentation source. Edit source and use the build workflow.
 - Do not weaken tests, exclude sources, add ignores, or replace coverage snapshots to hide defects. Review intentional baseline changes.
 - Keep report path normalization best-effort for standard paths, not a growing set of heuristics for nonstandard, virtual, or foreign-platform paths. Users can fix special cases with `sourcePath` and the original V8 `info.url`. Malformed paths must not abort generation before that hook runs; report path rewriting is separate from actual source-file loading.
 - `npm run lint` modifies files with `--fix`. `npm run test:snap` overwrites baselines. Never use `npm run eol`: it removes the index and performs a hard reset.

@@ -16,7 +16,7 @@ const coverageOptions = {
     assetsPath: '../assets',
     // lcov: true,
 
-    outputDir: './docs/node-ins',
+    outputDir: './.temp/site/reports/node-ins',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

@@ -21,7 +21,7 @@ const generate = async () => {
             '**/test/mock/node/**': true
         },
 
-        outputDir: './docs/node-fgc',
+        outputDir: './.temp/site/reports/node-fgc',
         onEnd: function(coverageResults) {
             checkSnapshot(coverageResults);
         }

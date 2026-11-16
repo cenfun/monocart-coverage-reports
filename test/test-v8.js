@@ -29,7 +29,7 @@ const coverageOptions = {
         }],
         ['markdown-details', {
             // color: 'Tex',
-            baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/v8/#page=',
+            baseUrl: 'https://cenfun.github.io/monocart-coverage-reports/reports/v8/#page=',
             metrics: ['bytes', 'lines']
         }],
         [path.resolve('./test/custom-istanbul-reporter.js'), {
@@ -51,7 +51,7 @@ const coverageOptions = {
 
     // inline: true,
 
-    outputDir: './docs/v8',
+    outputDir: './.temp/site/reports/v8',
 
     sourceFilter: (sourcePath) => sourcePath.search(/src\//) !== -1 || sourcePath.search(/minify\//) !== -1,
 
@@ -117,14 +117,14 @@ const coverageOptions = {
 
         // debug diff json
 
-        // const json1 = JSON.parse(fs.readFileSync('./docs/istanbul/coverage-final.json').toString('utf-8'));
-        // const json2 = JSON.parse(fs.readFileSync('./docs/v8/coverage-final.json').toString('utf-8'));
+        // const json1 = JSON.parse(fs.readFileSync('./.temp/site/reports/istanbul/coverage-final.json').toString('utf-8'));
+        // const json2 = JSON.parse(fs.readFileSync('./.temp/site/reports/v8/coverage-final.json').toString('utf-8'));
 
         // const data1 = json1[Object.keys(json1).find((it) => it.endsWith('logical.js'))];
         // const data2 = json2[Object.keys(json2).find((it) => it.endsWith('logical.js'))];
 
-        // fs.writeFileSync('./docs/v8/branch1.json', JSON.stringify(data1, null, 4));
-        // fs.writeFileSync('./docs/v8/branch2.json', JSON.stringify(data2, null, 4));
+        // fs.writeFileSync('./.temp/site/reports/v8/branch1.json', JSON.stringify(data1, null, 4));
+        // fs.writeFileSync('./.temp/site/reports/v8/branch2.json', JSON.stringify(data2, null, 4));
     }
 };
 

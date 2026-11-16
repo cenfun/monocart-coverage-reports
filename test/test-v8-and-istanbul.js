@@ -55,7 +55,7 @@ const multipleReportsOptions = {
         console.log('onEnd Bytes:', `${summary.bytes.pct} %`);
     },
 
-    outputDir: './docs/v8-and-istanbul'
+    outputDir: './.temp/site/reports/v8-and-istanbul'
 };
 
 const test = async (serverUrl) => {

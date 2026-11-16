@@ -23,7 +23,7 @@ const coverageOptions = {
         'coverage-swc/test/mock/': ''
     },
 
-    outputDir: './docs/swc',
+    outputDir: './.temp/site/reports/swc',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

@@ -18,7 +18,9 @@ Before:
 
 ```js
 const MCR = require('monocart-coverage-reports');
-const report = MCR({ outputDir: './coverage-reports' });
+const report = MCR({
+    outputDir: './coverage-reports'
+});
 ```
 
 After, in an `.mjs` file or a project with `"type": "module"`:
@@ -27,7 +29,9 @@ After, in an `.mjs` file or a project with `"type": "module"`:
 import MCR from 'monocart-coverage-reports';
 // Alternatively: import { MCR, CoverageReport } from 'monocart-coverage-reports';
 
-const report = MCR({ outputDir: './coverage-reports' });
+const report = MCR({
+    outputDir: './coverage-reports'
+});
 ```
 
 The default `MCR` export retains properties such as `MCR.CoverageReport`, `MCR.CDPClient` and `MCR.Util`.
@@ -38,7 +42,9 @@ The default `MCR` export retains properties such as `MCR.CoverageReport`, `MCR.C
 // coverage.cjs
 async function main() {
     const { MCR } = await import('monocart-coverage-reports');
-    const report = MCR({ outputDir: './coverage-reports' });
+    const report = MCR({
+        outputDir: './coverage-reports'
+    });
     await report.addFromDir('./coverage-data');
     await report.generate();
 }
@@ -143,24 +149,36 @@ Existing report and filter options remain available, including `reports`, `entry
 
 Relative reporter file paths must start with `./` or `../` and include the file extension. They are resolved from the current working directory, not the config file directory. Absolute paths and `file:` URLs are also accepted.
 
-```js
-// Before: a local path without an explicit relative prefix
-reports: [['test/custom-v8-reporter.js', { type: 'v8' }]]
+Before: a local path without an explicit relative prefix:
 
-// After
-reports: [['./test/custom-v8-reporter.js', { type: 'v8' }]]
+```js
+export default {
+    reports: [['test/custom-v8-reporter.js', {
+        type: 'v8'
+    }]]
+};
+```
+
+After:
+
+```js
+export default {
+    reports: [['./test/custom-v8-reporter.js', {
+        type: 'v8'
+    }]]
+};
 ```
 
 Names without a relative prefix, such as `test/custom-v8-reporter.js`, are treated as package specifiers, not local file paths. The old V8/`both` reporter fallback to a local file path has been removed; such paths may now fail with `ERR_MODULE_NOT_FOUND`. Actual package names can remain unchanged when their entry points support native ESM import resolution.
 
-Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(context)`, while V8 and `both` reporters implement `generate(reportData)`. The `both` type accepts results from either input format, distinguished by `reportData.type`; it does not receive simultaneous `v8Data` and `istanbulData` properties. See [Custom Reporter](README.md#available-reports) for examples.
+Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(context)`, while V8 and `both` reporters implement `generate(reportData)`. The `both` type accepts results from either input format, distinguished by `reportData.type`; it does not receive simultaneous `v8Data` and `istanbulData` properties. See [Custom Reporter](https://cenfun.github.io/monocart-coverage-reports/reference/reports.html) for examples.
 
 - `mcr test` is a new **optional** command; you do not have to replace your existing test runner.
 - `outputFilter` is a new **optional** filter, disabled by default. You do not have to replace `entryFilter` / `sourceFilter` with it.
 
 ### Review test-result artifacts when upgrading to 3.2.0+
 
-Starting in 3.2.0, `mcr test` always collects structured test results, even without `onTestEnd`. Raw exports (including ZIP) and debug caches can now include `test-results-<id>.json`, containing test names, paths and error strings that may be sensitive. Review existing automatic artifact uploads and retention policies. Use [`onTestEnd`](README.md#ontestend--mcr-test-only) to redact persisted results before publication; terminal output and temporary files already written are not redacted. Raw imports still merge coverage only, not test results. Other commands and API calls do not collect these test results.
+Starting in 3.2.0, `mcr test` always collects structured test results, even without `onTestEnd`. Raw exports (including ZIP) and debug caches can now include `test-results-<id>.json`, containing test names, paths and error strings that may be sensitive. Review existing automatic artifact uploads and retention policies. Use [`onTestEnd`](https://cenfun.github.io/monocart-coverage-reports/reference/hooks.html#ontestend--mcr-test-only) to redact persisted results before publication; terminal output and temporary files already written are not redacted. Raw imports still merge coverage only, not test results. Other commands and API calls do not collect these test results.
 
 ## Migration checklist
 
@@ -175,5 +193,5 @@ Starting in 3.2.0, `mcr test` always collects structured test results, even with
 - [ ] Check timeout settings for slow remote sourcemaps and CDP operations.
 - [ ] Regenerate representative reports and compare file lists, sourcemaps, summaries, merged results and coverage thresholds.
 
-See the [README](README.md) for API usage and the [changelog](CHANGELOG.md) for the full list of changes.
+See the [README](https://github.com/cenfun/monocart-coverage-reports/blob/main/README.md) for API usage and the [changelog](https://github.com/cenfun/monocart-coverage-reports/blob/main/CHANGELOG.md) for the full list of changes.
 

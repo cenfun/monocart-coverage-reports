@@ -58,12 +58,16 @@
         "test-cp": "node ./lib/cli.js node test/test-cp.mjs --outputDir .temp/test-cp",
         "test-all": "node ./test/test.js",
         "test-pr": "node --inspect=9230 ./test/test-pr.js",
-        "test": "npm run test-unit && npm run test-types && node ./lib/cli.js npm run test-all -c test/mcr.config.mcr.js && node ./scripts/docs.js",
+        "test": "npm run test-unit && npm run test-types && node ./lib/cli.js npm run test-all -c test/mcr.config.mcr.js",
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
-        "lint": "eslint src/ test/unit/ --fix && stylelint src/**/*.scss && npm run lint:readme",
-        "lint:readme": "node ./scripts/lint-readme.js",
+        "lint": "eslint src/ test/unit/ docs/ README.md README.zh-Hans.md --fix && stylelint src/**/*.scss",
+        "lint:docs": "eslint docs/ README.md README.zh-Hans.md --fix",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "node ./scripts/build-docs.js",
+        "docs:preview": "vitepress preview docs",
+        "docs:check": "npm run lint:docs -- --no-fix && npm run docs:build",
         "og": "node scripts/og-image/make-og-image.js",
         "version": "npm run build",
         "publish": "node ./scripts/publish.js"
@@ -71,7 +75,7 @@
     "files": [
         "lib",
         "README.zh-Hans.md",
-        "migrate-to-3.md",
+        "docs/migrations/migration-to-*.md",
         "skills"
     ],
     "license": "MIT",
@@ -101,6 +105,7 @@
     "devDependencies": {
         "@actions/core": "^3.0.1",
         "@actions/github": "^9.1.1",
+        "@eslint/markdown": "^8.0.3",
         "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
         "@rollup/plugin-commonjs": "^29.0.3",
         "@rollup/plugin-typescript": "^12.3.1",
@@ -144,6 +149,7 @@
         "vine-ui": "^4.2.1",
         "vite": "^8.3.8",
         "vite-plugin-css-injected-by-js": "^5.0.3",
+        "vitepress": "^1.6.4",
         "webpack": "^5.112.2"
     },
     "engines": {

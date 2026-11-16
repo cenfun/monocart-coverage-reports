@@ -40,7 +40,7 @@ const coverageOptions = {
 
     all: 'test/mock/src',
 
-    outputDir: './docs/puppeteer',
+    outputDir: './.temp/site/reports/puppeteer',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

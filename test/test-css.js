@@ -13,7 +13,7 @@ const coverageOptions = {
     name: 'My Css Coverage Report',
     assetsPath: '../assets',
     lcov: true,
-    outputDir: './docs/css',
+    outputDir: './.temp/site/reports/css',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

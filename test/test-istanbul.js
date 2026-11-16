@@ -31,7 +31,7 @@ const coverageOptions = {
         dir: ['test/mock/src']
     },
 
-    outputDir: './docs/istanbul',
+    outputDir: './.temp/site/reports/istanbul',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

@@ -10,7 +10,7 @@ const coverageOptions = {
     name: 'My Empty Coverage Report',
     assetsPath: '../assets',
 
-    outputDir: './docs/demo'
+    outputDir: './.temp/site/reports/demo'
 };
 
 

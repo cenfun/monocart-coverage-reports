@@ -5,6 +5,9 @@
     "[javascript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
+    "[markdown]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
     "[vue]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
@@ -18,7 +21,8 @@
     "eslint.validate": [
         "vue",
         "html",
-        "javascript"
+        "javascript",
+        "markdown"
     ],
     "scss.validate": false,
     "stylelint.validate": [

@@ -30,7 +30,7 @@ const coverageOptions = {
         }
     },
 
-    outputDir: './docs/client',
+    outputDir: './.temp/site/reports/client',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

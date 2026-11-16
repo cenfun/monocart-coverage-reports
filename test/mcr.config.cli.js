@@ -15,7 +15,7 @@ export default {
         'codecov'
     ],
 
-    outputDir: 'docs/cli',
+    outputDir: '.temp/site/reports/cli',
 
     assetsPath: '../assets',
 

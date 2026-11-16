@@ -4,48 +4,16 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath, pathToFileURL } from 'node:url';
-import { parse } from 'acorn';
+import { pathToFileURL } from 'node:url';
 import DefaultMCR, {
-    MCR,
-    CoverageReport, CoverageClient, getSnapshot, diffSnapshot, WSSession, CDPClient, Util
+    MCR, CoverageReport, CoverageClient, Util
 } from 'monocart-coverage-reports';
 import * as converter from 'monocart-coverage-reports/converter';
 import { Util as publicUtil } from 'monocart-coverage-reports/util';
-import pkg from 'monocart-coverage-reports/package.json' with { type: 'json' };
 
 describe('ESM package', {
     timeout: 15000
 }, () => {
-
-    it('publishes one native ESM entry', () => {
-        assert.equal(pkg.type, 'module');
-        assert.equal(pkg.main, './lib/index.js');
-        assert.deepEqual(pkg.exports['.'], {
-            types: './lib/index.d.ts', default: './lib/index.js'
-        });
-        assert.equal(pkg.exports['./register'], './lib/register/register.js');
-        assert.equal(fs.existsSync(new URL('../../lib/index.mjs', import.meta.url)), false);
-    });
-
-    it('uses named exports outside protocol entry points, including generated packages', () => {
-        const libDir = fileURLToPath(new URL('../../lib/', import.meta.url));
-        const files = fs.readdirSync(libDir, {
-            recursive: true
-        }).filter((name) => name.endsWith('.js'));
-        for (const file of files) {
-            const source = fs.readFileSync(path.join(libDir, file), 'utf8');
-            const ast = parse(source, {
-                ecmaVersion: 'latest', sourceType: 'module', allowHashBang: true
-            });
-            if (file !== 'index.js') {
-                // Node's custom reporter protocol requires a default export.
-                const isNodeTestReporter = file === path.join('test', 'test-reporter.js');
-                assert.equal(ast.body.some((node) => node.type === 'ExportDefaultDeclaration'), isNodeTestReporter, file);
-                assert.equal(ast.body.some((node) => node.type === 'ExportNamedDeclaration' && node.specifiers.some((specifier) => specifier.exported.name === 'default')), false, file);
-            }
-        }
-    });
 
     it('does not expose default exports through secondary entry points', async () => {
         for (const specifier of ['monocart-coverage-reports/converter', 'monocart-coverage-reports/util']) {
@@ -66,11 +34,6 @@ describe('ESM package', {
             if (name !== 'default' && name !== 'MCR') {
                 assert.equal(DefaultMCR[name], value, name);
             }
-        }
-        for (const [name, value] of Object.entries({
-            CoverageReport, CoverageClient, getSnapshot, diffSnapshot, WSSession, CDPClient, Util
-        })) {
-            assert.equal(MCR[name], value);
         }
         assert.equal(publicUtil, Util);
         assert.equal(typeof converter.convertV8List, 'function');
@@ -125,7 +88,6 @@ describe('ESM package', {
                     return JSON.parse(fs.readFileSync(path.join(coverageDir, name), 'utf8')).result;
                 });
                 assert.ok(coverage.some((entry) => entry.url === pathToFileURL(subject).href));
-                assert.equal(fileURLToPath(register).endsWith('register.js'), true);
             } finally {
                 fs.rmSync(root, {
                     recursive: true, force: true

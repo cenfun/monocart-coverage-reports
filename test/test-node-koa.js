@@ -24,7 +24,7 @@ const coverageOptions = {
         '**/test/**': true
     },
 
-    outputDir: './docs/node-koa',
+    outputDir: './.temp/site/reports/node-koa',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

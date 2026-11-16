@@ -39,6 +39,6 @@ jobs:
 
       - name: Generate list using Markdown
         run: |
-          cat docs/pr/coverage-summary.md >> $GITHUB_STEP_SUMMARY
-          cat docs/pr/coverage-details.md >> $GITHUB_STEP_SUMMARY
+          cat .temp/site/reports/pr/coverage-summary.md >> $GITHUB_STEP_SUMMARY
+          cat .temp/site/reports/pr/coverage-details.md >> $GITHUB_STEP_SUMMARY
           

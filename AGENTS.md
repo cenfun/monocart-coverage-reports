@@ -12,6 +12,7 @@ Monocart Coverage Reports (MCR) 3.x collects JavaScript, TypeScript, and CSS cov
 - Runtime source: native ESM JavaScript in `lib/`. This directory is mostly **handwritten source**, not build output.
 - Report UI: Vue single-file components and JavaScript in `src/app/`.
 - Bundled dependency entry points: `src/vendor/`; build configuration: `vite.config.mjs`.
+- Documentation: bilingual VitePress Markdown and configuration in `docs/`; publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/examples.md` and `docs/zh/examples.md`.
 - Public declarations: `lib/index.d.ts`. TypeScript checks declarations and consumer tests; it does not compile the runtime source.
 
 For integrating MCR into another project, read [the reusable coverage skill](skills/monocart-coverage-reports/SKILL.md).
@@ -30,7 +31,7 @@ Do not run repository development commands inside an installed dependency.
 | Filtering and paths | `lib/utils/source-path.js`, `lib/utils/util.js`, `lib/generate.js` | `test/unit/source-path.test.js`, `test/unit/output-filter.test.js` |
 | Report generation and merging | `lib/generate.js`, `lib/v8/`, `lib/istanbul/`, `lib/reports/` | Relevant unit tests and `test/test-merge*.js` |
 | HTML assets and report UI | `lib/assets.js`, `lib/default/template.html`, `src/app/` | Build, runtime smoke test, visual inspection |
-| Package compatibility | `package.json`, `lib/index.d.ts`, `migrate-to-3.md` | Type tests, runtime smoke test |
+| Package compatibility | `package.json`, `lib/index.d.ts`, `docs/migrations/migration-to-3.md` | Type tests, runtime smoke test |
 
 See [the detailed repository map](skills/monocart-coverage-reports/references/repository-map.md) for more routes.
 
@@ -45,13 +46,15 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | `npm run test-types` | Check the public ESM declarations and consumer examples |
 | `npm run test-runtime` | API, CLI, Node test runner, and raw merge smoke checks; uses a temporary directory |
 | `npm run test-unit-coverage` | Unit tests through `mcr test`; writes `.temp/coverage-unit/` |
-| `npm run lint:readme` | Check JavaScript examples in both README files without fixing them |
+| `npm run lint:docs` | ESLint with automatic fixes for `docs/` configuration/theme source and JavaScript fences in docs/READMEs; use `-- --no-fix` to check only |
 | `npx --no-install eslint src/ test/unit/` | Check the usual JavaScript/Vue lint scope without `--fix` |
-| `npm run dev` | Start Vite for the report UI; copies sample coverage data from `docs/v8/` to `dist/` |
+| `npm run dev` | Start Vite for the report UI; copies sample coverage data from `.temp/site/reports/v8/` to `dist/` |
 | `npm run build` | Build UI and `lib/packages/`; npm then runs `postbuild` to build test fixtures |
 | `npm run build-test` | Build bundler test fixtures only |
-| `npm run test-node` / `npm run test-browser` | Integration groups; write reports under `docs/` and remove `docs/assets/` |
-| `npm test` | Unit + type + integration coverage + docs generation; not a quick unit check |
+| `npm run docs:dev` | Preview the tracked VitePress source in `docs/` and serve existing `.temp/site/reports/` under `/reports/` |
+| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/` without clearing reports; no documentation unit tests |
+| `npm run test-node` / `npm run test-browser` | Integration groups; write reports under `.temp/site/reports/` and remove only its shared `assets/` |
+| `npm test` | Unit + type + integration coverage; not a quick unit check |
 
 Important constraints:
 
@@ -68,7 +71,7 @@ Important constraints:
 - Prefer Node built-ins for helper scripts. Put temporary scripts and artifacts in `.temp/`. Do not add dependencies for simple automation.
 - Preserve UTF-8 and LF line endings. `.gitattributes` requires LF because coverage range checks depend on source offsets.
 - Keep changes focused. Preserve user edits. Do not reformat unrelated code or regenerate unrelated artifacts.
-- For public behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese README examples, and focused tests. Update `migrate-to-3.md` when migration behavior changes.
+- For public behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese README examples, and focused tests. Update `docs/migrations/migration-to-3.md` when migration behavior changes.
 - Keep replies concise and use the user's language. Explain non-obvious tradeoffs. Report changed paths, actual checks, and checks blocked by the environment.
 - Do not claim that a check passed unless you ran it and observed success.
 
@@ -89,7 +92,7 @@ Do not hand-edit these outputs:
 
 - `lib/packages/`: generated vendor/converter bundles, embedded app/template assets, and vendor license output.
 - `dist/`: report UI build and local preview data.
-- `docs/`: generated reports and site artifacts, not the source documentation.
+- `.temp/site/`, `.temp/vitepress-cache/`, `.temp/vitepress-ssr/`: generated documentation, reports, site output and caches. Other `.temp/` subdirectories may contain agent helper scripts. `docs/` is tracked documentation source.
 - `test/mock/*/dist/`: generated bundler fixtures.
 
 Edit `src/app/`, `src/vendor/`, `lib/default/template.html`, or build scripts instead, then use the build workflow.

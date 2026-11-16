@@ -14,7 +14,7 @@ const coverageOptions = {
     ],
     name: 'My V8 Esbuild Coverage Report',
 
-    outputDir: './docs/esbuild',
+    outputDir: './.temp/site/reports/esbuild',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

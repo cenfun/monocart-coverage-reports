@@ -18,7 +18,7 @@ const coverageOptions = {
     inline: true,
 
     // merge from exists raw dirs
-    inputDir: './docs/node-vm/raw, ./docs/cli/raw, ./wrong-raw-dir',
+    inputDir: './.temp/site/reports/node-vm/raw, ./.temp/site/reports/cli/raw, ./wrong-raw-dir',
 
     name: 'My Merge Coverage Report',
     assetsPath: '../assets',
@@ -34,7 +34,7 @@ const coverageOptions = {
         return filePath;
     },
 
-    outputDir: './docs/merge',
+    outputDir: './.temp/site/reports/merge',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

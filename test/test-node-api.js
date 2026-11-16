@@ -21,7 +21,7 @@ const coverageOptions = {
         '**/test/mock/node/**': true
     },
 
-    outputDir: './docs/node-api',
+    outputDir: './.temp/site/reports/node-api',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

@@ -11,7 +11,7 @@ node -p "require.resolve('monocart-coverage-reports/package.json')"
 node -p "require.resolve('monocart-coverage-reports')"
 ```
 
-Resolve the manifest's `types` relative to its package directory (current path: `lib/index.d.ts`). Read the installed declarations and `lib/default/options.js` before inventing an API. `README.md`, `README.zh-Hans.md`, and `migrate-to-3.md` describe integration/version behavior. File inspection inside `lib/` does not make those files public package exports. Do not import arbitrary internals into a host application.
+Resolve the manifest's `types` relative to its package directory (current path: `lib/index.d.ts`). Read the installed declarations and `lib/default/options.js` before inventing an API. `README.md`, `README.zh-Hans.md`, and `docs/migrations/migration-to-3.md` describe integration/version behavior. File inspection inside `lib/` does not make those files public package exports. Do not import arbitrary internals into a host application.
 
 Current exports: main API, `/register` source-capture preload, `/converter` and `/util` named exports, `/package.json`, and `/skills/*` file resolution. Use the high-level API unless a task explicitly requires lower-level conversion.
 
@@ -34,7 +34,11 @@ Paths below are relative to the repository root and are generally **not shipped 
 | Native V8/Istanbul generation | `lib/v8/v8.js`, `lib/istanbul/istanbul.js`, `lib/reports/` | `test/test-v8-and-istanbul.js`, custom reporter examples under `test/` |
 | Snapshots | `lib/utils/snapshot.js` | `test/check-snapshot.js`, `test/snapshot/` |
 | HTML assets and report UI | `lib/assets.js`, `lib/default/template.html`, `src/app/`, `src/vendor/`, `vite.config.mjs` | `npm run dev`, `npm run build`, `npm run test-runtime` |
-| Runtime compatibility / upgrade | `migrate-to-3.md`, `scripts/test-runtime.js` | `test/unit/node-version.test.js` |
+| Runtime compatibility / upgrade | `docs/migrations/migration-to-3.md`, `scripts/test-runtime.js` | `test/unit/node-version.test.js` |
+
+## Documentation and published demos
+
+Tracked bilingual VitePress source lives in `docs/`. Use `npm run docs:dev` for development and `npm run docs:check` for check-only lint and a production build, without documentation unit tests. Generated documentation and reports share `.temp/site/`, with reports under `.temp/site/reports/`. Pages publishes that site directory; public report URLs start with `/monocart-coverage-reports/reports/`. Documentation rebuilds preserve reports. The report example lists are ordinary VitePress pages maintained in `docs/examples.md` and `docs/zh/examples.md`, not generated indexes. All report HTML, data and assets use the new `/reports/` URLs; old URLs are not supported. The npm skill remains self-contained and does not require the website.
 
 ## Development validation
 
@@ -46,11 +50,11 @@ npm run test-types
 npm run test-runtime
 ```
 
-Unit tests run directly with `node:test`, independently of the MCR CLI and coverage pipeline. For a focused test: `node --test test/unit/config.test.js`. Run `npm run test-unit-coverage` separately to collect coverage through `mcr test`; reports are written to `.temp/coverage-unit/`. For focused coverage: `node ./lib/cli.js test -c test/mcr.config.unit.js test/unit/config.test.js`. Browser/integration scripts may require downloaded browsers, built fixtures, local servers, and more time; inspect the relevant script before running it. `npm run build` invokes `postbuild` and builds test fixtures. `npm test` also runs integration/report generation and documentation generation; it is not a lightweight unit-only check.
+Unit tests run directly with `node:test`, independently of the MCR CLI and coverage pipeline. For a focused test: `node --test test/unit/config.test.js`. Run `npm run test-unit-coverage` separately to collect coverage through `mcr test`; reports are written to `.temp/coverage-unit/`. For focused coverage: `node ./lib/cli.js test -c test/mcr.config.unit.js test/unit/config.test.js`. Browser/integration scripts may require downloaded browsers, built fixtures, local servers, and more time; inspect the relevant script before running it. `npm run build` invokes `postbuild` and builds test fixtures. `npm test` also runs integration/report generation; it is not a lightweight unit-only check.
 
 A fresh checkout needs `npm run build` to generate `lib/packages/` before tests that import these bundles. Rebuild after changing UI, template, or vendor-entry source.
 
-Avoid unrelated generated changes. `npm run lint` currently includes `--fix`; inspect its scope before invoking it. Use `npx --no-install eslint src/ test/unit/` for the usual scope without fixes, and explicit paths for other changed source. Do not hand-edit generated `lib/packages/*`, `dist/`, `docs/`, or `test/mock/*/dist/`; use the build/generation workflow. `lib/assets.js` is handwritten runtime source, not generated output. Snapshot baseline changes must be intentional and reviewed, never a way to hide a defect.
+Avoid unrelated generated changes. `npm run lint` currently includes `--fix`; inspect its scope before invoking it. Use `npx --no-install eslint src/ test/unit/` for the usual scope without fixes, and explicit paths for other changed source. Do not hand-edit generated `lib/packages/*`, `dist/`, `.temp/site/`, VitePress caches, or `test/mock/*/dist/`; use the build/generation workflow. `lib/assets.js` is handwritten runtime source, not generated output. Snapshot baseline changes must be intentional and reviewed, never a way to hide a defect.
 
 Do not use `npm run eol` for validation: it removes the index and runs a hard reset. `npm run test:snap` overwrites baselines. `npm run publish` prepares a release through `npm version`, including its build hook and commit/tag creation; obtain explicit approval before release preparation or external writes.
 

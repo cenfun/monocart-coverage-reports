@@ -21,7 +21,7 @@
     - tolerate foreign or malformed file URLs and partially missing sourcemap sources without aborting reports (#139, #140)
 
 - 3.0.0
-  - [Migration guide: upgrading from 2.x to 3.x](migrate-to-3.md)
+  - [Migration guide: upgrading from 2.x to 3.x](docs/migrations/migration-to-3.md)
   - **Breaking Changes**
     - require Node.js >= 22.15.0
     - migrate to ESM only; replace the callable `require('monocart-coverage-reports')` entry with default/named imports, or dynamic `import()` from CommonJS

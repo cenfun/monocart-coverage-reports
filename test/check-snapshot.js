@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import EC from 'eight-colors';
 import { getSnapshot, diffSnapshot } from '../lib/index.js';
+import { getSnapshotId } from './report-path.js';
 
 export default function(coverageResults) {
 
@@ -13,7 +14,7 @@ export default function(coverageResults) {
     }
 
     const newSnapshot = getSnapshot(coverageResults);
-    const id = coverageResults.reportPath.split('/')[1];
+    const id = getSnapshotId(coverageResults.reportPath);
     const snapPath = path.resolve(snapDir, `${id}.snapshot.json`);
 
     if (!fs.existsSync(snapPath) || process.env.TEST_SNAPSHOT) {

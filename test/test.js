@@ -13,7 +13,7 @@ const executeNpmRun = async (item) => {
 const test = async (type) => {
 
     // remove assets
-    Util.rmSync('./docs/assets');
+    Util.rmSync('./.temp/site/reports/assets');
 
     const groups = {
 

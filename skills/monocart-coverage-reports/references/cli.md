@@ -90,7 +90,7 @@ Starting in **3.2.0**, `mcr test` always collects structured test results, even 
 
 Hooks may be async. Use `onReady` for a concrete flush/readiness condition when necessary, not an arbitrary permanent delay. API integrations manage their own process lifecycle; they do not receive CLI-only hooks automatically. Preserve test/child failures even if cleanup or reporting also fails.
 
-`onTestEnd` is optional and is not called for skipped runs, other commands or API calls. Mutate the result object to sanitize persisted raw/debug data. If it throws, test results are not published, the command fails, and coverage generation is still attempted. Missing/invalid reports fail without invoking the hook; incomplete reports are delivered with `complete: false` and also fail the command. See the [README hook contract](../../../README.md#ontestend--mcr-test-only) for the result schema and storage details. Save separate results outside `outputDir` if subsequent coverage cleanup could remove them.
+`onTestEnd` is optional and is not called for skipped runs, other commands or API calls. Mutate the result object to sanitize persisted raw/debug data. If it throws, test results are not published, the command fails, and coverage generation is still attempted. Missing/invalid reports fail without invoking the hook; incomplete reports are delivered with `complete: false` and also fail the command. See the [test-result hook contract](test-results.md) for the result schema and storage details. Save separate results outside `outputDir` if subsequent coverage cleanup could remove them.
 
 ## API use in CommonJS hosts
 
@@ -110,4 +110,4 @@ main().catch((error) => {
 });
 ```
 
-Use ESM-aware TypeScript module settings and verify emitted JavaScript. Secondary `/util` and `/converter` entries provide **named exports**, not defaults. These recipes do not cover other major versions; approved upgrades should follow the package's `migrate-to-3.md`.
+Use ESM-aware TypeScript module settings and verify emitted JavaScript. Secondary `/util` and `/converter` entries provide **named exports**, not defaults. These recipes do not cover other major versions; approved upgrades should follow the package's `docs/migrations/migration-to-3.md`.

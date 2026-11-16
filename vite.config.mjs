@@ -46,7 +46,7 @@ const tag = {
 
 const prepareDevData = () => {
     const dataFile = 'coverage-data.js';
-    const sourcePath = path.resolve(import.meta.dirname, `docs/v8/${dataFile}`);
+    const sourcePath = path.resolve(import.meta.dirname, `.temp/site/reports/v8/${dataFile}`);
     const targetPath = path.resolve(import.meta.dirname, `dist/${dataFile}`);
 
     fs.mkdirSync(path.dirname(targetPath), {

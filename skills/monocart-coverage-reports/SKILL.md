@@ -7,7 +7,7 @@ description: Collect, generate, merge, and debug JavaScript, TypeScript, and CSS
 
 ## Scope and environment — check first
 
-- This skill supports **MCR 3.x only**, with **Node.js >= 22.15.0** and the native ESM API. It does not provide workflows for other major versions. If the host uses another major version, stop applying these recipes and consult that version's documentation. Do not upgrade dependencies or the runtime without approval; for an approved upgrade, consult the package's `migrate-to-3.md`.
+- This skill supports **MCR 3.x only**, with **Node.js >= 22.15.0** and the native ESM API. It does not provide workflows for other major versions. If the host uses another major version, stop applying these recipes and consult that version's documentation. Do not upgrade dependencies or the runtime without approval; for an approved upgrade, consult the package's `docs/migrations/migration-to-3.md`.
 - Follow the user's language for replies and report labels. Reuse the host package manager, lockfile, test runner, build tools, and module conventions. MCR generates reports; it does not instrument Istanbul code automatically or require the entire host application to become ESM.
 - From the **host project root**, locate the installed package and skill:
 
@@ -18,7 +18,7 @@ node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-rep
 
 Read the manifest for version, engines, exports, and types. Resolve bundled links relative to this skill, not cwd. Resolve Markdown files; do not import them as JavaScript. Copy/distribute the **entire** skill directory, including `references/`. Installing the package does not register the skill or change agent settings.
 
-**Package-only/offline mode:** references contain integration recipes. The package includes `lib/`, README files, and the migration guide, but not repository `src/`, `test/`, or `scripts/`. [Repository navigation](references/repository-map.md) is optional for maintenance, not a prerequisite. Do not run repository development commands inside an installed dependency.
+**Package-only/offline mode:** references contain integration recipes. The package includes `lib/`, README files, and `docs/migrations/migration-to-3.md` (the migration guide only, not the full documentation site), but not repository `src/`, `test/`, or `scripts/`. [Repository navigation](references/repository-map.md) is optional for maintenance, not a prerequisite. Do not run repository development commands inside an installed dependency.
 
 ## Workflow and reference routing
 

@@ -23,7 +23,7 @@ const coverageOptions = {
         return filePath.replace(/&/g, '&amp;');
     },
 
-    outputDir: './docs/minify',
+    outputDir: './.temp/site/reports/minify',
     onEnd: function(coverageResults) {
         checkSnapshot(coverageResults);
     }

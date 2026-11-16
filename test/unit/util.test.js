@@ -22,48 +22,30 @@ it('Util.cmpVersion', () => {
 });
 
 
-it('Util.findUpConfig', () => {
-
-    // custom
-    assert.equal(typeof Util.findUpConfig('package-invalid.json'), 'undefined');
-    assert.equal(Util.findUpConfig('package.json'), 'package.json');
-
-    // default config
-    const mcrPath = path.resolve('mcr.config.mjs');
-    const mcrParentPath = path.resolve('../mcr.config.js');
-    console.log(mcrPath);
-    console.log(mcrParentPath);
-    if (fs.existsSync(mcrPath)) {
-        fs.rmSync(mcrPath, {
-            force: true,
-            maxRetries: 10
-        });
-    }
-    if (fs.existsSync(mcrParentPath)) {
-        fs.rmSync(mcrParentPath, {
-            force: true,
-            maxRetries: 10
-        });
-    }
-
-    assert.equal(typeof Util.findUpConfig(), 'undefined');
-
-    fs.writeFileSync(mcrPath, '');
-    assert.equal(Util.findUpConfig(), mcrPath);
-    fs.rmSync(mcrPath, {
-        force: true,
-        maxRetries: 10
+it('Util.findUpConfig resolves explicit paths and prefers the nearest default config', (t) => {
+    const tempDir = path.resolve(import.meta.dirname, '../../.temp');
+    fs.mkdirSync(tempDir, {
+        recursive: true
     });
-    assert.equal(typeof Util.findUpConfig(), 'undefined');
-
-    // parent
-    fs.writeFileSync(mcrParentPath, '');
-    assert.equal(Util.findUpConfig(), mcrParentPath);
-    fs.rmSync(mcrParentPath, {
-        force: true,
-        maxRetries: 10
+    const root = fs.mkdtempSync(path.join(tempDir, 'find-config-'));
+    const cwd = process.cwd();
+    t.after(() => {
+        process.chdir(cwd);
+        fs.rmSync(root, {
+            recursive: true, force: true
+        });
     });
-    assert.equal(typeof Util.findUpConfig(), 'undefined');
 
+    const child = path.join(root, 'child');
+    const parentConfig = path.join(root, 'mcr.config.cjs');
+    const childConfig = path.join(child, 'mcr.config.mjs');
+    fs.mkdirSync(child);
+    fs.writeFileSync(parentConfig, '');
+    process.chdir(child);
+
+    assert.equal(typeof Util.findUpConfig('missing.cjs'), 'undefined');
+    assert.equal(Util.findUpConfig(parentConfig), parentConfig);
+    assert.equal(Util.findUpConfig(), parentConfig);
+    fs.writeFileSync(childConfig, '');
+    assert.equal(Util.findUpConfig(), childConfig);
 });
-

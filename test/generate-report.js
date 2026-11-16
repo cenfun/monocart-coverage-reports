@@ -22,7 +22,7 @@ const generate = async () => {
             '**/test/mock/node/**': true
         },
 
-        outputDir: './docs/node-env',
+        outputDir: './.temp/site/reports/node-env',
 
         onEnd: function(coverageResults) {
             checkSnapshot(coverageResults);
