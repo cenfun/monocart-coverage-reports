@@ -14,6 +14,13 @@
 
 > JS代码覆盖率工具，用来生成原生的[V8](https://v8.dev/blog/javascript-code-coverage)或者[Istanbul](https://istanbul.js.org/)代码覆盖率报告
 
+## 文档
+
+- [完整中文文档](https://cenfun.github.io/monocart-coverage-reports/zh/) / [English](https://cenfun.github.io/monocart-coverage-reports/)
+- [最佳实践](https://cenfun.github.io/monocart-coverage-reports/zh/guide/best-practices.html)
+- [配置选项](https://cenfun.github.io/monocart-coverage-reports/zh/reference/options.html)
+- [报告演示](https://cenfun.github.io/monocart-coverage-reports/zh/examples.html)
+- [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md)（随 npm 包发布，支持离线使用）
 
 ## Usage
 > **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.15.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
@@ -54,18 +61,6 @@ await mcr.loadConfig();
 > `MCR({...})` 和 `new CoverageReport()` 创建的是同一个实例。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
 
 参见 [多进程支持](https://cenfun.github.io/monocart-coverage-reports/zh/guide/multiprocessing.html#multiprocessing-support)
-
-## 文档
-
-- [完整中文文档](https://cenfun.github.io/monocart-coverage-reports/zh/) / [English](https://cenfun.github.io/monocart-coverage-reports/)
-- [最佳实践](https://cenfun.github.io/monocart-coverage-reports/zh/guide/best-practices.html)
-- [Playwright](https://cenfun.github.io/monocart-coverage-reports/zh/integrations/playwright.html)
-- [配置选项](https://cenfun.github.io/monocart-coverage-reports/zh/reference/options.html)
-- [报告演示](https://cenfun.github.io/monocart-coverage-reports/zh/examples.html)
-- [3.x 迁移指南](https://cenfun.github.io/monocart-coverage-reports/zh/migrations/migration-to-3.html)
-- [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md)（随 npm 包发布，支持离线使用）
-- [贡献指南](https://cenfun.github.io/monocart-coverage-reports/zh/contributing.html)
-- [更新日志](CHANGELOG.md)
 
 ## License
 

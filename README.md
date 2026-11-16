@@ -14,6 +14,13 @@
 
 > A JavaScript code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
+## Documentation
+
+- [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [简体中文](https://cenfun.github.io/monocart-coverage-reports/zh/)
+- [Best practices](https://cenfun.github.io/monocart-coverage-reports/guide/best-practices.html)
+- [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
+- [Report Examples](https://cenfun.github.io/monocart-coverage-reports/examples.html)
+- [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md) (bundled with npm; usable offline)
 
 ## Usage
 > **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
@@ -54,18 +61,6 @@ await mcr.loadConfig();
 > Both `MCR({...})` and `new CoverageReport()` create the same instance. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
 For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/guide/multiprocessing.html#multiprocessing-support)
-
-## Documentation
-
-- [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [简体中文](https://cenfun.github.io/monocart-coverage-reports/zh/)
-- [Best practices](https://cenfun.github.io/monocart-coverage-reports/guide/best-practices.html)
-- [Playwright](https://cenfun.github.io/monocart-coverage-reports/integrations/playwright.html)
-- [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
-- [Report Examples](https://cenfun.github.io/monocart-coverage-reports/examples.html)
-- [3.x migration guide](https://cenfun.github.io/monocart-coverage-reports/migrations/migration-to-3.html)
-- [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md) (bundled with npm; usable offline)
-- [Contributing](https://cenfun.github.io/monocart-coverage-reports/contributing.html)
-- [Changelog](CHANGELOG.md)
 
 ## License
 
