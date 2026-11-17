@@ -5,9 +5,9 @@ The following usage scenarios may require merging coverage reports:
 - When tests are run on different machines or containers, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
 
 ## Automatic Merging {#automatic-merging}
-- The `MCR` will automatically merge all the added coverage data when executing `generate()`. And it supports adding coverage data asynchronously across processes, see [Multiprocessing Support](/guide/multiprocessing#multiprocessing-support)
+- The `MCR` will automatically merge all the added coverage data when executing `generate()`. And it supports adding coverage data asynchronously across processes, see [Multiprocessing Support](/reference/multiprocessing#multiprocessing-support)
 - For `Next.js`, it can actually add coverage data including both server side and client side before executing `generate()`, see example [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
-- Using `Codecov`, a popular online code coverage service, which supports automatic merging of reports. Please use report `codecov`, it will generate report file `codecov.json`. If multiple `codecov.json` files are generated, upload all these files, they will be automatically merged. see [Codecov](/integrations/examples#codecov) and [merging reports](https://docs.codecov.com/docs/merging-reports)
+- Using `Codecov`, a popular online code coverage service, which supports automatic merging of reports. Please use report `codecov`, it will generate report file `codecov.json`. If multiple `codecov.json` files are generated, upload all these files, they will be automatically merged. see [Codecov](/integrations/coverage-services#codecov) and [merging reports](https://docs.codecov.com/docs/merging-reports)
 
 ## Manual Merging {#manual-merging}
 If the reports cannot be merged automatically, then here is how to manually merge the reports.
@@ -37,7 +37,7 @@ const coverageOptions = {
 - We also have `raw` coverage data from `e2e test`, which is output to `./coverage-reports/e2e/raw`. E2E test examples:
     - `Playwright` + [monocart-reporter](https://github.com/cenfun/monocart-reporter) with coverage API
     - `Playwright` + `MCR`, see [playwright-coverage](https://github.com/cenfun/playwright-coverage)
-    - see more [Integration Examples](/integrations/examples#integration-examples)
+    - see more [Integration Examples](/integrations/frameworks-and-tools#integration-examples)
 
 - Then create a script `merge-coverage.js` to generate a merged report with option `inputDir`.
 ```js

@@ -24,3 +24,18 @@ const coverageData = [... jsCoverage, ... cssCoverage];
 ```
 Playwright Test 自动 fixture 参见完整 [playwright-coverage 示例](https://github.com/cenfun/playwright-coverage)中的 [fixtures.js](https://github.com/cenfun/playwright-coverage/blob/main/fixtures.js)，接入方式见[最佳实践指南](https://github.com/cenfun/monocart-coverage-reports/blob/main/skills/monocart-coverage-reports/references/best-practices.md#complete-project-example)。
 参见例子 [./test/test-v8.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-v8.js), [css](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-css.js)
+
+## 集成示例 {#playwright}
+
+- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright coverage reports
+- [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD coverage reports
+- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code coverage report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+- Coverage for component testing with `monocart-reporter`:
+    - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
+    - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
+    - [playwright-ct-svelte](https://github.com/cenfun/playwright-ct-svelte)
+- Coverage for Next.js, both server side and client side:
+    - [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
+    - [nextjs-with-playwright-istanbul](https://github.com/cenfun/nextjs-with-playwright-istanbul)
+- Coverage for Remix:
+    - [remix-with-playwright](https://github.com/cenfun/remix-with-playwright)

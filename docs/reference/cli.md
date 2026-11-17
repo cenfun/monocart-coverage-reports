@@ -30,7 +30,7 @@ The options below are only available when using the CLI (`mcr <command>`):
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](/reference/hooks#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](/reference/hooks#hooks) |
 
-For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see the [Options](/reference/options#options) table — they work the same way in CLI.
+For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see [Configuration options](/reference/options#options) — they work the same way in CLI.
 
 - Use `--` to separate sub CLI args
 ```sh
@@ -47,15 +47,15 @@ mcr --import tsx node ./test.ts
 mcr --env .env.test node ./test.js
 ```
 
-- `test`: run Node.js tests and generate coverage reports. See [Run Tests with `mcr test`](/guide/node-test-runner#run-tests-with-mcr-test).
+- `test`: run Node.js tests and generate coverage reports. See [Run Tests with `mcr test`](/getting-started/node-test-runner#run-tests-with-mcr-test).
 
 - `merge`: merge raw coverage data from `inputDir`(s) and generate merged reports directly, without running a child process.
 ```sh
 mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverage-reports/e2e/raw --outputDir ./coverage-reports/merged
 ```
-See [Merge Coverage Reports](/guide/merging#merge-coverage-reports).
+See [Merge Coverage Reports](/reference/merging#merge-coverage-reports).
 
 - Examples
-    - [Mocha](/integrations/examples#mocha)
-    - [TypeScript](/integrations/examples#typescript)
-    - [AVA](/integrations/examples#ava)
+    - [Mocha](/integrations/frameworks-and-tools#mocha)
+    - [TypeScript](/integrations/frameworks-and-tools#typescript)
+    - [AVA](/integrations/frameworks-and-tools#ava)

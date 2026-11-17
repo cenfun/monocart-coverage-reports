@@ -13,7 +13,7 @@ npm run docs:check
 npm run docs:preview
 ```
 
-所有文档产物都在 `.temp/`：站点输出为 `.temp/site/`，缓存为 `.temp/vitepress-cache/`，SSR 中间文件为 `.temp/vitepress-ssr/`。测试报告直接生成到 `.temp/site/reports/`；演示列表直接维护在 VitePress 页面 `docs/examples.md` 与 `docs/zh/examples.md` 中，链接指向各报告。报告的 HTML、数据与资源统一使用 `/monocart-coverage-reports/reports/` 下的新地址，不兼容旧地址。
+所有文档产物都在 `.temp/`：站点输出为 `.temp/site/`，缓存为 `.temp/vitepress-cache/`，SSR 中间文件为 `.temp/vitepress-ssr/`。测试报告直接生成到 `.temp/site/reports/`；演示列表直接维护在 VitePress 页面 `docs/getting-started/examples.md` 与 `docs/zh/getting-started/examples.md` 中，链接指向各报告。报告的 HTML、数据与资源统一使用 `/monocart-coverage-reports/reports/` 下的新地址，不兼容旧地址。
 
 `npm run docs:dev` 会直接提供 `.temp/site/reports/` 中已有报告的静态访问，不修改报告 HTML 或脚本。**报告演示**页面无需生成报告即可展示。本地打开具体报告前，请先运行对应的仓库测试。报告缺失时返回 404 并提示这些步骤；开发服务器不会自动运行测试。
 

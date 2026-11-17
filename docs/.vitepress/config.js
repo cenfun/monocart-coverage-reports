@@ -11,7 +11,7 @@ const socialImageAlt = 'Monocart Coverage Reports v3.x — rich native V8 covera
 const favicon = `data:image/svg+xml;base64,${readFileSync(new URL('../../src/app/images/icons/monocart.svg', import.meta.url)).toString('base64')}`;
 const groups = [
     ['start', 'Getting started', '入门'],
-    ['guide', 'Guides', '指南'],
+    ['collection', 'Coverage Collection', '覆盖率采集'],
     ['reference', 'Reference', '参考'],
     ['integrations', 'Integrations', '集成'],
     ['troubleshooting', 'Troubleshooting', '排障'],
@@ -22,31 +22,32 @@ const groups = [
 const theme = (zh) => {
     const label = (en, cn) => (zh ? cn : en);
     const prefix = label('/', '/zh/');
+    const groupItems = (group) => pages.filter((page) => page[3] === group).map(([route, title, translation]) => ({
+        text: label(title, translation),
+        link: `${prefix}${route}`
+    }));
     return {
         nav: [
             {
-                text: label('Guide', '指南'), link: `${prefix}guide/getting-started`
+                text: label('Get started', '开始使用'), link: `${prefix}getting-started/get-started`
             },
             {
-                text: 'AI Agent Skill', link: `${prefix}ai-agent-skill`
+                text: 'AI Agent Skill', link: `${prefix}getting-started/ai-agent-skill`
             },
             {
-                text: label('Reference', '参考'), link: `${prefix}reference/options`
+                text: label('Reference', '参考'), items: groupItems('reference')
             },
             {
-                text: label('Integrations', '集成'), link: `${prefix}integrations/overview`
+                text: label('Integrations', '集成'), items: groupItems('integrations')
             },
             {
-                text: label('Examples', '示例'), link: `${prefix}examples`
+                text: label('Examples', '示例'), link: `${prefix}getting-started/examples`
             }
         ],
         sidebar: groups.map(([group, en, cn]) => ({
             text: zh ? cn : en,
             collapsed: false,
-            items: pages.filter((page) => page[3] === group).map(([route, title, translation]) => ({
-                text: label(title, translation),
-                link: `${prefix}${route}`
-            }))
+            items: groupItems(group)
         })),
         outline: {
             level: [2, 3], label: label('On this page', '本页目录')

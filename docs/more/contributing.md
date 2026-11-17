@@ -13,7 +13,7 @@ npm run docs:check
 npm run docs:preview
 ```
 
-All documentation output stays under `.temp/`: `.temp/site/` is the published site, `.temp/vitepress-cache/` holds caches, and `.temp/vitepress-ssr/` holds intermediate SSR files. Integration tests write directly to `.temp/site/reports/`; the demo list is maintained as the VitePress pages `docs/examples.md` and `docs/zh/examples.md`, with direct links to reports. All report HTML, data and asset URLs use `/monocart-coverage-reports/reports/`; old URLs are not supported.
+All documentation output stays under `.temp/`: `.temp/site/` is the published site, `.temp/vitepress-cache/` holds caches, and `.temp/vitepress-ssr/` holds intermediate SSR files. Integration tests write directly to `.temp/site/reports/`; the demo list is maintained as the VitePress pages `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`, with direct links to reports. All report HTML, data and asset URLs use `/monocart-coverage-reports/reports/`; old URLs are not supported.
 
 `npm run docs:dev` serves existing reports directly from `.temp/site/reports/`, without modifying their HTML or scripts. The **Report Examples** page renders without reports. Run the corresponding repository tests before opening individual reports locally. Missing reports return a 404 with these instructions; the development server does not run tests automatically.
 

@@ -5,9 +5,9 @@
 - 分布式测试，测试结果保存到了多台机器或不同的容器中
 
 ## Automatic Merging {#automatic-merging}
-- 默认`MCR`在执行`generate()`时会自动合并覆盖率数据。所以可以在[多进程支持](/zh/guide/multiprocessing#multiprocessing-support)下，多次添加覆盖率数据，最后将自动合并
+- 默认`MCR`在执行`generate()`时会自动合并覆盖率数据。所以可以在[多进程支持](/zh/reference/multiprocessing#multiprocessing-support)下，多次添加覆盖率数据，最后将自动合并
 - 比如`Next.js`就可以同时添加前后端覆盖率数据，最后再执行`generate()`生成覆盖率报告，见例子[nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
-- 使用`Codecov`在线覆盖率报告服务，请设置输出`codecov`报告, 它会生成专属的`codecov.json`，如果有多个`codecov.json`文件上传，它们会自动合并数据，参见[Codecov](/zh/integrations/examples#codecov) 和 [合并报告说明](https://docs.codecov.com/docs/merging-reports)
+- 使用`Codecov`在线覆盖率报告服务，请设置输出`codecov`报告, 它会生成专属的`codecov.json`，如果有多个`codecov.json`文件上传，它们会自动合并数据，参见[Codecov](/zh/integrations/coverage-services#codecov) 和 [合并报告说明](https://docs.codecov.com/docs/merging-reports)
 
 ## Manual Merging {#manual-merging}
 手动合并覆盖率报告需要使用`raw`报告来导出原始的覆盖率数据到指定的目录
@@ -36,7 +36,7 @@ const coverageOptions = {
 - 同样的，E2E测试保存到`./coverage-reports/e2e/raw`. 见例子:
     - `Playwright` + [monocart-reporter](https://github.com/cenfun/monocart-reporter) with coverage API
     - `Playwright` + `MCR`, see [playwright-coverage](https://github.com/cenfun/playwright-coverage)
-    - see more [Integration Examples](/zh/integrations/examples#integration-examples)
+    - see more [Integration Examples](/zh/integrations/frameworks-and-tools#integration-examples)
 
 - 然后创建一个`merge-coverage.js`文件，使用`inputDir`参数导入`raw`数据，来生成合并的覆盖率报告.
 ```js

@@ -30,7 +30,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](/zh/reference/hooks#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](/zh/reference/hooks#hooks) |
 
-其他选项（如 `--name`、`--reports`、`--outputDir`、`--lcov` 等）参见 [选项配置](/zh/reference/options#options) 表格，它们在 CLI 中的用法相同。
+其他选项（如 `--name`、`--reports`、`--outputDir`、`--lcov` 等）参见 [配置选项](/zh/reference/options#options)，它们在 CLI 中的用法相同。
 
 - 使用 `--` 可以隔离子程序参数，以免两种参数混淆
 ```sh
@@ -47,15 +47,15 @@ mcr --import tsx node ./test.ts
 mcr --env .env.test node ./test.js
 ```
 
-- `test`：运行 Node.js 测试并生成覆盖率报告，参见[使用 `mcr test` 运行测试](/zh/guide/node-test-runner#run-tests-with-mcr-test)。
+- `test`：运行 Node.js 测试并生成覆盖率报告，参见[使用 `mcr test` 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)。
 
 - `merge`: 直接合并 `inputDir` 中的原始覆盖率数据并生成合并报告，无需启动子进程。
 ```sh
 mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverage-reports/e2e/raw --outputDir ./coverage-reports/merged
 ```
-参见 [合并覆盖率报告](/zh/guide/merging#merge-coverage-reports)。
+参见 [合并覆盖率报告](/zh/reference/merging#merge-coverage-reports)。
 
 - 参见例子
-    - [Mocha](/zh/integrations/examples#mocha)
-    - [TypeScript](/zh/integrations/examples#typescript)
-    - [AVA](/zh/integrations/examples#ava)
+    - [Mocha](/zh/integrations/frameworks-and-tools#mocha)
+    - [TypeScript](/zh/integrations/frameworks-and-tools#typescript)
+    - [AVA](/zh/integrations/frameworks-and-tools#ava)

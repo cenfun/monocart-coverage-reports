@@ -35,3 +35,8 @@ const coverageData = [... jsCoverage.map((it) => {
 }), ... cssCoverage];
 ```
 Example: [./test/test-puppeteer.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-puppeteer.js)
+
+## Integration examples {#puppeteer}
+
+- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
+- [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) - Example for Jest (unit) + Puppeteer (e2e) + Codecov

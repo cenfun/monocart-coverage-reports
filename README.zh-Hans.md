@@ -17,9 +17,9 @@
 ## 文档
 
 - [完整中文文档](https://cenfun.github.io/monocart-coverage-reports/zh/) / [English](https://cenfun.github.io/monocart-coverage-reports/)
-- [最佳实践](https://cenfun.github.io/monocart-coverage-reports/zh/guide/best-practices.html)
+- [最佳实践](https://cenfun.github.io/monocart-coverage-reports/zh/getting-started/best-practices.html)
 - [配置选项](https://cenfun.github.io/monocart-coverage-reports/zh/reference/options.html)
-- [报告演示](https://cenfun.github.io/monocart-coverage-reports/zh/examples.html)
+- [报告演示](https://cenfun.github.io/monocart-coverage-reports/zh/getting-started/examples.html)
 - [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md)（随 npm 包发布，支持离线使用）
 
 ## Usage
@@ -38,7 +38,7 @@ npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
 # 或者为任意 Node.js 命令采集覆盖率
 npx mcr node my-app.js -r v8,console-details
 ```
-参见[命令行](https://cenfun.github.io/monocart-coverage-reports/zh/reference/cli.html#command-line)和[使用 `mcr test` 运行测试](https://cenfun.github.io/monocart-coverage-reports/zh/guide/node-test-runner.html#run-tests-with-mcr-test)
+参见[命令行](https://cenfun.github.io/monocart-coverage-reports/zh/reference/cli.html#command-line)和[使用 `mcr test` 运行测试](https://cenfun.github.io/monocart-coverage-reports/zh/getting-started/node-test-runner.html#run-tests-with-mcr-test)
 
 - API
 ```js
@@ -52,7 +52,7 @@ const mcr = MCR({
 await mcr.add(coverageData);
 await mcr.generate();
 ```
-也可以使用ESM的 `import` 然后加载[配置文件](https://cenfun.github.io/monocart-coverage-reports/zh/guide/configuration.html#config-file)
+也可以使用ESM的 `import` 然后加载[配置文件](https://cenfun.github.io/monocart-coverage-reports/zh/reference/configuration.html#config-file)
 ```js
 import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
@@ -60,7 +60,7 @@ await mcr.loadConfig();
 ```
 > `MCR({...})` 和 `new CoverageReport()` 创建的是同一个实例。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
 
-参见 [多进程支持](https://cenfun.github.io/monocart-coverage-reports/zh/guide/multiprocessing.html#multiprocessing-support)
+参见 [多进程支持](https://cenfun.github.io/monocart-coverage-reports/zh/reference/multiprocessing.html#multiprocessing-support)
 
 ## License
 

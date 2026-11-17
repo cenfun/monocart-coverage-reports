@@ -17,9 +17,9 @@
 ## Documentation
 
 - [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [简体中文](https://cenfun.github.io/monocart-coverage-reports/zh/)
-- [Best practices](https://cenfun.github.io/monocart-coverage-reports/guide/best-practices.html)
+- [Best practices](https://cenfun.github.io/monocart-coverage-reports/getting-started/best-practices.html)
 - [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
-- [Report Examples](https://cenfun.github.io/monocart-coverage-reports/examples.html)
+- [Report Examples](https://cenfun.github.io/monocart-coverage-reports/getting-started/examples.html)
 - [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md) (bundled with npm; usable offline)
 
 ## Usage
@@ -38,7 +38,7 @@ npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
 # Or run any Node.js command with coverage
 npx mcr node my-app.js -r v8,console-details
 ```
-For more information, see [Command Line](https://cenfun.github.io/monocart-coverage-reports/reference/cli.html#command-line) and [Run Tests with `mcr test`](https://cenfun.github.io/monocart-coverage-reports/guide/node-test-runner.html#run-tests-with-mcr-test)
+For more information, see [Command Line](https://cenfun.github.io/monocart-coverage-reports/reference/cli.html#command-line) and [Run Tests with `mcr test`](https://cenfun.github.io/monocart-coverage-reports/getting-started/node-test-runner.html#run-tests-with-mcr-test)
 
 - API
 ```js
@@ -52,7 +52,7 @@ const mcr = MCR({
 await mcr.add(coverageData);
 await mcr.generate();
 ```
-Using `import` and load options from [config file](https://cenfun.github.io/monocart-coverage-reports/guide/configuration.html#config-file)
+Using `import` and load options from [config file](https://cenfun.github.io/monocart-coverage-reports/reference/configuration.html#config-file)
 ```js
 import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
@@ -60,7 +60,7 @@ await mcr.loadConfig();
 ```
 > Both `MCR({...})` and `new CoverageReport()` create the same instance. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
-For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/guide/multiprocessing.html#multiprocessing-support)
+For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html#multiprocessing-support)
 
 ## License
 

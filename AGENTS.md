@@ -12,7 +12,7 @@ Monocart Coverage Reports (MCR) 3.x collects JavaScript, TypeScript, and CSS cov
 - Runtime source: native ESM JavaScript in `lib/`. This directory is mostly **handwritten source**, not build output.
 - Report UI: Vue single-file components and JavaScript in `src/app/`.
 - Bundled dependency entry points: `src/vendor/`; build configuration: `vite.config.mjs`.
-- Documentation: bilingual VitePress Markdown and configuration in `docs/`; publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/examples.md` and `docs/zh/examples.md`.
+- Documentation: bilingual VitePress Markdown and configuration in `docs/`; publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`.
 - Public declarations: `lib/index.d.ts`. TypeScript checks declarations and consumer tests; it does not compile the runtime source.
 
 For integrating MCR into another project, read [the reusable coverage skill](skills/monocart-coverage-reports/SKILL.md).

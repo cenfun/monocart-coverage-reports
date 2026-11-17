@@ -59,5 +59,5 @@ import { withBase } from 'vitepress';
 | <a :href="withBase('/reports/mcr/index.html')" target="_blank" rel="noopener noreferrer">MCR 项目覆盖率</a> | 运行测试套件时采集的 MCR 自身覆盖率。 |
 
 ::: tip 本地预览
-此列表是文档的一部分，无需生成报告即可展示。本地打开具体报告前，请先运行对应测试，将报告生成到 `.temp/site/reports/`。构建与浏览器前置要求请参阅[贡献指南](/zh/contributing#contributing)。
+此列表是文档的一部分，无需生成报告即可展示。本地打开具体报告前，请先运行对应测试，将报告生成到 `.temp/site/reports/`。构建与浏览器前置要求请参阅[贡献指南](/zh/more/contributing#contributing)。
 :::

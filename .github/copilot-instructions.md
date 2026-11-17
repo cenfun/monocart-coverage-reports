@@ -7,7 +7,7 @@ These core rules are self-contained. They do not depend on loading linked files.
 
 - MCR 3.x requires Node.js >= 22.15.0. Use npm and the existing `package-lock.json`; inspect `package.json` before running scripts.
 - Most of `lib/` is handwritten native ESM JavaScript, including `lib/assets.js`. Public declarations are in `lib/index.d.ts`.
-- Tracked bilingual VitePress documentation lives in `docs/`. `npm run docs:check` runs check-only lint and builds to `.temp/site/`, without documentation unit tests; generated reports live under `.temp/site/reports/`. `npm run docs:dev` serves existing reports at `/reports/`; report example lists are maintained in `docs/examples.md` and `docs/zh/examples.md`. No legacy report URLs or redirects are provided.
+- Tracked bilingual VitePress documentation lives in `docs/`. `npm run docs:check` runs check-only lint and builds to `.temp/site/`, without documentation unit tests; generated reports live under `.temp/site/reports/`. `npm run docs:dev` serves existing reports at `/reports/`; report example lists are maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`. No legacy report URLs or redirects are provided.
 - The report UI is Vue/JavaScript in `src/app/`. Vendor entry points are in `src/vendor/`; the build config is `vite.config.mjs`.
 - Match nearby code: four spaces, semicolons, single-quoted JavaScript strings, and `.js` extensions on relative ESM imports. Preserve UTF-8 and LF; coverage ranges depend on source offsets.
 - Keep diffs focused and preserve user changes. Public behavior changes need matching declarations, defaults, English/Chinese docs, and regression tests.

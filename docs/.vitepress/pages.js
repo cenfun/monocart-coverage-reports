@@ -7,19 +7,19 @@ export const pages = [
         'migrations'
     ],
     [
-        'guide/getting-started',
-        'Quick start',
-        '快速开始',
+        'getting-started/get-started',
+        'Get started',
+        '开始使用',
         'start'
     ],
     [
-        'guide/best-practices',
+        'getting-started/best-practices',
         'Best practices',
         '最佳实践',
         'start'
     ],
     [
-        'ai-agent-skill',
+        'getting-started/ai-agent-skill',
         'AI Agent Skill',
         'AI Agent Skill',
         'start'
@@ -31,28 +31,94 @@ export const pages = [
         'reference'
     ],
     [
-        'reference/reports',
-        'Reports and custom reporters',
-        '报告与自定义 Reporter',
+        'reference/configuration',
+        'Configuration files',
+        '配置文件',
         'reference'
     ],
     [
-        'guide/compare-reports',
-        'V8 vs Istanbul',
-        'V8 与 Istanbul 对比',
-        'guide'
+        'reference/cli',
+        'Command line',
+        '命令行',
+        'reference'
     ],
     [
-        'guide/istanbul',
+        'reference/reports',
+        'Reports',
+        '报告',
+        'reference'
+    ],
+    [
+        'reference/filtering',
+        'Filtering',
+        '过滤覆盖率',
+        'reference'
+    ],
+    [
+        'reference/untested-files',
+        'Untested files',
+        '未测试文件',
+        'reference'
+    ],
+    [
+        'reference/ignoring-code',
+        'Ignoring code',
+        '忽略代码',
+        'reference'
+    ],
+    [
+        'reference/source-path',
+        'Source paths',
+        '源码路径',
+        'reference'
+    ],
+    [
+        'reference/merging',
+        'Merging reports',
+        '合并报告',
+        'reference'
+    ],
+    [
+        'reference/multiprocessing',
+        'Multiple processes',
+        '多进程',
+        'reference'
+    ],
+    [
+        'reference/hooks',
+        'Hooks',
+        'Hooks',
+        'reference'
+    ],
+    [
+        'reference/coverage-data',
+        'V8 coverage data',
+        'V8 覆盖率数据',
+        'reference'
+    ],
+    [
+        'reference/cdp-client',
+        'CDPClient',
+        'CDPClient',
+        'reference'
+    ],
+    [
+        'coverage-collection/v8',
+        'V8 collection',
+        '采集 V8 覆盖率',
+        'collection'
+    ],
+    [
+        'coverage-collection/istanbul',
         'Istanbul collection',
         '采集 Istanbul 覆盖率',
-        'guide'
+        'collection'
     ],
     [
-        'guide/v8',
-        'V8 collection overview',
-        'V8 采集概述',
-        'guide'
+        'coverage-collection/compare-reports',
+        'V8 vs Istanbul',
+        'V8 与 Istanbul 对比',
+        'collection'
     ],
     [
         'integrations/playwright',
@@ -67,82 +133,10 @@ export const pages = [
         'integrations'
     ],
     [
-        'guide/nodejs',
-        'Node.js collection',
-        '采集 Node.js 覆盖率',
-        'guide'
-    ],
-    [
-        'reference/cdp-client',
-        'CDPClient',
-        'CDPClient',
-        'reference'
-    ],
-    [
-        'reference/coverage-data',
-        'V8 coverage data',
-        'V8 覆盖率数据',
-        'reference'
-    ],
-    [
-        'guide/filtering',
-        'Filtering',
-        '过滤覆盖率',
-        'guide'
-    ],
-    [
-        'guide/source-path',
-        'Source paths',
-        '源码路径',
-        'guide'
-    ],
-    [
-        'guide/untested-files',
-        'Untested files',
-        '未测试文件',
-        'guide'
-    ],
-    [
-        'reference/hooks',
-        'Hooks and thresholds',
-        'Hooks 与阈值检查',
-        'reference'
-    ],
-    [
-        'guide/ignoring-code',
-        'Ignoring code',
-        '忽略代码',
-        'guide'
-    ],
-    [
-        'guide/multiprocessing',
-        'Multiple processes',
-        '多进程',
-        'guide'
-    ],
-    [
-        'reference/cli',
-        'Command line',
-        '命令行',
-        'reference'
-    ],
-    [
-        'guide/configuration',
-        'Configuration files',
-        '配置文件',
-        'guide'
-    ],
-    [
-        'guide/node-test-runner',
+        'getting-started/node-test-runner',
         'Run tests with mcr test',
         '使用 mcr test 运行测试',
         'start'
-    ],
-    [
-        'guide/merging',
-        'Merging reports',
-        '合并报告',
-        'guide'
     ],
     [
         'troubleshooting/common-issues',
@@ -157,31 +151,37 @@ export const pages = [
         'troubleshooting'
     ],
     [
-        'integrations/overview',
-        'Any testing framework',
-        '接入任意测试框架',
+        'integrations/frameworks-and-tools',
+        'Frameworks and tools',
+        '框架与工具',
         'integrations'
     ],
     [
-        'integrations/examples',
-        'Frameworks and CI services',
-        '框架与 CI 服务',
+        'integrations/coverage-services',
+        'Coverage services',
+        '覆盖率服务',
         'integrations'
     ],
     [
-        'examples',
+        'integrations/integrate-with-your-framework',
+        'Integrate with your framework',
+        '接入现有测试框架',
+        'integrations'
+    ],
+    [
+        'getting-started/examples',
         'Examples',
         '示例',
-        'other'
+        'start'
     ],
     [
-        'contributing',
+        'more/contributing',
         'Contributing',
         '贡献指南',
         'other'
     ],
     [
-        'thanks',
+        'more/thanks',
         'Thanks',
         '致谢',
         'other'
