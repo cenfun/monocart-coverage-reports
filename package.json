@@ -62,8 +62,8 @@
         "test:snap": "cross-env TEST_SNAPSHOT=true npm run test",
         "open": "node ./scripts/open.js",
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
-        "lint": "eslint src/ test/unit/ docs/ README.md README.zh-Hans.md --fix && stylelint src/**/*.scss",
-        "lint:docs": "eslint docs/ README.md README.zh-Hans.md --fix",
+        "lint": "eslint src/ test/unit/ docs/ README.md --fix && stylelint src/**/*.scss",
+        "lint:docs": "eslint docs/ README.md --fix",
         "docs:dev": "vitepress dev docs",
         "docs:build": "node ./scripts/build-docs.js",
         "docs:preview": "vitepress preview docs",
@@ -74,7 +74,6 @@
     },
     "files": [
         "lib",
-        "README.zh-Hans.md",
         "docs/migrations/migration-to-*.md",
         "skills"
     ],

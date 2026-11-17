@@ -18,7 +18,7 @@ node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-rep
 
 Read the manifest for version, engines, exports, and types. Resolve bundled links relative to this skill, not cwd. Resolve Markdown files; do not import them as JavaScript. Copy/distribute the **entire** skill directory, including `references/`. Installing the package does not register the skill or change agent settings.
 
-**Package-only/offline mode:** references contain integration recipes. The package includes `lib/`, README files, and `docs/migrations/migration-to-3.md` (the migration guide only, not the full documentation site), but not repository `src/`, `test/`, or `scripts/`. [Repository navigation](references/repository-map.md) is optional for maintenance, not a prerequisite. Do not run repository development commands inside an installed dependency.
+**Package-only/offline mode:** references contain integration recipes. The package includes `lib/`, `README.md`, and `docs/migrations/migration-to-3.md` (the migration guide only, not the full documentation site), but not repository `src/`, `test/`, or `scripts/`. [Repository navigation](references/repository-map.md) is optional for maintenance, not a prerequisite. Do not run repository development commands inside an installed dependency.
 
 ## Workflow and reference routing
 

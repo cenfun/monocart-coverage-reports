@@ -31,7 +31,7 @@ npm run test
 
 npm run dev
 ```
-`npm run lint:docs` 默认直接使用 ESLint 检查并自动修复 `docs/` 中的 VitePress 配置、Vue 主题，以及文档和两份 README 内的 JavaScript 代码块。官方 `@eslint/markdown` 处理器会将错误位置及自动修复映射回 Markdown 源文件。`js`、`javascript`、`mjs`、`cjs` 代码块沿用项目的语法与格式规则，也支持 `js{1,3-5}:line-numbers` 等 VitePress 标注与代码组文件名。仅对省略上下文的片段关闭 `no-undef` 和 `no-unused-vars`，其他正确性规则保持启用。TypeScript（`ts`）与文本代码块不会被当成 JavaScript 检查；Markdown 正文也不会被重新排版。
+`npm run lint:docs` 默认直接使用 ESLint 检查并自动修复 `docs/` 中的 VitePress 配置、Vue 主题，以及文档和 `README.md` 内的 JavaScript 代码块。官方 `@eslint/markdown` 处理器会将错误位置及自动修复映射回 Markdown 源文件。`js`、`javascript`、`mjs`、`cjs` 代码块沿用项目的语法与格式规则，也支持 `js{1,3-5}:line-numbers` 等 VitePress 标注与代码组文件名。仅对省略上下文的片段关闭 `no-undef` 和 `no-unused-vars`，其他正确性规则保持启用。TypeScript（`ts`）与文本代码块不会被当成 JavaScript 检查；Markdown 正文也不会被重新排版。
 
 刻意保留非标准语法的演示可继续使用 `js` 高亮，在对应代码围栏前紧接一行 `<!-- eslint-skip -->`。它只跳过紧随其后的代码块，包括自动修复；多个例外需要逐个标记。不要用 JavaScript `eslint-disable` 注释隐藏普通示例中的错误。仓库的 VSCode 配置已启用 Markdown 的 ESLint 校验与格式修复。
 

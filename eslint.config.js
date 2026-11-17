@@ -23,7 +23,7 @@ export default [
     plus,
     ... vue.configs['flat/recommended'],
     {
-        files: ['docs/**/*.md', 'README*.md'],
+        files: ['docs/**/*.md', 'README.md'],
         plugins: {
             markdown
         },

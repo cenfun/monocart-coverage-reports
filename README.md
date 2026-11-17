@@ -10,13 +10,11 @@
 ![dependencies](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
 [![downloads](https://devimg.vercel.app/npm/downloads/monocart-coverage-reports?label={total}%20downloads/month)](https://www.npmjs.com/package/monocart-coverage-reports)
 
-🌐 English | [简体中文](https://cenfun.github.io/monocart-coverage-reports/zh/)
-
 > A JavaScript code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
 ## Documentation
 
-- [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [简体中文](https://cenfun.github.io/monocart-coverage-reports/zh/)
+- [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [中文文档](https://cenfun.github.io/monocart-coverage-reports/zh/)
 - [Best practices](https://cenfun.github.io/monocart-coverage-reports/getting-started/best-practices.html)
 - [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
 - [Report Examples](https://cenfun.github.io/monocart-coverage-reports/getting-started/examples.html)

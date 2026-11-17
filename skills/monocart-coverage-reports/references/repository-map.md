@@ -11,7 +11,7 @@ node -p "require.resolve('monocart-coverage-reports/package.json')"
 node -p "require.resolve('monocart-coverage-reports')"
 ```
 
-Resolve the manifest's `types` relative to its package directory (current path: `lib/index.d.ts`). Read the installed declarations and `lib/default/options.js` before inventing an API. `README.md`, `README.zh-Hans.md`, and `docs/migrations/migration-to-3.md` describe integration/version behavior. File inspection inside `lib/` does not make those files public package exports. Do not import arbitrary internals into a host application.
+Resolve the manifest's `types` relative to its package directory (current path: `lib/index.d.ts`). Read the installed declarations and `lib/default/options.js` before inventing an API. `README.md` and `docs/migrations/migration-to-3.md` describe integration/version behavior. File inspection inside `lib/` does not make those files public package exports. Do not import arbitrary internals into a host application.
 
 Current exports: main API, `/register` source-capture preload, `/converter` and `/util` named exports, `/package.json`, and `/skills/*` file resolution. Use the high-level API unless a task explicitly requires lower-level conversion.
 

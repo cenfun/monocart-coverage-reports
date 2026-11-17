@@ -46,7 +46,7 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | `npm run test-types` | Check the public ESM declarations and consumer examples |
 | `npm run test-runtime` | API, CLI, Node test runner, and raw merge smoke checks; uses a temporary directory |
 | `npm run test-unit-coverage` | Unit tests through `mcr test`; writes `.temp/coverage-unit/` |
-| `npm run lint:docs` | ESLint with automatic fixes for `docs/` configuration/theme source and JavaScript fences in docs/READMEs; use `-- --no-fix` to check only |
+| `npm run lint:docs` | ESLint with automatic fixes for `docs/` configuration/theme source and JavaScript fences in documentation and `README.md`; use `-- --no-fix` to check only |
 | `npx --no-install eslint src/ test/unit/` | Check the usual JavaScript/Vue lint scope without `--fix` |
 | `npm run dev` | Start Vite for the report UI; copies sample coverage data from `.temp/site/reports/v8/` to `dist/` |
 | `npm run build` | Build UI and `lib/packages/`; npm then runs `postbuild` to build test fixtures |
@@ -71,7 +71,7 @@ Important constraints:
 - Prefer Node built-ins for helper scripts. Put temporary scripts and artifacts in `.temp/`. Do not add dependencies for simple automation.
 - Preserve UTF-8 and LF line endings. `.gitattributes` requires LF because coverage range checks depend on source offsets.
 - Keep changes focused. Preserve user edits. Do not reformat unrelated code or regenerate unrelated artifacts.
-- For public behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese README examples, and focused tests. Update `docs/migrations/migration-to-3.md` when migration behavior changes.
+- For public behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese documentation and `README.md` examples, and focused tests. Update `docs/migrations/migration-to-3.md` when migration behavior changes.
 - Keep replies concise and use the user's language. Explain non-obvious tradeoffs. Report changed paths, actual checks, and checks blocked by the environment.
 - Do not claim that a check passed unless you ran it and observed success.
 
