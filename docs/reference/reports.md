@@ -25,7 +25,7 @@ Supports V8 coverage data only.
 
 #### `v8-json` {#v8-json}
 
-- Save `CoverageResults` to a json file (defaults to [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json)).
+- Save [`CoverageResults`](/reference/types#coverageresults) to a json file (defaults to [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json)).
 - Shows native V8 code coverage with VSCode extension: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
 ![](../../assets/mcv.gif)
@@ -161,7 +161,7 @@ example: [./test/custom-istanbul-reporter.js](https://github.com/cenfun/monocart
 
 ### `v8` — V8 custom reports {#custom-v8}
 
-`'v8'` (default) — uses `new Reporter(reportOptions, globalOptions)` followed by `await generate(reportData)` for V8 input. `reportData` is the V8 coverage result, with `type`, `summary` and `files`; each file contains V8 ranges and summaries.
+`'v8'` (default) — uses `new Reporter(reportOptions, globalOptions)` followed by `await generate(reportData)` for V8 input. [`reportData`](/reference/types#coverageresults) is the V8 coverage result, with `type`, [`summary`](/reference/types#coveragesummary) and [`files`](/reference/types#coveragefile); each file contains V8 ranges and summaries.
 
 example: [./test/custom-v8-reporter.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/custom-v8-reporter.js)
 

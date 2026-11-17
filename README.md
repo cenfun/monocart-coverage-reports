@@ -56,7 +56,7 @@ import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
 await mcr.loadConfig();
 ```
-> Both `MCR({...})` and `new CoverageReport()` create the same instance. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
+> Both `MCR({...})` and `new CoverageReport()` create instances of the same `CoverageReport` class. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
 For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html#multiprocessing-support)
 

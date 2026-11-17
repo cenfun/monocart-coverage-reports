@@ -14,6 +14,6 @@ See [Command line](/reference/cli#command-line) for options. For browser tests, 
 
 ## API {#api}
 
-Collect coverage data in your test hooks or fixtures, then add it to an MCR report instance with `await mcr.add(coverageData)`. After all tests finish, call `await mcr.generate()` to generate the reports.
+Collect coverage data in your test hooks or fixtures, then add it to an MCR report instance ([`CoverageReport`](/reference/types#coveragereport)) with `await mcr.add(coverageData)`. After all tests finish, call `await mcr.generate()` to generate the reports.
 
 This approach gives you control over when coverage is collected and submitted. See [V8 collection](/coverage-collection/v8), [Istanbul collection](/coverage-collection/istanbul), and [Multiple processes](/reference/multiprocessing#multiprocessing-support) for collection and cross-process integration details.

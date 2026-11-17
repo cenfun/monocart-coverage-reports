@@ -4,6 +4,8 @@
 
 使用 `entryFilter` 和 `sourceFilter` 过滤 V8 报告中的入口文件与源文件。
 
+`entryFilter` 回调的参数 [`entry`](/zh/reference/types#v8coverageentry) 类型为 `V8CoverageEntry`；`sourceFilter` 接收源码路径字符串。
+
 当收集到V8的覆盖数据时，它实际上包含了所有的入口文件的覆盖率数据, 比如有以下3个文件:
 
 - *dist/main.js*
@@ -99,7 +101,7 @@ const coverageOptions = {
 
 对于 V8 输入，`outputFilter` 同时作用于 V8 报告和转换后的 Istanbul 报告。默认值为 `null`，不启用过滤。
 
-它与 `entryFilter` 和 `sourceFilter` 使用相同的字符串和有序对象匹配规则：按顺序返回第一个匹配项的值，未匹配的文件不保留。匹配目标是经过 `sourcePath` 改写后的最终路径。函数形式接收最终文件对象，而不是路径字符串。
+它与 `entryFilter` 和 `sourceFilter` 使用相同的字符串和有序对象匹配规则：按顺序返回第一个匹配项的值，未匹配的文件不保留。匹配目标是经过 `sourcePath` 改写后的最终路径。函数形式接收最终文件对象 [`entry`](/zh/reference/types#coveragefile)（`CoverageFile`），而不是路径字符串。
 
 ```js
 const coverageOptions = {

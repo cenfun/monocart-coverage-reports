@@ -31,6 +31,12 @@ export const pages = [
         'reference'
     ],
     [
+        'reference/types',
+        'Type declarations',
+        '类型声明',
+        'reference'
+    ],
+    [
         'reference/configuration',
         'Configuration files',
         '配置文件',

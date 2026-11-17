@@ -14,6 +14,6 @@ mcr your-cli --your-arguments
 
 ## API {#api}
 
-在测试 hook 或 fixture 中收集覆盖率数据，然后通过 `await mcr.add(coverageData)` 添加到 MCR 报告实例。所有测试结束后，调用 `await mcr.generate()` 生成报告。
+在测试 hook 或 fixture 中收集覆盖率数据，然后通过 `await mcr.add(coverageData)` 添加到 MCR 报告实例（[`CoverageReport`](/zh/reference/types#coveragereport)）。所有测试结束后，调用 `await mcr.generate()` 生成报告。
 
 此方式可以自行控制采集和提交覆盖率数据的时机。采集方案及跨进程接入方式参见 [采集 V8 覆盖率](/zh/coverage-collection/v8)、[采集 Istanbul 覆盖率](/zh/coverage-collection/istanbul) 和 [多进程支持](/zh/reference/multiprocessing#multiprocessing-support)。

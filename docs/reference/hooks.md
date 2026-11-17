@@ -4,6 +4,8 @@
 
 Runs after the report is generated.
 
+Parameter: [`coverageResults`](/reference/types#coverageresults), of type `CoverageResults | undefined`.
+
 ```js
 const coverageOptions = {
     onEnd: async (coverageResults) => {
@@ -57,6 +59,8 @@ This policy rejects missing/zero-total metrics; adapt it explicitly if a metric 
 
 Runs before each V8 entry is processed (V8 only).
 
+Parameter: [`entry`](/reference/types#v8coverageentry), of type `V8CoverageEntry`.
+
 Use this to mutate the entry (for example, transform non-standard sources into valid ECMAScript before the AST parser runs). See [Unparsable source](/troubleshooting/common-issues#unparsable-source).
 ```js
 const coverageOptions = {
@@ -70,6 +74,8 @@ const coverageOptions = {
 
 Only available when using `mcr <command>`. `onStart(coverageReport)` runs before the child process is spawned.
 
+Parameter: [`coverageReport`](/reference/types#coveragereport), of type `CoverageReport`.
+
 ```js
 // mcr.config.js
 export default {
@@ -82,6 +88,12 @@ export default {
 ## `onReady` {#onready}
 
 Only available when using `mcr <command>`. `onReady(coverageReport, nodeV8CoverageDir, subprocess)` runs after the child exits, before MCR reads coverage from `nodeV8CoverageDir`. Useful when the child hasn't finished flushing coverage data and needs to be waited on.
+
+Parameters:
+
+- [`coverageReport`](/reference/types#coveragereport): `CoverageReport`.
+- `nodeV8CoverageDir`: `string`, the Node.js V8 coverage directory.
+- `subprocess`: `any`, the Node.js `ChildProcess` object.
 
 ```js
 // mcr.config.js
@@ -97,6 +109,8 @@ export default {
 Available with `mcr test` only. See [Run tests with mcr test](/getting-started/node-test-runner#run-tests-with-mcr-test) for configuration and usage.
 
 `onTestEnd(testResults)` runs once after the test runner exits and its JSON results are collected, before publishing the test results cache, `onReady`, and coverage generation. It is awaited even when assertions fail. Other commands, API calls, and runs skipped because no targets were supplied do not call it. The existing `onEnd(coverageResults)` is unchanged.
+
+Parameter: [`testResults`](/reference/types#testresults), of type `TestResults`.
 
 ### Usage {#test-end-usage}
 

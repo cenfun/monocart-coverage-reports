@@ -1,30 +1,19 @@
 # CDPClient {#collecting-v8-coverage-data-with-cdpclient-api}
 
-`timeout` controls HTTP discovery and WebSocket connection deadlines (default: 10000ms). `requestTimeout` controls each CDP command on built-in WebSocket sessions (default: 30000ms). Set either to `0` to disable its deadline. Custom Playwright/Puppeteer sessions manage their own command timeouts. For custom sockets, use `new MCR.WSSession(ws, { timeout: 30000 })`.
+`CDPClient` is MCR’s coverage collection client based on the [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/). It connects to a Node.js process or Chromium-based browser with debugging enabled, or reuses an existing Playwright/Puppeteer CDP session, to start and stop JavaScript coverage collection and, in browsers, CSS coverage collection. Pass the collected data to `mcr.add()` and then call `mcr.generate()` to generate reports; `CDPClient` handles collection, not report generation.
 
-- `CDPClient` available APIs
-```ts
-interface CoverageClient {
-    startJSCoverage: () => Promise<void>;
-    stopJSCoverage: () => Promise<V8CoverageEntry[]>;
+## Timeouts {#timeouts}
 
-    startCSSCoverage: () => Promise<void>;
-    stopCSSCoverage: () => Promise<V8CoverageEntry[]>;
+`timeout` controls HTTP discovery and WebSocket connection deadlines (default: 10000ms). `requestTimeout` controls each CDP command on built-in WebSocket sessions (default: 30000ms). Set either to `0` to disable its deadline. Custom Playwright/Puppeteer sessions manage their own command timeouts. For custom sockets, use [`new MCR.WSSession(ws, { timeout: 30000 })`](/reference/types#wssession).
 
-    /** start both js and css coverage */
-    startCoverage: () => Promise<void>;
-    /** stop and return both js and css coverage */
-    stopCoverage: () => Promise<V8CoverageEntry[]>;
+## API types {#api-types}
 
-    /** write the coverage started by NODE_V8_COVERAGE to disk on demand, returns v8 coverage dir */
-    writeCoverage: () => Promise<string>;
+[`CDPClient`](/reference/types#cdpclient) accepts [`CDPOptions`](/reference/types#cdpoptions) and resolves to a [`CoverageClient`](/reference/types#coverageclient) or `undefined`. Custom sessions implement [`CDPSession`](/reference/types#cdpsession); `stopJSCoverage()`, `stopCSSCoverage()` and `stopCoverage()` return arrays of [`V8CoverageEntry`](/reference/types#v8coverageentry).
 
-    /** get istanbul coverage data */
-    getIstanbulCoverage: (coverageKey?: string) => Promise<any>;
-}
-```
+## Debugging ports {#debugging-ports}
 
-- Work with node debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`
+Use the Node.js debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`.
+
 ```js
 import { MCR } from 'monocart-coverage-reports';
 const client = await MCR.CDPClient({
@@ -35,7 +24,10 @@ await client.startJSCoverage();
 const coverageData = await client.stopJSCoverage();
 ```
 
-- Work with [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession)
+## Playwright {#playwright}
+
+Use a [Playwright CDPSession](https://playwright.dev/docs/api/class-cdpsession).
+
 ```js
 import { chromium } from 'playwright';
 import { MCR } from 'monocart-coverage-reports';
@@ -52,7 +44,10 @@ await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
-- Work with [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession)
+## Puppeteer {#puppeteer}
+
+Use a [Puppeteer CDPSession](https://pptr.dev/api/puppeteer.cdpsession).
+
 ```js
 import puppeteer from 'puppeteer';
 import { MCR } from 'monocart-coverage-reports';
@@ -69,7 +64,10 @@ await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
-- Work with [Selenium Webdriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge Browser)
+## Selenium WebDriver {#selenium}
+
+Use a [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge).
+
 ```js
 import { Builder, Browser } from 'selenium-webdriver';
 import { MCR } from 'monocart-coverage-reports';

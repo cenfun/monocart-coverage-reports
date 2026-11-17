@@ -51,7 +51,7 @@ export type V8CoverageData = ScriptCoverage[];
 | Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
 | Bun | ❌ | [issue](https://github.com/oven-sh/bun/issues/30968) |
 
-> MCR extends each V8 coverage entry with additional fields:
+> MCR extends each V8 coverage entry ([`V8CoverageEntry`](/reference/types#v8coverageentry)) with additional fields:
 
 | Field | Type | Description |
 | :-- | :-- | :-- |

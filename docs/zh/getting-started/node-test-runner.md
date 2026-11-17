@@ -56,9 +56,11 @@ export default {
 };
 ```
 
+配置类型参见 [`McrCliOptions`](/zh/reference/types#mcrclioptions)。
+
 ### onTestEnd {#on-test-end}
 
-如需在测试运行器退出后查看或修改结构化测试结果，可在 `mcr.config.js` 中配置 [`onTestEnd` hook](/zh/reference/hooks#ontestend--仅-mcr-test-可用)。结果字段、缓存与导出行为，以及敏感数据处理方式参见该 hook 的说明。
+如需在测试运行器退出后查看或修改结构化测试结果，可在 `mcr.config.js` 中配置 [`onTestEnd` hook](/zh/reference/hooks#ontestend--仅-mcr-test-可用)。参数 [`testResults`](/zh/reference/types#testresults) 的类型为 `TestResults`。结果字段、缓存与导出行为，以及敏感数据处理方式参见该 hook 的说明。
 
 ## 测试目标规则 {#test-targets}
 

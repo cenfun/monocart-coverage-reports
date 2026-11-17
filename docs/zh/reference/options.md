@@ -1,9 +1,9 @@
 # 配置选项 {#options}
 
-按功能分组查阅配置，每个选项均提供独立锚点，可从右侧目录直接定位。通用选项对应 `CoverageReportOptions`；CLI 与测试运行器专属选项对应 `McrCliOptions`。
+按功能分组查阅配置，每个选项均提供独立锚点，可从右侧目录直接定位。通用选项对应 [`CoverageReportOptions`](/zh/reference/types#coveragereportoptions)；CLI 与测试运行器专属选项对应 [`McrCliOptions`](/zh/reference/types#mcrclioptions)。
 
 - 默认配置：[lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
-- 类型声明：[lib/index.d.ts](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/index.d.ts)
+- 类型声明：[lib/index.d.ts](/zh/reference/types#types)
 - 配置加载与示例：[配置文件](/zh/reference/configuration#config-file)
 
 ## 报告输出 {#report-output}
@@ -20,7 +20,7 @@
 - **类型:** `string | (string | ReportDescription)[]`
 - **默认值:** `""` (自动)
 
-生成哪些报告。V8 数据默认 `"v8"`，Istanbul 数据默认 `"html"`。参见 [所有支持的报告类型](/zh/reference/reports#available-reports)。
+生成哪些报告，各报告的选项类型参见 [`ReportDescription`](/zh/reference/types#reportdescription)。V8 数据默认 `"v8"`，Istanbul 数据默认 `"html"`。参见 [所有支持的报告类型](/zh/reference/reports#available-reports)。
 
 ### `outputDir` {#outputdir}
 
@@ -48,7 +48,7 @@
 - **类型:** `[number, number] | object`
 - **默认值:** `[50, 80]`
 
-覆盖率高/低阈值百分比。也支持按指标配置：`{ bytes:[50,80], lines:[50,80] }`。这些值控制报告的颜色分级，不会强制检查覆盖率是否达标；质量门禁参见 [覆盖率阈值](/zh/reference/hooks#coverage-thresholds)。
+覆盖率高/低阈值百分比，完整类型参见 [`Watermarks`](/zh/reference/types#watermarks)。也支持按指标配置：`{ bytes:[50,80], lines:[50,80] }`。这些值控制报告的颜色分级，不会强制检查覆盖率是否达标；质量门禁参见 [覆盖率阈值](/zh/reference/hooks#coverage-thresholds)。
 
 ## 输入与源码路径 {#inputs-and-paths}
 
@@ -183,7 +183,7 @@
 - **类型:** `"off" | "error" | "info" | "debug"`
 - **默认值:** `"info"`
 
-日志级别。设为 `"debug"` 会保留原始缓存并输出 sourcemap，便于排查问题。参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap)。
+日志级别（[`LoggingType`](/zh/reference/types#loggingtype)）。设为 `"debug"` 会保留原始缓存并输出 sourcemap，便于排查问题。参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap)。
 
 ### `sourceMap` {#sourcemap}
 
@@ -206,14 +206,14 @@
 - **类型:** `(entry) => void | Promise<void>`
 - **默认值:** `null`
 
-（仅 V8）每个入口文件处理前触发，参见 [Hooks](/zh/reference/hooks#hooks)。
+（仅 V8）每个入口文件处理前触发，参数为 [`entry`](/zh/reference/types#v8coverageentry)。参见 [Hooks](/zh/reference/hooks#hooks)。
 
 ### `onEnd` {#onend}
 
 - **类型:** `(coverageResults: CoverageResults | undefined) => void | Promise<void>`
 - **默认值:** `null`
 
-报告生成完成后触发，参见 [Hooks](/zh/reference/hooks#hooks)。
+报告生成完成后触发，参数为 [`coverageResults`](/zh/reference/types#coverageresults)。参见 [Hooks](/zh/reference/hooks#hooks)。
 
 ## CLI 与测试运行器 {#cli-and-tests}
 
@@ -231,18 +231,18 @@
 - **类型:** `(coverageReport: CoverageReport) => void | Promise<void>`
 - **默认值:** `undefined`（未配置）
 
-仅 CLI：子进程启动前触发，参见 [`onStart`](/zh/reference/hooks#onstart--onready--仅cli可用)。
+仅 CLI：子进程启动前触发，参数为 [`coverageReport`](/zh/reference/types#coveragereport)。参见 [`onStart`](/zh/reference/hooks#onstart--onready--仅cli可用)。
 
 ### `onReady` {#onready}
 
 - **类型:** `(coverageReport: CoverageReport, nodeV8CoverageDir: string, subprocess: any) => void | Promise<void>`
 - **默认值:** `undefined`（未配置）
 
-仅 CLI：子进程退出后、读取覆盖率数据前触发，参见 [`onReady`](/zh/reference/hooks#onready)。
+仅 CLI：子进程退出后、读取覆盖率数据前触发，参数为 [`coverageReport`](/zh/reference/types#coveragereport)。参见 [`onReady`](/zh/reference/hooks#onready)。
 
 ### `onTestEnd` {#ontestend}
 
 - **类型:** `(testResults: TestResults) => void | Promise<void>`
 - **默认值:** `null`
 
-仅适用于 `mcr test`：测试结果采集后、结果缓存发布和覆盖率生成前触发。可在此处理或脱敏测试结果；不配置此 hook 也会采集测试结果。参见 [`onTestEnd`](/zh/reference/hooks#ontestend--仅-mcr-test-可用)。
+仅适用于 `mcr test`：测试结果采集后、结果缓存发布和覆盖率生成前触发，参数为 [`testResults`](/zh/reference/types#testresults)。可在此处理或脱敏测试结果；不配置此 hook 也会采集测试结果。参见 [`onTestEnd`](/zh/reference/hooks#ontestend--仅-mcr-test-可用)。

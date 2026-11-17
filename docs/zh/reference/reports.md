@@ -25,7 +25,7 @@ outline: [2, 4]
 
 #### `v8-json` {#v8-json}
 
-- 保存 `CoverageResults` 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json))
+- 保存 [`CoverageResults`](/zh/reference/types#coverageresults) 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json))
 - 用于VSCode扩展来显示原生V8代码覆盖率: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
 ![](../../../assets/mcv.gif)
@@ -161,7 +161,7 @@ const coverageOptions = {
 
 ### `v8` — V8 自定义报告 {#custom-v8}
 
-`'v8'`（默认值）— 对 V8 输入，先调用 `new Reporter(reportOptions, globalOptions)`，再调用 `await generate(reportData)`。`reportData` 是 V8 覆盖率结果，包含 `type`、`summary` 和 `files`；每个文件包含 V8 覆盖范围和汇总。
+`'v8'`（默认值）— 对 V8 输入，先调用 `new Reporter(reportOptions, globalOptions)`，再调用 `await generate(reportData)`。[`reportData`](/zh/reference/types#coverageresults) 是 V8 覆盖率结果，包含 `type`、[`summary`](/zh/reference/types#coveragesummary) 和 [`files`](/zh/reference/types#coveragefile)；每个文件包含 V8 覆盖范围和汇总。
 
 例子: [./test/custom-v8-reporter.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/custom-v8-reporter.js)
 

@@ -1,5 +1,7 @@
 # Configuration files {#config-file}
-In MCR 3.x, `loadConfig()` throws if an explicitly requested config does not exist or a discovered config fails to load (including JSON parsing, module syntax and startup errors). All CLI commands exit with a non-zero status for these errors. No `strict` option is needed. If no custom config is requested and no default config is found, execution continues with existing options.
+In MCR 3.x, [`loadConfig()`](/reference/types#coveragereport) throws if an explicitly requested config does not exist or a discovered config fails to load (including JSON parsing, module syntax and startup errors). All CLI commands exit with a non-zero status for these errors. No `strict` option is needed. If no custom config is requested and no default config is found, execution continues with existing options.
+
+Configuration types: [`CoverageReportOptions`](/reference/types#coveragereportoptions) for the API, or [`McrCliOptions`](/reference/types#mcrclioptions) for CLI and test runner options.
 
 Loading config file by priority:
 - Custom config file:

@@ -4,6 +4,8 @@
 
 报告生成后触发。
 
+参数：[`coverageResults`](/zh/reference/types#coverageresults)，类型为 `CoverageResults | undefined`。
+
 ```js
 const coverageOptions = {
     onEnd: async (coverageResults) => {
@@ -57,6 +59,8 @@ const coverageOptions = {
 
 每个 V8 入口在处理前触发，仅适用于 V8 数据。
 
+参数：[`entry`](/zh/reference/types#v8coverageentry)，类型为 `V8CoverageEntry`。
+
 可以在进入AST解析前改写 entry（例如对非标准语法的源码做预编译），参见 [Unparsable source](/zh/troubleshooting/common-issues#unparsable-source)
 ```js
 const coverageOptions = {
@@ -70,6 +74,8 @@ const coverageOptions = {
 
 仅在使用 `mcr <command>` 时有效。`onStart(coverageReport)` 在子进程启动前触发。
 
+参数：[`coverageReport`](/zh/reference/types#coveragereport)，类型为 `CoverageReport`。
+
 ```js
 // mcr.config.js
 export default {
@@ -82,6 +88,12 @@ export default {
 ## `onReady` {#onready}
 
 仅在使用 `mcr <command>` 时有效。`onReady(coverageReport, nodeV8CoverageDir, subprocess)` 在子进程退出后、MCR 读取 `nodeV8CoverageDir` 之前触发。用于子进程尚未写完覆盖数据、需要等待的场景。
+
+参数：
+
+- [`coverageReport`](/zh/reference/types#coveragereport)：`CoverageReport`。
+- `nodeV8CoverageDir`：`string`，Node.js V8 覆盖率目录。
+- `subprocess`：`any`，Node.js `ChildProcess` 对象。
 
 ```js
 // mcr.config.js
@@ -97,6 +109,8 @@ export default {
 仅适用于 `mcr test`。配置及用法参见 [使用 mcr test 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)。
 
 `onTestEnd(testResults)` 在测试运行器退出、JSON 测试结果采集完成后触发一次，早于测试结果缓存发布、`onReady` 和覆盖率报告生成。支持异步等待，测试断言失败时也会触发。其他命令、API 调用，以及因未提供目标而跳过的测试，不触发该 hook。现有 `onEnd(coverageResults)` 保持不变。
+
+参数：[`testResults`](/zh/reference/types#testresults)，类型为 `TestResults`。
 
 ### 用法示例 {#test-end-usage}
 

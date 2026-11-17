@@ -51,7 +51,7 @@ export type V8CoverageData = ScriptCoverage[];
 | Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
 | Bun | ❌ | [issue](https://github.com/oven-sh/bun/issues/30968) |
 
-> MCR 为每个 V8 覆盖率条目扩展了以下字段：
+> MCR 为每个 V8 覆盖率条目（[`V8CoverageEntry`](/zh/reference/types#v8coverageentry)）扩展了以下字段：
 
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |

@@ -1,9 +1,9 @@
 # Configuration options {#options}
 
-Browse options by feature, or use the on-page outline to jump to an individual option. General options belong to `CoverageReportOptions`; CLI and test runner options belong to `McrCliOptions`.
+Browse options by feature, or use the on-page outline to jump to an individual option. General options belong to [`CoverageReportOptions`](/reference/types#coveragereportoptions); CLI and test runner options belong to [`McrCliOptions`](/reference/types#mcrclioptions).
 
 - Default configuration: [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
-- Type declarations: [lib/index.d.ts](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/index.d.ts)
+- Type declarations: [lib/index.d.ts](/reference/types#types)
 - Configuration loading and examples: [Configuration files](/reference/configuration#config-file)
 
 ## Report output {#report-output}
@@ -20,7 +20,7 @@ Report title shown in the UI and summary reports.
 - **Type:** `string | (string | ReportDescription)[]`
 - **Default:** `""` (auto)
 
-Reports to generate. Defaults to `"v8"` for V8 data and `"html"` for Istanbul data. See [Available Reports](/reference/reports#available-reports).
+Reports to generate; see [`ReportDescription`](/reference/types#reportdescription) for per-report options. Defaults to `"v8"` for V8 data and `"html"` for Istanbul data. See [Available Reports](/reference/reports#available-reports).
 
 ### `outputDir` {#outputdir}
 
@@ -48,7 +48,7 @@ Also generate `lcov.info` (equivalent to adding the `lcovonly` report).
 - **Type:** `[number, number] | object`
 - **Default:** `[50, 80]`
 
-Low/high thresholds (percent). Accepts per-metric object like `{ bytes:[50,80], lines:[50,80] }`. These values control report color bands, not pass/fail enforcement. See [Coverage thresholds](/reference/hooks#coverage-thresholds) for quality gates.
+Low/high thresholds (percent); see [`Watermarks`](/reference/types#watermarks) for the full type. Accepts per-metric object like `{ bytes:[50,80], lines:[50,80] }`. These values control report color bands, not pass/fail enforcement. See [Coverage thresholds](/reference/hooks#coverage-thresholds) for quality gates.
 
 ## Inputs and source paths {#inputs-and-paths}
 
@@ -183,7 +183,7 @@ Memory threshold in MB; force GC at critical stages when JavaScript heap usage (
 - **Type:** `"off" | "error" | "info" | "debug"`
 - **Default:** `"info"`
 
-Logging level. Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap).
+Logging level ([`LoggingType`](/reference/types#loggingtype)). Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap).
 
 ### `sourceMap` {#sourcemap}
 
@@ -206,14 +206,14 @@ Custom sourcemap loader (e.g. from a build cache). Call `defaultResolver(url)` t
 - **Type:** `(entry) => void | Promise<void>`
 - **Default:** `null`
 
-(V8 only) Per-entry hook; see [Hooks](/reference/hooks#hooks).
+(V8 only) Per-entry hook. Parameter: [`entry`](/reference/types#v8coverageentry). See [Hooks](/reference/hooks#hooks).
 
 ### `onEnd` {#onend}
 
 - **Type:** `(coverageResults: CoverageResults | undefined) => void | Promise<void>`
 - **Default:** `null`
 
-Hook invoked after report generation; see [Hooks](/reference/hooks#hooks).
+Hook invoked after report generation. Parameter: [`coverageResults`](/reference/types#coverageresults). See [Hooks](/reference/hooks#hooks).
 
 ## CLI and test runner {#cli-and-tests}
 
@@ -231,18 +231,18 @@ Used only by `mcr test`. Test file paths or glob patterns passed to `node --test
 - **Type:** `(coverageReport: CoverageReport) => void | Promise<void>`
 - **Default:** `undefined` (not configured)
 
-CLI only: runs before the child process starts. See [`onStart`](/reference/hooks#onstart--onready--cli-only).
+CLI only: runs before the child process starts. Parameter: [`coverageReport`](/reference/types#coveragereport). See [`onStart`](/reference/hooks#onstart--onready--cli-only).
 
 ### `onReady` {#onready}
 
 - **Type:** `(coverageReport: CoverageReport, nodeV8CoverageDir: string, subprocess: any) => void | Promise<void>`
 - **Default:** `undefined` (not configured)
 
-CLI only: runs after the child exits, before coverage data is read. See [`onReady`](/reference/hooks#onready).
+CLI only: runs after the child exits, before coverage data is read. Parameter: [`coverageReport`](/reference/types#coveragereport). See [`onReady`](/reference/hooks#onready).
 
 ### `onTestEnd` {#ontestend}
 
 - **Type:** `(testResults: TestResults) => void | Promise<void>`
 - **Default:** `null`
 
-Used only by `mcr test`: runs after test results are collected, before result publication and coverage generation. Use it to process or redact test results; results are still collected when this hook is omitted. See [`onTestEnd`](/reference/hooks#ontestend--mcr-test-only).
+Used only by `mcr test`: runs after test results are collected, before result publication and coverage generation. Parameter: [`testResults`](/reference/types#testresults). Use it to process or redact test results; results are still collected when this hook is omitted. See [`onTestEnd`](/reference/hooks#ontestend--mcr-test-only).

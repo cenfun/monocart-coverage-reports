@@ -4,6 +4,8 @@
 
 Use `entryFilter` and `sourceFilter` to filter entry files and source files in V8 reports.
 
+The `entryFilter` callback receives an [`entry`](/reference/types#v8coverageentry) of type `V8CoverageEntry`; `sourceFilter` receives a source path string.
+
 When V8 coverage data collected, it actually contains the data of all entry files, for example:
 
 - *dist/main.js*
@@ -99,7 +101,7 @@ Use `outputFilter` to filter the final file list.
 
 For V8 input, `outputFilter` filters both V8 reports and converted Istanbul reports. It defaults to `null` (disabled).
 
-Like `entryFilter` and `sourceFilter`, it supports strings and ordered pattern objects (the first matching pattern wins; unmatched files are excluded). Patterns match the final `sourcePath`, including any `sourcePath` rewrites. A function receives the final file entry, not a path string.
+Like `entryFilter` and `sourceFilter`, it supports strings and ordered pattern objects (the first matching pattern wins; unmatched files are excluded). Patterns match the final `sourcePath`, including any `sourcePath` rewrites. A function receives the final file [`entry`](/reference/types#coveragefile) (`CoverageFile`), not a path string.
 
 ```js
 const coverageOptions = {

@@ -23,6 +23,8 @@ npx mcr node my-app.js -r v8,console-details
 
 ## API {#api}
 
+配置类型参见 [`CoverageReportOptions`](/zh/reference/types#coveragereportoptions)，生成的结果结构参见 [`CoverageResults`](/zh/reference/types#coverageresults)。
+
 ```js
 import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
@@ -43,6 +45,6 @@ import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
 await mcr.loadConfig();
 ```
-> `MCR({...})` 和 `new CoverageReport()` 创建的是同一个实例。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
+> [`MCR({...})`](/zh/reference/types#mcr) 和 [`new CoverageReport()`](/zh/reference/types#coveragereport) 创建的都是 `CoverageReport` 类型的实例，并非共享同一个对象。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
 
 参见 [多进程支持](/zh/reference/multiprocessing#multiprocessing-support)

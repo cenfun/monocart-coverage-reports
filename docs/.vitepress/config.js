@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vitepress';
 import { pages } from './pages.js';
 import { reportServer } from './report-server.js';
+import { typeDeclarations, typeDeclarationsReload } from './type-declarations.js';
 
 const repository = 'https://github.com/cenfun/monocart-coverage-reports';
 const siteOrigin = 'https://cenfun.github.io';
@@ -69,6 +70,11 @@ const theme = (zh) => {
 export default defineConfig({
     title: 'Monocart Coverage Reports',
     description: 'Native V8 coverage for JavaScript, TypeScript & CSS. 15+ built-in reports, Istanbul & custom reports. MCR 3.x: AI Agent Skills, mcr test with the Node.js test runner, source maps, coverage merging & CI integration.',
+    markdown: {
+        config(md) {
+            md.use(typeDeclarations);
+        }
+    },
     base: '/monocart-coverage-reports/',
     outDir: '../.temp/site',
     cacheDir: '../.temp/vitepress-cache',
@@ -187,7 +193,7 @@ export default defineConfig({
         ];
     },
     vite: {
-        plugins: [reportServer()],
+        plugins: [reportServer(), typeDeclarationsReload()],
         build: {
             // Reports share this output directory. Never erase them on a docs rebuild.
             emptyOutDir: false

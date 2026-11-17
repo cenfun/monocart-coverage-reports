@@ -23,6 +23,8 @@ For more information, see [Command Line](/reference/cli#command-line) and [Run T
 
 ## API {#api}
 
+See [`CoverageReportOptions`](/reference/types#coveragereportoptions) for configuration and [`CoverageResults`](/reference/types#coverageresults) for the generated result structure.
+
 ```js
 import { MCR } from 'monocart-coverage-reports';
 const mcr = MCR({
@@ -43,6 +45,6 @@ import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
 await mcr.loadConfig();
 ```
-> Both `MCR({...})` and `new CoverageReport()` create the same instance. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
+> Both [`MCR({...})`](/reference/types#mcr) and [`new CoverageReport()`](/reference/types#coveragereport) create instances of the same `CoverageReport` class. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
 For more information, see [Multiprocessing Support](/reference/multiprocessing#multiprocessing-support)
