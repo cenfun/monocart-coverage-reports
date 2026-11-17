@@ -1,5 +1,29 @@
 # Frameworks and tools {#integration-examples}
 
+## [Playwright](https://playwright.dev/) {#playwright}
+
+For collection code, see [Collect V8 coverage with Playwright](/coverage-collection/v8#playwright).
+
+- [playwright-coverage](https://github.com/cenfun/playwright-coverage) - Example for Playwright coverage reports
+- [playwright-bdd-coverage](https://github.com/cenfun/playwright-bdd-coverage) - Example for Playwright BDD coverage reports
+- [monocart-reporter](https://github.com/cenfun/monocart-reporter) - Playwright custom reporter, supports generating [Code coverage report](https://github.com/cenfun/monocart-reporter?#code-coverage-report)
+- Coverage for component testing with `monocart-reporter`:
+    - [playwright-ct-vue](https://github.com/cenfun/playwright-ct-vue)
+    - [playwright-ct-react](https://github.com/cenfun/playwright-ct-react)
+    - [playwright-ct-svelte](https://github.com/cenfun/playwright-ct-svelte)
+- Coverage for Next.js, both server side and client side:
+    - [nextjs-with-playwright](https://github.com/cenfun/nextjs-with-playwright)
+    - [nextjs-with-playwright-istanbul](https://github.com/cenfun/nextjs-with-playwright-istanbul)
+- Coverage for Remix:
+    - [remix-with-playwright](https://github.com/cenfun/remix-with-playwright)
+
+## [Puppeteer](https://pptr.dev/) {#puppeteer}
+
+For collection code, see [Collect V8 coverage with Puppeteer](/coverage-collection/v8#puppeteer).
+
+- [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
+- [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) - Example for Jest (unit) + Puppeteer (e2e) + Codecov
+
 ## [c8](https://github.com/bcoe/c8) {#c8}
 - c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)
 ```sh

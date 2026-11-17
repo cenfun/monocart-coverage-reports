@@ -127,18 +127,6 @@ export const pages = [
         'collection'
     ],
     [
-        'integrations/playwright',
-        'Playwright',
-        'Playwright',
-        'integrations'
-    ],
-    [
-        'integrations/puppeteer',
-        'Puppeteer',
-        'Puppeteer',
-        'integrations'
-    ],
-    [
         'getting-started/node-test-runner',
         'Run tests with mcr test',
         '使用 mcr test 运行测试',
