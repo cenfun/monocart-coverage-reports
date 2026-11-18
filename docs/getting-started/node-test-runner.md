@@ -82,3 +82,11 @@ To inspect or modify structured test results after the test runner exits, config
 - **The `test` option has no effect on other CLI commands or API calls**, including `merge` and `generate()`.
 
 See [Command Line](/reference/cli#command-line) for other CLI options.
+
+## Modern testing workflow {#modern-testing-workflow}
+
+For new Node.js projects, `mcr test` offers a lightweight, forward-looking testing workflow: use native platform capabilities to run tests, collect V8 coverage and generate reports with one command, reducing reliance on a separate testing toolchain.
+
+It is based on the built-in [Node.js `node:test` runner](https://nodejs.org/docs/latest/api/test.html), so no separate test runner installation is needed; MCR still needs to be installed as shown in [Quick start](#quick-start). Assertions can also use the built-in [`node:assert/strict`](https://nodejs.org/docs/latest/api/assert.html#strict-assertion-mode) module.
+
+For conventional Node.js unit and integration tests, this setup can replace the testing roles served by tools such as [Mocha](/integrations/frameworks-and-tools#mocha), [AVA](/integrations/frameworks-and-tools#ava) and [Tape](https://github.com/tape-testing/tape). It is not a drop-in compatibility layer: migrating requires adapting test APIs, assertions and lifecycle hooks, and evaluating plugin, snapshot and other feature requirements.
