@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vitepress';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 import { pages } from './pages.js';
 import { reportServer } from './report-server.js';
 import { typeDeclarations, typeDeclarationsReload } from './type-declarations.js';
@@ -67,12 +68,25 @@ const theme = (zh) => {
     };
 };
 
-export default defineConfig({
+export default withMermaid(defineConfig({
     title: 'Monocart Coverage Reports',
     description: 'Native V8 coverage for JavaScript, TypeScript & CSS. 15+ built-in reports, Istanbul & custom reports. MCR 3.x: AI Agent Skills, mcr test with the Node.js test runner, source maps, coverage merging & CI integration.',
     markdown: {
         config(md) {
             md.use(typeDeclarations);
+        }
+    },
+    // Keep Mermaid's automatic scanner away from the initially empty Vue containers.
+    mermaidPlugin: {
+        class: 'mcr-mermaid'
+    },
+    mermaid: {
+        fontFamily: 'var(--vp-font-family-base)',
+        securityLevel: 'strict',
+        theme: 'default',
+        flowchart: {
+            htmlLabels: false,
+            useMaxWidth: true
         }
     },
     base: '/monocart-coverage-reports/',
@@ -193,6 +207,10 @@ export default defineConfig({
         ];
     },
     vite: {
+        // Mermaid loads these CommonJS modules from lazy diagram chunks in dev.
+        optimizeDeps: {
+            include: ['fastdom', 'fastdom/extensions/fastdom-promised.js']
+        },
         plugins: [reportServer(), typeDeclarationsReload()],
         build: {
             // Reports share this output directory. Never erase them on a docs rebuild.
@@ -204,4 +222,4 @@ export default defineConfig({
             }
         }
     }
-});
+}));

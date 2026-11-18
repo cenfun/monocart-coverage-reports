@@ -1,8 +1,27 @@
 # V8 coverage data {#v8-coverage-data-api}
-- [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
-- [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
-- [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
-- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)
+
+This page distinguishes raw V8 data collected at runtime from MCR coverage entries. Public TypeScript types are maintained on the [Type declarations](/reference/types#types) page.
+
+## MCR coverage entries {#coverage-entries}
+
+See [`V8CoverageEntry`](/reference/types#v8coverageentry) for the complete fields and types, rather than duplicating the declaration here. JavaScript entries contain `functions` and source text in `source`; CSS entries contain `ranges` and stylesheet text in `text`.
+
+In addition to raw coverage data, MCR supports the following metadata:
+
+- `sourceMap`: a parsed sourcemap object for mapping coverage back to original sources.
+- `scriptOffset`: the source offset of a script wrapper (for example, in `vm` modules), automatically applied to coverage range start/end offsets.
+- `distFile`: the dist bundle this source was unpacked from.
+- `empty`: marks entries added through `all` without real coverage data, showing 0% coverage.
+- `fake`: marks content that is not the original source (for example, compiled from `.ts`/`.jsx`); the AST parser skips coverage extraction for fake sources.
+
+Read or mutate entries in the [`onEntry`](/reference/hooks#onentry--before-each-v8-entry-is-processed-v8-only) hook. See [Untested files](/reference/untested-files#adding-empty-coverage-for-untested-files) for handling files without collected coverage.
+
+## Raw V8 data format {#raw-v8-data}
+
+The following structures describe raw JavaScript coverage returned by V8/CDP; `integer` and `Runtime.ScriptId` are protocol type notation. MCR’s `V8CoverageEntry` adds source text and other metadata to these entries.
+
+The raw `CoverageRange` below uses `startOffset` and `endOffset`. It is not interchangeable with MCR’s converted [`CoverageRange`](/reference/types#coveragerange), which uses `start` and `end`.
+
 ```ts
 // Coverage data for a source range.
 export interface CoverageRange {
@@ -41,27 +60,36 @@ export interface ScriptCoverage {
 export type V8CoverageData = ScriptCoverage[];
 ```
 
-| JavaScript Runtime | V8 Coverage |  |
-| :--------------| :----: | :----------------------  |
-| Chrome (65%) | ✅ | Chromium-based |
-| Safari (18%) | ❌ |  |
-| Edge (5%) | ✅ | Chromium-based |
-| Firefox (2%) | ❌ |  |
-| Node.js | ✅ |  |
-| Deno | ❌ | [issue](https://github.com/denoland/deno/issues/23359) |
-| Bun | ❌ | [issue](https://github.com/oven-sh/bun/issues/30968) |
+## Runtime support {#runtime-support}
 
-> MCR extends each V8 coverage entry ([`V8CoverageEntry`](/reference/types#v8coverageentry)) with additional fields:
+### Browsers {#browsers}
 
-| Field | Type | Description |
-| :-- | :-- | :-- |
-| `url` | `string` | Script URL or file path |
-| `type` | `"js" \| "css"` | Entry type |
-| `source` | `string` | (JS) Source code text |
-| `sourceMap` | `object` | (JS) Parsed sourcemap object |
-| `scriptOffset` | `number` | (JS) Byte offset for the script wrapper (e.g. in `vm` modules). This offset is automatically added to all range start/end values |
-| `distFile` | `string` | (JS) The dist bundle file this source was unpacked from |
-| `empty` | `boolean` | Marked as `true` when this entry was added via the `all` option (no real coverage data), showing 0% coverage |
-| `fake` | `boolean` | Marked as `true` when the source code is not original (e.g. compiled from `.ts`/`.jsx`). The AST parser skips coverage extraction for fake sources |
+Source: [StatCounter Global Stats, October 2026](https://gs.statcounter.com/browser-market-share#monthly-202610-202610-bar), worldwide, all platforms (desktop, mobile, tablet and console). These are **page-view usage shares**, not shares of people or installations; see the [methodology](https://gs.statcounter.com/faq#methodology). Retrieved on **2026-11-17**.
 
-These fields can be read/mutated in [`onEntry`](/reference/hooks#hooks) hooks.
+| Browser | Engine | Global page-view share | Native V8 collection | Notes |
+| :-- | :-- | --: | :--: | :-- |
+| Chrome | V8 | 68.79% | ✅ | Chromium/V8 builds, such as desktop and Android |
+| Safari | JavaScriptCore | 16.59% | ❌ | WebKit / JavaScriptCore, not V8 |
+| Edge | V8 | 5.36% | ✅ | Chromium/V8 builds |
+| Firefox | SpiderMonkey | 2.57% | ❌ | Gecko / SpiderMonkey, not V8 |
+| Opera | V8 | 2.16% | ✅ | Chromium/V8 builds; not Opera Mini |
+| Samsung Internet | V8 | 2.05% | ✅ | Chromium/V8 on Android |
+
+The percentages describe browser brands across platforms. The ✅ applies only to builds using V8 and an accessible coverage/CDP interface, not every platform or edition of that brand (for example, WebKit-based iOS builds). It does not imply that every listed browser has been tested with MCR. Do not add these brand percentages together to estimate V8 engine share. See [Browser collection](/coverage-collection/v8#browser) and [CDPClient](/reference/cdp-client#collecting-v8-coverage-data-with-cdpclient-api) for collection methods.
+
+### Non-browser runtimes {#non-browser-runtimes}
+
+Source: [State of JS 2025](https://2025.stateofjs.com/en-US/other-tools/#runtimes), a multiple-choice runtime question with 11,141 respondents ([published February 2026](https://2025.stateofjs.com/en-US/about/)). Figures are **survey usage, not market share**; they cannot be added together or compared directly with browser shares. Retrieved: 2026-11-17.
+
+| Runtime | Engine | Survey usage | Native V8 collection (MCR) | MCR notes |
+| :-- | :-- | --: | :--: | :-- |
+| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported; MCR requires Node.js >= 22.15.0. See [Node.js collection](/coverage-collection/v8#collecting-v8-coverage-data-from-nodejs). |
+| Bun | JavaScriptCore | 20.83% | ❌ | V8-compatible coverage APIs are partially implemented, but MCR compatibility remains unconfirmed. Track [issue #22128](https://github.com/oven-sh/bun/issues/22128); [#30968](https://github.com/oven-sh/bun/issues/30968) was closed as a duplicate. |
+| Deno | V8 | 11.17% | ❌ | Does not export the complete raw V8 coverage data needed by MCR: matching transpiled sources and sourcemaps are missing. See [issue #23359](https://github.com/denoland/deno/issues/23359). |
+
+## Further reading {#resources}
+
+- [JavaScript code coverage in V8](https://v8.dev/blog/javascript-code-coverage)
+- [Playwright Coverage Class](https://playwright.dev/docs/api/class-coverage)
+- [Puppeteer Coverage Class](https://pptr.dev/api/puppeteer.coverage)
+- [DevTools Protocol for Coverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#method-startPreciseCoverage) see [ScriptCoverage](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/#type-ScriptCoverage) and [v8-coverage](https://github.com/bcoe/v8-coverage)

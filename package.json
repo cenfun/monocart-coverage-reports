@@ -126,6 +126,7 @@
         "find-up": "^8.0.0",
         "koa": "^3.3.0",
         "koa-static-resolver": "^1.1.0",
+        "mermaid": "^11.17.2",
         "minimatch": "^11.0.8",
         "monocart-code-viewer": "^1.2.0",
         "monocart-formatter": "^3.0.1",
@@ -149,6 +150,7 @@
         "vite": "^8.3.8",
         "vite-plugin-css-injected-by-js": "^5.0.3",
         "vitepress": "^1.6.4",
+        "vitepress-plugin-mermaid": "^2.0.17",
         "webpack": "^5.112.2"
     },
     "engines": {
