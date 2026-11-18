@@ -1,73 +1,24 @@
 # Hooks {#hooks}
 
-## `onEnd` {#onend--报告生成后触发}
+## 执行流程 {#test-end-workflow}
 
-报告生成后触发。
+下图展示已配置各 hook，且测试结果和覆盖率数据可用时，`mcr test` 的正常流程。每个 hook 都会等待执行完成。`onTestEnd` 在 `onReady` 之前触发一次；`onEntry` 针对每个 V8 条目触发，可能执行多次。
 
-参数：[`coverageResults`](/zh/reference/types#coverageresults)，类型为 `CoverageResults | undefined`。
-
-```js
-const coverageOptions = {
-    onEnd: async (coverageResults) => {
-        // coverageResults.type, coverageResults.summary, coverageResults.files, ...
-    }
-};
-```
-
-### 覆盖率阈值 {#coverage-thresholds}
-
-典型用法：检测覆盖率是否达标，失败时抛错，让 API 调用方处理异常、CLI 返回非零状态；不要使用 `process.exit()` 提前中断清理。
-```js
-const getCoverageError = (metric, summary, minimum) => {
-    if (!summary || !(summary.total > 0)) {
-        return `${metric}: missing or empty coverage`;
-    }
-    const { pct } = summary;
-    if (typeof pct !== 'number' || !Number.isFinite(pct) || pct < minimum) {
-        return `${metric}: ${pct}%, required ${minimum}%`;
-    }
-    return '';
-};
-const coverageOptions = {
-    name: 'My Coverage Report',
-    outputDir: './coverage-reports',
-    onEnd: (coverageResults) => {
-        if (!coverageResults) {
-            throw new Error('No coverage results');
-        }
-        const thresholds = {
-            bytes: 80,
-            lines: 60
-        };
-        const errors = [];
-        for (const [metric, minimum] of Object.entries(thresholds)) {
-            const error = getCoverageError(metric, coverageResults.summary?.[metric], minimum);
-            if (error) {
-                errors.push(error);
-            }
-        }
-        if (errors.length) {
-            throw new Error(errors.join('\n'));
-        }
-    }
-};
-```
-
-本示例拒绝缺失或总数为零的指标；如果某项指标允许为空，应明确调整策略。没有可用输入时，`generate()` 可能直接返回 `undefined` 而不调用 `onEnd`。API 调用方必须检查返回值；普通 CLI 流程应使用干净的输出目录，并验证本次生成的非空报告。参见 [严格 CI 示例](https://github.com/cenfun/monocart-coverage-reports/blob/main/skills/monocart-coverage-reports/references/reports-and-ci.md#reject-stale-reports-and-missing-collection-in-ci)。
-
-## `onEntry` {#onentry--每个v8入口在处理前触发仅v8}
-
-每个 V8 入口在处理前触发，仅适用于 V8 数据。
-
-参数：[`entry`](/zh/reference/types#v8coverageentry)，类型为 `V8CoverageEntry`。
-
-可以在进入AST解析前改写 entry（例如对非标准语法的源码做预编译），参见 [Unparsable source](/zh/troubleshooting/common-issues#unparsable-source)
-```js
-const coverageOptions = {
-    onEntry: async (entry) => {
-        // entry.source, entry.sourceMap, entry.fake, ...
-    }
-};
+```mermaid
+flowchart TD
+    accTitle: mcr test 的 Hook 执行顺序
+    accDescr: onStart 在测试前执行。测试运行器退出并读取 JSON 结果后，执行 onTestEnd，然后发布测试结果缓存并执行 onReady。随后读取覆盖率，对每个 V8 条目执行 onEntry，生成报告后执行 onEnd。
+    onStart["onStart (CLI only)"]
+    onTestEnd["onTestEnd (mcr test only)"]
+    onReady["onReady (CLI only)"]
+    subgraph entries["针对每个 V8 条目触发，可能执行多次"]
+        onEntry["onEntry (V8 only)"]
+    end
+    onEnd["onEnd (API / CLI)"]
+    onStart -->|"运行测试，运行器退出，读取 JSON 结果"| onTestEnd
+    onTestEnd -->|"发布测试结果缓存"| onReady
+    onReady -->|"读取覆盖率文件"| onEntry
+    onEntry -->|"转换覆盖率并生成报告"| onEnd
 ```
 
 ## `onStart` {#onstart--onready--仅cli可用}
@@ -81,25 +32,6 @@ const coverageOptions = {
 export default {
     onStart: async (coverageReport) => {
         // 在启动子进程前执行准备工作
-    }
-};
-```
-
-## `onReady` {#onready}
-
-仅在使用 `mcr <command>` 时有效。`onReady(coverageReport, nodeV8CoverageDir, subprocess)` 在子进程退出后、MCR 读取 `nodeV8CoverageDir` 之前触发。用于子进程尚未写完覆盖数据、需要等待的场景。
-
-参数：
-
-- [`coverageReport`](/zh/reference/types#coveragereport)：`CoverageReport`。
-- `nodeV8CoverageDir`：`string`，Node.js V8 覆盖率目录。
-- `subprocess`：`any`，Node.js `ChildProcess` 对象。
-
-```js
-// mcr.config.js
-export default {
-    onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
-        // 等待某个信号，或先对 raw 文件做一些预处理
     }
 };
 ```
@@ -164,3 +96,92 @@ export default {
     }
 };
 ```
+
+## `onReady` {#onready}
+
+仅在使用 `mcr <command>` 时有效。`onReady(coverageReport, nodeV8CoverageDir, subprocess)` 在子进程退出后、MCR 读取 `nodeV8CoverageDir` 之前触发。用于子进程尚未写完覆盖数据、需要等待的场景。
+
+参数：
+
+- [`coverageReport`](/zh/reference/types#coveragereport)：`CoverageReport`。
+- `nodeV8CoverageDir`：`string`，Node.js V8 覆盖率目录。
+- `subprocess`：`any`，Node.js `ChildProcess` 对象。
+
+```js
+// mcr.config.js
+export default {
+    onReady: async (coverageReport, nodeV8CoverageDir, subprocess) => {
+        // 等待某个信号，或先对 raw 文件做一些预处理
+    }
+};
+```
+
+## `onEntry` {#onentry--每个v8入口在处理前触发仅v8}
+
+每个 V8 入口在处理前触发，仅适用于 V8 数据。
+
+参数：[`entry`](/zh/reference/types#v8coverageentry)，类型为 `V8CoverageEntry`。
+
+可以在进入AST解析前改写 entry（例如对非标准语法的源码做预编译），参见 [Unparsable source](/zh/troubleshooting/common-issues#unparsable-source)
+```js
+const coverageOptions = {
+    onEntry: async (entry) => {
+        // entry.source, entry.sourceMap, entry.fake, ...
+    }
+};
+```
+
+## `onEnd` {#onend--报告生成后触发}
+
+报告生成后触发。
+
+参数：[`coverageResults`](/zh/reference/types#coverageresults)，类型为 `CoverageResults | undefined`。
+
+```js
+const coverageOptions = {
+    onEnd: async (coverageResults) => {
+        // coverageResults.type, coverageResults.summary, coverageResults.files, ...
+    }
+};
+```
+
+### 覆盖率阈值 {#coverage-thresholds}
+
+典型用法：检测覆盖率是否达标，失败时抛错，让 API 调用方处理异常、CLI 返回非零状态；不要使用 `process.exit()` 提前中断清理。
+```js
+const getCoverageError = (metric, summary, minimum) => {
+    if (!summary || !(summary.total > 0)) {
+        return `${metric}: missing or empty coverage`;
+    }
+    const { pct } = summary;
+    if (typeof pct !== 'number' || !Number.isFinite(pct) || pct < minimum) {
+        return `${metric}: ${pct}%, required ${minimum}%`;
+    }
+    return '';
+};
+const coverageOptions = {
+    name: 'My Coverage Report',
+    outputDir: './coverage-reports',
+    onEnd: (coverageResults) => {
+        if (!coverageResults) {
+            throw new Error('No coverage results');
+        }
+        const thresholds = {
+            bytes: 80,
+            lines: 60
+        };
+        const errors = [];
+        for (const [metric, minimum] of Object.entries(thresholds)) {
+            const error = getCoverageError(metric, coverageResults.summary?.[metric], minimum);
+            if (error) {
+                errors.push(error);
+            }
+        }
+        if (errors.length) {
+            throw new Error(errors.join('\n'));
+        }
+    }
+};
+```
+
+本示例拒绝缺失或总数为零的指标；如果某项指标允许为空，应明确调整策略。没有可用输入时，`generate()` 可能直接返回 `undefined` 而不调用 `onEnd`。API 调用方必须检查返回值；普通 CLI 流程应使用干净的输出目录，并验证本次生成的非空报告。参见 [严格 CI 示例](https://github.com/cenfun/monocart-coverage-reports/blob/main/skills/monocart-coverage-reports/references/reports-and-ci.md#reject-stale-reports-and-missing-collection-in-ci)。
