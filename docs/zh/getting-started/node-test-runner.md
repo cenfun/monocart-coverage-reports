@@ -82,3 +82,11 @@ export default {
 - **`test` 配置在其他 CLI 命令和 API 调用中均不生效**，包括 `merge` 和 `generate()`。
 
 其他 CLI 选项参见[命令行](/zh/reference/cli#command-line)。
+
+## 现代测试工作流 {#modern-testing-workflow}
+
+对于新建的 Node.js 项目，`mcr test` 提供了一种面向未来的轻量化测试方案：基于平台原生能力，一条命令完成测试执行、V8 覆盖率采集和报告生成，减少对独立测试工具链的依赖。
+
+它基于 Node.js 自带的 [`node:test` 测试运行器](https://nodejs.org/docs/latest/api/test.html)，运行器无需额外安装；MCR 仍需按[快速开始](#quick-start)安装。测试断言也可以使用内置的 [`node:assert/strict`](https://nodejs.org/docs/latest/api/assert.html#strict-assertion-mode)。
+
+对于常规 Node.js 单元测试和集成测试，这套方案可以替代 [Mocha](/zh/integrations/frameworks-and-tools#mocha)、[AVA](/zh/integrations/frameworks-and-tools#ava)、[Tape](https://github.com/tape-testing/tape) 等工具承担的测试职责。但它不是这些框架的直接兼容替代：迁移时需要调整测试 API、断言和生命周期钩子，并评估插件、快照等特性需求。
