@@ -1,16 +1,73 @@
 /* stylelint-disable selector-class-pattern -- Theme overrides use upstream VitePress classes. */
-.VPHome {
+:root {
     --vp-c-brand-1: #a54e12;
     --vp-c-brand-2: #b65b18;
     --vp-c-brand-3: #a54e12;
+    --vp-c-brand-soft: rgb(165 78 18 / 8%);
     --vp-button-brand-bg: #a54e12;
     --vp-button-brand-hover-bg: #86400f;
     --vp-button-brand-active-bg: #71350d;
+    --vp-nav-logo-height: 28px;
+    --mcr-brand-divider: rgb(165 78 18 / 24%);
 }
 
-.dark .VPHome {
+.dark {
     --vp-c-brand-1: #f5bd8f;
     --vp-c-brand-2: #ffd1ab;
+    --vp-c-brand-soft: rgb(245 189 143 / 10%);
+    --mcr-brand-divider: rgb(245 189 143 / 24%);
+}
+
+.VPNavBarTitle .title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+/* Recolor the native separators without adding a layer above flyout menus. */
+.VPNavBar > .divider,
+.VPNavBarTitle .title {
+    --vp-c-divider: var(--mcr-brand-divider);
+    --vp-c-gutter: var(--mcr-brand-divider);
+}
+
+/* The native divider already separates the expanded mobile navigation. */
+.VPNavBar.screen-open {
+    border-bottom: 0;
+}
+
+.VPNavBarMenuLink > span,
+.VPNavBarMenuGroup > .button > .text {
+    position: relative;
+}
+
+.VPNavBarMenuLink.active > span::after,
+.VPNavBarMenuGroup.active > .button > .text::after {
+    position: absolute;
+    right: 0;
+    bottom: 12px;
+    left: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--vp-c-brand-1);
+    content: '';
+}
+
+/* Reserve the same inset for every row so changing pages does not move text. */
+.VPSidebarItem.level-1 > .item > .link {
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.VPSidebarItem.level-1.is-active > .item > .link {
+    background: var(--vp-c-brand-soft);
+    box-shadow: inset 2px 0 var(--vp-c-brand-1);
+}
+
+.Layout :is(a, button, [tabindex="0"]):focus-visible {
+    outline: 2px solid var(--vp-c-brand-1);
+    outline-offset: 3px;
 }
 
 .VPHome .VPHero {
@@ -67,6 +124,10 @@
     font-size: clamp(32px, 4vw, 48px);
     line-height: 1.2;
     letter-spacing: -1px;
+}
+
+.VPNavBarMenuGroup:hover > .button > .text {
+    color: var(--vp-c-brand-1);
 }
 
 .mcr-accent {
@@ -166,28 +227,8 @@
     outline-offset: 4px;
 }
 
-/* Keep the long project name and the prominent Skill link usable on tablets. */
-@media (max-width: 1023px) {
-    .VPNavBar .title {
-        min-width: 0;
-        flex-shrink: 1;
-    }
-
-    .VPNavBarTitle span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .VPNavBar .content {
-        flex-grow: 0;
-    }
-}
-
+/* Keep the prominent Skill link and search usable on tablets. */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .VPNavBarTitle {
-        max-width: 120px;
-    }
-
     .VPNavBarMenuLink {
         padding-right: 8px;
         padding-left: 8px;

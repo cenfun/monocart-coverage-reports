@@ -106,6 +106,10 @@ export default withMermaid(defineConfig({
         }
     },
     themeConfig: {
+        siteTitle: 'MCR',
+        logo: {
+            src: favicon, alt: 'Monocart Coverage Reports'
+        },
         socialLinks: [{
             icon: 'github', link: repository
         }],
