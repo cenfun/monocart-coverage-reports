@@ -4,7 +4,7 @@ Monocart Coverage Reports (MCR) turns JavaScript, TypeScript and CSS coverage da
 
 ## Installation {#installation}
 
-Requires [Node.js >= 22.15.0](https://nodejs.org/). In your project directory (run `npm init -y` first for a new project):
+Requires [Node.js >= 22.15.0](https://nodejs.org/).
 
 ```sh
 npm i monocart-coverage-reports -D

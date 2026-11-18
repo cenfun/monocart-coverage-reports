@@ -4,7 +4,7 @@ Monocart Coverage Reports（MCR）将 JavaScript、TypeScript 和 CSS 覆盖率�
 
 ## 安装 {#installation}
 
-需要 [Node.js >= 22.15.0](https://nodejs.org/)。在项目目录中安装（新项目先运行 `npm init -y`）：
+需要 [Node.js >= 22.15.0](https://nodejs.org/)。
 
 ```sh
 npm i monocart-coverage-reports -D
