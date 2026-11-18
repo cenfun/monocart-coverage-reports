@@ -5,7 +5,6 @@
 [![npm](https://img.shields.io/npm/v/monocart-coverage-reports)](https://www.npmjs.com/package/monocart-coverage-reports)
 ![license](https://img.shields.io/github/license/cenfun/monocart-coverage-reports)
 ![build](https://img.shields.io/github/actions/workflow/status/cenfun/monocart-coverage-reports/ci.yml)
-[![install size](https://packagephobia.com/badge?p=monocart-coverage-reports)](https://packagephobia.com/result?p=monocart-coverage-reports)
 [![npm graph](https://img.shields.io/badge/npm-graph-blue)](https://npmgraph.js.org/?q=monocart-coverage-reports)
 ![dependencies](https://img.shields.io/librariesio/github/cenfun/monocart-coverage-reports)
 [![downloads](https://devimg.vercel.app/npm/downloads/monocart-coverage-reports?label={total}%20downloads/month)](https://www.npmjs.com/package/monocart-coverage-reports)
@@ -15,50 +14,44 @@
 ## Documentation
 
 - [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [中文文档](https://cenfun.github.io/monocart-coverage-reports/zh/)
-- [Best practices](https://cenfun.github.io/monocart-coverage-reports/getting-started/best-practices.html)
-- [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
-- [Report Examples](https://cenfun.github.io/monocart-coverage-reports/getting-started/examples.html)
-- [AI Agent Skill](skills/monocart-coverage-reports/SKILL.md) (bundled with npm; usable offline)
-
-## Usage
-> **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
-
-**Upgrading from 2.x:** See the [3.x migration guide](https://cenfun.github.io/monocart-coverage-reports/migrations/migration-to-3.html).
-
-- Install as a dev dependency
-```sh
-npm i monocart-coverage-reports -D
-```
-- CLI
-```sh
-# Run tests with the Node.js test runner and collect native V8 coverage
-npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
-# Or run any Node.js command with coverage
-npx mcr node my-app.js -r v8,console-details
-```
-For more information, see [Command Line](https://cenfun.github.io/monocart-coverage-reports/reference/cli.html#command-line) and [Run Tests with `mcr test`](https://cenfun.github.io/monocart-coverage-reports/getting-started/node-test-runner.html#run-tests-with-mcr-test)
-
-- API
-```js
-import { MCR } from 'monocart-coverage-reports';
-const mcr = MCR({
-    name: 'My Coverage Report - 2024-02-28',
-    outputDir: './coverage-reports',
-    reports: ['v8', 'console-details'],
-    cleanCache: true
-});
-await mcr.add(coverageData);
-await mcr.generate();
-```
-Using `import` and load options from [config file](https://cenfun.github.io/monocart-coverage-reports/reference/configuration.html#configuration-files)
-```js
-import { CoverageReport } from 'monocart-coverage-reports';
-const mcr = new CoverageReport();
-await mcr.loadConfig();
-```
-> Both `MCR({...})` and `new CoverageReport()` create instances of the same `CoverageReport` class. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
-
-For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html#multiple-processes)
+- Getting started
+    - [Get started](https://cenfun.github.io/monocart-coverage-reports/getting-started/get-started.html)
+    - [Best practices](https://cenfun.github.io/monocart-coverage-reports/getting-started/best-practices.html)
+    - [AI Agent Skill](https://cenfun.github.io/monocart-coverage-reports/getting-started/ai-agent-skill.html)
+    - [Run tests with mcr test](https://cenfun.github.io/monocart-coverage-reports/getting-started/node-test-runner.html)
+    - [Examples](https://cenfun.github.io/monocart-coverage-reports/getting-started/examples.html)
+- Coverage Collection
+    - [V8 collection](https://cenfun.github.io/monocart-coverage-reports/coverage-collection/v8.html)
+    - [Istanbul collection](https://cenfun.github.io/monocart-coverage-reports/coverage-collection/istanbul.html)
+    - [V8 vs Istanbul](https://cenfun.github.io/monocart-coverage-reports/coverage-collection/compare-reports.html)
+- Reference
+    - [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
+    - [Type declarations](https://cenfun.github.io/monocart-coverage-reports/reference/types.html)
+    - [Configuration files](https://cenfun.github.io/monocart-coverage-reports/reference/configuration.html)
+    - [Command line](https://cenfun.github.io/monocart-coverage-reports/reference/cli.html)
+    - [Reports](https://cenfun.github.io/monocart-coverage-reports/reference/reports.html)
+    - [Filtering](https://cenfun.github.io/monocart-coverage-reports/reference/filtering.html)
+    - [Untested files](https://cenfun.github.io/monocart-coverage-reports/reference/untested-files.html)
+    - [Ignoring code](https://cenfun.github.io/monocart-coverage-reports/reference/ignoring-code.html)
+    - [Source paths](https://cenfun.github.io/monocart-coverage-reports/reference/source-path.html)
+    - [Merging reports](https://cenfun.github.io/monocart-coverage-reports/reference/merging.html)
+    - [Multiple processes](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html)
+    - [Hooks](https://cenfun.github.io/monocart-coverage-reports/reference/hooks.html)
+    - [V8 coverage data](https://cenfun.github.io/monocart-coverage-reports/reference/coverage-data.html)
+    - [CDPClient](https://cenfun.github.io/monocart-coverage-reports/reference/cdp-client.html)
+- Integrations
+    - [Frameworks and tools](https://cenfun.github.io/monocart-coverage-reports/integrations/frameworks-and-tools.html)
+    - [Coverage services](https://cenfun.github.io/monocart-coverage-reports/integrations/coverage-services.html)
+    - [Integrate with your framework](https://cenfun.github.io/monocart-coverage-reports/integrations/integrate-with-your-framework.html)
+- Troubleshooting
+    - [Common issues](https://cenfun.github.io/monocart-coverage-reports/troubleshooting/common-issues.html)
+    - [Sourcemaps and debugging](https://cenfun.github.io/monocart-coverage-reports/troubleshooting/sourcemaps.html)
+    - [CSS coverage issues](https://cenfun.github.io/monocart-coverage-reports/troubleshooting/css-coverage-issues.html)
+- Migration and upgrades
+    - [Migrating to 3.x](https://cenfun.github.io/monocart-coverage-reports/migrations/migration-to-3.html)
+- More
+    - [Contributing](https://cenfun.github.io/monocart-coverage-reports/more/contributing.html)
+    - [Thanks](https://cenfun.github.io/monocart-coverage-reports/more/thanks.html)
 
 ## License
 
