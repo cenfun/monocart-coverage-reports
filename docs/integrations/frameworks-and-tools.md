@@ -24,12 +24,6 @@ For collection code, see [Collect V8 coverage with Puppeteer](/coverage-collecti
 - [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
 - [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) - Example for Jest (unit) + Puppeteer (e2e) + Codecov
 
-## [c8](https://github.com/bcoe/c8) {#c8}
-- c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)
-```sh
-c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
-```
-
 ## [CodeceptJS](https://github.com/codeceptjs/CodeceptJS) {#codeceptjs}
 - CodeceptJS is a [BDD](https://codecept.io/bdd/) + [AI](https://codecept.io/ai/) testing framework for e2e testing, it has integrated `MCR` since [v3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15), see [plugins/coverage](https://codecept.io/plugins/#coverage)
 
@@ -43,9 +37,6 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 ## [Vitest](https://github.com/vitest-dev/vitest) {#vitest}
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Vitest custom provider module for coverage reports
 - [merge-code-coverage-vitest](https://github.com/cenfun/merge-code-coverage-vitest) - Example for merging code coverage (Vitest unit + Playwright e2e sharding)
-
-## [Node Test Runner](https://nodejs.org/docs/latest/api/test.html) {#node-test-runner}
-- [node-monocart-coverage](https://github.com/cenfun/node-monocart-coverage) - Custom reporter for Node test runner for coverage
 
 ## [Cypress](https://github.com/cypress-io/cypress) {#cypress}
 - [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - Cypress plugin for coverage reports
@@ -61,11 +52,6 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 
 ## [Selenium Webdriver](https://github.com/seleniumhq/selenium) {#selenium-webdriver}
 - [selenium-webdriver-coverage](https://github.com/cenfun/selenium-webdriver-coverage) - Example for Selenium Webdriver V8 coverage reports
-
-## [Mocha](https://github.com/mochajs/mocha) {#mocha}
-```sh
-mcr mocha ./test/**/*.js
-```
 
 ## [TypeScript](https://github.com/microsoft/typescript) {#typescript}
 
@@ -83,7 +69,33 @@ cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr ts-node ./sr
 cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test/**/*.ts
 ```
 
+## [c8](https://github.com/bcoe/c8) {#c8}
+- c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)
+```sh
+c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
+```
+
+For Node.js's built-in test runner, we recommend using `mcr test` instead of a separate coverage collection workflow; see [Run tests with mcr test](/getting-started/node-test-runner#run-tests-with-mcr-test).
+
+## [Node Test Runner](https://nodejs.org/docs/latest/api/test.html) {#node-test-runner}
+- [node-monocart-coverage](https://github.com/cenfun/node-monocart-coverage) - Custom reporter for Node test runner for coverage
+
+We recommend using `mcr test` directly instead of configuring a separate coverage reporter; see [Run tests with mcr test](/getting-started/node-test-runner#run-tests-with-mcr-test).
+
+## [Mocha](https://github.com/mochajs/mocha) {#mocha}
+```sh
+mcr mocha ./test/**/*.js
+```
+
+For Node.js unit and integration tests, we recommend using `mcr test` instead; see [Run tests with mcr test](/getting-started/node-test-runner#run-tests-with-mcr-test).
+
 ## [AVA](https://github.com/avajs/ava) {#ava}
 ```sh
 mcr ava
 ```
+
+For Node.js unit and integration tests, we recommend using `mcr test` instead; see [Run tests with mcr test](/getting-started/node-test-runner#run-tests-with-mcr-test).
+
+---
+
+<small>Note: Replacing a test runner with `mcr test` means migrating to `node:test`, not just changing the command; test APIs, assertions and hooks may need adapting.</small>

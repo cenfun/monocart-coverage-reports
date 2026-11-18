@@ -24,12 +24,6 @@
 - [jest-puppeteer-coverage](https://github.com/cenfun/jest-puppeteer-coverage) - Example for Jest puppeteer coverage
 - [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) - Example for Jest (unit) + Puppeteer (e2e) + Codecov
 
-## [c8](https://github.com/bcoe/c8) {#c8}
-- c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)
-```sh
-c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
-```
-
 ## [CodeceptJS](https://github.com/codeceptjs/CodeceptJS) {#codeceptjs}
 - CodeceptJS is a [BDD](https://codecept.io/bdd/) + [AI](https://codecept.io/ai/) testing framework for e2e testing, it has integrated `MCR` since [v3.5.15](https://github.com/codeceptjs/CodeceptJS/releases/tag/3.5.15), see [plugins/coverage](https://codecept.io/plugins/#coverage)
 
@@ -43,9 +37,6 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 ## [Vitest](https://github.com/vitest-dev/vitest) {#vitest}
 - [vitest-monocart-coverage](https://github.com/cenfun/vitest-monocart-coverage) - Vitest custom provider module for coverage reports
 - [merge-code-coverage-vitest](https://github.com/cenfun/merge-code-coverage-vitest) - Example for merging code coverage (Vitest unit + Playwright e2e sharding)
-
-## [Node Test Runner](https://nodejs.org/docs/latest/api/test.html) {#node-test-runner}
-- [node-monocart-coverage](https://github.com/cenfun/node-monocart-coverage) - Custom reporter for Node test runner for coverage
 
 ## [Cypress](https://github.com/cypress-io/cypress) {#cypress}
 - [cypress-monocart-coverage](https://github.com/cenfun/cypress-monocart-coverage) - Cypress plugin for coverage reports
@@ -61,11 +52,6 @@ c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
 
 ## [Selenium Webdriver](https://github.com/seleniumhq/selenium) {#selenium-webdriver}
 - [selenium-webdriver-coverage](https://github.com/cenfun/selenium-webdriver-coverage) - Example for Selenium Webdriver V8 coverage reports
-
-## [Mocha](https://github.com/mochajs/mocha) {#mocha}
-```sh
-mcr mocha ./test/**/*.js
-```
 
 ## [TypeScript](https://github.com/microsoft/typescript) {#typescript}
 
@@ -84,7 +70,33 @@ cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test
 ```
 
 
+## [c8](https://github.com/bcoe/c8) {#c8}
+- c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)
+```sh
+c8 --experimental-monocart --reporter=v8 --reporter=console-details node foo.js
+```
+
+如果使用 Node.js 内置测试运行器，推荐使用 `mcr test` 代替独立的覆盖率采集流程，参见[使用 mcr test 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)。
+
+## [Node Test Runner](https://nodejs.org/docs/latest/api/test.html) {#node-test-runner}
+- [node-monocart-coverage](https://github.com/cenfun/node-monocart-coverage) - Custom reporter for Node test runner for coverage
+
+推荐直接使用 `mcr test`，无需单独配置覆盖率 reporter，参见[使用 mcr test 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)。
+
+## [Mocha](https://github.com/mochajs/mocha) {#mocha}
+```sh
+mcr mocha ./test/**/*.js
+```
+
+对于 Node.js 单元测试和集成测试，推荐使用 `mcr test` 代替，参见[使用 mcr test 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)。
+
 ## [AVA](https://github.com/avajs/ava) {#ava}
 ```sh
 mcr ava
 ```
+
+对于 Node.js 单元测试和集成测试，推荐使用 `mcr test` 代替，参见[使用 mcr test 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)。
+
+---
+
+<small>注：使用 `mcr test` 替代测试运行器，是指迁移到 `node:test`，并非只替换命令；原框架的测试 API、断言和钩子可能需要调整。</small>
