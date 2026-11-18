@@ -183,7 +183,7 @@ Memory threshold in MB; force GC at critical stages when JavaScript heap usage (
 - **Type:** `"off" | "error" | "info" | "debug"`
 - **Default:** `"info"`
 
-Logging level ([`LoggingType`](/reference/types#loggingtype)). Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#sourcemaps-and-css).
+Logging level ([`LoggingType`](/reference/types#loggingtype)). Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Sourcemaps and debugging](/troubleshooting/sourcemaps#sourcemaps-and-debugging).
 
 ### `sourceMap` {#sourcemap}
 

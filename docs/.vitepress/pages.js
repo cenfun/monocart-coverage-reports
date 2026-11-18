@@ -140,8 +140,14 @@ export const pages = [
     ],
     [
         'troubleshooting/sourcemaps',
-        'Sourcemaps and CSS',
-        'Sourcemap 与 CSS',
+        'Sourcemaps and debugging',
+        'Sourcemap 与调试',
+        'troubleshooting'
+    ],
+    [
+        'troubleshooting/css-coverage-issues',
+        'CSS coverage issues',
+        'CSS 覆盖率问题',
         'troubleshooting'
     ],
     [

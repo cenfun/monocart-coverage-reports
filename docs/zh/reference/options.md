@@ -183,7 +183,7 @@
 - **类型:** `"off" | "error" | "info" | "debug"`
 - **默认值:** `"info"`
 
-日志级别（[`LoggingType`](/zh/reference/types#loggingtype)）。设为 `"debug"` 会保留原始缓存并输出 sourcemap，便于排查问题。参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#sourcemaps-and-css)。
+日志级别（[`LoggingType`](/zh/reference/types#loggingtype)）。设为 `"debug"` 会保留原始缓存并输出 sourcemap，便于排查问题。参见 [Sourcemap 与调试](/zh/troubleshooting/sourcemaps#sourcemaps-and-debugging)。
 
 ### `sourceMap` {#sourcemap}
 

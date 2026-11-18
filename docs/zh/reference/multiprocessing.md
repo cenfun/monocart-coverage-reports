@@ -1,5 +1,5 @@
 # 多进程 {#multiple-processes}
-> 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](/zh/troubleshooting/sourcemaps#sourcemaps-and-css)，或者使用了`raw`报告
+> 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](/zh/troubleshooting/sourcemaps#sourcemaps-and-debugging)，或者使用了`raw`报告
 
 ## 流程概览 {#workflow}
 
