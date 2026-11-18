@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vitepress';
-import { withMermaid } from 'vitepress-plugin-mermaid';
+import { mermaidMarkdown } from './mermaid.js';
 import { pages } from './pages.js';
 import { reportServer } from './report-server.js';
 import { typeDeclarations, typeDeclarationsReload } from './type-declarations.js';
@@ -65,26 +65,18 @@ const theme = (zh) => {
     };
 };
 
-export default withMermaid(defineConfig({
+export default defineConfig({
     title: 'Monocart Coverage Reports',
     description: 'Native V8 coverage for JavaScript, TypeScript & CSS. 15+ built-in reports, Istanbul & custom reports. MCR 3.x: AI Agent Skills, mcr test with the Node.js test runner, source maps, coverage merging & CI integration.',
     markdown: {
         config(md) {
+            md.use(mermaidMarkdown);
             md.use(typeDeclarations);
         }
     },
-    // Keep Mermaid's automatic scanner away from the initially empty Vue containers.
-    mermaidPlugin: {
-        class: 'mcr-mermaid'
-    },
-    mermaid: {
-        fontFamily: 'var(--vp-font-family-base)',
-        securityLevel: 'strict',
-        theme: 'default',
-        flowchart: {
-            htmlLabels: false,
-            useMaxWidth: true
-        }
+    // The full sidebar is visible on most pages; do not fetch every linked page.
+    router: {
+        prefetchLinks: false
     },
     base: '/monocart-coverage-reports/',
     outDir: '../.temp/site',
@@ -182,8 +174,16 @@ export default withMermaid(defineConfig({
     ],
     // Emit page-specific metadata into static HTML: social crawlers need no JavaScript.
     transformHead({
-        page, title, description, siteData
+        page, title, description, siteData, head
     }) {
+        // VitePress 1.x also preloads direct dynamic imports from the app chunk.
+        // Keep the diagram engine genuinely on demand, not merely code-split.
+        for (let i = head.length - 1; i >= 0; i--) {
+            const [tag, attrs] = head[i];
+            if (tag === 'link' && ['modulepreload', 'prefetch'].includes(attrs?.rel) && attrs.href?.includes('/mermaid-renderer.')) {
+                head.splice(i, 1);
+            }
+        }
         const route = page.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '.html');
         const url = new URL(`${siteData.base}${route}`, siteOrigin).href;
         return [
@@ -223,4 +223,4 @@ export default withMermaid(defineConfig({
             }
         }
     }
-}));
+});
