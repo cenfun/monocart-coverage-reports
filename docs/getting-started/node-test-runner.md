@@ -46,7 +46,7 @@ npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=sp
 
 ## Configuration {#configuration}
 
-For repeated runs, save the test targets and coverage options in `mcr.config.js` (ESM; use `"type": "module"` in `package.json`, or name the config `mcr.config.mjs`):
+For repeated runs, save the test targets and coverage options in `mcr.config.js`. This example uses ESM exports; for CommonJS configuration, see [Configuration module formats](/reference/configuration#module-format):
 
 ```js
 export default {

@@ -2,7 +2,7 @@
 
 ## 最小配置 {#minimal-config}
 
-在项目根目录创建 `mcr.config.mjs`。使用 `.mjs` 可以直接使用 ESM 语法，不依赖 `package.json` 中的 `"type"` 设置：
+在项目根目录创建 `mcr.config.js`，下面使用 ESM 导出语法；CommonJS 配置参见[模块格式](#module-format)：
 
 ```js
 export default {
@@ -12,13 +12,19 @@ export default {
 };
 ```
 
-然后在项目根目录运行（将 `demo.mjs` 替换为自己的脚本，或使用[快速开始示例](/zh/getting-started/get-started#first-report)）：
+然后在项目根目录运行（将 `demo.js` 替换为自己的脚本，或使用[快速开始示例](/zh/getting-started/get-started#first-report)）：
 
 ```sh
-npx mcr node demo.mjs
+npx mcr node demo.js
 ```
 
 CLI 会自动查找配置文件。全部可配置字段见[配置选项](/zh/reference/options#configuration-options)，输出格式见[报告](/zh/reference/reports#reports)。
+
+## 模块格式 {#module-format}
+
+MCR 同时支持 ESM 和 CommonJS 配置。ESM 配置使用 `export default`（例如 `package.json` 设置了 `"type": "module"` 的 `.js` 文件）；CommonJS 配置使用 `module.exports`（例如 `.cjs` 文件，或 `"type": "commonjs"` 项目中的 `.js` 文件）。
+
+MCR 的 ESM-only 不会改变项目中 `.js` 文件的模块格式。CommonJS 脚本可以通过 `import()` 异步加载 MCR，无需将整个项目改为 ESM，参见[迁移指南](/zh/migrations/migration-to-3)。
 
 ## API 加载配置 {#api}
 

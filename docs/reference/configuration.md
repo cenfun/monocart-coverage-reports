@@ -2,7 +2,7 @@
 
 ## Minimal config {#minimal-config}
 
-Create `mcr.config.mjs` in your project root. The `.mjs` extension allows ESM syntax regardless of the `"type"` setting in `package.json`:
+Create `mcr.config.js` in your project root. This example uses ESM exports; for CommonJS configuration, see [Module format](#module-format):
 
 ```js
 export default {
@@ -12,13 +12,19 @@ export default {
 };
 ```
 
-Then run from the project root (replace `demo.mjs` with your script, or use the [quick-start example](/getting-started/get-started#first-report)):
+Then run from the project root (replace `demo.js` with your script, or use the [quick-start example](/getting-started/get-started#first-report)):
 
 ```sh
-npx mcr node demo.mjs
+npx mcr node demo.js
 ```
 
 The CLI discovers config files automatically. See [Configuration options](/reference/options#configuration-options) for all fields and [Reports](/reference/reports#reports) for output formats.
+
+## Module format {#module-format}
+
+MCR supports both ESM and CommonJS configuration. Use `export default` for ESM (for example, `.js` files with `"type": "module"` in `package.json`), or `module.exports` for CommonJS (for example, `.cjs` files, or `.js` files with `"type": "commonjs"`).
+
+MCR being ESM-only does not change the module format of your project's `.js` files. CommonJS scripts can load MCR with asynchronous `import()` without converting the whole project to ESM; see the [migration guide](/migrations/migration-to-3).
 
 ## Load config with the API {#api}
 

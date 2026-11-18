@@ -23,7 +23,7 @@ const report = MCR({
 });
 ```
 
-After, in an `.mjs` file or a project with `"type": "module"`:
+After, using ES module syntax:
 
 ```js
 import MCR from 'monocart-coverage-reports';
@@ -76,7 +76,7 @@ import type { CoverageReportOptions } from 'monocart-coverage-reports';
 Both ESM and CommonJS configuration files remain supported:
 
 ```js
-// mcr.config.mjs, or mcr.config.js in an ESM project
+// mcr.config.js in an ESM project
 export default {
     reports: ['v8', 'console-summary']
 };

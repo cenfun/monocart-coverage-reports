@@ -46,7 +46,7 @@ npx mcr -c ./mcr.config.js -- test "../tests/**/*.test.js" -- --test-reporter=sp
 
 ## 配置文件 {#configuration}
 
-对于需要反复执行的测试，可将测试目标和覆盖率选项保存到 `mcr.config.js`（ESM；需在 `package.json` 设置 `"type": "module"`，或将配置命名为 `mcr.config.mjs`）：
+对于需要反复执行的测试，可将测试目标和覆盖率选项保存到 `mcr.config.js`。下面使用 ESM 导出语法；CommonJS 配置参见[配置文件的模块格式](/zh/reference/configuration#module-format)：
 
 ```js
 export default {

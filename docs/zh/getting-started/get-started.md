@@ -10,11 +10,11 @@ Monocart Coverage Reports（MCR）将 JavaScript、TypeScript 和 CSS 覆盖率�
 npm i monocart-coverage-reports -D
 ```
 
-从 2.x 升级？参见[迁移指南](/zh/migrations/migration-to-3)。
+**自 v3 起，MCR 为 ESM-only。** CommonJS 项目可以通过 `import()` 异步导入，接入方式及 2.x 升级说明参见[迁移指南](/zh/migrations/migration-to-3)。
 
 ## API {#api}
 
-已有采集数据时，在 ESM 脚本（`.mjs`）中接上以下代码生成报告：
+已有采集数据时，接上以下代码生成报告：
 
 ```js
 import { MCR } from 'monocart-coverage-reports';
@@ -48,7 +48,7 @@ console.log(coverageResults.reportPath);
 
 ### 生成第一份报告 {#first-report}
 
-如果还没有测试文件，也可以创建 `demo.mjs`，先用简单脚本体验覆盖率采集：
+如果还没有测试文件，也可以创建 `demo.js`，先用简单脚本体验覆盖率采集：
 
 ```js
 console.log('Hello, MCR!');
@@ -57,11 +57,11 @@ console.log('Hello, MCR!');
 运行并采集覆盖率：
 
 ```sh
-npx mcr node demo.mjs -r v8,console-summary -o ./coverage-reports
+npx mcr node demo.js -r v8,console-summary -o ./coverage-reports
 ```
 
 用浏览器打开 `./coverage-reports/index.html`，终端也会输出覆盖率概要。请使用专用输出目录：[默认会清理之前的报告输出](/zh/reference/options#clean)。
 
-将 `node demo.mjs` 替换为自己的 Node.js 命令即可。更多用法参见 [CLI 参数](/zh/reference/cli)。
+将 `node demo.js` 替换为自己的 Node.js 命令即可。更多用法参见 [CLI 参数](/zh/reference/cli)。
 
 更多内容：[报告格式](/zh/reference/reports)、[框架集成](/zh/integrations/frameworks-and-tools)和[报告示例](/zh/getting-started/examples)。

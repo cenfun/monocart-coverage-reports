@@ -10,11 +10,11 @@ Requires [Node.js >= 22.15.0](https://nodejs.org/). In your project directory (r
 npm i monocart-coverage-reports -D
 ```
 
-Upgrading from 2.x? See the [migration guide](/migrations/migration-to-3).
+**MCR is ESM-only since v3.** CommonJS projects can load it with asynchronous `import()`; see the [migration guide](/migrations/migration-to-3) for usage and 2.x upgrades.
 
 ## API {#api}
 
-To generate reports from collected data, use the following in an ESM script (`.mjs`) after your collection step:
+To generate reports from collected data, use the following after your collection step:
 
 ```js
 import { MCR } from 'monocart-coverage-reports';
@@ -48,7 +48,7 @@ For projects using Node.js's built-in test runner, start with [Run tests with mc
 
 ### Generate your first report {#first-report}
 
-If you do not have test files yet, create `demo.mjs` to try coverage with a simple script:
+If you do not have test files yet, create `demo.js` to try coverage with a simple script:
 
 ```js
 console.log('Hello, MCR!');
@@ -57,11 +57,11 @@ console.log('Hello, MCR!');
 Run it with coverage:
 
 ```sh
-npx mcr node demo.mjs -r v8,console-summary -o ./coverage-reports
+npx mcr node demo.js -r v8,console-summary -o ./coverage-reports
 ```
 
 Open `./coverage-reports/index.html` in your browser; the terminal also prints a coverage summary. Use a dedicated output directory: [previous report output is cleaned by default](/reference/options#clean).
 
-Replace `node demo.mjs` with your own Node.js command. See [CLI options](/reference/cli) for more.
+Replace `node demo.js` with your own Node.js command. See [CLI options](/reference/cli) for more.
 
 For more, explore [report formats](/reference/reports), [framework integrations](/integrations/frameworks-and-tools) and [report examples](/getting-started/examples).
