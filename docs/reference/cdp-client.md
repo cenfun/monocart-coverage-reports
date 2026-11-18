@@ -1,4 +1,4 @@
-# CDPClient {#collecting-v8-coverage-data-with-cdpclient-api}
+# CDPClient {#cdpclient}
 
 `CDPClient` is MCR’s coverage collection client based on the [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/). It connects to a Node.js process or Chromium-based browser with debugging enabled, or reuses an existing Playwright/Puppeteer CDP session, to start and stop JavaScript coverage collection and, in browsers, CSS coverage collection. Pass the collected data to `mcr.add()` and then call `mcr.generate()` to generate reports; `CDPClient` handles collection, not report generation.
 
@@ -64,7 +64,7 @@ await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
-## Selenium WebDriver {#selenium}
+## Selenium WebDriver {#selenium-webdriver}
 
 Use a [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) WebSocket (Chrome/Edge).
 

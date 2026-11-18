@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 
-# 报告 {#available-reports}
+# 报告 {#reports}
 
 ## 内置报告 {#built-in-reports}
 
@@ -129,7 +129,7 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 
 #### `raw` {#raw}
 
-只是保存原始覆盖率数据, 用于使用`inputDir`参数来导入多个原始数据进行合并报告。参见 [合并覆盖率报告](/zh/reference/merging#merge-coverage-reports)
+只是保存原始覆盖率数据, 用于使用`inputDir`参数来导入多个原始数据进行合并报告。参见 [合并覆盖率报告](/zh/reference/merging#merging-reports)
 
 ## 自定义报告 {#custom-reports}
 

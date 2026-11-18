@@ -1,6 +1,6 @@
-# V8 覆盖率数据 {#v8-coverage-data-api}
+# V8 覆盖率数据 {#v8-coverage-data}
 
-本页说明运行时采集的原始 V8 数据与 MCR 覆盖率条目的关系。公共 TypeScript 类型统一在[类型声明](/zh/reference/types#types)页面维护。
+本页说明运行时采集的原始 V8 数据与 MCR 覆盖率条目的关系。公共 TypeScript 类型统一在[类型声明](/zh/reference/types#type-declarations)页面维护。
 
 ## MCR 覆盖率条目 {#coverage-entries}
 
@@ -14,7 +14,7 @@
 - `empty`：通过 `all` 选项添加、没有真实覆盖率数据的条目，显示为 0% 覆盖。
 - `fake`：标记并非原始源码的内容（例如由 `.ts`/`.jsx` 编译而来），AST 解析器会跳过 fake 源的覆盖率提取。
 
-可在 [`onEntry`](/zh/reference/hooks#onentry--每个v8入口在处理前触发仅v8) 钩子中读取或修改条目。未测试文件的处理方式参见[未测试文件](/zh/reference/untested-files#adding-empty-coverage-for-untested-files)。
+可在 [`onEntry`](/zh/reference/hooks#onentry) 钩子中读取或修改条目。未测试文件的处理方式参见[未测试文件](/zh/reference/untested-files#untested-files)。
 
 ## 原始 V8 数据格式 {#raw-v8-data}
 
@@ -75,7 +75,7 @@ export type V8CoverageData = ScriptCoverage[];
 | Opera | V8 | 2.16% | ✅ | 使用 Chromium/V8 的版本，不包括 Opera Mini |
 | Samsung Internet | V8 | 2.05% | ✅ | Android 上使用 Chromium/V8 的版本 |
 
-百分比按浏览器品牌跨平台统计；✅ 仅适用于采用 V8、且有可用覆盖率/CDP 接口的版本，不代表该品牌所有平台或版本均支持（例如使用 WebKit 的 iOS 版本）。此标记也不表示所有浏览器均已通过 MCR 测试。不要将这些品牌份额直接相加，当作 V8 引擎的市场份额。采集方式参见[浏览器采集](/zh/coverage-collection/v8#browser)和 [CDPClient](/zh/reference/cdp-client#collecting-v8-coverage-data-with-cdpclient-api)。
+百分比按浏览器品牌跨平台统计；✅ 仅适用于采用 V8、且有可用覆盖率/CDP 接口的版本，不代表该品牌所有平台或版本均支持（例如使用 WebKit 的 iOS 版本）。此标记也不表示所有浏览器均已通过 MCR 测试。不要将这些品牌份额直接相加，当作 V8 引擎的市场份额。采集方式参见[浏览器采集](/zh/coverage-collection/v8#browser)和 [CDPClient](/zh/reference/cdp-client#cdpclient)。
 
 ### 非浏览器运行时 {#non-browser-runtimes}
 
@@ -83,7 +83,7 @@ export type V8CoverageData = ScriptCoverage[];
 
 | 运行时 | 引擎 | 调查使用率 | 原生 V8 采集（MCR） | MCR 说明 |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率；MCR 要求 Node.js >= 22.15.0。参见 [Node.js 采集](/zh/coverage-collection/v8#collecting-v8-coverage-data-from-nodejs)。 |
+| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率；MCR 要求 Node.js >= 22.15.0。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
 | Bun | JavaScriptCore | 20.83% | ❌ | 已部分实现 V8 兼容的覆盖率接口，但与 MCR 的兼容性仍未确认。进展参见 [issue #22128](https://github.com/oven-sh/bun/issues/22128)；[#30968](https://github.com/oven-sh/bun/issues/30968) 已作为重复 issue 关闭。 |
 | Deno | V8 | 11.17% | ❌ | 无法导出 MCR 所需的完整 raw V8 覆盖率数据，缺少匹配的转译后源码和 sourcemap。参见 [issue #23359](https://github.com/denoland/deno/issues/23359)。 |
 

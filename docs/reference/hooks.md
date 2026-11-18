@@ -1,13 +1,13 @@
 # Hooks {#hooks}
 
-## Workflow {#test-end-workflow}
+## Lifecycle {#lifecycle}
 
-The diagram shows the normal `mcr test` flow with configured hooks and usable test results and coverage. Each hook is awaited. `onTestEnd` runs once before `onReady`; `onEntry` runs for each V8 entry and may run multiple times.
+Hooks provide extension points for command execution, test-result collection, coverage processing and report generation. The diagram uses the normal `mcr test` lifecycle to show their order and scope. Hooks are optional, and configured asynchronous hooks are awaited; refer to the labels for CLI-only, test-only and V8-only restrictions.
 
 ```mermaid
 flowchart TD
-    accTitle: Hook order for mcr test
-    accDescr: onStart runs before tests. After the test runner exits and JSON results are read, onTestEnd runs before result publication and onReady. Coverage entries are then processed through onEntry, followed by report generation and onEnd.
+    accTitle: Hook lifecycle
+    accDescr: The mcr test lifecycle proceeds through onStart, onTestEnd, onReady, onEntry for each V8 entry, and onEnd after report generation. Each hook is labeled with its applicable scope.
     onStart["onStart (CLI only)"]
     onTestEnd["onTestEnd (mcr test only)"]
     onReady["onReady (CLI only)"]
@@ -21,7 +21,7 @@ flowchart TD
     onEntry -->|"Convert coverage and generate reports"| onEnd
 ```
 
-## `onStart` {#onstart--onready--cli-only}
+## `onStart` {#onstart}
 
 Only available when using `mcr <command>`. `onStart(coverageReport)` runs before the child process is spawned.
 
@@ -36,7 +36,7 @@ export default {
 };
 ```
 
-## `onTestEnd` {#ontestend--mcr-test-only}
+## `onTestEnd` {#ontestend}
 
 Available with `mcr test` only. See [Run tests with mcr test](/getting-started/node-test-runner#run-tests-with-mcr-test) for configuration and usage.
 
@@ -44,7 +44,7 @@ Available with `mcr test` only. See [Run tests with mcr test](/getting-started/n
 
 Parameter: [`testResults`](/reference/types#testresults), of type `TestResults`.
 
-### Usage {#test-end-usage}
+### Usage {#usage}
 
 `mcr test` always collects structured test results using an internal JSON reporter, preserving terminal output and user-specified reporter/destination pairs. `onTestEnd` is optional; omitting it does not disable result collection. To retain results for later use, enable `raw` reports or debug logging; normal cache cleanup still applies.
 
@@ -61,7 +61,7 @@ export default {
 };
 ```
 
-### Result structure {#test-results}
+### Result structure {#result-structure}
 
 - `id`: a collection ID generated with the same `Util.uid()` mechanism as coverage cache data.
 - `framework`: `'node:test'`.
@@ -69,11 +69,11 @@ export default {
 - `summary`: `{ tests, suites, passed, failed, cancelled, skipped, todo, duration, success }`; `null` if incomplete. Counts come from the runner's final summary; `tests` excludes suites. Durations are in milliseconds.
 - `tests`: completed test and suite records, including nested tests: `{ name, type, nesting, testNumber, file?, line?, column?, duration, status, skip?, todo?, error? }`. Status is `passed`, `failed`, `cancelled`, `skipped`, or `todo`. Errors always include string `name` and `message` (defaults: `'Error'` and `''`). Other own enumerable data properties are copied only when their values are strings, booleans, finite numbers, or `null`; BigInts become decimal strings. Getters/setters, objects/arrays, functions, symbols, `undefined`, `NaN`, and infinities are omitted without recursive traversal. Apart from the two fixed fields, inherited/non-enumerable properties are not collected, so normal `stack` is omitted and fields inside `cause` are not flattened. Explicitly enumerable string `stack` is copied like any other string. Reserved keys `__proto__`, `constructor`, and `prototype` are excluded; the fixed fields cannot be overwritten by extra properties.
 
-### Failure handling {#test-end-errors}
+### Failure handling {#failure-handling}
 
 Test failures, incomplete/missing/invalid reports, and hook errors keep the command nonzero. An incomplete report is delivered with `complete: false`; a missing or invalid JSON report cannot be delivered and is logged as a collection error. A nonzero `process.exitCode` set by `onTestEnd` cannot be cleared by later coverage hooks. Hook/collection errors do not prevent MCR from attempting coverage generation. If the hook throws, test results are not published or exported, rather than falling back to possibly unredacted data. Test results are independent of coverage, so this hook can run even if coverage generation later fails.
 
-### Cache and export {#test-results-cache}
+### Cache and export {#cache-and-export}
 
 Test results use the same ID and filename mechanism as coverage cache data: `outputDir/.cache/test-results-<id>.json`, with the same `id` stored in the JSON. The reporter streams records into `.json.tmp` with its collection ID already included. A small `.meta.tmp` completion record verifies the final byte count. Without a hook, MCR reads only this completion record and renames the JSON, without loading or rewriting the full report. With a hook, MCR reads the full result object and publishes its mutations after the hook completes. Temporary output and metadata are removed before coverage generation. Finalized JSON follows the coverage cache lifecycle: normally cleaned after generation, retained in debug mode, or exported by `raw` (including ZIP). It is not embedded in HTML/coverage JSON reports, and importing raw data does not yet merge test results. Save results yourself if needed; files written into `outputDir` by this hook may be removed by the subsequent coverage cleanup when `clean: true`.
 
@@ -116,7 +116,7 @@ export default {
 };
 ```
 
-## `onEntry` {#onentry--before-each-v8-entry-is-processed-v8-only}
+## `onEntry` {#onentry}
 
 Runs before each V8 entry is processed (V8 only).
 
@@ -131,7 +131,7 @@ const coverageOptions = {
 };
 ```
 
-## `onEnd` {#onend--after-the-report-is-generated}
+## `onEnd` {#onend}
 
 Runs after the report is generated.
 

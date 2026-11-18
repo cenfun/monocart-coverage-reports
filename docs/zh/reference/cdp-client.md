@@ -1,4 +1,4 @@
-# CDPClient {#collecting-v8-coverage-data-with-cdpclient-api}
+# CDPClient {#cdpclient}
 
 `CDPClient` 是 MCR 基于 [Chrome DevTools Protocol（CDP）](https://chromedevtools.github.io/devtools-protocol/) 提供的覆盖率采集客户端。它可以连接已开启调试功能的 Node.js 进程或 Chromium 内核浏览器，也可以复用 Playwright/Puppeteer 已有的 CDP 会话，用于开启、停止并获取 JavaScript 覆盖率，以及浏览器中的 CSS 覆盖率。采集到的数据交给 `mcr.add()`，再调用 `mcr.generate()` 生成报告；`CDPClient` 负责采集，不直接生成报告。
 
@@ -64,7 +64,7 @@ await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
 
-## Selenium WebDriver {#selenium}
+## Selenium WebDriver {#selenium-webdriver}
 
 结合使用 [Selenium WebDriver](https://www.selenium.dev/documentation/webdriver/) WebSocket（仅支持 Chrome/Edge 浏览器）。
 

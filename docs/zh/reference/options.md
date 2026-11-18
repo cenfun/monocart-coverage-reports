@@ -1,10 +1,10 @@
-# 配置选项 {#options}
+# 配置选项 {#configuration-options}
 
 按功能分组查阅配置，每个选项均提供独立锚点，可从右侧目录直接定位。通用选项对应 [`CoverageReportOptions`](/zh/reference/types#coveragereportoptions)；CLI 与测试运行器专属选项对应 [`McrCliOptions`](/zh/reference/types#mcrclioptions)。
 
 - 默认配置：[lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
-- 类型声明：[lib/index.d.ts](/zh/reference/types#types)
-- 配置加载与示例：[配置文件](/zh/reference/configuration#config-file)
+- 类型声明：[lib/index.d.ts](/zh/reference/types#type-declarations)
+- 配置加载与示例：[配置文件](/zh/reference/configuration#configuration-files)
 
 ## 报告输出 {#report-output}
 
@@ -20,7 +20,7 @@
 - **类型:** `string | (string | ReportDescription)[]`
 - **默认值:** `""` (自动)
 
-生成哪些报告，各报告的选项类型参见 [`ReportDescription`](/zh/reference/types#reportdescription)。V8 数据默认 `"v8"`，Istanbul 数据默认 `"html"`。参见 [所有支持的报告类型](/zh/reference/reports#available-reports)。
+生成哪些报告，各报告的选项类型参见 [`ReportDescription`](/zh/reference/types#reportdescription)。V8 数据默认 `"v8"`，Istanbul 数据默认 `"html"`。参见 [所有支持的报告类型](/zh/reference/reports#reports)。
 
 ### `outputDir` {#outputdir}
 
@@ -57,7 +57,7 @@
 - **类型:** `string | string[]`
 - **默认值:** `null`
 
-导入的原始覆盖率数据目录（用于 [合并](/zh/reference/merging#merge-coverage-reports)）。
+导入的原始覆盖率数据目录（用于 [合并](/zh/reference/merging#merging-reports)）。
 
 ### `dataDir` {#datadir}
 
@@ -78,7 +78,7 @@
 - **类型:** `object | function`
 - **默认值:** `null`
 
-修改源文件路径，参见 [使用 `sourcePath`](/zh/reference/source-path#resolve-sourcepath-for-the-source-files)。
+修改源文件路径，参见 [使用 `sourcePath`](/zh/reference/source-path#source-paths)。
 
 ## 过滤与统计范围 {#filtering-and-scope}
 
@@ -87,7 +87,7 @@
 - **类型:** `string | object | function`
 - **默认值:** `null`
 
-（仅 V8）按 URL 过滤入口文件，参见 [过滤V8覆盖率数据](/zh/reference/filtering#filtering-results)。
+（仅 V8）按 URL 过滤入口文件，参见 [过滤V8覆盖率数据](/zh/reference/filtering#filtering)。
 
 ### `sourceFilter` {#sourcefilter}
 
@@ -108,21 +108,21 @@
 - **类型:** `string | object | function`
 - **默认值:** `null`
 
-（仅 V8）在 sourcemap 转换后，按最终 `sourcePath` 过滤文件。参见 [过滤V8覆盖率数据](/zh/reference/filtering#filtering-results)。
+（仅 V8）在 sourcemap 转换后，按最终 `sourcePath` 过滤文件。参见 [过滤V8覆盖率数据](/zh/reference/filtering#filtering)。
 
 ### `all` {#all}
 
 - **类型:** `string | string[] | object`
 - **默认值:** `null`
 
-为未测试文件添加空覆盖率，参见 [为未测试的文件添加空的覆盖率报告](/zh/reference/untested-files#adding-empty-coverage-for-untested-files)。
+为未测试文件添加空覆盖率，参见 [为未测试的文件添加空的覆盖率报告](/zh/reference/untested-files#untested-files)。
 
 ### `v8Ignore` {#v8ignore}
 
 - **类型:** `boolean`
 - **默认值:** `true`
 
-（仅 V8）启用/禁用基于注释的忽略（`v8 ignore …`），参见 [忽略未覆盖代码](/zh/reference/ignoring-code#ignoring-uncovered-codes)。
+（仅 V8）启用/禁用基于注释的忽略（`v8 ignore …`），参见 [忽略未覆盖代码](/zh/reference/ignoring-code#ignoring-code)。
 
 ## V8 HTML 报告 {#v8-html}
 
@@ -183,7 +183,7 @@
 - **类型:** `"off" | "error" | "info" | "debug"`
 - **默认值:** `"info"`
 
-日志级别（[`LoggingType`](/zh/reference/types#loggingtype)）。设为 `"debug"` 会保留原始缓存并输出 sourcemap，便于排查问题。参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap)。
+日志级别（[`LoggingType`](/zh/reference/types#loggingtype)）。设为 `"debug"` 会保留原始缓存并输出 sourcemap，便于排查问题。参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#sourcemaps-and-css)。
 
 ### `sourceMap` {#sourcemap}
 
@@ -231,7 +231,7 @@
 - **类型:** `(coverageReport: CoverageReport) => void | Promise<void>`
 - **默认值:** `undefined`（未配置）
 
-仅 CLI：子进程启动前触发，参数为 [`coverageReport`](/zh/reference/types#coveragereport)。参见 [`onStart`](/zh/reference/hooks#onstart--onready--仅cli可用)。
+仅 CLI：子进程启动前触发，参数为 [`coverageReport`](/zh/reference/types#coveragereport)。参见 [`onStart`](/zh/reference/hooks#onstart)。
 
 ### `onReady` {#onready}
 
@@ -245,4 +245,4 @@
 - **类型:** `(testResults: TestResults) => void | Promise<void>`
 - **默认值:** `null`
 
-仅适用于 `mcr test`：测试结果采集后、结果缓存发布和覆盖率生成前触发，参数为 [`testResults`](/zh/reference/types#testresults)。可在此处理或脱敏测试结果；不配置此 hook 也会采集测试结果。参见 [`onTestEnd`](/zh/reference/hooks#ontestend--仅-mcr-test-可用)。
+仅适用于 `mcr test`：测试结果采集后、结果缓存发布和覆盖率生成前触发，参数为 [`testResults`](/zh/reference/types#testresults)。可在此处理或脱敏测试结果；不配置此 hook 也会采集测试结果。参见 [`onTestEnd`](/zh/reference/hooks#ontestend)。

@@ -1,5 +1,5 @@
-# Multiple processes {#multiprocessing-support}
-> The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap)
+# Multiple processes {#multiple-processes}
+> The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#sourcemaps-and-css)
 
 ## Workflow {#workflow}
 

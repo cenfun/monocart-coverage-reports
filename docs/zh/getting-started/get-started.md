@@ -1,4 +1,4 @@
-# 开始使用 {#usage}
+# 开始使用 {#get-started}
 > **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.15.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
 
 **从 2.x 升级：** 请参阅 [3.x 迁移指南](/zh/migrations/migration-to-3)。
@@ -39,7 +39,7 @@ await mcr.generate();
 
 ### 加载配置文件 {#load-config}
 
-也可以使用ESM的 `import` 然后加载[配置文件](/zh/reference/configuration#config-file)
+也可以使用ESM的 `import` 然后加载[配置文件](/zh/reference/configuration#configuration-files)
 ```js
 import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
@@ -47,4 +47,4 @@ await mcr.loadConfig();
 ```
 > [`MCR({...})`](/zh/reference/types#mcr) 和 [`new CoverageReport()`](/zh/reference/types#coveragereport) 创建的都是 `CoverageReport` 类型的实例，并非共享同一个对象。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
 
-参见 [多进程支持](/zh/reference/multiprocessing#multiprocessing-support)
+参见 [多进程支持](/zh/reference/multiprocessing#multiple-processes)

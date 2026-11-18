@@ -178,7 +178,7 @@ Custom reporter interfaces are unchanged: Istanbul reporters implement `execute(
 
 ### Review test-result artifacts when upgrading to 3.2.0+
 
-Starting in 3.2.0, `mcr test` always collects structured test results, even without `onTestEnd`. Raw exports (including ZIP) and debug caches can now include `test-results-<id>.json`, containing test names, paths and error strings that may be sensitive. Review existing automatic artifact uploads and retention policies. Use [`onTestEnd`](https://cenfun.github.io/monocart-coverage-reports/reference/hooks.html#ontestend--mcr-test-only) to redact persisted results before publication; terminal output and temporary files already written are not redacted. Raw imports still merge coverage only, not test results. Other commands and API calls do not collect these test results.
+Starting in 3.2.0, `mcr test` always collects structured test results, even without `onTestEnd`. Raw exports (including ZIP) and debug caches can now include `test-results-<id>.json`, containing test names, paths and error strings that may be sensitive. Review existing automatic artifact uploads and retention policies. Use [`onTestEnd`](https://cenfun.github.io/monocart-coverage-reports/reference/hooks.html#ontestend) to redact persisted results before publication; terminal output and temporary files already written are not redacted. Raw imports still merge coverage only, not test results. Other commands and API calls do not collect these test results.
 
 ## Migration checklist
 

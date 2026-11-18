@@ -1,4 +1,4 @@
-# Istanbul collection {#collecting-istanbul-coverage-data}
+# Istanbul collection {#istanbul-collection}
 
 ## Step 1: Prepare the build {#build}
 
@@ -24,4 +24,4 @@ Read coverage data from `global.__coverage__`.
 
 ### 3. General-purpose CDP {#cdp}
 
-Use `getIstanbulCoverage()` to retrieve Istanbul coverage through CDP; see [CDPClient](/reference/cdp-client#collecting-v8-coverage-data-with-cdpclient-api).
+Use `getIstanbulCoverage()` to retrieve Istanbul coverage through CDP; see [CDPClient](/reference/cdp-client#cdpclient).

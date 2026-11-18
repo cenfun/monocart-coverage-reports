@@ -30,7 +30,7 @@ The options below are only available when using the CLI (`mcr <command>`):
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](/reference/hooks#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](/reference/hooks#hooks) |
 
-For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see [Configuration options](/reference/options#options) — they work the same way in CLI.
+For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see [Configuration options](/reference/options#configuration-options) — they work the same way in CLI.
 
 - Use `--` to separate sub CLI args
 ```sh
@@ -53,7 +53,7 @@ mcr --env .env.test node ./test.js
 ```sh
 mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverage-reports/e2e/raw --outputDir ./coverage-reports/merged
 ```
-See [Merge Coverage Reports](/reference/merging#merge-coverage-reports).
+See [Merge Coverage Reports](/reference/merging#merging-reports).
 
 - Examples
     - [Mocha](/integrations/frameworks-and-tools#mocha)

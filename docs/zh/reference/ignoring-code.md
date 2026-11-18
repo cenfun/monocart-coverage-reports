@@ -1,4 +1,4 @@
-# 忽略代码 {#ignoring-uncovered-codes}
+# 忽略代码 {#ignoring-code}
 
 使用特定的注释，以`v8 ignore `开头可以忽略未覆盖的代码:
 - 忽略开始到结束

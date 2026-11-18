@@ -1,6 +1,6 @@
-# V8 coverage data {#v8-coverage-data-api}
+# V8 coverage data {#v8-coverage-data}
 
-This page distinguishes raw V8 data collected at runtime from MCR coverage entries. Public TypeScript types are maintained on the [Type declarations](/reference/types#types) page.
+This page distinguishes raw V8 data collected at runtime from MCR coverage entries. Public TypeScript types are maintained on the [Type declarations](/reference/types#type-declarations) page.
 
 ## MCR coverage entries {#coverage-entries}
 
@@ -14,7 +14,7 @@ In addition to raw coverage data, MCR supports the following metadata:
 - `empty`: marks entries added through `all` without real coverage data, showing 0% coverage.
 - `fake`: marks content that is not the original source (for example, compiled from `.ts`/`.jsx`); the AST parser skips coverage extraction for fake sources.
 
-Read or mutate entries in the [`onEntry`](/reference/hooks#onentry--before-each-v8-entry-is-processed-v8-only) hook. See [Untested files](/reference/untested-files#adding-empty-coverage-for-untested-files) for handling files without collected coverage.
+Read or mutate entries in the [`onEntry`](/reference/hooks#onentry) hook. See [Untested files](/reference/untested-files#untested-files) for handling files without collected coverage.
 
 ## Raw V8 data format {#raw-v8-data}
 
@@ -75,7 +75,7 @@ Source: [StatCounter Global Stats, October 2026](https://gs.statcounter.com/brow
 | Opera | V8 | 2.16% | ✅ | Chromium/V8 builds; not Opera Mini |
 | Samsung Internet | V8 | 2.05% | ✅ | Chromium/V8 on Android |
 
-The percentages describe browser brands across platforms. The ✅ applies only to builds using V8 and an accessible coverage/CDP interface, not every platform or edition of that brand (for example, WebKit-based iOS builds). It does not imply that every listed browser has been tested with MCR. Do not add these brand percentages together to estimate V8 engine share. See [Browser collection](/coverage-collection/v8#browser) and [CDPClient](/reference/cdp-client#collecting-v8-coverage-data-with-cdpclient-api) for collection methods.
+The percentages describe browser brands across platforms. The ✅ applies only to builds using V8 and an accessible coverage/CDP interface, not every platform or edition of that brand (for example, WebKit-based iOS builds). It does not imply that every listed browser has been tested with MCR. Do not add these brand percentages together to estimate V8 engine share. See [Browser collection](/coverage-collection/v8#browser) and [CDPClient](/reference/cdp-client#cdpclient) for collection methods.
 
 ### Non-browser runtimes {#non-browser-runtimes}
 
@@ -83,7 +83,7 @@ Source: [State of JS 2025](https://2025.stateofjs.com/en-US/other-tools/#runtime
 
 | Runtime | Engine | Survey usage | Native V8 collection (MCR) | MCR notes |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported; MCR requires Node.js >= 22.15.0. See [Node.js collection](/coverage-collection/v8#collecting-v8-coverage-data-from-nodejs). |
+| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported; MCR requires Node.js >= 22.15.0. See [Node.js collection](/coverage-collection/v8#nodejs). |
 | Bun | JavaScriptCore | 20.83% | ❌ | V8-compatible coverage APIs are partially implemented, but MCR compatibility remains unconfirmed. Track [issue #22128](https://github.com/oven-sh/bun/issues/22128); [#30968](https://github.com/oven-sh/bun/issues/30968) was closed as a duplicate. |
 | Deno | V8 | 11.17% | ❌ | Does not export the complete raw V8 coverage data needed by MCR: matching transpiled sources and sourcemaps are missing. See [issue #23359](https://github.com/denoland/deno/issues/23359). |
 

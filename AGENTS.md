@@ -1,7 +1,6 @@
 # Guidance for AI coding agents
 
-This file is the tool-neutral source of repository guidance. Read it before changing this checkout.
-`.github/copilot-instructions.md` contains a self-contained summary for Copilot environments that may not load this file. Keep shared rules aligned when either file changes.
+This file is the single, tool-neutral source of repository guidance. Read it before changing this checkout.
 
 ## Project and scope
 
@@ -52,7 +51,7 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | `npm run build` | Build UI and `lib/packages/`; npm then runs `postbuild` to build test fixtures |
 | `npm run build-test` | Build bundler test fixtures only |
 | `npm run docs:dev` | Preview the tracked VitePress source in `docs/` and serve existing `.temp/site/reports/` under `/reports/` |
-| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/` without clearing reports; no documentation unit tests |
+| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/` without clearing reports; no documentation tests |
 | `npm run test-node` / `npm run test-browser` | Integration groups; write reports under `.temp/site/reports/` and remove only its shared `assets/` |
 | `npm test` | Unit + type + integration coverage; not a quick unit check |
 
@@ -71,9 +70,16 @@ Important constraints:
 - Prefer Node built-ins for helper scripts. Put temporary scripts and artifacts in `.temp/`. Do not add dependencies for simple automation.
 - Preserve UTF-8 and LF line endings. `.gitattributes` requires LF because coverage range checks depend on source offsets.
 - Keep changes focused. Preserve user edits. Do not reformat unrelated code or regenerate unrelated artifacts.
-- For public behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese documentation and `README.md` examples, and focused tests. Update `docs/migrations/migration-to-3.md` when migration behavior changes.
+- For product behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese documentation and `README.md` examples, and focused tests. Update `docs/migrations/migration-to-3.md` when migration behavior changes.
 - Keep replies concise and use the user's language. Explain non-obvious tradeoffs. Report changed paths, actual checks, and checks blocked by the environment.
 - Do not claim that a check passed unless you ran it and observed success.
+
+## Documentation conventions
+
+- Do not add tests for documentation, including pages, examples, diagrams, navigation, or VitePress configuration/theme and documentation helpers. This includes unit, integration, snapshot, browser-automation, and standalone test scripts. Use existing lint/build commands (`npm run docs:check`) and manual preview/review as needed; test product behavior, not documentation.
+- Keep content, headings, anchors, links, filenames, directories, and navigation consistent. When meaning or structure changes, update the affected names and all references together. English/Chinese counterparts should share semantic English anchors.
+- Keep headings short; move scope, qualifications, and detail into the accompanying description.
+- Prefer Mermaid for workflows, lifecycles, and other diagrams that clarify processes or relationships.
 
 ## Coverage correctness and safety
 
@@ -102,7 +108,7 @@ Edit `src/app/`, `src/vendor/`, `lib/default/template.html`, or build scripts in
 ## Completion checklist
 
 1. Inspect `git status --short` and the relevant source/tests before editing.
-2. Add or update a focused regression test for behavior changes.
-3. Run relevant unit tests; add type/runtime checks for API or packaging changes, and build/integration checks for UI, vendor, or conversion changes.
+2. Add or update a focused regression test for product behavior changes. Do not add documentation tests.
+3. Run relevant unit tests for product changes; add type/runtime checks for API or packaging changes, and build/integration checks for report UI, vendor, or conversion changes. For documentation-only changes, use lint/build and manual preview/review instead.
 4. For AI skill changes, check relative links, exported skill resolution, and inclusion of the entire skill directory with `npm pack --dry-run`.
 5. Review `git diff --check` and the final diff. Include no unrelated generated files, secrets, or user changes.

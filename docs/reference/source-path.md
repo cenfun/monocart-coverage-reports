@@ -1,4 +1,4 @@
-# Source paths {#resolve-sourcepath-for-the-source-files}
+# Source paths {#source-paths}
 If the source file comes from the sourcemap, then its path is a virtual path. Using the `sourcePath` option to resolve a custom path.
 For example, we have tested multiple dist files, which contain some common files. We hope to merge the coverage of the same files, so we need to unify the `sourcePath` in order to be able to merge the coverage data.
 ```js

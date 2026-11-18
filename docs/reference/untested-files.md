@@ -1,4 +1,4 @@
-# Untested files {#adding-empty-coverage-for-untested-files}
+# Untested files {#untested-files}
 Untested files are excluded by default. Use `all` to include them with 0% coverage, even when no coverage data was collected. For the same original source, real V8 coverage takes precedence over empty entries.
 ```js
 const coverageOptions = {

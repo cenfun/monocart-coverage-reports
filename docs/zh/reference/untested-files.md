@@ -1,4 +1,4 @@
-# 未测试文件 {#adding-empty-coverage-for-untested-files}
+# 未测试文件 {#untested-files}
 默认不包含未测试文件。使用 `all` 可将它们以 0% 覆盖率加入报告，即使没有采集到任何覆盖率数据也可生成报告。同一原始源码的真实 V8 覆盖率优先于空覆盖率条目。
 ```js
 const coverageOptions = {

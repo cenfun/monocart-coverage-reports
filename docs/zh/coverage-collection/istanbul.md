@@ -1,4 +1,4 @@
-# 采集 Istanbul 覆盖率 {#collecting-istanbul-coverage-data}
+# 采集 Istanbul 覆盖率 {#istanbul-collection}
 
 ## 第一步：构建准备 {#build}
 
@@ -24,4 +24,4 @@
 
 ### 3. 通用 CDP 方案 {#cdp}
 
-通过 `getIstanbulCoverage()` 读取 Istanbul 覆盖率数据，接入方式参见 [CDPClient](/zh/reference/cdp-client#collecting-v8-coverage-data-with-cdpclient-api)。
+通过 `getIstanbulCoverage()` 读取 Istanbul 覆盖率数据，接入方式参见 [CDPClient](/zh/reference/cdp-client#cdpclient)。

@@ -1,4 +1,4 @@
-# Ignoring code {#ignoring-uncovered-codes}
+# Ignoring code {#ignoring-code}
 
 To ignore codes, use the special comment which starts with `v8 ignore `:
 - Ignoring all until stop

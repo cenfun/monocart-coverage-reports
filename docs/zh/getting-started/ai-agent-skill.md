@@ -16,7 +16,7 @@
 node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
 ```
 
-## 使用与参考 {#usage}
+## 使用与参考 {#usage-and-references}
 
 按技能中的链接查阅参考文档，并以已安装包的版本和运行环境要求为准。旧版本可能不包含该技能。
 

@@ -6,7 +6,7 @@ description: 浏览浏览器、Node.js、CSS 和打包源码的原生 V8 与 Ist
 import { withBase } from 'vitepress';
 </script>
 
-# 报告演示 {#examples}
+# 报告演示 {#report-examples}
 
 以下报告由本仓库的测试套件生成。打开报告即可体验文件树、覆盖率指标与源码详情。
 

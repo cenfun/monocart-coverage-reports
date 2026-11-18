@@ -58,9 +58,9 @@ export default {
 
 Configuration types are defined by [`McrCliOptions`](/reference/types#mcrclioptions).
 
-### onTestEnd {#on-test-end}
+### onTestEnd {#ontestend}
 
-To inspect or modify structured test results after the test runner exits, configure the [`onTestEnd` hook](/reference/hooks#ontestend--mcr-test-only) in `mcr.config.js`. The [`testResults`](/reference/types#testresults) parameter has type `TestResults`. See the hook documentation for result fields, cache and export behavior, and sensitive data handling.
+To inspect or modify structured test results after the test runner exits, configure the [`onTestEnd` hook](/reference/hooks#ontestend) in `mcr.config.js`. The [`testResults`](/reference/types#testresults) parameter has type `TestResults`. See the hook documentation for result fields, cache and export behavior, and sensitive data handling.
 
 ## Test targets {#test-targets}
 

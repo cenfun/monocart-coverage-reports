@@ -1,4 +1,4 @@
-# Get started {#usage}
+# Get started {#get-started}
 > **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
 
 **Upgrading from 2.x:** See the [3.x migration guide](/migrations/migration-to-3).
@@ -39,7 +39,7 @@ await mcr.generate();
 
 ### Load a config file {#load-config}
 
-Using `import` and load options from [config file](/reference/configuration#config-file)
+Using `import` and load options from [config file](/reference/configuration#configuration-files)
 ```js
 import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
@@ -47,4 +47,4 @@ await mcr.loadConfig();
 ```
 > Both [`MCR({...})`](/reference/types#mcr) and [`new CoverageReport()`](/reference/types#coveragereport) create instances of the same `CoverageReport` class. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
-For more information, see [Multiprocessing Support](/reference/multiprocessing#multiprocessing-support)
+For more information, see [Multiprocessing Support](/reference/multiprocessing#multiple-processes)

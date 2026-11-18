@@ -1,4 +1,4 @@
-# Sourcemaps and CSS {#debug-for-coverage-and-sourcemap}
+# Sourcemaps and CSS {#sourcemaps-and-css}
 > Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
 - Start debugging for v8 report with option `logging: 'debug'`
 ```js

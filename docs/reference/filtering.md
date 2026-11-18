@@ -1,6 +1,6 @@
-# Filtering {#filtering-results}
+# Filtering {#filtering}
 
-## entryFilter + sourceFilter {#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report}
+## entryFilter + sourceFilter {#entryfilter-sourcefilter}
 
 Use `entryFilter` and `sourceFilter` to filter entry files and source files in V8 reports.
 
@@ -78,7 +78,7 @@ const coverageOptions = {
 };
 ```
 
-## filter {#using-filter-instead-of-entryfilter-and-sourcefilter}
+## filter {#filter}
 
 If you don't want to define both `entryFilter` and `sourceFilter`, you can use `filter` instead. (Added in: v2.8)
 ```js
@@ -93,7 +93,7 @@ const coverageOptions = {
 };
 ```
 
-## outputFilter {#using-outputfilter-to-filter-final-files}
+## outputFilter {#outputfilter}
 
 Use `outputFilter` to filter the final file list.
 
@@ -123,7 +123,7 @@ mcr merge --inputDir ./raw --outputFilter "{'**/node_modules/**':false,'**/src/*
 
 `outputFilter` does not change raw coverage exports and does not apply to Istanbul input.
 
-## Filtering approaches {#choose-filtering-approach}
+## Filtering approaches {#filtering-approaches}
 
 You can choose either input filtering (`entryFilter` + `sourceFilter`) or output filtering (`outputFilter`), depending on your needs. Each has advantages and trade-offs, and they can also be used together. The combined `filter` option is shorthand for `entryFilter` + `sourceFilter`; it does not configure `outputFilter`.
 

@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 
-# Reports {#available-reports}
+# Reports {#reports}
 
 ## Built-in reports {#built-in-reports}
 
@@ -129,7 +129,7 @@ Save coverage details to a markdown file (defaults to `coverage-details.md`).
 
 #### `raw` {#raw}
 
-Keep all original data, which can be used for other reports input with `inputDir`. see [Merge Coverage Reports](/reference/merging#merge-coverage-reports)
+Keep all original data, which can be used for other reports input with `inputDir`. see [Merge Coverage Reports](/reference/merging#merging-reports)
 
 ## Custom reports {#custom-reports}
 

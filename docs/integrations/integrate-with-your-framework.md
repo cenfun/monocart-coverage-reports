@@ -1,4 +1,4 @@
-# Integrate with your framework {#integration-with-any-testing-framework}
+# Integrate with your framework {#integrate-with-your-framework}
 
 MCR can integrate with your existing testing framework through the CLI or API, without replacing your test runner or changing how you write tests. Choose the approach that fits your workflow.
 
@@ -16,4 +16,4 @@ See [Command line](/reference/cli#command-line) for options. For browser tests, 
 
 Collect coverage data in your test hooks or fixtures, then add it to an MCR report instance ([`CoverageReport`](/reference/types#coveragereport)) with `await mcr.add(coverageData)`. After all tests finish, call `await mcr.generate()` to generate the reports.
 
-This approach gives you control over when coverage is collected and submitted. See [V8 collection](/coverage-collection/v8), [Istanbul collection](/coverage-collection/istanbul), and [Multiple processes](/reference/multiprocessing#multiprocessing-support) for collection and cross-process integration details.
+This approach gives you control over when coverage is collected and submitted. See [V8 collection](/coverage-collection/v8), [Istanbul collection](/coverage-collection/istanbul), and [Multiple processes](/reference/multiprocessing#multiple-processes) for collection and cross-process integration details.

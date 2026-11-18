@@ -1,10 +1,10 @@
-# Configuration options {#options}
+# Configuration options {#configuration-options}
 
 Browse options by feature, or use the on-page outline to jump to an individual option. General options belong to [`CoverageReportOptions`](/reference/types#coveragereportoptions); CLI and test runner options belong to [`McrCliOptions`](/reference/types#mcrclioptions).
 
 - Default configuration: [lib/default/options.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/lib/default/options.js)
-- Type declarations: [lib/index.d.ts](/reference/types#types)
-- Configuration loading and examples: [Configuration files](/reference/configuration#config-file)
+- Type declarations: [lib/index.d.ts](/reference/types#type-declarations)
+- Configuration loading and examples: [Configuration files](/reference/configuration#configuration-files)
 
 ## Report output {#report-output}
 
@@ -20,7 +20,7 @@ Report title shown in the UI and summary reports.
 - **Type:** `string | (string | ReportDescription)[]`
 - **Default:** `""` (auto)
 
-Reports to generate; see [`ReportDescription`](/reference/types#reportdescription) for per-report options. Defaults to `"v8"` for V8 data and `"html"` for Istanbul data. See [Available Reports](/reference/reports#available-reports).
+Reports to generate; see [`ReportDescription`](/reference/types#reportdescription) for per-report options. Defaults to `"v8"` for V8 data and `"html"` for Istanbul data. See [Available Reports](/reference/reports#reports).
 
 ### `outputDir` {#outputdir}
 
@@ -57,7 +57,7 @@ Low/high thresholds (percent); see [`Watermarks`](/reference/types#watermarks) f
 - **Type:** `string | string[]`
 - **Default:** `null`
 
-Input directories of raw coverage data for [merging](/reference/merging#merge-coverage-reports).
+Input directories of raw coverage data for [merging](/reference/merging#merging-reports).
 
 ### `dataDir` {#datadir}
 
@@ -78,7 +78,7 @@ Base directory used to normalize relative source paths. The default `null` uses 
 - **Type:** `object | function`
 - **Default:** `null`
 
-Rewrite source paths; see [Resolve `sourcePath`](/reference/source-path#resolve-sourcepath-for-the-source-files).
+Rewrite source paths; see [Resolve `sourcePath`](/reference/source-path#source-paths).
 
 ## Filtering and scope {#filtering-and-scope}
 
@@ -87,7 +87,7 @@ Rewrite source paths; see [Resolve `sourcePath`](/reference/source-path#resolve-
 - **Type:** `string | object | function`
 - **Default:** `null`
 
-(V8 only) Filter V8 entries by url. See [Filtering Results](/reference/filtering#filtering-results).
+(V8 only) Filter V8 entries by url. See [Filtering Results](/reference/filtering#filtering).
 
 ### `sourceFilter` {#sourcefilter}
 
@@ -108,21 +108,21 @@ Combined filter replacing both `entryFilter` and `sourceFilter`. Does not config
 - **Type:** `string | object | function`
 - **Default:** `null`
 
-(V8 only) Filter final files by `sourcePath` after sourcemap conversion. See [Filtering Results](/reference/filtering#filtering-results).
+(V8 only) Filter final files by `sourcePath` after sourcemap conversion. See [Filtering Results](/reference/filtering#filtering).
 
 ### `all` {#all}
 
 - **Type:** `string | string[] | object`
 - **Default:** `null`
 
-Include untested files as empty coverage. See [Adding Empty Coverage](/reference/untested-files#adding-empty-coverage-for-untested-files).
+Include untested files as empty coverage. See [Adding Empty Coverage](/reference/untested-files#untested-files).
 
 ### `v8Ignore` {#v8ignore}
 
 - **Type:** `boolean`
 - **Default:** `true`
 
-(V8 only) Enable/disable comment-based ignoring (`v8 ignore …`). See [Ignoring Uncovered Codes](/reference/ignoring-code#ignoring-uncovered-codes).
+(V8 only) Enable/disable comment-based ignoring (`v8 ignore …`). See [Ignoring Uncovered Codes](/reference/ignoring-code#ignoring-code).
 
 ## V8 HTML report {#v8-html}
 
@@ -183,7 +183,7 @@ Memory threshold in MB; force GC at critical stages when JavaScript heap usage (
 - **Type:** `"off" | "error" | "info" | "debug"`
 - **Default:** `"info"`
 
-Logging level ([`LoggingType`](/reference/types#loggingtype)). Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap).
+Logging level ([`LoggingType`](/reference/types#loggingtype)). Use `"debug"` to keep raw cache and dump sourcemaps for troubleshooting. See [Debug for Coverage and Sourcemap](/troubleshooting/sourcemaps#sourcemaps-and-css).
 
 ### `sourceMap` {#sourcemap}
 
@@ -231,7 +231,7 @@ Used only by `mcr test`. Test file paths or glob patterns passed to `node --test
 - **Type:** `(coverageReport: CoverageReport) => void | Promise<void>`
 - **Default:** `undefined` (not configured)
 
-CLI only: runs before the child process starts. Parameter: [`coverageReport`](/reference/types#coveragereport). See [`onStart`](/reference/hooks#onstart--onready--cli-only).
+CLI only: runs before the child process starts. Parameter: [`coverageReport`](/reference/types#coveragereport). See [`onStart`](/reference/hooks#onstart).
 
 ### `onReady` {#onready}
 
@@ -245,4 +245,4 @@ CLI only: runs after the child exits, before coverage data is read. Parameter: [
 - **Type:** `(testResults: TestResults) => void | Promise<void>`
 - **Default:** `null`
 
-Used only by `mcr test`: runs after test results are collected, before result publication and coverage generation. Parameter: [`testResults`](/reference/types#testresults). Use it to process or redact test results; results are still collected when this hook is omitted. See [`onTestEnd`](/reference/hooks#ontestend--mcr-test-only).
+Used only by `mcr test`: runs after test results are collected, before result publication and coverage generation. Parameter: [`testResults`](/reference/types#testresults). Use it to process or redact test results; results are still collected when this hook is omitted. See [`onTestEnd`](/reference/hooks#ontestend).

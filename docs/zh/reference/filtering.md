@@ -1,6 +1,6 @@
-# 过滤覆盖率 {#filtering-results}
+# 过滤覆盖率 {#filtering}
 
-## entryFilter + sourceFilter {#using-entryfilter-and-sourcefilter-to-filter-the-results-for-v8-report}
+## entryFilter + sourceFilter {#entryfilter-sourcefilter}
 
 使用 `entryFilter` 和 `sourceFilter` 过滤 V8 报告中的入口文件与源文件。
 
@@ -78,7 +78,7 @@ const coverageOptions = {
 };
 ```
 
-## filter {#using-filter-instead-of-entryfilter-and-sourcefilter}
+## filter {#filter}
 
 如果你不想定义两个过滤器，可以使用 `filter` 选项代替，可以将多个匹配合并在一起. (Added in: v2.8)
 ```js
@@ -93,7 +93,7 @@ const coverageOptions = {
 };
 ```
 
-## outputFilter {#使用-outputfilter-过滤最终文件}
+## outputFilter {#outputfilter}
 
 使用 `outputFilter` 过滤最终文件列表。
 
@@ -123,7 +123,7 @@ mcr merge --inputDir ./raw --outputFilter "{'**/node_modules/**':false,'**/src/*
 
 `outputFilter` 不改变 raw 原始覆盖率导出，也不适用于 Istanbul 格式的输入数据。
 
-## 如何选择和组合过滤方案 {#choose-filtering-approach}
+## 如何选择和组合过滤方案 {#filtering-approaches}
 
 可以根据需要，单独选择输入过滤（`entryFilter` + `sourceFilter`）或输出过滤（`outputFilter`），两套方案各有优劣，也支持混合使用。合并选项 `filter` 只是 `entryFilter` + `sourceFilter` 的简写，不会配置 `outputFilter`。
 

@@ -1,4 +1,4 @@
-# Frameworks and tools {#integration-examples}
+# Frameworks and tools {#frameworks-and-tools}
 
 ## [Playwright](https://playwright.dev/) {#playwright}
 

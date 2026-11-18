@@ -16,7 +16,7 @@ Locate the installed skill from your project root:
 node -p "require.resolve('monocart-coverage-reports/skills/monocart-coverage-reports/SKILL.md')"
 ```
 
-## Usage and references {#usage}
+## Usage and references {#usage-and-references}
 
 Follow the skill's reference links and the installed package's version and runtime requirements. Older releases may not include the skill.
 

@@ -8,7 +8,7 @@ const a = tf ? 'true' : 'false';
               m1     p  m2
 ```
 上面是经过构建工具编译过的代码，通过AST分析，位置`p`对应的原始位置是我们要找的，而从sourcemap里仅能找到离`p`最近的位置映射`m1`和`m2`，也就是位置`p`并没有精确的映射保存到sourcemap里，从而无法直接获取精确的原始位置，但我们能知道`p`的原始位置应该在`m1`和`m2`之间。
-- 参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#debug-for-coverage-and-sourcemap)
+- 参见 [调试覆盖率和sourcemap](/zh/troubleshooting/sourcemaps#sourcemaps-and-css)
 
 `MCR`如何解决这个问题:
 - 1, 首先会尝试使用[`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences)工具来比较`m1`和`m2`之间的生成代码和原始代码，找到`p`对应的字符位置，可以解决绝大多数问题。但是如果代码是非JS格式的，比如Vue模板是HTML，或JSX这些，不管怎么比较也是很难精确找到对应位置的，甚至此时的sourcemap本身都比较乱。

@@ -50,7 +50,7 @@ const mcr = MCR({
 await mcr.add(coverageData);
 await mcr.generate();
 ```
-Using `import` and load options from [config file](https://cenfun.github.io/monocart-coverage-reports/reference/configuration.html#config-file)
+Using `import` and load options from [config file](https://cenfun.github.io/monocart-coverage-reports/reference/configuration.html#configuration-files)
 ```js
 import { CoverageReport } from 'monocart-coverage-reports';
 const mcr = new CoverageReport();
@@ -58,7 +58,7 @@ await mcr.loadConfig();
 ```
 > Both `MCR({...})` and `new CoverageReport()` create instances of the same `CoverageReport` class. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
-For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html#multiprocessing-support)
+For more information, see [Multiprocessing Support](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html#multiple-processes)
 
 ## License
 

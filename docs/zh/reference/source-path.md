@@ -1,4 +1,4 @@
-# 源码路径 {#resolve-sourcepath-for-the-source-files}
+# 源码路径 {#source-paths}
 当一个文件从sourcemap解包，它的路径可能是个虚拟路径, 此时可以使用`sourcePath`选项来修改文件路径。比如，我们测试了多个dist包的入口文件，它们的源文件可能包含了一些共同的文件，但路径可能不同，如果我们需要相同的文件覆盖率数据可以自动合并，那么需要使用`sourcePath`来统一这些相同文件的路径
 ```js
 const coverageOptions = {
