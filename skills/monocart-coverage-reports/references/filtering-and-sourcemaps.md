@@ -2,7 +2,7 @@
 
 ## Choose a filtering strategy
 
-For V8 input, choose according to the README's **Approach** comparison, rather than always selecting `outputFilter`. The following comparison is self-contained for package-only/offline use. Both approaches decide which files appear in the report; choose one for the intended scope, not both automatically.
+For V8 input, use the comparison below to choose a filtering strategy, rather than always selecting `outputFilter`. The following comparison is self-contained for package-only/offline use. Both approaches decide which files appear in the report; choose one for the intended scope, not both automatically.
 
 | Approach | When and what it filters | Advantages | Trade-offs |
 | --- | --- | --- | --- |

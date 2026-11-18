@@ -27,7 +27,7 @@ export default {
 };
 ```
 
-Choose the filtering approach using the README's Approach trade-offs: input filtering for early exclusion and better performance, or 3.x `outputFilter` for simpler final-path selection at the cost of processing unwanted inputs first. This config chooses input filtering for directly executed `src/` modules. For bundles, change `entryFilter` to allow the actual bundle URLs, then use `sourceFilter` for their unpacked sources. `sourceFilter` alone does not exclude unmapped collected entries. Do not stack both strategies by default; see [filtering-and-sourcemaps.md](filtering-and-sourcemaps.md) for both alternatives.
+Choose the filtering approach using the [filtering strategy comparison](filtering-and-sourcemaps.md#choose-a-filtering-strategy): input filtering for early exclusion and better performance, or 3.x `outputFilter` for simpler final-path selection at the cost of processing unwanted inputs first. This config chooses input filtering for directly executed `src/` modules. For bundles, change `entryFilter` to allow the actual bundle URLs, then use `sourceFilter` for their unpacked sources. `sourceFilter` alone does not exclude unmapped collected entries. Do not stack both strategies by default; see [filtering-and-sourcemaps.md](filtering-and-sourcemaps.md) for both alternatives.
 
 A CommonJS config can remain `mcr.config.cjs` with `module.exports = { ... }`, even though MCR's own API is ESM. `.js` follows the host's `package.json` module type. Do not add `"type": "module"` to an entire host project merely for one config file.
 
