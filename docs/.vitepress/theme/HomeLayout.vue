@@ -1,13 +1,32 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme';
-import { useData, withBase } from 'vitepress';
+import {
+    useData, useRouter, withBase
+} from 'vitepress';
 import logo from '../../../src/app/images/icons/monocart.svg';
 
 const { frontmatter } = useData();
+const router = useRouter();
+
+// Pointer clicks on desktop group buttons open the first page. Keep keyboard
+// activation and mobile disclosure buttons unchanged so every page is reachable.
+const openFirstNavItem = (event) => {
+    if (event.detail === 0) {
+        return;
+    }
+    const button = event.target.closest?.('.VPNavBarMenuGroup > .button');
+    const link = button?.parentElement.querySelector('.menu a[href]');
+    if (!link) {
+        return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    return router.go(link.href);
+};
 </script>
 
 <template>
-  <DefaultTheme.Layout>
+  <DefaultTheme.Layout @click.capture="openFirstNavItem">
     <template #home-hero-info-before>
       <span class="mcr-version">MCR 3.x · Node.js ≥ 22.15.0</span>
     </template>

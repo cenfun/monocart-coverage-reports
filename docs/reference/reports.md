@@ -203,3 +203,7 @@ const coverageOptions = {
 };
 const mcr = MCR(coverageOptions);
 ```
+
+## Report Examples {#report-examples}
+
+Explore generated V8, Istanbul, browser, Node.js and CSS reports on the [Report Examples](/getting-started/examples) page.

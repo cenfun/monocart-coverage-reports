@@ -31,19 +31,16 @@ const theme = (zh) => {
     return {
         nav: [
             {
-                text: label('Get started', '开始使用'), link: `${prefix}getting-started/get-started`
+                text: label('Getting started', '入门'), items: groupItems('start')
             },
             {
-                text: 'AI Agent Skill', link: `${prefix}getting-started/ai-agent-skill`
+                text: label('Coverage Collection', '覆盖率采集'), items: groupItems('collection')
             },
             {
                 text: label('Reference', '参考'), items: groupItems('reference')
             },
             {
                 text: label('Integrations', '集成'), items: groupItems('integrations')
-            },
-            {
-                text: label('Examples', '示例'), link: `${prefix}getting-started/examples`
             }
         ],
         sidebar: groups.map(([group, en, cn]) => ({

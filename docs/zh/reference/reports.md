@@ -204,3 +204,7 @@ const coverageOptions = {
 };
 const mcr = MCR(coverageOptions);
 ```
+
+## 报告示例 {#report-examples}
+
+前往[报告示例](/zh/getting-started/examples)页面，浏览生成的 V8、Istanbul、浏览器、Node.js 和 CSS 覆盖率报告。
