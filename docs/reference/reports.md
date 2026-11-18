@@ -21,14 +21,14 @@ Supports V8 coverage data only.
     - Better Support for Sourcemap Conversion
 - Demos: [V8](https://cenfun.github.io/monocart-coverage-reports/reports/v8) and [more](/getting-started/examples)
 
-![](../../assets/v8.gif)
+![](/images/v8.gif)
 
 #### `v8-json` {#v8-json}
 
 - Save [`CoverageResults`](/reference/types#coverageresults) to a json file (defaults to [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json)).
 - Shows native V8 code coverage with VSCode extension: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
-![](../../assets/mcv.gif)
+![](/images/mcv.gif)
 
 ### Istanbul {#istanbul-reports}
 
@@ -104,13 +104,13 @@ Save coverage data to a json file with [Codacy API](https://api.codacy.com/swagg
 
 Shows coverage summary in the console.
 
-![](../../assets/console-summary.png)
+![](/images/console-summary.png)
 
 #### `console-details` <span role="img" aria-label="Recommended" title="Recommended">⭐</span> {#console-details}
 
 Show coverage details in the console. Like `text`, but for V8. For Github actions, we can enforce color with env: `FORCE_COLOR: true`.
 
-![](../../assets/console-details.png)
+![](/images/console-details.png)
 
 #### `markdown-summary` {#markdown-summary}
 
@@ -119,7 +119,7 @@ Save coverage summary to a markdown file (defaults to `coverage-summary.md`). Fo
 ```sh
 cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 ```
-![](../../assets/markdown-summary.png)
+![](/images/markdown-summary.png)
 
 #### `markdown-details` {#markdown-details}
 

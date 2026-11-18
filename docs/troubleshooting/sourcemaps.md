@@ -11,11 +11,11 @@ const coverageOptions = {
 };
 ```
 When `logging` is `debug`, the raw report data is preserved in `[outputDir]/.cache` (or `[outputDir]/raw` if the `raw` report is used). The dist file is also kept in the V8 list, so you can open the browser's devtools and visually verify the coverage data.
-![](../../assets/debug-coverage.png)
+![](/images/debug-coverage.png)
 
 - Check sourcemap with [Source Map Visualization](https://evanw.github.io/source-map-visualization/)
 
-![](../../assets/debug-sourcemap.png)
+![](/images/debug-sourcemap.png)
 
 - Generate additional source and sourcemap files to cache or raw dir
 ```js

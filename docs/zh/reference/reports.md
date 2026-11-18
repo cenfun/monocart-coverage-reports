@@ -21,14 +21,14 @@ outline: [2, 4]
     - 对Sourcemap转换有更好的支持
 - 预览: [V8](https://cenfun.github.io/monocart-coverage-reports/reports/v8) and [更多](/zh/getting-started/examples)
 
-![](../../../assets/v8.gif)
+![](/images/v8.gif)
 
 #### `v8-json` {#v8-json}
 
 - 保存 [`CoverageResults`](/zh/reference/types#coverageresults) 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json))
 - 用于VSCode扩展来显示原生V8代码覆盖率: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
-![](../../../assets/mcv.gif)
+![](/images/mcv.gif)
 
 ### Istanbul {#istanbul-reports}
 
@@ -104,13 +104,13 @@ outline: [2, 4]
 
 在控制台显示覆盖率概要
 
-![](../../../assets/console-summary.png)
+![](/images/console-summary.png)
 
 #### `console-details` <span role="img" aria-label="推荐优先使用" title="推荐优先使用">⭐</span> {#console-details}
 
 在控制台显示每个文件的覆盖率概要。如果是Github actions，可以使用环境变量`FORCE_COLOR: true`来强制开启颜色支持
 
-![](../../../assets/console-details.png)
+![](/images/console-details.png)
 
 #### `markdown-summary` {#markdown-summary}
 
@@ -119,7 +119,7 @@ outline: [2, 4]
 ```sh
 cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 ```
-![](../../../assets/markdown-summary.png)
+![](/images/markdown-summary.png)
 
 #### `markdown-details` {#markdown-details}
 

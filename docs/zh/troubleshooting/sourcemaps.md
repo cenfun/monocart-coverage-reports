@@ -11,11 +11,11 @@ const coverageOptions = {
 };
 ```
 调试模式下，也就是`logging`为`debug`的时候, 原始的覆盖率数据将保留在`[outputDir]/.cache`缓存目录下，不会删除，如果使用了`raw`报告，那么位置变为`[outputDir]/raw`下，这样我们可以打开v8报告的html文件，通过下面新增的一些调试帮助信息来核对覆盖率
-![](../../../assets/debug-coverage.png)
+![](/images/debug-coverage.png)
 
 - 调试sourcemap可以直接使用[Source Map Visualization](https://evanw.github.io/source-map-visualization/) （esbuild作者提供的sourcemap在线查看器）
 
-![](../../../assets/debug-sourcemap.png)
+![](/images/debug-sourcemap.png)
 
 - 生成额外的source和sourcemap文件到cache或raw文件夹
 ```js

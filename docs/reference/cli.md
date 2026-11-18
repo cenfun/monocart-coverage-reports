@@ -1,21 +1,28 @@
 # Command line {#command-line}
+
 > The CLI will run the program as a [child process](https://nodejs.org/docs/latest/api/child_process.html) with `NODE_V8_COVERAGE=dir` until it exits gracefully, and generate the coverage report with the coverage data from the `dir`.
 
-- Installing globally
+## Installation {#installation}
+
+### Global installation {#global-installation}
+
 ```sh
 npm i monocart-coverage-reports -g
 mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
-- Locally in your project
+### Local installation {#local-installation}
+
 ```sh
 npm i monocart-coverage-reports
 npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 ```
 
-- CLI Options
+## Command execution {#command-execution}
 
 Commands are executed with Execa's default options, without enabling shell mode. Pass the executable and its arguments separately, for example `mcr node "./my app.js"`; do not quote an entire command as a single argument. Argument boundaries are preserved: MCR does not expand environment variables or globs, or interpret pipes, redirections, `&&` or other shell syntax. Move command sequences into a script instead. Use `mcr [options] -- executable ...args` to keep child options separate from MCR options. Execa handles platform-specific command execution, including escaped batch-file invocation through `cmd.exe` when needed on Windows.
+
+## CLI options {#cli-options}
 
 The options below are only available when using the CLI (`mcr <command>`):
 
@@ -32,30 +39,41 @@ The options below are only available when using the CLI (`mcr <command>`):
 
 For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see [Configuration options](/reference/options#configuration-options) — they work the same way in CLI.
 
-- Use `--` to separate sub CLI args
+## Separate child arguments {#separate-child-arguments}
+
+Use `--` to separate sub CLI args:
 ```sh
 mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 ```
 
-- `--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
+## Preload modules {#preload-modules}
+
+`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
 ```sh
 mcr --import tsx node ./test.ts
 ```
 
-- `--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Uses `process.loadEnvFile`, available on all supported Node.js versions.
+## Environment variables {#environment-variables}
+
+`--env [path]`: load environment variables from a dotenv file before the child starts (defaults to `.env`). Uses `process.loadEnvFile`, available on all supported Node.js versions.
 ```sh
 mcr --env .env.test node ./test.js
 ```
 
-- `test`: run Node.js tests and generate coverage reports. See [Run Tests with `mcr test`](/getting-started/node-test-runner#run-tests-with-mcr-test).
+## Run tests {#run-tests}
 
-- `merge`: merge raw coverage data from `inputDir`(s) and generate merged reports directly, without running a child process.
+`test`: run Node.js tests and generate coverage reports. See [Run Tests with `mcr test`](/getting-started/node-test-runner#run-tests-with-mcr-test).
+
+## Merge coverage {#merge-coverage}
+
+`merge`: merge raw coverage data from `inputDir`(s) and generate merged reports directly, without running a child process.
 ```sh
 mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverage-reports/e2e/raw --outputDir ./coverage-reports/merged
 ```
 See [Merge Coverage Reports](/reference/merging#merging-reports).
 
-- Examples
-    - [Mocha](/integrations/frameworks-and-tools#mocha)
-    - [TypeScript](/integrations/frameworks-and-tools#typescript)
-    - [AVA](/integrations/frameworks-and-tools#ava)
+## Examples {#examples}
+
+- [Mocha](/integrations/frameworks-and-tools#mocha)
+- [TypeScript](/integrations/frameworks-and-tools#typescript)
+- [AVA](/integrations/frameworks-and-tools#ava)
