@@ -1,50 +1,67 @@
 # 开始使用 {#get-started}
-> **MCR 3.x 的所有 API 和 CLI 命令均要求 [Node.js >= 22.15.0](https://nodejs.org/)**，包括普通命令、`merge` 和 `test`。
 
-**从 2.x 升级：** 请参阅 [3.x 迁移指南](/zh/migrations/migration-to-3)。
+Monocart Coverage Reports（MCR）将 JavaScript、TypeScript 和 CSS 覆盖率数据生成 HTML 等格式的报告。
 
 ## 安装 {#installation}
 
-安装为开发依赖：
+需要 [Node.js >= 22.15.0](https://nodejs.org/)。在项目目录中安装（新项目先运行 `npm init -y`）：
 
 ```sh
 npm i monocart-coverage-reports -D
 ```
 
-## CLI {#cli}
-
-```sh
-# 使用 Node.js 测试运行器执行测试并采集原生 V8 覆盖率
-npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
-# 或者为任意 Node.js 命令采集覆盖率
-npx mcr node my-app.js -r v8,console-details
-```
-参见[命令行](/zh/reference/cli#command-line)和[使用 `mcr test` 运行测试](/zh/getting-started/node-test-runner#run-tests-with-mcr-test)
+从 2.x 升级？参见[迁移指南](/zh/migrations/migration-to-3)。
 
 ## API {#api}
 
-配置类型参见 [`CoverageReportOptions`](/zh/reference/types#coveragereportoptions)，生成的结果结构参见 [`CoverageResults`](/zh/reference/types#coverageresults)。
+已有采集数据时，在 ESM 脚本（`.mjs`）中接上以下代码生成报告：
 
 ```js
 import { MCR } from 'monocart-coverage-reports';
+
 const mcr = MCR({
-    name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ['v8', 'console-details'],
+    reports: ['v8', 'console-summary'],
     cleanCache: true
 });
 await mcr.add(coverageData);
-await mcr.generate();
+const coverageResults = await mcr.generate();
+if (!coverageResults) {
+    throw new Error('No coverage report was generated');
+}
+console.log(coverageResults.reportPath);
 ```
 
-### 加载配置文件 {#load-config}
+### 数据与结果 {#coverage-data}
 
-也可以使用ESM的 `import` 然后加载[配置文件](/zh/reference/configuration#configuration-files)
+`coverageData` 是采集得到的 V8 覆盖率数据，获取方式参见 [V8 采集](/zh/coverage-collection/v8)。
+
+`coverageResults` 是 `generate()` 返回的输出结果，字段说明参见 [`CoverageResults`](/zh/reference/types#coverageresults)。
+
+### 配置 {#load-config}
+
+参见[配置文件](/zh/reference/configuration#minimal-config)、[API 加载配置](/zh/reference/configuration#api)和[配置选项](/zh/reference/options)。
+
+## CLI {#cli}
+
+对于使用 Node.js 内置测试运行器的项目，建议从[使用 mcr test 运行测试](/zh/getting-started/node-test-runner#quick-start)开始：一条命令完成测试执行、覆盖率采集和报告生成，无需配置文件。
+
+### 生成第一份报告 {#first-report}
+
+如果还没有测试文件，也可以创建 `demo.mjs`，先用简单脚本体验覆盖率采集：
+
 ```js
-import { CoverageReport } from 'monocart-coverage-reports';
-const mcr = new CoverageReport();
-await mcr.loadConfig();
+console.log('Hello, MCR!');
 ```
-> [`MCR({...})`](/zh/reference/types#mcr) 和 [`new CoverageReport()`](/zh/reference/types#coveragereport) 创建的都是 `CoverageReport` 类型的实例，并非共享同一个对象。`MCR()` 是简写工厂函数；`new CoverageReport()` 更适合需要单独调用 `loadConfig()` 的场景。
 
-参见 [多进程支持](/zh/reference/multiprocessing#multiple-processes)
+运行并采集覆盖率：
+
+```sh
+npx mcr node demo.mjs -r v8,console-summary -o ./coverage-reports
+```
+
+用浏览器打开 `./coverage-reports/index.html`，终端也会输出覆盖率概要。请使用专用输出目录：[默认会清理之前的报告输出](/zh/reference/options#clean)。
+
+将 `node demo.mjs` 替换为自己的 Node.js 命令即可。更多用法参见 [CLI 参数](/zh/reference/cli)。
+
+更多内容：[报告格式](/zh/reference/reports)、[框架集成](/zh/integrations/frameworks-and-tools)和[报告示例](/zh/getting-started/examples)。

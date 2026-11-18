@@ -64,7 +64,7 @@
         "eol": "git rm -rf --cached . && git reset --hard HEAD",
         "lint": "eslint src/ test/unit/ docs/ README.md --fix && stylelint src/**/*.scss",
         "lint:docs": "eslint docs/ README.md --fix",
-        "docs:dev": "vitepress dev docs",
+        "docs:dev": "vitepress dev docs --open",
         "docs:build": "node ./scripts/build-docs.js",
         "docs:preview": "vitepress preview docs",
         "docs:check": "npm run lint:docs -- --no-fix && npm run docs:build",

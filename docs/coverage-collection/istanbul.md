@@ -25,3 +25,18 @@ Read coverage data from `global.__coverage__`.
 ### 3. General-purpose CDP {#cdp}
 
 Use `getIstanbulCoverage()` to retrieve Istanbul coverage through CDP; see [CDPClient](/reference/cdp-client#cdpclient).
+
+## Step 3: Generate a report {#generate}
+
+Here, `page` is an existing page that has loaded your instrumented application and completed the test actions. For browser and page initialization, see the [Playwright](/reference/cdp-client#playwright) or [Puppeteer](/reference/cdp-client#puppeteer) examples; Istanbul collection does not require the native V8 / CSS coverage calls in those examples. Retrieve the page's coverage object into Node.js:
+
+```js
+const coverageData = await page.evaluate(() => window.__coverage__);
+if (!coverageData || !Object.keys(coverageData).length) {
+    throw new Error('No Istanbul coverage was collected; check instrumentation');
+}
+```
+
+Continue with the [quick-start API example](/getting-started/get-started#api), changing `reports` to `['html', 'console-summary']`. See [Istanbul reports](/reference/reports#istanbul-reports) for other compatible formats.
+
+In Node.js, replace `page.evaluate()` with `global.__coverage__` in the same process that executes the instrumented code; a separate report script cannot directly read another process's globals.

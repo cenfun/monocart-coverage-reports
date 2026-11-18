@@ -4,6 +4,10 @@ outline: [2, 4]
 
 # 报告 {#reports}
 
+将本页的报告名称填入 [API 的 `reports` 选项](/zh/getting-started/get-started#api)或[配置文件](/zh/reference/configuration#minimal-config)，CLI 对应参数为 [`-r, --reports`](/zh/reference/options#configuration-options)。各报告支持的输入格式见下面的分类；覆盖率服务的格式选择参见[覆盖率服务](/zh/integrations/coverage-services)。
+
+下文中的配置片段只展示报告选项，完整的添加数据和生成流程请复用 [API 示例](/zh/getting-started/get-started#api)。
+
 ## 内置报告 {#built-in-reports}
 
 ### V8 {#v8-reports}
@@ -136,6 +140,8 @@ cat path-to/coverage-summary.md >> $GITHUB_STEP_SUMMARY
 通过报告模块路径或 npm 包名配置自定义报告，使用 `type` 指定报告接口。
 
 ```js
+import path from 'node:path';
+
 const coverageOptions = {
     reports: [
         [path.resolve('./test/custom-istanbul-reporter.js'), {

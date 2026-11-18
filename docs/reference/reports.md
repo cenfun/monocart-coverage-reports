@@ -4,6 +4,10 @@ outline: [2, 4]
 
 # Reports {#reports}
 
+Use the report names below in the [API `reports` option](/getting-started/get-started#api) or a [config file](/reference/configuration#minimal-config); the CLI option is [`-r, --reports`](/reference/options#configuration-options). Supported input formats are listed by category below; for service-specific choices, see [Coverage services](/integrations/coverage-services).
+
+The configuration snippets below show report options only; use the [API example](/getting-started/get-started#api) for the complete add-and-generate flow.
+
 ## Built-in reports {#built-in-reports}
 
 ### V8 {#v8-reports}
@@ -136,6 +140,8 @@ Keep all original data, which can be used for other reports input with `inputDir
 Configure custom reports using a reporter module path or npm package name. The `type` option selects the reporter interface.
 
 ```js
+import path from 'node:path';
+
 const coverageOptions = {
     reports: [
         [path.resolve('./test/custom-istanbul-reporter.js'), {

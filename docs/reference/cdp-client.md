@@ -10,6 +10,8 @@
 
 [`CDPClient`](/reference/types#cdpclient) accepts [`CDPOptions`](/reference/types#cdpoptions) and resolves to a [`CoverageClient`](/reference/types#coverageclient) or `undefined`. Custom sessions implement [`CDPSession`](/reference/types#cdpsession); `stopJSCoverage()`, `stopCSSCoverage()` and `stopCoverage()` return arrays of [`V8CoverageEntry`](/reference/types#v8coverageentry).
 
+All examples require a working connection. If `CDPClient()` returns `undefined`, check the debugging port or session and stop the collection flow rather than calling client methods. Browser examples also require the automation package and a browser; replace `your page url` with your page URL, and run and await test actions after navigation and before stopping coverage.
+
 ## Debugging ports {#debugging-ports}
 
 Use the Node.js debugger port `--inspect=9229` or browser debugging port `--remote-debugging-port=9229`.
@@ -63,6 +65,12 @@ await client.startCoverage();
 await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
+
+## Generate a report {#generate}
+
+Pass `coverageData` above to the [quick-start API example](/getting-started/get-started#api) to generate reports without further conversion.
+
+Call `await client.close()` after collection to close the CDP connection, and close any browser you created. In real tests, use `try/finally` to clean up even on failure.
 
 ## Selenium WebDriver {#selenium-webdriver}
 

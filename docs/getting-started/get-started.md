@@ -1,50 +1,67 @@
 # Get started {#get-started}
-> **MCR 3.x requires [Node.js >= 22.15.0](https://nodejs.org/)** for all APIs and CLI commands, including ordinary commands, `merge` and `test`.
 
-**Upgrading from 2.x:** See the [3.x migration guide](/migrations/migration-to-3).
+Monocart Coverage Reports (MCR) turns JavaScript, TypeScript and CSS coverage data into HTML and other reports.
 
 ## Installation {#installation}
 
-Install as a dev dependency:
+Requires [Node.js >= 22.15.0](https://nodejs.org/). In your project directory (run `npm init -y` first for a new project):
 
 ```sh
 npm i monocart-coverage-reports -D
 ```
 
-## CLI {#cli}
-
-```sh
-# Run tests with the Node.js test runner and collect native V8 coverage
-npx mcr test "./test/**/*.test.js" -r v8,console-summary -o ./coverage-reports
-# Or run any Node.js command with coverage
-npx mcr node my-app.js -r v8,console-details
-```
-For more information, see [Command Line](/reference/cli#command-line) and [Run Tests with `mcr test`](/getting-started/node-test-runner#run-tests-with-mcr-test)
+Upgrading from 2.x? See the [migration guide](/migrations/migration-to-3).
 
 ## API {#api}
 
-See [`CoverageReportOptions`](/reference/types#coveragereportoptions) for configuration and [`CoverageResults`](/reference/types#coverageresults) for the generated result structure.
+To generate reports from collected data, use the following in an ESM script (`.mjs`) after your collection step:
 
 ```js
 import { MCR } from 'monocart-coverage-reports';
+
 const mcr = MCR({
-    name: 'My Coverage Report - 2024-02-28',
     outputDir: './coverage-reports',
-    reports: ['v8', 'console-details'],
+    reports: ['v8', 'console-summary'],
     cleanCache: true
 });
 await mcr.add(coverageData);
-await mcr.generate();
+const coverageResults = await mcr.generate();
+if (!coverageResults) {
+    throw new Error('No coverage report was generated');
+}
+console.log(coverageResults.reportPath);
 ```
 
-### Load a config file {#load-config}
+### Coverage data and results {#coverage-data}
 
-Using `import` and load options from [config file](/reference/configuration#configuration-files)
+`coverageData` is the collected V8 coverage data; obtain it from [V8 collection](/coverage-collection/v8).
+
+`coverageResults` is the output returned by `generate()`; see [`CoverageResults`](/reference/types#coverageresults) for its fields.
+
+### Configuration {#load-config}
+
+See [configuration files](/reference/configuration#minimal-config), [loading config with the API](/reference/configuration#api) and [configuration options](/reference/options).
+
+## CLI {#cli}
+
+For projects using Node.js's built-in test runner, start with [Run tests with mcr test](/getting-started/node-test-runner#quick-start): run tests, collect coverage and generate reports with one command, without a config file.
+
+### Generate your first report {#first-report}
+
+If you do not have test files yet, create `demo.mjs` to try coverage with a simple script:
+
 ```js
-import { CoverageReport } from 'monocart-coverage-reports';
-const mcr = new CoverageReport();
-await mcr.loadConfig();
+console.log('Hello, MCR!');
 ```
-> Both [`MCR({...})`](/reference/types#mcr) and [`new CoverageReport()`](/reference/types#coveragereport) create instances of the same `CoverageReport` class. `MCR()` is a shorthand factory function; use `new CoverageReport()` when you prefer class instantiation or need to call `loadConfig()` separately.
 
-For more information, see [Multiprocessing Support](/reference/multiprocessing#multiple-processes)
+Run it with coverage:
+
+```sh
+npx mcr node demo.mjs -r v8,console-summary -o ./coverage-reports
+```
+
+Open `./coverage-reports/index.html` in your browser; the terminal also prints a coverage summary. Use a dedicated output directory: [previous report output is cleaned by default](/reference/options#clean).
+
+Replace `node demo.mjs` with your own Node.js command. See [CLI options](/reference/cli) for more.
+
+For more, explore [report formats](/reference/reports), [framework integrations](/integrations/frameworks-and-tools) and [report examples](/getting-started/examples).

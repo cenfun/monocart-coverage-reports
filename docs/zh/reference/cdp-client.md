@@ -10,6 +10,8 @@
 
 [`CDPClient`](/zh/reference/types#cdpclient) 接收 [`CDPOptions`](/zh/reference/types#cdpoptions)，异步返回 [`CoverageClient`](/zh/reference/types#coverageclient) 或 `undefined`。自定义会话需实现 [`CDPSession`](/zh/reference/types#cdpsession)；`stopJSCoverage()`、`stopCSSCoverage()` 和 `stopCoverage()` 返回 [`V8CoverageEntry`](/zh/reference/types#v8coverageentry) 数组。
 
+所有示例都需要先建立有效连接。如果 `CDPClient()` 返回 `undefined`，请检查调试端口或会话并终止当前采集流程，不要继续调用客户端方法。浏览器示例还需要安装对应自动化工具及浏览器，将 `your page url` 替换为被测页面地址，并在导航后、停止采集前执行和等待测试操作。
+
 ## 调试端口 {#debugging-ports}
 
 使用 Node.js 调试端口 `--inspect=9229` 或浏览器调试端口 `--remote-debugging-port=9229`。
@@ -63,6 +65,12 @@ await client.startCoverage();
 await page.goto('your page url');
 const coverageData = await client.stopCoverage();
 ```
+
+## 生成报告 {#generate}
+
+将上述 `coverageData` 传给[快速开始中的 API 示例](/zh/getting-started/get-started#api)，即可生成报告，无需额外转换。
+
+采集后调用 `await client.close()` 关闭 CDP 连接；浏览器示例中还需要关闭自己创建的 browser。实际测试建议使用 `try/finally` 确保失败时也能清理。
 
 ## Selenium WebDriver {#selenium-webdriver}
 

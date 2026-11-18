@@ -2,6 +2,8 @@
 
 This page distinguishes raw V8 data collected at runtime from MCR coverage entries. Public TypeScript types are maintained on the [Type declarations](/reference/types#type-declarations) page.
 
+New to `coverageData` and `coverageResults`? Start with [data sources and return values in Get started](/getting-started/get-started#coverage-data). To obtain the entries described here, see [V8 collection](/coverage-collection/v8).
+
 ## MCR coverage entries {#coverage-entries}
 
 See [`V8CoverageEntry`](/reference/types#v8coverageentry) for the complete fields and types, rather than duplicating the declaration here. JavaScript entries contain `functions` and source text in `source`; CSS entries contain `ranges` and stylesheet text in `text`.

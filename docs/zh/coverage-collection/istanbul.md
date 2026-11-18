@@ -25,3 +25,18 @@
 ### 3. 通用 CDP 方案 {#cdp}
 
 通过 `getIstanbulCoverage()` 读取 Istanbul 覆盖率数据，接入方式参见 [CDPClient](/zh/reference/cdp-client#cdpclient)。
+
+## 第三步：生成报告 {#generate}
+
+这里的 `page` 是已经加载插桩后应用并完成测试操作的页面。创建方式参见 [Playwright](/zh/reference/cdp-client#playwright) 或 [Puppeteer](/zh/reference/cdp-client#puppeteer) 示例中的浏览器与页面初始化部分；Istanbul 采集无需调用这些示例中的原生 V8 / CSS 覆盖率接口。通过下面的代码将页面内的覆盖率对象读取到 Node.js 中：
+
+```js
+const coverageData = await page.evaluate(() => window.__coverage__);
+if (!coverageData || !Object.keys(coverageData).length) {
+    throw new Error('No Istanbul coverage was collected; check instrumentation');
+}
+```
+
+接上[快速开始中的 API 示例](/zh/getting-started/get-started#api)生成报告，将 `reports` 改为 `['html', 'console-summary']`；其他兼容格式参见 [Istanbul 报告](/zh/reference/reports#istanbul-reports)。
+
+在 Node.js 中，应在执行插桩代码的同一进程内读取 `global.__coverage__`，代替上面的 `page.evaluate()`；在单独的报告脚本中无法直接读取另一个进程的全局变量。

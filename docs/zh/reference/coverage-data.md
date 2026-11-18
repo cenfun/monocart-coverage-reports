@@ -2,6 +2,8 @@
 
 本页说明运行时采集的原始 V8 数据与 MCR 覆盖率条目的关系。公共 TypeScript 类型统一在[类型声明](/zh/reference/types#type-declarations)页面维护。
 
+首次接触 `coverageData` 和 `coverageResults`？先看[快速开始中的数据来源与返回结果说明](/zh/getting-started/get-started#coverage-data)。如何获得本页介绍的条目，参见 [V8 采集](/zh/coverage-collection/v8)。
+
 ## MCR 覆盖率条目 {#coverage-entries}
 
 完整字段和类型参见 [`V8CoverageEntry`](/zh/reference/types#v8coverageentry)，不在本页重复声明。JavaScript 条目包含 `functions` 和源码 `source`；CSS 条目包含 `ranges` 和样式文本 `text`。
