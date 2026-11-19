@@ -18,6 +18,14 @@ In addition to raw coverage data, MCR supports the following metadata:
 
 Read or mutate entries in the [`onEntry`](/reference/hooks#onentry) hook. See [Untested files](/reference/untested-files#untested-files) for handling files without collected coverage.
 
+## Collection context {#collection-context}
+
+Matching report paths and source text can aggregate into one report file. Ordinary JS/CSS retain their existing V8 range-merging behavior. Eligible TS loading contexts are analyzed separately when native loading facts or an explicit TS policy require it; distinct sourcemaps also keep separate cache references. This applies native TS BOM corrections before aggregation without changing the existing report `id` or exposing additional identifiers.
+
+Raw reports retain source text, sourcemap associations and loading facts. Import them through MCR instead of inferring internal cache filenames from report IDs. Saved runtime paths, IDs and cache references are reused: importing raw does not rerun runtime `sourcePath` callbacks or rebase those paths with `baseDir`. Configure runtime path rewriting during collection. Sourcemap originals still use the normal path-resolution callbacks when their maps are decoded.
+
+Istanbul-derived reports (including LCOV) require unique report paths for different content versions and reject duplicates. MCR's Node preload associates captured sources by process and worker thread; `addFromDir()` rejects ambiguous versions rather than choosing an arbitrary source. Use a separate `NODE_V8_COVERAGE` directory for each build.
+
 ## Raw V8 data format {#raw-v8-data}
 
 The following structures describe raw JavaScript coverage returned by V8/CDP; `integer` and `Runtime.ScriptId` are protocol type notation. MCR’s `V8CoverageEntry` adds source text and other metadata to these entries.
@@ -85,7 +93,7 @@ Source: [State of JS 2025](https://2025.stateofjs.com/en-US/other-tools/#runtime
 
 | Runtime | Engine | Survey usage | Native V8 collection (MCR) | MCR notes |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported; MCR requires Node.js >= 22.15.0. See [Node.js collection](/coverage-collection/v8#nodejs). |
+| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported; MCR requires Node.js >= 22.18.0. See [Node.js collection](/coverage-collection/v8#nodejs). |
 | Bun | JavaScriptCore | 20.83% | ❌ | V8-compatible coverage APIs are partially implemented, but MCR compatibility remains unconfirmed. Track [issue #22128](https://github.com/oven-sh/bun/issues/22128); [#30968](https://github.com/oven-sh/bun/issues/30968) was closed as a duplicate. |
 | Deno | V8 | 11.17% | ❌ | Does not export the complete raw V8 coverage data needed by MCR: matching transpiled sources and sourcemaps are missing. See [issue #23359](https://github.com/denoland/deno/issues/23359). |
 

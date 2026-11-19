@@ -57,9 +57,11 @@ MCR 3.x 中，显式指定的配置不存在，或找到的配置加载失败（
 - `mcr.config.cjs`
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
-- `mcr.config.ts` （需要预加载 TypeScript 执行模块，比如 `tsx`）:
+- `mcr.config.ts` — 在较新 Node.js 上使用可擦除 TS 语法时可原生加载，无需预加载 `tsx`。参见 [TypeScript 支持](/zh/reference/typescript#typescript-support)。
 ```sh
-mcr --import tsx -c mcr.config.ts node ./test.js
+mcr -c mcr.config.ts node ./test.ts
+# 需要独立 TypeScript 运行时的项目：
+mcr --import tsx -c mcr.config.ts node ./test.ts
 ```
 
 > 未指定自定义路径时，MCR 会从当前工作目录向上查找默认配置文件（通过 [`find-up`](https://github.com/sindresorhus/find-up)）。不在搜索路径内的文件会被忽略

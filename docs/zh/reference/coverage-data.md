@@ -18,6 +18,14 @@
 
 可在 [`onEntry`](/zh/reference/hooks#onentry) 钩子中读取或修改条目。未测试文件的处理方式参见[未测试文件](/zh/reference/untested-files#untested-files)。
 
+## 采集上下文 {#collection-context}
+
+相同的报告路径与源码文本可以聚合为一个报告文件。普通 JS/CSS 保留原有的 V8 ranges 合并行为。仅在原生加载事实或显式 TS 策略要求时，才分别分析符合条件的 TS 加载上下文；不同 sourcemap 也保留独立的缓存引用。这样可以在聚合前完成原生 TS 的 BOM 坐标修正，同时保留原有报告 `id`，不额外公开标识字段。
+
+Raw 报告保留源码、sourcemap 关联和加载事实。请通过 MCR 导入，避免根据报告 ID 推断内部缓存文件名。导入时直接复用已保存的运行时路径、ID 和缓存引用，不会重新调用运行时 `sourcePath` 回调，也不会根据 `baseDir` 重写这些路径。请在采集阶段配置运行时路径重写。sourcemap 原始文件仍在解包映射时按原有规则执行路径解析回调。
+
+Istanbul 派生报告（包括 LCOV）要求不同内容版本使用唯一的报告路径，遇到重复路径会拒绝生成。MCR 的 Node preload 根据进程和 worker 线程关联捕获的源码；无法唯一关联多个版本时，`addFromDir()` 会拒绝而不是任意选择。请为每个构建使用独立的 `NODE_V8_COVERAGE` 目录。
+
 ## 原始 V8 数据格式 {#raw-v8-data}
 
 以下结构描述 V8/CDP 返回的原始 JavaScript 覆盖率数据；`integer` 和 `Runtime.ScriptId` 是协议中的类型记法。MCR 的 `V8CoverageEntry` 对这类条目添加源码和其他辅助字段。
@@ -85,7 +93,7 @@ export type V8CoverageData = ScriptCoverage[];
 
 | 运行时 | 引擎 | 调查使用率 | 原生 V8 采集（MCR） | MCR 说明 |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率；MCR 要求 Node.js >= 22.15.0。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
+| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率；MCR 要求 Node.js >= 22.18.0。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
 | Bun | JavaScriptCore | 20.83% | ❌ | 已部分实现 V8 兼容的覆盖率接口，但与 MCR 的兼容性仍未确认。进展参见 [issue #22128](https://github.com/oven-sh/bun/issues/22128)；[#30968](https://github.com/oven-sh/bun/issues/30968) 已作为重复 issue 关闭。 |
 | Deno | V8 | 11.17% | ❌ | 无法导出 MCR 所需的完整 raw V8 覆盖率数据，缺少匹配的转译后源码和 sourcemap。参见 [issue #23359](https://github.com/denoland/deno/issues/23359)。 |
 

@@ -57,9 +57,11 @@ Loading config file by priority:
 - `mcr.config.cjs`
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
-- `mcr.config.ts` (requires preloading the TypeScript execution module, for example with `tsx`):
+- `mcr.config.ts` — loads natively on recent Node.js when it uses erasable TypeScript syntax; no `tsx` preload is needed. See [TypeScript support](/reference/typescript#typescript-support).
 ```sh
-mcr --import tsx -c mcr.config.ts node ./test.js
+mcr -c mcr.config.ts node ./test.ts
+# For projects that require a separate TypeScript runtime:
+mcr --import tsx -c mcr.config.ts node ./test.ts
 ```
 
 > If no custom path is given, MCR walks up from the current working directory to find the default config file (via [`find-up`](https://github.com/sindresorhus/find-up)). Files outside the search path will be ignored.

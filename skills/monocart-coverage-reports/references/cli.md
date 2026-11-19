@@ -1,6 +1,6 @@
 # CLI and configuration
 
-These recipes support MCR 3.x only (Node.js >= 22.15.0). Verify the installed major version and runtime before using them.
+These recipes support MCR 3.x only (Node.js >= 22.18.0). Verify the installed major version and runtime before using them.
 
 ## Executable and argument boundaries
 
@@ -31,7 +31,13 @@ Choose the filtering approach using the [filtering strategy comparison](filterin
 
 A CommonJS config can remain `mcr.config.cjs` with `module.exports = { ... }`, even though MCR's own API is ESM. `.js` follows the host's `package.json` module type. Do not add `"type": "module"` to an entire host project merely for one config file.
 
-Default discovery walks upward from cwd and checks `mcr.config.js`, `.cjs`, `.mjs`, `.json`, then `.ts`. Prefer explicit `-c` when a monorepo could find an unintended parent config. TypeScript configs need an appropriate loader, for example when the host already has `tsx`:
+Default discovery walks upward from cwd and checks `mcr.config.js`, `.cjs`, `.mjs`, `.json`, then `.ts`. Prefer explicit `-c` when a monorepo could find an unintended parent config. Native erasable TypeScript configs load directly on supported Node.js versions:
+
+```sh
+npx mcr -c mcr.config.ts -- node ./app.js
+```
+
+If a config needs syntax outside Node's native support, retain an appropriate existing loader, for example when the host already has `tsx`:
 
 ```sh
 npx mcr --import tsx -c mcr.config.ts -- node ./app.js

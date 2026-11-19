@@ -6,7 +6,7 @@ This file is the single, tool-neutral source of repository guidance. Read it bef
 
 Monocart Coverage Reports (MCR) 3.x collects JavaScript, TypeScript, and CSS coverage and generates native V8 or Istanbul reports.
 
-- Runtime: Node.js >= 22.15.0. Check `package.json` for the current version, engines, exports, and scripts.
+- Runtime: Node.js >= 22.18.0. Check `package.json` for the current version, engines, exports, and scripts.
 - Package manager: npm with `package-lock.json`. Use `npm ci` when dependencies need installation. Do not change dependencies or runtimes without a task-related reason.
 - Runtime source: native ESM JavaScript in `lib/`. This directory is mostly **handwritten source**, not build output.
 - Report UI: Vue single-file components and JavaScript in `src/app/`.

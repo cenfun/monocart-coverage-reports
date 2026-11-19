@@ -19,6 +19,8 @@ const test = async (type) => {
 
         '--node': [
             'test-node-env',
+            'test-node-ts',
+            'test-mcr-test-ts',
             'test-node-api',
             'test-node-ins',
             'test-node-cdp',

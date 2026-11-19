@@ -1,6 +1,6 @@
 # MCR best practices: test code and get useful coverage
 
-Use this module to choose a test setup and implement coverage collection. These recipes target **MCR 3.x and Node.js >= 22.15.0**. Reuse the host package manager, module format, test server, and installed tools. Do not upgrade dependencies or migrate an existing runner without approval.
+Use this module to choose a test setup and implement coverage collection. These recipes target **MCR 3.x and Node.js >= 22.18.0**. Reuse the host package manager, module format, test server, and installed tools. Do not upgrade dependencies or migrate an existing runner without approval.
 
 ## 1. Choose the simplest collection path
 

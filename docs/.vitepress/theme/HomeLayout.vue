@@ -28,7 +28,7 @@ const openFirstNavItem = (event) => {
 <template>
   <DefaultTheme.Layout @click.capture="openFirstNavItem">
     <template #home-hero-info-before>
-      <span class="mcr-version">MCR 3.x · Node.js ≥ 22.15.0</span>
+      <span class="mcr-version">MCR 3.x · Node.js ≥ 22.18.0</span>
     </template>
     <template #home-hero-image>
       <img

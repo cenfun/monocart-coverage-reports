@@ -1,5 +1,13 @@
 ## Changelog
 
+- Unreleased
+  - **Breaking Changes**
+    - raise the minimum Node.js version to 22.18.0, enabling native TypeScript execution by default on supported LTS runtimes
+
+  - **Bug Fixes**
+    - preserve separate sourcemap cache references for identical runtime URLs and source text
+    - normalize native TS and JS-loader coverage in their own collection contexts before aggregation, including raw merge/ZIP round trips
+
 - 3.2.1
   - **Bug Fixes**
     - fix branch coverage counts in class field initializers, avoiding false coverage for uninstantiated classes and preserving initializer execution counts (#142)

@@ -7,6 +7,8 @@
 - 多种测试类型，比如`Jest`单元测试，以及`Playwright`的端到端自动化测试
 - 分布式测试，测试结果保存到了多台机器或不同的容器中
 
+V8 会合并报告路径与源码文本均相同的记录。普通 JS/CSS 保留原有的 ranges 合并流程，仅在必要时区分符合条件的 TS 上下文和不同 sourcemap。可以在采集阶段通过 `sourcePath` 统一不同环境的运行时路径；导入 raw 时不会重写已保存的运行时路径。
+
 ## 自动合并 {#automatic-merging}
 
 ### 生成报告时合并 {#merge-during-generation}

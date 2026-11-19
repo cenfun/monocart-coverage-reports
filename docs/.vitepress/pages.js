@@ -31,12 +31,6 @@ export const pages = [
         'reference'
     ],
     [
-        'reference/types',
-        'Type declarations',
-        '类型声明',
-        'reference'
-    ],
-    [
         'reference/configuration',
         'Configuration files',
         '配置文件',
@@ -61,12 +55,6 @@ export const pages = [
         'reference'
     ],
     [
-        'reference/untested-files',
-        'Untested files',
-        '未测试文件',
-        'reference'
-    ],
-    [
         'reference/ignoring-code',
         'Ignoring code',
         '忽略代码',
@@ -79,9 +67,15 @@ export const pages = [
         'reference'
     ],
     [
-        'reference/merging',
-        'Merging reports',
-        '合并报告',
+        'reference/typescript',
+        'TypeScript support',
+        'TypeScript 支持',
+        'reference'
+    ],
+    [
+        'reference/untested-files',
+        'Untested files',
+        '未测试文件',
         'reference'
     ],
     [
@@ -91,9 +85,21 @@ export const pages = [
         'reference'
     ],
     [
+        'reference/merging',
+        'Merging reports',
+        '合并报告',
+        'reference'
+    ],
+    [
         'reference/hooks',
         'Hooks',
         'Hooks',
+        'reference'
+    ],
+    [
+        'reference/types',
+        'Type declarations',
+        '类型声明',
         'reference'
     ],
     [

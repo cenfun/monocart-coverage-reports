@@ -1,6 +1,6 @@
 # 使用 mcr test 运行测试 {#run-tests-with-mcr-test}
 
-**MCR 3.x 重要更新：** 使用内置的 [Node.js 测试 runner](https://nodejs.org/docs/latest/api/test.html)，一条命令即可运行测试并自动生成覆盖率报告。需要 **Node.js >= 22.15.0**。
+**MCR 3.x 重要更新：** 使用内置的 [Node.js 测试 runner](https://nodejs.org/docs/latest/api/test.html)，一条命令即可运行测试并自动生成覆盖率报告。需要 **Node.js >= 22.18.0**。
 
 ## 快速开始 {#quick-start}
 
@@ -69,7 +69,7 @@ export default {
 - 测试发现、匹配、参数解释及错误行为均交给 Node。
 - 相对路径以当前工作目录为基准，而不是配置文件目录。
 - 不承诺直接指定目录会递归发现测试；递归匹配请使用 `"../tests/**/*.test.js"` 等 glob，行为以当前 Node 版本的原生支持为准。
-- TypeScript 执行能力取决于 Node 版本或 `--import tsx` 等加载器。
+- 较新 Node.js 可以直接运行原生可擦除 TypeScript：`mcr test "./test/**/*.test.ts"`，无需外部 TS loader/解析器。其他 TS 方言可能仍需 `--import tsx` 等加载器。参见 [TypeScript 支持](/zh/reference/typescript#typescript-support)。
 
 ## 报告与退出状态 {#reports-and-exit-status}
 

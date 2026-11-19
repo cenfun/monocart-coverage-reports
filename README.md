@@ -11,6 +11,8 @@
 
 > A JavaScript code coverage tool to generate native [V8](https://v8.dev/blog/javascript-code-coverage) reports or [Istanbul](https://istanbul.js.org/) reports.
 
+Requires [Node.js >= 22.18.0](https://nodejs.org/).
+
 ## Documentation
 
 - [Full documentation](https://cenfun.github.io/monocart-coverage-reports/) / [中文文档](https://cenfun.github.io/monocart-coverage-reports/zh/)
@@ -26,17 +28,18 @@
     - [V8 vs Istanbul](https://cenfun.github.io/monocart-coverage-reports/coverage-collection/compare-reports.html)
 - Reference
     - [Configuration options](https://cenfun.github.io/monocart-coverage-reports/reference/options.html)
-    - [Type declarations](https://cenfun.github.io/monocart-coverage-reports/reference/types.html)
     - [Configuration files](https://cenfun.github.io/monocart-coverage-reports/reference/configuration.html)
     - [Command line](https://cenfun.github.io/monocart-coverage-reports/reference/cli.html)
     - [Reports](https://cenfun.github.io/monocart-coverage-reports/reference/reports.html)
     - [Filtering](https://cenfun.github.io/monocart-coverage-reports/reference/filtering.html)
-    - [Untested files](https://cenfun.github.io/monocart-coverage-reports/reference/untested-files.html)
     - [Ignoring code](https://cenfun.github.io/monocart-coverage-reports/reference/ignoring-code.html)
     - [Source paths](https://cenfun.github.io/monocart-coverage-reports/reference/source-path.html)
-    - [Merging reports](https://cenfun.github.io/monocart-coverage-reports/reference/merging.html)
+    - [TypeScript support](https://cenfun.github.io/monocart-coverage-reports/reference/typescript.html) — native `mcr node example.ts` and `mcr test "./test/*.test.ts"`, without an extra TS loader on recent Node.js; configurable automatic, forced or per-file analysis.
+    - [Untested files](https://cenfun.github.io/monocart-coverage-reports/reference/untested-files.html)
     - [Multiple processes](https://cenfun.github.io/monocart-coverage-reports/reference/multiprocessing.html)
+    - [Merging reports](https://cenfun.github.io/monocart-coverage-reports/reference/merging.html)
     - [Hooks](https://cenfun.github.io/monocart-coverage-reports/reference/hooks.html)
+    - [Type declarations](https://cenfun.github.io/monocart-coverage-reports/reference/types.html)
     - [V8 coverage data](https://cenfun.github.io/monocart-coverage-reports/reference/coverage-data.html)
     - [CDPClient](https://cenfun.github.io/monocart-coverage-reports/reference/cdp-client.html)
 - Integrations

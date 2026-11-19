@@ -1,5 +1,5 @@
 import {
-    describe, it, beforeEach, afterEach
+    describe, it, beforeEach, afterEach, mock
 } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -9,6 +9,7 @@ import { spawnSync } from 'node:child_process';
 import { Util } from '../../lib/utils/util.js';
 import { getUntestedList } from '../../lib/converter/untested.js';
 import { getJsAstInfo } from '../../lib/converter/ast.js';
+import { Parser } from 'acorn';
 
 const run = (code, args = []) => {
     const result = spawnSync(process.execPath, [... args, '--input-type=module', '-e', code], {
@@ -211,6 +212,32 @@ describe('untested file reads', () => {
         assert.equal(seen.length, 3);
         assert.ok(list[0].source.endsWith('// rewritten\n// transformed\n'));
     });
+});
+
+it('parses only the stripped source for enabled TypeScript analysis', () => {
+    const source = `${'var value = 1;\n'.repeat(1000)}interface Last { value: number; }\n`;
+    const parse = Parser.parse;
+    const seen = [];
+    const mocked = mock.method(Parser, 'parse', function(text, options) {
+        seen.push(text);
+        return parse.call(this, text, options);
+    });
+    try {
+        const info = getJsAstInfo({
+            source, url: 'file:///large.ts', nativeTypeScript: true
+        }, [{
+            functionName: '',
+            ranges: [{
+                startOffset: 0, endOffset: source.length, count: 1
+            }]
+        }]);
+        assert.equal(info.statements.length, 1000);
+        assert.equal(seen.length, 1);
+        assert.equal(seen[0].includes('interface Last'), false);
+        assert.equal(seen[0].length, source.length);
+    } finally {
+        mocked.mock.restore();
+    }
 });
 
 it('uses the last enclosing covered block when AST offsets are not exact matches', () => {

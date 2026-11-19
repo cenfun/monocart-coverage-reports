@@ -32,12 +32,21 @@ The options below are only available when using the CLI (`mcr <command>`):
 | `--import` | `string` | `null` | Preload ESM module via `NODE_OPTIONS`, e.g. `tsx` for TypeScript. |
 | `--require` | `string` | `null` | Deprecated alias for `--import`; uses ESM loading, not CommonJS resolution |
 | `--env` | `string` | `null` | Load environment variables from a dotenv file (defaults to `.env`). |
-| `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.15.0` |
+| `test` (config only) | `string \| string[] \| null` | `null` | Default test file paths or glob patterns accepted by `node --test`, passed unchanged when `mcr test` has no positional targets; ignored by other commands and the API. Requires Node.js `>= 22.18.0` |
 | `onTestEnd` (config only) | `(testResults) => void \| Promise<void>` | `null` | Only `mcr test`: runs after test result collection, before `onReady` and coverage generation; see [Hooks](/reference/hooks#hooks) |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | Runs before the child process is spawned; see [Hooks](/reference/hooks#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | Runs after the child exits, before MCR reads coverage; see [Hooks](/reference/hooks#hooks) |
 
 For other options (e.g. `--name`, `--reports`, `--outputDir`, `--lcov`, etc.), see [Configuration options](/reference/options#configuration-options) — they work the same way in CLI.
+
+## TypeScript analysis {#typescript-analysis}
+
+`--typescript` forces analysis of eligible original TS; `--no-typescript` disables MCR's TS analysis even for confirmed native TS. Both override the config value. Omitting both preserves configuration and defaults to automatic detection. These flags affect reporting, not Node's execution mode. Configure objects and file callbacks in a config file or API options. See [TypeScript support](/reference/typescript#analysis-policy).
+
+```sh
+mcr --typescript node ./src/example.ts
+mcr --no-typescript merge --inputDir ./raw
+```
 
 ## Separate child arguments {#separate-child-arguments}
 
@@ -48,7 +57,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 ## Preload modules {#preload-modules}
 
-`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
+`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) when needed by your project. Native erasable TS programs and `mcr.config.ts` need no preload on recent Node.js; see [TypeScript support](/reference/typescript#typescript-support). Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
 ```sh
 mcr --import tsx node ./test.ts
 ```

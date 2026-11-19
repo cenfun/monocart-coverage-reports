@@ -55,11 +55,20 @@
 
 ## [TypeScript](https://github.com/microsoft/typescript) {#typescript}
 
+对于 Node 原生支持的可擦除语法，使用较新 Node.js 即可运行，无需外部 TS loader/解析器：
+
+```sh
+mcr node ./src/example.ts
+mcr test "./test/*.test.ts"
+```
+
+版本要求、配置及限制参见 [TypeScript 支持](/zh/reference/typescript#typescript-support)。需要额外语法支持的项目可以继续使用以下运行时。
+
 - [tsx](https://github.com/privatenumber/tsx)
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# MCR 3.x: Node.js >= 22.15.0
+# MCR 3.x: Node.js >= 22.18.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```

@@ -5,5 +5,10 @@
         "types": [
             "node"
         ]
-    }
+    },
+    "exclude": [
+        "node-ts",
+        "mcr.config.node-ts.ts",
+        "mcr.config.mcr-test-ts.ts"
+    ]
 }

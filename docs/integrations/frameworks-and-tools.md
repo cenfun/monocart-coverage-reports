@@ -55,11 +55,20 @@ For collection code, see [Collect V8 coverage with Puppeteer](/coverage-collecti
 
 ## [TypeScript](https://github.com/microsoft/typescript) {#typescript}
 
+For Node's native erasable syntax, use a recent Node.js and run without an external TS loader/parser:
+
+```sh
+mcr node ./src/example.ts
+mcr test "./test/*.test.ts"
+```
+
+See [TypeScript support](/reference/typescript#typescript-support) for requirements, configuration and limitations. Projects needing additional syntax can retain the runtimes below.
+
 - [tsx](https://github.com/privatenumber/tsx)
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# MCR 3.x: Node.js >= 22.15.0
+# MCR 3.x: Node.js >= 22.18.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```

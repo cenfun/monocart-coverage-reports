@@ -32,12 +32,21 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 | `--import` | `string` | `null` | 通过 `NODE_OPTIONS` 预加载 ESM 模块，如 `tsx`。|
 | `--require` | `string` | `null` | `--import` 的已弃用别名；使用 ESM 加载，不使用 CommonJS 解析 |
 | `--env` | `string` | `null` | 从 dotenv 文件加载环境变量（默认 `.env`）。|
-| `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.15.0` |
+| `test`（仅配置文件） | `string \| string[] \| null` | `null` | 未指定命令行目标时，原样传给 `node --test` 的默认测试文件路径或 glob，**仅 `mcr test` 使用**；其他命令和 API 忽略。需要 Node.js `>= 22.18.0` |
 | `onTestEnd`（仅配置文件） | `(testResults) => void \| Promise<void>` | `null` | 仅 `mcr test`：测试结果采集完成后、`onReady` 和覆盖率生成前触发；参见 [Hooks](/zh/reference/hooks#hooks) |
 | `onStart` | `(coverageReport) => Promise<void>` | `null` | 子进程启动前触发；参见 [Hooks](/zh/reference/hooks#hooks) |
 | `onReady` | `(coverageReport, nodeV8CoverageDir, subprocess) => Promise<void>` | `null` | 子进程退出后、MCR 读取覆盖率前触发；参见 [Hooks](/zh/reference/hooks#hooks) |
 
 其他选项（如 `--name`、`--reports`、`--outputDir`、`--lcov` 等）参见 [配置选项](/zh/reference/options#configuration-options)，它们在 CLI 中的用法相同。
+
+## TypeScript 分析 {#typescript-analysis}
+
+`--typescript` 强制分析符合条件的原始 TS；`--no-typescript` 关闭 MCR 的 TS 分析，即使已确认原生 TS 身份。两者都会覆盖配置文件；都不传时保留配置，默认自动识别。这些参数影响报告分析，不改变 Node 执行模式。对象和文件回调应写在配置文件或 API options 中。参见 [TypeScript 支持](/zh/reference/typescript#analysis-policy)。
+
+```sh
+mcr --typescript node ./src/example.ts
+mcr --no-typescript merge --inputDir ./raw
+```
 
 ## 隔离子程序参数 {#separate-child-arguments}
 
@@ -48,7 +57,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 ## 预加载模块 {#preload-modules}
 
-`--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
+`--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。用于项目需要的 TypeScript/JSX 运行时（`tsx`、`ts-node` 等）。在较新 Node.js 上，原生可擦除 TS 程序及 `mcr.config.ts` 无需预加载模块，参见 [TypeScript 支持](/zh/reference/typescript#typescript-support)。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
 ```sh
 mcr --import tsx node ./test.ts
 ```

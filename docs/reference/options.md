@@ -117,6 +117,15 @@ Combined filter replacing both `entryFilter` and `sourceFilter`. Does not config
 
 Include untested files as empty coverage. See [Adding Empty Coverage](/reference/untested-files#untested-files).
 
+### `typescript` {#typescript}
+
+- **Type:** `boolean | object | function | null`
+- **Default:** `null`
+
+(V8 only) Native TS analysis policy. `null`, `undefined` and `{}` use conservative automatic detection; `true` forces eligible original TS analysis and `false` disables it. Object form: `{ enabled: boolean | (info) => boolean }`. Top-level `(info) => result` callbacks return final boolean/object/nullish settings. Callbacks are synchronous and file-specific; only one is called per eligible file. Existing transformed JS, sourcemaps and explicit `all.transformer` output keep their own workflows.
+
+CLI overrides: `--typescript` / `--no-typescript`. See [TypeScript support](/reference/typescript#analysis-policy) for callback fields, raw behavior, validation and limitations.
+
 ### `v8Ignore` {#v8ignore}
 
 - **Type:** `boolean`

@@ -117,6 +117,15 @@
 
 为未测试文件添加空覆盖率，参见 [为未测试的文件添加空的覆盖率报告](/zh/reference/untested-files#untested-files)。
 
+### `typescript` {#typescript}
+
+- **类型:** `boolean | object | function | null`
+- **默认值:** `null`
+
+（仅 V8）原生 TS 分析策略。`null`、`undefined` 和 `{}` 为保守的自动识别；`true` 强制分析符合条件的原始 TS，`false` 关闭分析。对象形式为 `{ enabled: boolean | (info) => boolean }`；顶层 `(info) => result` 回调返回最终的布尔值、配置对象或空值。回调按文件同步执行，每个符合条件的文件只调用一个用户回调。已有转换后 JS、sourcemap 和显式 `all.transformer` 输出保留各自的处理流程。
+
+CLI 覆盖参数为 `--typescript` / `--no-typescript`。回调字段、raw 行为、校验和限制参见 [TypeScript 支持](/zh/reference/typescript#analysis-policy)。
+
 ### `v8Ignore` {#v8ignore}
 
 - **类型:** `boolean`

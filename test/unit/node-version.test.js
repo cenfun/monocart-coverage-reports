@@ -3,6 +3,12 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert';
 import { spawnSync } from 'node:child_process';
 import pkg from '../../package.json' with { type: 'json' };
+import lock from '../../package-lock.json' with { type: 'json' };
+
+it('requires Node.js 22.18+ consistently in the manifest and lockfile', () => {
+    assert.equal(pkg.engines.node, '>=22.18.0');
+    assert.equal(lock.packages[''].engines.node, pkg.engines.node);
+});
 
 describe('CLI version', () => {
     // Allow the child-process deadline to expire before the test runner's.

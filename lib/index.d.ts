@@ -11,14 +11,14 @@ declare namespace MCR {
         /** css only */
         ranges?: any[];
 
-        /** js only */
+        /** JS source from the exact tested build, before any report-path rewriting. */
         source?: string;
         /** js only */
         scriptId?: string;
         /** js only */
         functions?: any[];
 
-        /** js only */
+        /** JS sourcemap retained for this collection context, even when URL/source match another entry. */
         sourceMap?: any;
         /** js only */
         scriptOffset?: number;
@@ -32,6 +32,34 @@ declare namespace MCR {
 
         [key: string]: any;
     }
+
+    /** Immutable file description, not the mutable coverage entry. */
+    export interface TypeScriptFileInfo {
+        readonly url: string;
+        readonly sourcePath: string;
+        /** Confirmed Node-native loading; false means unconfirmed, including untested files. */
+        readonly nativeTypeScript: boolean;
+        readonly empty: boolean;
+    }
+
+    /** Final options returned by a file callback. Omitted enabled means auto. */
+    export interface ResolvedTypeScriptOptions {
+        enabled?: boolean | undefined;
+    }
+
+    export interface TypeScriptOptions extends Omit<ResolvedTypeScriptOptions, 'enabled'> {
+        /** Synchronous callback, called once per eligible TS file/path/collection context; must return a boolean. */
+        enabled?: boolean | ((info: TypeScriptFileInfo) => boolean) | undefined;
+    }
+
+    export type TypeScriptOptionsResult = boolean | ResolvedTypeScriptOptions | null | undefined;
+
+    /** null/undefined/{}: auto; true: force TS analysis; false: disable it.
+     * Callbacks are synchronous and file-specific. A top-level callback returns
+     * final options, not another callback or a nested enabled callback.
+     */
+    export type TypeScriptOption = boolean | TypeScriptOptions | null | undefined |
+        ((info: TypeScriptFileInfo) => TypeScriptOptionsResult);
 
     export type Watermarks = [number, number] | {
         /** V8 only */
@@ -252,7 +280,7 @@ declare namespace MCR {
             extras?: {
                 /** 
                  * key: line number;
-                 * b: blank;
+                 * b: blank (including erased-only TypeScript lines);
                  * c: comment;
                  * i: ignored;
                  */
@@ -440,6 +468,12 @@ declare namespace MCR {
 
         };
 
+        /** (V8 only) Native TS analysis policy. Defaults to null (conservative auto).
+         * Applies only to TS candidates; does not compile TS, change Node execution,
+         * or override existing transformed-JS/sourcemap workflows or all.transformer.
+         */
+        typescript?: TypeScriptOption;
+
         /** (V8 only) {boolean} Enable/Disable ignoring uncovered codes with the special comments: v8 ignore next/next N/start/stop */
         v8Ignore?: boolean;
 
@@ -497,7 +531,7 @@ declare namespace MCR {
          * Node handles parsing and discovery relative to cwd; null is not passed to Node.
          * Positional CLI targets override this option.
          * Defaults to null (skip tests unless CLI targets are supplied).
-         * Requires Node.js >= 22.15.0. Ignored by other commands and the API.
+         * Requires Node.js >= 22.18.0. Ignored by other commands and the API.
          */
         test?: string | string[] | null;
 
@@ -693,6 +727,11 @@ declare function MCR(options?: MCR.CoverageReportOptions): MCR.CoverageReport;
 
 export { MCR as default, MCR };
 export import V8CoverageEntry = MCR.V8CoverageEntry;
+export import TypeScriptFileInfo = MCR.TypeScriptFileInfo;
+export import ResolvedTypeScriptOptions = MCR.ResolvedTypeScriptOptions;
+export import TypeScriptOptions = MCR.TypeScriptOptions;
+export import TypeScriptOptionsResult = MCR.TypeScriptOptionsResult;
+export import TypeScriptOption = MCR.TypeScriptOption;
 export import Watermarks = MCR.Watermarks;
 export import ReportDescription = MCR.ReportDescription;
 export import AddedResults = MCR.AddedResults;

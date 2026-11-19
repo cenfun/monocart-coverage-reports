@@ -33,6 +33,8 @@ import { withBase } from 'vitepress';
 | 报告 | 说明 |
 | --- | --- |
 | <a :href="withBase('/reports/node-env/index.html')" target="_blank" rel="noopener noreferrer">NODE_V8_COVERAGE</a> | 通过 Node.js 环境变量采集的覆盖率。 |
+| <a :href="withBase('/reports/node-ts/index.html')" target="_blank" rel="noopener noreferrer">原生 TypeScript</a> | 使用 `mcr node` 直接执行 TS，无需构建或外部 TS loader。 |
+| <a :href="withBase('/reports/mcr-test-ts/index.html')" target="_blank" rel="noopener noreferrer">原生 TypeScript 测试</a> | 使用 `mcr test` 和 Node 内置测试运行器执行 TS 测试。 |
 | <a :href="withBase('/reports/node-api/index.html')" target="_blank" rel="noopener noreferrer">Node.js API</a> | 通过 Node.js V8 API 采集的覆盖率。 |
 | <a :href="withBase('/reports/node-ins/index.html')" target="_blank" rel="noopener noreferrer">Inspector</a> | 通过 Node.js inspector 会话采集的覆盖率。 |
 | <a :href="withBase('/reports/node-cdp/index.html')" target="_blank" rel="noopener noreferrer">Node.js CDP</a> | 通过 Node.js CDP 连接采集的覆盖率。 |

@@ -1,0 +1,57 @@
+{
+    "type": "v8",
+    "summary": {
+        "bytes": "69.25 %",
+        "statements": "68.00 %",
+        "branches": "37.50 %",
+        "functions": "71.43 %",
+        "lines": "50.00 %"
+    },
+    "files": {
+        "test/node-ts/src/common.cts": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "100.00 %",
+            "lines": "75.00 %",
+            "bytes": "94.39 %",
+            "uncoveredLines": "2",
+            "extras": "4b,6b"
+        },
+        "test/node-ts/src/module.mts": {
+            "functions": "100.00 %",
+            "branches": "50.00 %",
+            "statements": "100.00 %",
+            "lines": "66.67 %",
+            "bytes": "92.39 %",
+            "uncoveredLines": "2",
+            "extras": "4b"
+        },
+        "test/node-ts/src/subject.ts": {
+            "functions": "75.00 %",
+            "branches": "50.00 %",
+            "statements": "78.57 %",
+            "lines": "62.50 %",
+            "bytes": "80.54 %",
+            "uncoveredLines": "12-14,17-19",
+            "extras": "1b,2b,3b,4b,5b,6b,7b,8b,16b,20b,24b,28b"
+        },
+        "test/node-ts/src/types.ts": {
+            "functions": "",
+            "branches": "",
+            "statements": "",
+            "lines": "",
+            "bytes": "100.00 %",
+            "uncoveredLines": "",
+            "extras": "1b,2b,3b,4b,5b,6b"
+        },
+        "test/node-ts/src/untested.ts": {
+            "functions": "0.00 %",
+            "branches": "0.00 %",
+            "statements": "0.00 %",
+            "lines": "0.00 %",
+            "bytes": "0.00 %",
+            "uncoveredLines": "5-11",
+            "extras": "1b,2b,3b,4b,12b"
+        }
+    }
+}

@@ -7,6 +7,8 @@ The following usage scenarios may require merging coverage reports:
 - When the code is subjected to different kinds of testing. For example, `unit tests` with `Jest` might cover certain parts of the code, while `end-to-end tests` with `Playwright` might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
 - When tests are run on different machines or containers, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
 
+V8 combines records with matching report paths and identical source text. Ordinary JS/CSS keep the existing raw-range merge; eligible TS contexts and distinct sourcemaps are separated only when needed. Use `sourcePath` during collection to unify runtime paths from different environments; saved raw runtime paths are not rewritten on import.
+
 ## Automatic merging {#automatic-merging}
 
 ### Merge during report generation {#merge-during-generation}
