@@ -76,9 +76,9 @@ Important constraints:
 
 ## Incidental issues and TODOs
 
-- When scanning or analyzing code reveals a pre-existing issue unrelated to the current task, record it temporarily in `TODO.md` instead of expanding the task to fix it. Defer the fix for later consideration unless explicitly requested.
+- When scanning or analyzing code reveals a pre-existing issue unrelated to the current task, record it temporarily in `.temp/TODO.md` (create the local, Git-ignored file if needed) instead of expanding the task to fix it. Defer the fix for later consideration unless explicitly requested.
 - Each entry must identify the affected code, describe expected versus actual behavior, and include reproducible steps or a concrete example. Include relevant commands, inputs, and environment details when needed; distinguish confirmed findings from suspected issues.
-- After fixing and validating an issue, remove its entry from `TODO.md` rather than keeping a completed checkbox or fix history. Keep regression coverage in the relevant tests.
+- After fixing and validating an issue, remove its entry from `.temp/TODO.md` rather than keeping a completed checkbox or fix history. Keep regression coverage in the relevant tests.
 
 ## Documentation conventions
 
@@ -117,5 +117,5 @@ Edit `src/app/`, `src/vendor/`, `lib/default/template.html`, or build scripts in
 2. Add or update a focused regression test for product behavior changes. Do not add documentation tests.
 3. Run relevant unit tests for product changes; add type/runtime checks for API or packaging changes, and build/integration checks for report UI, vendor, or conversion changes. For documentation-only changes, use lint/build and manual preview/review instead.
 4. For AI skill changes, check relative links, exported skill resolution, and inclusion of the entire skill directory with `npm pack --dry-run`.
-5. Record unrelated pre-existing findings in `TODO.md` with reproduction steps or examples, and remove entries for issues fixed and validated in this task.
+5. Record unrelated pre-existing findings in `.temp/TODO.md` with reproduction steps or examples, and remove entries for issues fixed and validated in this task.
 6. Review `git diff --check` and the final diff. Include no unrelated generated files, secrets, or user changes.
