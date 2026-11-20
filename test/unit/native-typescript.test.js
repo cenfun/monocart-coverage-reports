@@ -74,9 +74,14 @@ describe('native TypeScript coverage', {
                 const captured = fs.readdirSync(dir).filter((name) => name.startsWith('source-')).map((name) => {
                     return JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
                 }).find((item) => item.url === url);
-                assert.deepEqual(captured, {
+                const { execution, ... sourceData } = captured;
+                assert.deepEqual(sourceData, {
                     url, source, nativeTypeScript: true
                 });
+                assert.equal(execution.threadId, 0);
+                assert.ok(Number.isInteger(execution.processId) && execution.processId > 0);
+                // Captured timestamp is the process start time (Unix epoch milliseconds).
+                assert.ok(Number.isInteger(execution.timestamp) && execution.timestamp > 0);
                 // Reporting must use the captured build, not a later filesystem version.
                 fs.writeFileSync(filename, 'this is not valid TypeScript');
                 const coverage = reporter({

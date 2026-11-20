@@ -540,6 +540,9 @@ declare namespace MCR {
 
         /**
          * add V8 coverage from a dir
+         * Uses a single captured source directly, or matches multiple versions to Node processes and worker threads.
+         * Always selects one source for an existing URL; unresolved ties use the first candidate (best effort).
+         * Preserve the original Node coverage filenames and captured execution metadata when copying inputs.
          * @param dir node v8 coverage dir
          */
         addFromDir: (dir: string) => Promise<void>;

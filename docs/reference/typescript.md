@@ -125,10 +125,11 @@ flowchart TD
 - **Coordinates:** mappings use line boundaries and transitions between preserved and replaced text. BOM removal is represented in the map rather than by shifting V8 ranges.
 - **Functions, branches and statements:** analyzed from the stripped JS and mapped back to TS. Type-only modules do not acquire a synthetic runtime statement merely because a sourcemap is present.
 - **Lines and bytes:** currently follow the existing original-source sourcemap reporting rules. Erased type syntax is **not yet treated as comments**, so type-only lines may enter line statistics. Byte coverage uses the original source length and is not a measurement of executable TS tokens.
+- **Repeated snapshots:** within a directory import, MCR reuses type stripping and the generated map template for each captured source record. Every entry receives an independent map object and arrays, so `onEntry` changes do not affect later snapshots.
 - **Raw reports:** retain stripped JS, V8 ranges, native identity and the generated map containing the original TS. Regeneration and merging do not strip again or require the original source file.
 - **Existing map comments:** TS `sourceMappingURL` comments do not replace MCR's generated map, because they may describe another compilation output.
 
-Keep different builds in separate Node coverage directories, then call `addFromDir()` for each. Do not mix different source versions for the same URL in one capture directory. See [Merging reports](/reference/merging#merging-reports).
+Captures from separate Node processes or worker threads are associated with their own source versions, even when they share a URL and capture directory; this also applies to captured JavaScript. Preserve the original Node coverage filenames and source execution metadata. See [Node coverage imports](/coverage-collection/v8#generate) for legacy capture compatibility and same-process limitations, and [Merging reports](/reference/merging#merging-reports) for combining independent collections.
 
 ## Supported syntax {#supported-syntax}
 

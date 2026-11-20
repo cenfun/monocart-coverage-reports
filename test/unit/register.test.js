@@ -6,10 +6,19 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
+import { threadId } from 'node:worker_threads';
 import { pathToFileURL } from 'node:url';
 import { load } from '../../lib/register/hooks.js';
 
 const source = 'module.exports = 42;\n//# sourceMappingURL=subject.js.map\n';
+const execution = {
+    processId: process.pid,
+    threadId,
+    // Process start time (Unix epoch milliseconds).
+    timestamp: Math.floor(performance.timeOrigin)
+};
 
 describe('synchronous coverage hooks', {
     timeout: 15000
@@ -64,7 +73,7 @@ describe('synchronous coverage hooks', {
             assert.equal(calls, 1);
             assert.equal(result, loaded);
             assert.deepEqual(savedSources(), [{
-                url, source
+                url, source, execution
             }]);
         });
     });
@@ -79,7 +88,7 @@ describe('synchronous coverage hooks', {
                 };
                 assert.equal(load(url, {}, () => loaded), loaded);
                 assert.deepEqual(savedSources(), [{
-                    url, source: text, nativeTypeScript: true
+                    url, source: text, execution, nativeTypeScript: true
                 }]);
             });
         });
@@ -92,7 +101,37 @@ describe('synchronous coverage hooks', {
         };
         load(url, {}, () => loaded);
         assert.deepEqual(savedSources(), [{
-            url, source
+            url, source, execution
+        }]);
+    });
+
+    it('includes execution identity in the hash while preserving the source-<hash>.json format', () => {
+        const url = pathToFileURL(path.join(root, 'subject.cjs')).href;
+        load(url, {}, () => ({
+            format: 'commonjs', source
+        }));
+        load(url, {}, () => ({
+            format: 'commonjs', source
+        }));
+        const id = createHash('sha1').update(JSON.stringify([execution, url, source, false])).digest('hex');
+        assert.deepEqual(fs.readdirSync(process.env.NODE_V8_COVERAGE), [`source-${id}.json`]);
+        for (const alternate of [
+            {
+                ... execution, processId: execution.processId + 1
+            },
+            {
+                ... execution, threadId: execution.threadId + 1
+            },
+            {
+                // A different process start time (Unix epoch milliseconds).
+                ... execution, timestamp: execution.timestamp + 1
+            }
+        ]) {
+            const otherId = createHash('sha1').update(JSON.stringify([alternate, url, source, false])).digest('hex');
+            assert.notEqual(otherId, id);
+        }
+        assert.deepEqual(savedSources(), [{
+            url, source, execution
         }]);
     });
 
