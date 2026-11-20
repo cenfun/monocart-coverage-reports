@@ -1,6 +1,6 @@
 # 使用 mcr test 运行测试 {#run-tests-with-mcr-test}
 
-**MCR 3.x 重要更新：** 使用内置的 [Node.js 测试 runner](https://nodejs.org/docs/latest/api/test.html)，一条命令即可运行测试并自动生成覆盖率报告。需要 **Node.js >= 22.15.0**。
+**MCR 3.x 重要更新：** 使用内置的 [Node.js 测试 runner](https://nodejs.org/docs/latest/api/test.html)，一条命令即可运行测试并自动生成覆盖率报告。
 
 ## 快速开始 {#quick-start}
 

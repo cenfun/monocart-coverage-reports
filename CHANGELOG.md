@@ -1,5 +1,9 @@
 ## Changelog
 
+- Unreleased
+  - **Breaking Changes**
+    - require Node.js >= 22.18.0, enabling native TypeScript type stripping without an extra flag on Node.js 22
+
 - 3.2.1
   - **Bug Fixes**
     - fix branch coverage counts in class field initializers, avoiding false coverage for uninstantiated classes and preserving initializer execution counts (#142)

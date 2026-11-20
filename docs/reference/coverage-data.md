@@ -85,7 +85,7 @@ Source: [State of JS 2025](https://2025.stateofjs.com/en-US/other-tools/#runtime
 
 | Runtime | Engine | Survey usage | Native V8 collection (MCR) | MCR notes |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported; MCR requires Node.js >= 22.15.0. See [Node.js collection](/coverage-collection/v8#nodejs). |
+| Node.js | V8 | 90.32% | ✅ | Native V8 coverage is supported. See [Node.js collection](/coverage-collection/v8#nodejs). |
 | Bun | JavaScriptCore | 20.83% | ❌ | V8-compatible coverage APIs are partially implemented, but MCR compatibility remains unconfirmed. Track [issue #22128](https://github.com/oven-sh/bun/issues/22128); [#30968](https://github.com/oven-sh/bun/issues/30968) was closed as a duplicate. |
 | Deno | V8 | 11.17% | ❌ | Does not export the complete raw V8 coverage data needed by MCR: matching transpiled sources and sourcemaps are missing. See [issue #23359](https://github.com/denoland/deno/issues/23359). |
 

@@ -1,6 +1,6 @@
 # Run tests with mcr test {#run-tests-with-mcr-test}
 
-**New in MCR 3.x:** Run tests with the built-in [Node.js test runner](https://nodejs.org/docs/latest/api/test.html) and automatically generate coverage reports with one command. Requires **Node.js >= 22.15.0**.
+**New in MCR 3.x:** Run tests with the built-in [Node.js test runner](https://nodejs.org/docs/latest/api/test.html) and automatically generate coverage reports with one command.
 
 ## Quick start {#quick-start}
 

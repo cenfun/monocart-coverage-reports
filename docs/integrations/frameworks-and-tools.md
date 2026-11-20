@@ -59,7 +59,6 @@ For collection code, see [Collect V8 coverage with Puppeteer](/coverage-collecti
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-# MCR 3.x: Node.js >= 22.15.0
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```

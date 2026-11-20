@@ -85,7 +85,7 @@ export type V8CoverageData = ScriptCoverage[];
 
 | 运行时 | 引擎 | 调查使用率 | 原生 V8 采集（MCR） | MCR 说明 |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率；MCR 要求 Node.js >= 22.15.0。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
+| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
 | Bun | JavaScriptCore | 20.83% | ❌ | 已部分实现 V8 兼容的覆盖率接口，但与 MCR 的兼容性仍未确认。进展参见 [issue #22128](https://github.com/oven-sh/bun/issues/22128)；[#30968](https://github.com/oven-sh/bun/issues/30968) 已作为重复 issue 关闭。 |
 | Deno | V8 | 11.17% | ❌ | 无法导出 MCR 所需的完整 raw V8 覆盖率数据，缺少匹配的转译后源码和 sourcemap。参见 [issue #23359](https://github.com/denoland/deno/issues/23359)。 |
 

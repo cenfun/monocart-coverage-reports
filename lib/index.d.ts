@@ -497,7 +497,7 @@ declare namespace MCR {
          * Node handles parsing and discovery relative to cwd; null is not passed to Node.
          * Positional CLI targets override this option.
          * Defaults to null (skip tests unless CLI targets are supplied).
-         * Requires Node.js >= 22.15.0. Ignored by other commands and the API.
+         * Ignored by other commands and the API.
          */
         test?: string | string[] | null;
 

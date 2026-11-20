@@ -2,7 +2,7 @@
 
 ## Development environment and commands {#development}
 
-- Latest Node.js 24 LTS recommended for development; minimum package runtime is 22.15.0. Development tools may require a newer patch than the minimum runtime.
+- Latest Node.js 24 LTS recommended for development; see `package.json` engines for the minimum runtime. Development tools may require a newer patch.
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

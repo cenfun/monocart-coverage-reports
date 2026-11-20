@@ -2,7 +2,7 @@
 
 ## 开发环境与命令 {#development}
 
-- 推荐使用最新 Node.js 24 LTS 开发；包的最低运行版本为 22.15.0。开发工具可能要求高于最低运行版本的补丁版本。
+- 推荐使用最新 Node.js 24 LTS 开发；最低运行版本见 `package.json` 的 engines。开发工具可能要求更新的补丁版本。
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install

@@ -31,7 +31,6 @@ const assertReport = (dir) => {
 };
 
 const main = async () => {
-    assert.equal(pkg.engines.node, '>=22.15.0');
     assert.equal(runNode([cli, '--version']), pkg.version);
     runNode(['--input-type=module', '-e', `
         import { MCR, CoverageReport } from 'monocart-coverage-reports';
@@ -69,6 +68,17 @@ const main = async () => {
     assertReport(path.join(root, 'command'));
     runNode([cli, 'test']);
     assertReport(path.join(root, 'reports'));
+
+    // Native TypeScript must work without a loader or type-stripping flag.
+    fs.writeFileSync(path.join(root, 'test/native.test.mts'), `
+        import { test } from 'node:test';
+        import assert from 'node:assert/strict';
+        import subject from '../src/subject.cjs';
+        const value: boolean = true;
+        test('native TypeScript', () => assert.equal(subject(value), 42));
+    `);
+    runNode([cli, 'test', 'test/native.test.mts', '-o', 'native-ts']);
+    assertReport(path.join(root, 'native-ts'));
     runNode([cli, 'merge', '-i', 'reports/raw', '-o', 'merged', '-r', 'v8-json']);
     assertReport(path.join(root, 'merged'));
     console.log(`MCR ${pkg.version} runtime smoke tests passed on Node.js ${process.versions.node}`);
