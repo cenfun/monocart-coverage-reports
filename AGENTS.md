@@ -51,8 +51,8 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | `npm run build` | Build UI and `lib/packages/`; npm then runs `postbuild` to build test fixtures |
 | `npm run build-test` | Build bundler test fixtures only |
 | `npm run docs:dev` | Preview the tracked VitePress source in `docs/` and serve existing `.temp/site/reports/` under `/reports/` |
-| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/` without clearing reports; no documentation tests |
-| `npm run test-node` / `npm run test-browser` | Integration groups; write reports under `.temp/site/reports/` and remove only its shared `assets/` |
+| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/`, clearing old site output except `reports/`; no documentation tests |
+| `npm run test-node` / `npm run test-browser` | Integration groups; clean marked legacy report redirects in the site root, write under `.temp/site/reports/`, and remove its shared `assets/` |
 | `npm test` | Unit + type + integration coverage; not a quick unit check |
 
 Important constraints:

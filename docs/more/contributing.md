@@ -59,4 +59,6 @@ All documentation output stays under `.temp/`: `.temp/site/` is the published si
 
 ## Cleanup and publishing {#cleanup-and-publishing}
 
-Documentation rebuilds preserve reports. For a completely fresh local site, clean only the dedicated `.temp/site/` output, then rebuild documentation and regenerate the required reports. Never clean or generate over `docs/`. CI builds documentation and reports separately, then downloads them into the same site directory for publishing.
+`npm run docs:build` (also used by `docs:check`) removes previous site output except `reports/` before building, so obsolete pages, legacy report redirects and hashed assets do not accumulate. Integration test groups (`test-node`, `test-browser`, `test-all`) remove marked legacy report redirect directories from the site root while preserving documentation and existing reports; each generated report cleans its own output directory. Reports and raw merge inputs under `reports/` are not globally cleared by either workflow.
+
+For a completely fresh local site, clean only the dedicated `.temp/site/` output, then rebuild documentation and regenerate the required reports. Never clean or generate over `docs/`. CI builds documentation and reports separately, then downloads them into the same site directory for publishing.

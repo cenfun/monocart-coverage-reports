@@ -214,7 +214,7 @@ export default defineConfig({
         },
         plugins: [reportServer(), typeDeclarationsReload()],
         build: {
-            // Reports share this output directory. Never erase them on a docs rebuild.
+            // build-docs.js cleans obsolete docs first, preserving the reports directory.
             emptyOutDir: false
         },
         server: {
