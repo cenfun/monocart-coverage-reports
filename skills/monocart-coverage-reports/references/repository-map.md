@@ -38,7 +38,7 @@ Paths below are relative to the repository root and are generally **not shipped 
 
 ## Documentation and published demos
 
-Tracked bilingual VitePress source lives in `docs/`. Use `npm run docs:dev` for development and `npm run docs:check` for check-only lint and a production build, without documentation unit tests. Generated documentation and reports share `.temp/site/`, with reports under `.temp/site/reports/`. Pages publishes that site directory; public report URLs start with `/monocart-coverage-reports/reports/`. Documentation rebuilds preserve reports. The report example lists are ordinary VitePress pages maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`, not generated indexes. All report HTML, data and assets use the new `/reports/` URLs; old URLs are not supported. The npm skill remains self-contained and does not require the website.
+Tracked bilingual VitePress source lives in `docs/`. Use `npm run docs:dev` for development and `npm run docs` for check-only lint and a production build, without documentation unit tests. Generated documentation and reports share `.temp/site/`, with reports under `.temp/site/reports/`. Pages publishes that site directory; public report URLs start with `/monocart-coverage-reports/reports/`. Documentation rebuilds preserve reports. The report example lists are ordinary VitePress pages maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`, not generated indexes. All report HTML, data and assets use the new `/reports/` URLs; old URLs are not supported. The npm skill remains self-contained and does not require the website.
 
 ## Development validation
 

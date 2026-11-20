@@ -51,7 +51,7 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | `npm run build` | Build UI and `lib/packages/`; npm then runs `postbuild` to build test fixtures |
 | `npm run build-test` | Build bundler test fixtures only |
 | `npm run docs:dev` | Preview the tracked VitePress source in `docs/` and serve existing `.temp/site/reports/` under `/reports/` |
-| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/`, clearing old site output except `reports/`; no documentation tests |
+| `npm run docs` | Lint documentation without fixes, then build to `.temp/site/`, clearing old site output except `reports/`; no documentation tests |
 | `npm run test-node` / `npm run test-browser` | Integration groups; clean marked legacy report redirects in the site root, write under `.temp/site/reports/`, and remove its shared `assets/` |
 | `npm test` | Unit + type + integration coverage; not a quick unit check |
 
@@ -76,7 +76,7 @@ Important constraints:
 
 ## Documentation conventions
 
-- Do not add tests for documentation, including pages, examples, diagrams, navigation, or VitePress configuration/theme and documentation helpers. This includes unit, integration, snapshot, browser-automation, and standalone test scripts. Use existing lint/build commands (`npm run docs:check`) and manual preview/review as needed; test product behavior, not documentation.
+- Do not add tests for documentation, including pages, examples, diagrams, navigation, or VitePress configuration/theme and documentation helpers. This includes unit, integration, snapshot, browser-automation, and standalone test scripts. Use existing lint/build commands (`npm run docs`) and manual preview/review as needed; test product behavior, not documentation.
 - Keep content, headings, anchors, links, filenames, directories, and navigation consistent. When meaning or structure changes, update the affected names and all references together. English/Chinese counterparts should share semantic English anchors.
 - Keep headings short; move scope, qualifications, and detail into the accompanying description.
 - Prefer Mermaid for workflows, lifecycles, and other diagrams that clarify processes or relationships.

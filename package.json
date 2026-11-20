@@ -69,7 +69,7 @@
         "docs:dev": "vitepress dev docs --open",
         "docs:build": "node ./scripts/build-docs.js",
         "docs:preview": "vitepress preview docs",
-        "docs:check": "npm run lint:docs -- --no-fix && npm run docs:build",
+        "docs": "npm run lint:docs -- --no-fix && npm run docs:build",
         "og": "node scripts/og-image/make-og-image.js",
         "version": "npm run build",
         "publish": "node ./scripts/publish.js"
