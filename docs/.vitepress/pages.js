@@ -49,6 +49,12 @@ export const pages = [
         'reference'
     ],
     [
+        'reference/typescript',
+        'TypeScript support',
+        'TypeScript 支持',
+        'reference'
+    ],
+    [
         'reference/reports',
         'Reports',
         '报告',

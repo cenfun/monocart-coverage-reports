@@ -5,5 +5,6 @@
         "types": [
             "node"
         ]
-    }
+    },
+    "include": ["mock/**/*"]
 }

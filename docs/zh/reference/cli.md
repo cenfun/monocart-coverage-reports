@@ -22,6 +22,8 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 命令使用 Execa 的默认选项执行，不主动开启 shell 模式。请分别传入可执行文件及参数，例如 `mcr node "./my app.js"`，不要把整条命令作为一个带引号的参数传入。MCR 保留参数边界，不展开环境变量或 glob，也不解析管道、重定向、`&&` 等 shell 语法；组合命令请放入脚本。使用 `mcr [options] -- executable ...args` 可以避免子命令参数被当作 MCR 参数解析。平台相关的命令执行由 Execa 处理，包括在 Windows 下按需通过 `cmd.exe` 调用批处理文件并转义参数。
 
+原生 TS 的执行、配置和覆盖率行为参见 [TypeScript 支持](/zh/reference/typescript#typescript-support)。
+
 ## CLI 选项 {#cli-options}
 
 以下选项仅在 CLI 模式（`mcr <command>`）下可用：
@@ -48,7 +50,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 ## 预加载模块 {#preload-modules}
 
-`--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。常用于 TypeScript/JSX 运行时（`tsx`、`ts-node` 等），也可用于加载 `mcr.config.ts`。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
+`--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。在需要外部 TypeScript/JSX 运行时（`tsx`、`ts-node` 等）时使用，也适用于配置文件中超出原生擦除能力的语法。仅使用可擦除类型语法的 `mcr.config.ts` 不需要 loader。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
 ```sh
 mcr --import tsx node ./test.ts
 ```
@@ -75,5 +77,5 @@ mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverag
 ## 示例 {#examples}
 
 - [Mocha](/zh/integrations/frameworks-and-tools#mocha)
-- [TypeScript](/zh/integrations/frameworks-and-tools#typescript)
+- [TypeScript 支持](/zh/reference/typescript#typescript-support)
 - [AVA](/zh/integrations/frameworks-and-tools#ava)

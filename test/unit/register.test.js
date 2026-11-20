@@ -69,6 +69,33 @@ describe('synchronous coverage hooks', {
         });
     });
 
+    ['module-typescript', 'commonjs-typescript'].forEach((format) => {
+        [false, true].forEach((withBOM) => {
+            it(`captures ${format} without a sourcemap and preserves source with BOM=${withBOM}`, () => {
+                const url = pathToFileURL(path.join(root, 'subject.ts')).href;
+                const text = `${withBOM ? '\uFEFF' : ''}const value: number = 42;\n`;
+                const loaded = {
+                    format, source: Buffer.from(text)
+                };
+                assert.equal(load(url, {}, () => loaded), loaded);
+                assert.deepEqual(savedSources(), [{
+                    url, source: text, nativeTypeScript: true
+                }]);
+            });
+        });
+    });
+
+    it('does not mark transformed TS loaded as ordinary JS as native TypeScript', () => {
+        const url = pathToFileURL(path.join(root, 'subject.ts')).href;
+        const loaded = {
+            format: 'module', source
+        };
+        load(url, {}, () => loaded);
+        assert.deepEqual(savedSources(), [{
+            url, source
+        }]);
+    });
+
     it('does not save sources when coverage is disabled', () => {
         delete process.env.NODE_V8_COVERAGE;
         const loaded = {

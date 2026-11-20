@@ -30,6 +30,9 @@ declare namespace MCR {
         /** fake source */
         fake?: boolean;
 
+        /** Collected from Node native TypeScript; ingestion supplies stripped JS and a map to the original TS. */
+        nativeTypeScript?: boolean;
+
         [key: string]: any;
     }
 

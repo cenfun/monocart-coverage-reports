@@ -22,6 +22,8 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 Commands are executed with Execa's default options, without enabling shell mode. Pass the executable and its arguments separately, for example `mcr node "./my app.js"`; do not quote an entire command as a single argument. Argument boundaries are preserved: MCR does not expand environment variables or globs, or interpret pipes, redirections, `&&` or other shell syntax. Move command sequences into a script instead. Use `mcr [options] -- executable ...args` to keep child options separate from MCR options. Execa handles platform-specific command execution, including escaped batch-file invocation through `cmd.exe` when needed on Windows.
 
+For native TS execution, configuration and coverage behavior, see [TypeScript support](/reference/typescript#typescript-support).
+
 ## CLI options {#cli-options}
 
 The options below are only available when using the CLI (`mcr <command>`):
@@ -48,7 +50,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 ## Preload modules {#preload-modules}
 
-`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this for TypeScript/JSX runtimes (`tsx`, `ts-node`, etc.) and also when loading a `mcr.config.ts`. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
+`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this when an external TypeScript/JSX runtime (`tsx`, `ts-node`, etc.) is needed, including for configuration syntax beyond native stripping. Erasable `mcr.config.ts` files do not need a loader. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
 ```sh
 mcr --import tsx node ./test.ts
 ```
@@ -75,5 +77,5 @@ See [Merge Coverage Reports](/reference/merging#merging-reports).
 ## Examples {#examples}
 
 - [Mocha](/integrations/frameworks-and-tools#mocha)
-- [TypeScript](/integrations/frameworks-and-tools#typescript)
+- [TypeScript support](/reference/typescript#typescript-support)
 - [AVA](/integrations/frameworks-and-tools#ava)

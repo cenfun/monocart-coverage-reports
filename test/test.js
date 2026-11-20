@@ -24,7 +24,9 @@ const test = async (type) => {
             'test-node-cdp',
             'test-node-fgc',
             'test-node-vm',
-            'test-node-koa'
+            'test-node-koa',
+            'test-node-ts',
+            'test-mcr-test-ts'
         ],
 
         '--browser': [
