@@ -168,7 +168,7 @@ npx mcr --import tsx node ./src/example.ts
 npx mcr --import tsx test "./test/**/*.test.ts"
 ```
 
-外部 loader 和预编译 JS 保留已有覆盖率路径。参见[框架与工具](/zh/integrations/frameworks-and-tools#typescript)。
+外部 loader 和预编译 JS 保留已有覆盖率路径。参见[外部 loader 示例](/zh/integrations/frameworks-and-tools#external-loaders)。
 
 ## 仓库示例 {#repository-examples}
 

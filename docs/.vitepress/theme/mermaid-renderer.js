@@ -13,6 +13,11 @@ export const renderDiagram = (graph, dark) => {
             suppressErrorRendering: true,
             fontFamily: 'var(--vp-font-family-base)',
             theme: dark ? 'dark' : 'default',
+            themeVariables: {
+                fontSize: '14px'
+            },
+            // Keep HTML labels at Mermaid's measured line height, not VitePress's prose line height.
+            themeCSS: 'foreignObject p { line-height: inherit; }',
             flowchart: {
                 htmlLabels: false,
                 useMaxWidth: true

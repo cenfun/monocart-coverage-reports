@@ -90,3 +90,19 @@ export default {
 它基于 Node.js 自带的 [`node:test` 测试运行器](https://nodejs.org/docs/latest/api/test.html)，运行器无需额外安装；MCR 仍需按[快速开始](#quick-start)安装。测试断言也可以使用内置的 [`node:assert/strict`](https://nodejs.org/docs/latest/api/assert.html#strict-assertion-mode)。
 
 对于常规 Node.js 单元测试和集成测试，这套方案可以替代 [Mocha](/zh/integrations/frameworks-and-tools#mocha)、[AVA](/zh/integrations/frameworks-and-tools#ava)、[Tape](https://github.com/tape-testing/tape) 等工具承担的测试职责。但它不是这些框架的直接兼容替代：迁移时需要调整测试 API、断言和生命周期钩子，并评估插件、快照等特性需求。
+
+## 运行原理 {#how-it-works}
+
+```mermaid
+flowchart TD
+    accTitle: mcr test 运行流程
+    accDescr: MCR 启动 Node.js 测试运行器。运行器退出后，MCR 处理测试结果，调用可选的 onTestEnd，并根据 V8 覆盖率文件生成报告。
+    MCR["mcr test"] -->|"设置 NODE_V8_COVERAGE"| Runner["node --test"]
+    Runner --> Results["测试结果"]
+    Runner --> Raw["V8 JSON"]
+    Results --> Hook["处理结果<br/>onTestEnd（可选）"]
+    Hook --> Reports["覆盖率报告"]
+    Raw --> Reports
+```
+
+MCR 的测试 reporter 收集测试事件，Node.js 则将 V8 覆盖率写入 `NODE_V8_COVERAGE` 目录。运行器退出后，MCR 先处理测试结果，并在已配置时调用 [`onTestEnd`](#ontestend)，再读取 V8 文件生成报告。该 hook 接收的是测试结果，而不是覆盖率。测试失败时，MCR 仍会尝试生成覆盖率报告，并保留非零退出状态。

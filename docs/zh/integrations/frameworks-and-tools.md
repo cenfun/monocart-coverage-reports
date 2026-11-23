@@ -55,19 +55,34 @@
 
 ## [TypeScript](https://github.com/microsoft/typescript) {#typescript}
 
-- [tsx](https://github.com/privatenumber/tsx)
+在 Node.js 22.18.0 或更高版本上，推荐使用内置的类型擦除直接运行只含可擦除语法的 TypeScript，无需构建步骤或外部 loader。
+
+```sh
+npx mcr node ./src/example.ts
+npx mcr test "./test/**/*.test.ts"
+```
+
+配置、覆盖率行为以及仍需构建或外部 loader 的场景，参见 [TypeScript 支持](/zh/getting-started/typescript#typescript-support)。
+
+### 外部 loader {#external-loaders}
+
+以下示例适用于仍使用外部 loader 的现有项目。
+
+**[tsx](https://github.com/privatenumber/tsx)**
+
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
-- [ts-node](https://github.com/TypeStrong/ts-node)
+
+**[ts-node](https://github.com/TypeStrong/ts-node)**
+
 ```sh
 cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr ts-node ./src/example.ts
 cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test/**/*.ts
 ```
-
 
 ## [c8](https://github.com/bcoe/c8) {#c8}
 - c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)

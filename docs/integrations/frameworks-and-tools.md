@@ -55,14 +55,30 @@ For collection code, see [Collect V8 coverage with Puppeteer](/coverage-collecti
 
 ## [TypeScript](https://github.com/microsoft/typescript) {#typescript}
 
-- [tsx](https://github.com/privatenumber/tsx)
+For Node.js 22.18.0 or later, prefer built-in type stripping to run TypeScript with erasable syntax. No build step or external loader is needed.
+
+```sh
+npx mcr node ./src/example.ts
+npx mcr test "./test/**/*.test.ts"
+```
+
+See [TypeScript support](/getting-started/typescript#typescript-support) for setup, coverage behavior, and when a build step or external loader is still needed.
+
+### External loaders {#external-loaders}
+
+These examples are for existing projects that still use an external loader.
+
+**[tsx](https://github.com/privatenumber/tsx)**
+
 ```sh
 cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
 cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
 mcr --import tsx tsx ./src/example.ts
 mcr --import tsx mocha ./test/**/*.ts
 ```
-- [ts-node](https://github.com/TypeStrong/ts-node)
+
+**[ts-node](https://github.com/TypeStrong/ts-node)**
+
 ```sh
 cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr ts-node ./src/example.ts
 cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test/**/*.ts

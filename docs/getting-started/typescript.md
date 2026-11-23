@@ -168,7 +168,7 @@ npx mcr --import tsx node ./src/example.ts
 npx mcr --import tsx test "./test/**/*.test.ts"
 ```
 
-External loaders and precompiled JS keep their existing coverage paths. See [Frameworks and tools](/integrations/frameworks-and-tools#typescript).
+External loaders and precompiled JS keep their existing coverage paths. See [external loader examples](/integrations/frameworks-and-tools#external-loaders).
 
 ## Repository examples {#repository-examples}
 
