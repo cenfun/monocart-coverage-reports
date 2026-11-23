@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "83.67 %",
-        "statements": "84.41 %",
+        "bytes": "83.12 %",
+        "statements": "83.97 %",
         "branches": "60.85 %",
-        "functions": "89.29 %",
-        "lines": "71.11 %"
+        "functions": "88.89 %",
+        "lines": "70.09 %"
     },
     "files": {
         "monocart-coverage-reports/test/mock/node/src/index.js": {
@@ -92,11 +92,11 @@
         "monocart-coverage-reports/test/mock/src/component.js": {
             "functions": "50.00 %",
             "branches": "50.00 %",
-            "statements": "72.73 %",
-            "lines": "31.25 %",
-            "bytes": "68.90 %",
-            "uncoveredLines": "4-6,12-22",
-            "extras": "1b,3b,5b,7b,11b,15b,19b,23b,25b"
+            "statements": "66.67 %",
+            "lines": "21.43 %",
+            "bytes": "62.07 %",
+            "uncoveredLines": "1-3,8-18",
+            "extras": "2b,4b,7b,11b,15b,19b,21b"
         },
         "monocart-coverage-reports/test/mock/src/ignore/ignore.js": {
             "functions": "100.00 %",
@@ -142,15 +142,6 @@
             "bytes": "85.54 %",
             "uncoveredLines": "2,19",
             "extras": "5c,6i,7i,8i,9c,10b,11i,12i,13b,14i,15c,16b,20i,21i,22c,23c"
-        },
-        "monocart-coverage-reports/test/mock/src/typescript.ts": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": "",
-            "extras": "1c,6b,12b,13b,15c,16c,17c,22b,23c,24b,26b,28b,30b"
         },
         "monocart-coverage-reports/webpack/after-startup": {
             "functions": "",

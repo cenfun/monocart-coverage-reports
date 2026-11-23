@@ -1,11 +1,11 @@
 {
     "type": "v8",
     "summary": {
-        "bytes": "50.76 %",
-        "statements": "56.95 %",
+        "bytes": "50.82 %",
+        "statements": "56.32 %",
         "branches": "51.65 %",
-        "functions": "51.04 %",
-        "lines": "42.27 %"
+        "functions": "50.00 %",
+        "lines": "41.94 %"
     },
     "files": {
         "test/mock/node/lib/app.js": {
@@ -155,11 +155,11 @@
         "test/mock/src/component.js": {
             "functions": "50.00 %",
             "branches": "50.00 %",
-            "statements": "72.73 %",
-            "lines": "31.25 %",
-            "bytes": "68.90 %",
-            "uncoveredLines": "4-6,12-22",
-            "extras": "1b,3b,5b,7b,11b,15b,19b,23b,25b"
+            "statements": "66.67 %",
+            "lines": "21.43 %",
+            "bytes": "62.07 %",
+            "uncoveredLines": "1-3,8-18",
+            "extras": "2b,4b,7b,11b,15b,19b,21b"
         },
         "test/mock/src/css/colors.less": {
             "functions": "",
@@ -338,8 +338,8 @@
             "statements": "0.00 %",
             "lines": "0.00 %",
             "bytes": "0.00 %",
-            "uncoveredLines": "1-124",
-            "extras": "3b,5b,9b,11b,15b,18b,23b,26b,31b,34b,37b,40b,42b,45b,48b,53b,55b,59b,64b,68b,73b,80b,82b,86b,91b,95b,103b,106b,109b,111b,114b,116b,117b,118c,120b,121b,125b"
+            "uncoveredLines": "1-122",
+            "extras": "3b,5b,8b,10b,14b,17b,22b,25b,30b,33b,36b,39b,41b,44b,47b,52b,54b,58b,63b,67b,72b,79b,81b,85b,90b,94b,102b,104b,107b,109b,112b,114b,115b,116c,118b,119b,123b"
         },
         "test/mock/src/statement.js": {
             "functions": "0.00 %",
@@ -358,15 +358,6 @@
             "bytes": "0.00 %",
             "uncoveredLines": "2-45",
             "extras": "1c,19b,21b,25b,30b,33c,40b,46b"
-        },
-        "test/mock/src/typescript.ts": {
-            "functions": "100.00 %",
-            "branches": "",
-            "statements": "100.00 %",
-            "lines": "100.00 %",
-            "bytes": "100.00 %",
-            "uncoveredLines": "",
-            "extras": "1c,6b,12b,13b,15c,16c,17c,22b,23c,24b,26b,28b,30b"
         },
         "test/mock/src/untest/empty.js": {
             "functions": "",
@@ -394,15 +385,6 @@
             "bytes": "0.00 %",
             "uncoveredLines": "2-17",
             "extras": "1c,3b,7b,8c,9b,12b,14c,18b"
-        },
-        "test/mock/src/untest/untest.ts": {
-            "functions": "",
-            "branches": "",
-            "statements": "",
-            "lines": "0.00 %",
-            "bytes": "0.00 %",
-            "uncoveredLines": "2-31",
-            "extras": "1c,6b,12b,13b,15c,16c,17c,22b,23c,24b,26b,28b,30b"
         },
         "test/mock/src/untest/untest.vue": {
             "functions": "",

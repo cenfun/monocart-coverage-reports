@@ -1,9 +1,9 @@
 {
     "type": "istanbul",
     "summary": {
-        "lines": "82.60 %",
-        "statements": "82.51 %",
-        "functions": "77.90 %",
+        "lines": "82.15 %",
+        "statements": "82.08 %",
+        "functions": "77.38 %",
         "branches": "57.93 %"
     },
     "files": {
@@ -104,11 +104,11 @@
             "extras": ""
         },
         "component.js": {
-            "lines": "81.81 %",
+            "lines": "77.77 %",
             "functions": "100.00 %",
-            "statements": "81.81 %",
+            "statements": "77.77 %",
             "branches": "50.00 %",
-            "uncoveredLines": "17,21",
+            "uncoveredLines": "13,17",
             "extras": ""
         },
         "css/colors.less": {
@@ -264,11 +264,11 @@
             "extras": ""
         },
         "index.js": {
-            "lines": "72.13 %",
+            "lines": "71.18 %",
             "functions": "53.84 %",
-            "statements": "72.58 %",
+            "statements": "71.66 %",
             "branches": "57.14 %",
-            "uncoveredLines": "28,39-61,70-71,77,89,99-100",
+            "uncoveredLines": "27,38-60,69-70,76,88,98-99",
             "extras": ""
         },
         "statement.js": {
@@ -285,14 +285,6 @@
             "statements": "83.33 %",
             "branches": "66.66 %",
             "uncoveredLines": "10,13,27",
-            "extras": ""
-        },
-        "typescript.ts": {
-            "lines": "100.00 %",
-            "functions": "100.00 %",
-            "statements": "100.00 %",
-            "branches": "100.00 %",
-            "uncoveredLines": "",
             "extras": ""
         },
         "untest/empty.js": {
@@ -312,14 +304,6 @@
             "extras": ""
         },
         "untest/untest.scss": {
-            "lines": "0.00 %",
-            "functions": "0.00 %",
-            "statements": "0.00 %",
-            "branches": "0.00 %",
-            "uncoveredLines": "",
-            "extras": ""
-        },
-        "untest/untest.ts": {
             "lines": "0.00 %",
             "functions": "0.00 %",
             "statements": "0.00 %",

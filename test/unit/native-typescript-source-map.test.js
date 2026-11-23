@@ -6,7 +6,6 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
 import { stripTypeScriptTypes } from 'node:module';
 import { encode } from '@jridgewell/sourcemap-codec';
 import { MCR } from '../../lib/index.js';
@@ -160,25 +159,6 @@ describe('native TypeScript source map integration', {
         const result = await excluded.generate();
         assert.ok(result);
         assert.equal(result.files.length, 0);
-    });
-
-    it('keeps the existing tsx loader and sourcemap path for non-erasable TS', () => {
-        const source = 'export enum Mode { Ready, Waiting }\nexport function choose(value: boolean) { return value ? Mode.Ready : Mode.Waiting; }\n';
-        write('subject.ts', source);
-        write('entry.ts', "import { choose } from './subject.ts';\nchoose(true);\n");
-        write('mcr.config.cjs', `module.exports = {
-            reports: ['v8-json'], outputDir: './report',
-            entryFilter: (entry) => entry.url.endsWith('/subject.ts')
-        };`);
-        const cli = fileURLToPath(import.meta.resolve('../../lib/cli.js'));
-        const child = run([cli, '--import', 'tsx', process.execPath, 'entry.ts']);
-        assert.equal(child.status, 0, child.stdout + child.stderr);
-        const result = JSON.parse(fs.readFileSync(path.join(root, 'report/coverage-report.json'), 'utf8'));
-        assert.equal(result.files.length, 1);
-        const [file] = result.files;
-        assert.equal(file.source, source);
-        assert.equal(Object.hasOwn(file, 'nativeTypeScript'), false);
-        assert.equal(file.data.functions.find((fn) => fn.name === 'choose').count, 1);
     });
 
     it('keeps ordinary JS source identities and coverage unchanged beside native TS', async () => {

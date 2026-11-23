@@ -12,7 +12,7 @@ Monocart Coverage Reports (MCR) 3.x collects JavaScript, TypeScript, and CSS cov
 - Report UI: Vue single-file components and JavaScript in `src/app/`.
 - Bundled dependency entry points: `src/vendor/`; build configuration: `vite.config.mjs`.
 - Documentation: bilingual VitePress Markdown and configuration in `docs/`; publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`.
-- Public declarations: `lib/index.d.ts`. TypeScript checks declarations and consumer tests; it does not compile the runtime source.
+- Public declarations: `lib/index.d.ts`. The separate TypeScript check validates declarations, consumer examples, and native TS fixtures without emitting JavaScript.
 
 For integrating MCR into another project, read [the reusable coverage skill](skills/monocart-coverage-reports/SKILL.md).
 Load only the references needed for the task. The skill ships in npm; this checkout guide does not.
@@ -42,7 +42,7 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | --- | --- |
 | `node --test test/unit/config.test.js` | Example focused test, without collecting coverage |
 | `npm run test-unit` | All `node:test` unit tests; no browser suite |
-| `npm run test-types` | Check the public ESM declarations and consumer examples |
+| `npm run test-types` | Check public declarations, consumer examples, and native TS fixtures with the local compiler; also runs as part of `npm test` |
 | `npm run test-runtime` | API, CLI, Node test runner, and raw merge smoke checks; uses a temporary directory |
 | `npm run test-unit-coverage` | Unit tests through `mcr test`; writes `.temp/coverage-unit/` |
 | `npm run lint:docs` | ESLint with automatic fixes for `docs/` configuration/theme source and JavaScript fences in documentation and `README.md`; use `-- --no-fix` to check only |

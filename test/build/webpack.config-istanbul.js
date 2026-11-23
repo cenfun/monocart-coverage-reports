@@ -29,12 +29,6 @@ export default {
                     ]
                 }
             }
-        }, {
-            test: /\.tsx?$/,
-            use: [
-                '@jsdevtools/coverage-istanbul-loader',
-                'ts-loader'
-            ]
         }]
     }
 };
