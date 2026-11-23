@@ -1,7 +1,9 @@
 import { it } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import { MCR } from '../../lib/index.js';
+import {
+    MCR, diffSnapshot, getSnapshot
+} from '../../lib/index.js';
 import { createTempRoot } from './unit-utils.js';
 
 it('excludes JS lines containing only block comments and whitespace from V8 line coverage', async (t) => {
@@ -42,4 +44,15 @@ it('excludes JS lines containing only block comments and whitespace from V8 line
     });
     assert.equal(file.summary.lines.comment, 3);
     assert.equal(file.summary.lines.total, 1);
+
+    const current = getSnapshot(result);
+    const previous = structuredClone(current);
+    previous.files[file.sourcePath].extras = '1i,2c,3c';
+    assert.equal(diffSnapshot(current, current).change, false);
+
+    const diff = diffSnapshot(previous, current);
+    assert.equal(diff.change, true);
+    assert.match(diff.message, /Extras/);
+    assert.match(diff.message, /1i/);
+    assert.match(diff.message, /1c/);
 });

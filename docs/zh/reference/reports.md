@@ -30,6 +30,7 @@ outline: [2, 4]
 #### `v8-json` {#v8-json}
 
 - 保存 [`CoverageResults`](/zh/reference/types#coverageresults) 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json))
+- `data.extras` 的标记和示例参见[行分类](/zh/reference/coverage-data#line-classifications)。
 - 用于VSCode扩展来显示原生V8代码覆盖率: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
 ![](/images/mcv.gif)

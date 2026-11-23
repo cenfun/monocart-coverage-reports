@@ -18,6 +18,20 @@ In addition to raw coverage data, MCR supports the following metadata:
 
 Read or mutate entries in the [`onEntry`](/reference/hooks#onentry) hook. See [Untested files](/reference/untested-files#untested-files) for handling files without collected coverage.
 
+## Line classifications {#line-classifications}
+
+In a V8 [`CoverageFile`](/reference/types#coveragefile), `data.extras` maps 1-based source line numbers to codes for lines excluded from line coverage. These codes are not hit counts:
+
+| Code | Meaning |
+| :-- | :-- |
+| `b` | Blank line, including whitespace-only lines. |
+| `c` | Comment-only line. |
+| `i` | Line excluded by an [ignore directive](/reference/ignoring-code#ignoring-code). |
+
+Blank and comment-only lines keep their classification even inside an ignored range. For example, a line containing only `/* node:coverage enable */` is `c`.
+
+[`CoverageSnapshot`](/reference/types#coveragesnapshot) stores the same data as a comma-separated string: `{ "2": "b", "12": "c", "16": "i" }` becomes `"2b,12c,16i"`. The snapshot field is empty if there are no entries, including in Istanbul snapshots.
+
 ## Raw V8 data format {#raw-v8-data}
 
 The following structures describe raw JavaScript coverage returned by V8/CDP; `integer` and `Runtime.ScriptId` are protocol type notation. MCR’s `V8CoverageEntry` adds source text and other metadata to these entries.

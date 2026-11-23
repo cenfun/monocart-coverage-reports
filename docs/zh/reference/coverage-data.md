@@ -18,6 +18,20 @@
 
 可在 [`onEntry`](/zh/reference/hooks#onentry) 钩子中读取或修改条目。未测试文件的处理方式参见[未测试文件](/zh/reference/untested-files#untested-files)。
 
+## 行分类 {#line-classifications}
+
+V8 的 [`CoverageFile`](/zh/reference/types#coveragefile) 用 `data.extras` 记录不计入行覆盖率的源码行。键是从 1 开始的行号，值是分类标记，不是执行次数：
+
+| 标记 | 含义 |
+| :-- | :-- |
+| `b` | 空白行，包括只有空白字符的行。 |
+| `c` | 纯注释行。 |
+| `i` | 被[忽略指令](/zh/reference/ignoring-code#ignoring-code)排除的行。 |
+
+即使位于忽略区间内，空白行和纯注释行也分别标为 `b` 和 `c`。例如，只包含 `/* node:coverage enable */` 的一行标为 `c`。
+
+[`CoverageSnapshot`](/zh/reference/types#coveragesnapshot) 将同一份数据保存为逗号分隔的字符串：`{ "2": "b", "12": "c", "16": "i" }` 会变成 `"2b,12c,16i"`。没有分类条目时该字段为空字符串，Istanbul 快照也是如此。
+
 ## 原始 V8 数据格式 {#raw-v8-data}
 
 以下结构描述 V8/CDP 返回的原始 JavaScript 覆盖率数据；`integer` 和 `Runtime.ScriptId` 是协议中的类型记法。MCR 的 `V8CoverageEntry` 对这类条目添加源码和其他辅助字段。

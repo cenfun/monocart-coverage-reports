@@ -30,6 +30,7 @@ Supports V8 coverage data only.
 #### `v8-json` {#v8-json}
 
 - Save [`CoverageResults`](/reference/types#coverageresults) to a json file (defaults to [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json)).
+- For `data.extras` codes and examples, see [Line classifications](/reference/coverage-data#line-classifications).
 - Shows native V8 code coverage with VSCode extension: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
 ![](/images/mcv.gif)

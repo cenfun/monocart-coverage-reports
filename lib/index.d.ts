@@ -252,13 +252,12 @@ declare namespace MCR {
                  */
                 [key: string]: number | string;
             };
+            /**
+             * V8 lines excluded from line coverage, keyed by 1-based line number.
+             * `b` = blank, `c` = comment-only, `i` = excluded by an ignore directive.
+             * Blank and comment-only lines keep their classification inside ignored ranges.
+             */
             extras?: {
-                /** 
-                 * key: line number;
-                 * b: blank;
-                 * c: comment;
-                 * i: ignored;
-                 */
                 [key: string]: "b" | "c" | "i";
             }
         }
@@ -597,6 +596,11 @@ declare namespace MCR {
                 functions: string;
                 lines: string;
                 uncoveredLines: string;
+                /**
+                 * Comma-separated 1-based line numbers with their `CoverageFile.data.extras` codes.
+                 * For example, `2b,12c,16i` means line 2 is blank, line 12 is comment-only,
+                 * and line 16 is ignored. Empty when there are no entries (including Istanbul).
+                 */
                 extras: string;
             }
         }
@@ -605,7 +609,7 @@ declare namespace MCR {
     /** get snapshot from coverage report data */
     export function getSnapshot(coverageResults: CoverageResults): CoverageSnapshot;
 
-    /** diff two snapshots  */
+    /** Diff two snapshots, including per-file uncovered lines and line classifications (`extras`). */
     export function diffSnapshot(oldData: CoverageSnapshot, newData: CoverageSnapshot, diffOptions: {
         skipEqual?: boolean;
         showSummary?: boolean;

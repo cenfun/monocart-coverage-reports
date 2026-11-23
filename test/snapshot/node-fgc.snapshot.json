@@ -114,7 +114,7 @@
             "lines": "100.00 %",
             "bytes": "100.00 %",
             "uncoveredLines": "",
-            "extras": "1c,2b,4b,5c,6i,7c,8c,9c,10i,11i,12i,14b,15c,16i,18b,19c,20i,21i,22i,24b"
+            "extras": "1c,2b,4b,5c,6i,7c,8c,9c,10i,11i,12c,14b,15c,16i,18b,19c,20i,21i,22i,24b"
         },
         "monocart-coverage-reports/test/mock/src/ignore/v8-ignore-next.js": {
             "functions": "",
