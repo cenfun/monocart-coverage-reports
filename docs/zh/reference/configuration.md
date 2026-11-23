@@ -57,7 +57,7 @@ MCR 3.x 中，显式指定的配置不存在，或找到的配置加载失败（
 - `mcr.config.cjs`
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
-- `mcr.config.ts` - 可擦除语法可原生加载，参见 [TypeScript 支持](/zh/reference/typescript#configure-coverage)。
+- `mcr.config.ts` - 可擦除语法可原生加载，参见 [TypeScript 支持](/zh/getting-started/typescript#configure-coverage)。
 
 需要外部运行时处理的配置语法仍可使用 `tsx` 等 loader：
 ```sh

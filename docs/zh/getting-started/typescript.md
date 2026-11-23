@@ -13,14 +13,6 @@ npx mcr test "./test/**/*.test.ts"
 
 报告展示保留类型信息的原始 TS。MCR 分析擦除类型后的 JavaScript，并生成映射回捕获原文的 sourcemap，复用现有的 JavaScript/sourcemap 报告流程。
 
-## Node.js 要求 {#nodejs-requirements}
-
-使用 **Node.js >=22.18.0**，这些版本默认启用原生类型擦除。通过 `node --version` 检查启动 MCR 的版本。测试发现与支持的语法取决于当前 Node.js 版本。
-
-MCR 使用 Node 内置的 `module.stripTypeScriptTypes()`，并采用 strip 模式。该 API 有独立的稳定性状态，即使某个 Node.js 版本已将直接执行 TS 标记为稳定，生成报告时仍可能输出实验性警告。MCR 不会全局屏蔽这些警告。
-
-运行时语法限制参见 [Node.js TypeScript 文档](https://nodejs.org/api/typescript.html)。
-
 ## 运行 TS 程序 {#run-a-ts-program}
 
 使用 ESM `.ts` 文件时，在项目的 `package.json` 中设置 `"type": "module"`。将以下内容保存为 `src/math.ts`：
@@ -142,6 +134,22 @@ Node 的可擦除 TS 语法包括类型标注、接口、类型别名、类型�
 | `.cts` | 始终为 CommonJS，运行时导出使用 CommonJS 写法。 |
 
 相对导入要写实际扩展名，例如 `import './math.ts'`。仅用于类型的导入应使用 `import type`。本功能不会在 `.js` 文件中启用类型标注。
+
+## Node.js 要求 {#nodejs-requirements}
+
+MCR 要求 **Node.js 22.18.0 或更高版本**。通过 `node --version` 检查启动 MCR 的版本。
+
+| Node.js | 默认启用类型擦除 | 版本说明 |
+| --- | --- | --- |
+| [22.x](https://nodejs.org/docs/latest-v22.x/api/typescript.html) | 从 **22.18.0** 起 | 22.6.0–22.17.x 需使用 `--experimental-strip-types`，且低于 MCR 的最低版本要求。Node 的 `--require` 会在源码捕获前加载 `.cts`，这些文件可能不会出现在报告中。请改用 `--import`，或在程序入口中加载。 |
+| [24.x](https://nodejs.org/docs/latest-v24.x/api/typescript.html) | 是 | 类型擦除从 **24.12.0** 起成为稳定功能。 |
+| [26.x](https://nodejs.org/docs/latest-v26.x/api/typescript.html) | 是 | 类型擦除已稳定。Node 在 **26.0.0** 移除了 `--experimental-transform-types`。 |
+
+上表仅说明 Node 内置的类型擦除能力，并非完整的 TypeScript 转译。测试发现与支持的语法取决于当前 Node.js 版本。
+
+MCR 使用 Node 内置的 `module.stripTypeScriptTypes()`，并采用 strip 模式。该 API 有独立的稳定性状态，即使某个 Node.js 版本已将直接执行 TS 标记为稳定，生成报告时仍可能输出实验性警告。MCR 不会全局屏蔽这些警告。
+
+运行时语法限制参见 [Node.js TypeScript 文档](https://nodejs.org/api/typescript.html)。
 
 ## 使用限制 {#limitations}
 

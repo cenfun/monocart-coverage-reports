@@ -13,14 +13,6 @@ npx mcr test "./test/**/*.test.ts"
 
 Reports display the original TS, including types. MCR analyzes the stripped JavaScript and generates a sourcemap back to the captured TS, reusing its existing JavaScript/sourcemap reporting pipeline.
 
-## Node.js requirements {#nodejs-requirements}
-
-Use **Node.js >=22.18.0**, where native type stripping is enabled by default. Check the version launching MCR with `node --version`. Test discovery and supported syntax depend on that Node.js version.
-
-MCR uses Node's built-in `module.stripTypeScriptTypes()` in strip mode. This API has its own stability status and may emit an experimental warning during report generation, even on Node.js versions where direct TS execution is stable. MCR does not suppress these warnings globally.
-
-See the [Node.js TypeScript documentation](https://nodejs.org/api/typescript.html) for runtime syntax restrictions.
-
 ## Run a TS program {#run-a-ts-program}
 
 For ESM `.ts` files, set `"type": "module"` in your project's `package.json`. Save the following as `src/math.ts`:
@@ -142,6 +134,22 @@ Node's erasable TS syntax includes type annotations, interfaces, type aliases, t
 | `.cts` | Always CommonJS; use CommonJS runtime exports. |
 
 Use actual extensions in relative imports, such as `import './math.ts'`. Use `import type` for imports that only exist at the type level. This feature does not enable type annotations in `.js` files.
+
+## Node.js requirements {#nodejs-requirements}
+
+MCR requires **Node.js 22.18.0 or later**. Check the version that launches MCR with `node --version`.
+
+| Node.js | Type stripping by default | Version notes |
+| --- | --- | --- |
+| [22.x](https://nodejs.org/docs/latest-v22.x/api/typescript.html) | Since **22.18.0** | In 22.6.0–22.17.x, stripping requires `--experimental-strip-types`; those versions are below MCR's minimum. `.cts` files preloaded by Node's `--require` may be missing from reports because they load before source capture. Use `--import` or load them from your entry point. |
+| [24.x](https://nodejs.org/docs/latest-v24.x/api/typescript.html) | Yes | Type stripping became stable in **24.12.0**. |
+| [26.x](https://nodejs.org/docs/latest-v26.x/api/typescript.html) | Yes | Type stripping is stable. Node removed `--experimental-transform-types` in **26.0.0**. |
+
+This table covers Node's built-in type stripping, not full TypeScript transpilation. Test discovery and supported syntax depend on the Node.js version.
+
+MCR uses Node's built-in `module.stripTypeScriptTypes()` in strip mode. This API has its own stability status and may emit an experimental warning during report generation, even on Node.js versions where direct TS execution is stable. MCR does not suppress these warnings globally.
+
+See the [Node.js TypeScript documentation](https://nodejs.org/api/typescript.html) for runtime syntax restrictions.
 
 ## Limitations {#limitations}
 

@@ -49,12 +49,6 @@ export const pages = [
         'reference'
     ],
     [
-        'reference/typescript',
-        'TypeScript support',
-        'TypeScript 支持',
-        'reference'
-    ],
-    [
         'reference/reports',
         'Reports',
         '报告',
@@ -136,6 +130,12 @@ export const pages = [
         'getting-started/node-test-runner',
         'Run tests with mcr test',
         '使用 mcr test 运行测试',
+        'start'
+    ],
+    [
+        'getting-started/typescript',
+        'TypeScript support',
+        'TypeScript 支持',
         'start'
     ],
     [

@@ -57,7 +57,7 @@ Loading config file by priority:
 - `mcr.config.cjs`
 - `mcr.config.mjs`
 - `mcr.config.json` - json format
-- `mcr.config.ts` - erasable syntax loads natively; see [TypeScript support](/reference/typescript#configure-coverage).
+- `mcr.config.ts` - erasable syntax loads natively; see [TypeScript support](/getting-started/typescript#configure-coverage).
 
 Configuration syntax requiring an external runtime can still use a loader such as `tsx`:
 ```sh

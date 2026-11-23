@@ -69,7 +69,7 @@ To inspect or modify structured test results after the test runner exits, config
 - Node handles discovery, matching, interpretation and errors.
 - Relative paths use the current working directory, not the config file directory.
 - A bare directory is not promised to trigger recursive discovery; use a glob such as `"../tests/**/*.test.js"` for recursive matching, following the installed Node version's native behavior.
-- Native TypeScript tests can run without a loader: `mcr test "./test/**/*.test.ts"`. Reports display original TS through a generated sourcemap; see [TypeScript support](/reference/typescript#run-ts-tests) for supported syntax and limitations.
+- Native TypeScript tests can run without a loader: `mcr test "./test/**/*.test.ts"`. Reports display original TS through a generated sourcemap; see [TypeScript support](/getting-started/typescript#run-ts-tests) for supported syntax and limitations.
 
 ## Reports and exit status {#reports-and-exit-status}
 

@@ -19,6 +19,7 @@
     - [Best practices](https://cenfun.github.io/monocart-coverage-reports/getting-started/best-practices.html)
     - [AI Agent Skill](https://cenfun.github.io/monocart-coverage-reports/getting-started/ai-agent-skill.html)
     - [Run tests with mcr test](https://cenfun.github.io/monocart-coverage-reports/getting-started/node-test-runner.html)
+    - [TypeScript support](https://cenfun.github.io/monocart-coverage-reports/getting-started/typescript.html)
     - [Examples](https://cenfun.github.io/monocart-coverage-reports/getting-started/examples.html)
 - Coverage Collection
     - [V8 collection](https://cenfun.github.io/monocart-coverage-reports/coverage-collection/v8.html)

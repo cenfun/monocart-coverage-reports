@@ -22,7 +22,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 Commands are executed with Execa's default options, without enabling shell mode. Pass the executable and its arguments separately, for example `mcr node "./my app.js"`; do not quote an entire command as a single argument. Argument boundaries are preserved: MCR does not expand environment variables or globs, or interpret pipes, redirections, `&&` or other shell syntax. Move command sequences into a script instead. Use `mcr [options] -- executable ...args` to keep child options separate from MCR options. Execa handles platform-specific command execution, including escaped batch-file invocation through `cmd.exe` when needed on Windows.
 
-For native TS execution, configuration and coverage behavior, see [TypeScript support](/reference/typescript#typescript-support).
+For native TS execution, configuration and coverage behavior, see [TypeScript support](/getting-started/typescript#typescript-support).
 
 ## CLI options {#cli-options}
 
@@ -77,5 +77,5 @@ See [Merge Coverage Reports](/reference/merging#merging-reports).
 ## Examples {#examples}
 
 - [Mocha](/integrations/frameworks-and-tools#mocha)
-- [TypeScript support](/reference/typescript#typescript-support)
+- [TypeScript support](/getting-started/typescript#typescript-support)
 - [AVA](/integrations/frameworks-and-tools#ava)

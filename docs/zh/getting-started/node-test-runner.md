@@ -69,7 +69,7 @@ export default {
 - 测试发现、匹配、参数解释及错误行为均交给 Node。
 - 相对路径以当前工作目录为基准，而不是配置文件目录。
 - 不承诺直接指定目录会递归发现测试；递归匹配请使用 `"../tests/**/*.test.js"` 等 glob，行为以当前 Node 版本的原生支持为准。
-- 原生 TypeScript 测试无需 loader：`mcr test "./test/**/*.test.ts"`。报告通过生成的 sourcemap 展示原始 TS；支持语法和限制参见[TypeScript 支持](/zh/reference/typescript#run-ts-tests)。
+- 原生 TypeScript 测试无需 loader：`mcr test "./test/**/*.test.ts"`。报告通过生成的 sourcemap 展示原始 TS；支持语法和限制参见[TypeScript 支持](/zh/getting-started/typescript#run-ts-tests)。
 
 ## 报告与退出状态 {#reports-and-exit-status}
 

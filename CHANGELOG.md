@@ -1,8 +1,8 @@
 ## Changelog
 
-- Unreleased
-  - **Breaking Changes**
-    - require Node.js >= 22.18.0, enabling native TypeScript type stripping without an extra flag on Node.js 22
+- 3.3.0
+  - run TypeScript directly with `mcr node` and `mcr test`, and report coverage against the original source. See [TypeScript support](docs/getting-started/typescript.md).
+  - raise the minimum Node.js version from 22.15.0 to 22.18.0.
 
 - 3.2.1
   - **Bug Fixes**

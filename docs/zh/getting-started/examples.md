@@ -39,7 +39,7 @@ import { withBase } from 'vitepress';
 | <a :href="withBase('/reports/node-fgc/index.html')" target="_blank" rel="noopener noreferrer">前台子进程</a> | 子进程覆盖率采集。 |
 | <a :href="withBase('/reports/node-vm/index.html')" target="_blank" rel="noopener noreferrer">VM</a> | Node.js VM 上下文中执行代码的覆盖率。 |
 | <a :href="withBase('/reports/node-koa/index.html')" target="_blank" rel="noopener noreferrer">Koa</a> | Koa 应用的服务端覆盖率。 |
-| <a :href="withBase('/reports/node-ts/index.html')" target="_blank" rel="noopener noreferrer">原生 TypeScript</a> | `npm run test-node-ts`：使用 Node 执行 TS，报告展示原始 TS；参见 [TypeScript 支持](/zh/reference/typescript#repository-examples)。 |
+| <a :href="withBase('/reports/node-ts/index.html')" target="_blank" rel="noopener noreferrer">原生 TypeScript</a> | `npm run test-node-ts`：使用 Node 执行 TS，报告展示原始 TS；参见 [TypeScript 支持](/zh/getting-started/typescript#repository-examples)。 |
 | <a :href="withBase('/reports/mcr-test-ts/index.html')" target="_blank" rel="noopener noreferrer">TypeScript 测试</a> | `npm run test-mcr-test-ts`：使用 `mcr test` 运行原生 TS 测试。 |
 
 ## 打包工具与源码映射

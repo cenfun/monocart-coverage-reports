@@ -22,7 +22,7 @@ npx mcr node ./test/specs/node.test.js -r v8,console-details --lcov
 
 命令使用 Execa 的默认选项执行，不主动开启 shell 模式。请分别传入可执行文件及参数，例如 `mcr node "./my app.js"`，不要把整条命令作为一个带引号的参数传入。MCR 保留参数边界，不展开环境变量或 glob，也不解析管道、重定向、`&&` 等 shell 语法；组合命令请放入脚本。使用 `mcr [options] -- executable ...args` 可以避免子命令参数被当作 MCR 参数解析。平台相关的命令执行由 Execa 处理，包括在 Windows 下按需通过 `cmd.exe` 调用批处理文件并转义参数。
 
-原生 TS 的执行、配置和覆盖率行为参见 [TypeScript 支持](/zh/reference/typescript#typescript-support)。
+原生 TS 的执行、配置和覆盖率行为参见 [TypeScript 支持](/zh/getting-started/typescript#typescript-support)。
 
 ## CLI 选项 {#cli-options}
 
@@ -77,5 +77,5 @@ mcr merge -r v8,console-details --inputDir ./coverage-reports/unit/raw,./coverag
 ## 示例 {#examples}
 
 - [Mocha](/zh/integrations/frameworks-and-tools#mocha)
-- [TypeScript 支持](/zh/reference/typescript#typescript-support)
+- [TypeScript 支持](/zh/getting-started/typescript#typescript-support)
 - [AVA](/zh/integrations/frameworks-and-tools#ava)
