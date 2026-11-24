@@ -1,3 +1,7 @@
+---
+outline: [2, 4]
+---
+
 # TypeScript support {#typescript-support}
 
 ::: warning Node.js only
@@ -135,6 +139,75 @@ Node's erasable TS syntax includes type annotations, interfaces, type aliases, t
 
 Use actual extensions in relative imports, such as `import './math.ts'`. Use `import type` for imports that only exist at the type level. This feature does not enable type annotations in `.js` files.
 
+### Check for non-erasable syntax {#check-erasable-syntax}
+
+Node.js strips types but does not generate JavaScript for syntax such as `enum`, constructor parameter properties or namespaces with runtime code. To catch these before running your code, enable `erasableSyntaxOnly` (TypeScript **5.8 or later**) in your project's `tsconfig.json`:
+
+```json
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "erasableSyntaxOnly": true,
+        "types": ["node"]
+    },
+    "include": ["src", "test", "mcr.config.ts"]
+}
+```
+
+Adjust `include` to cover the TypeScript files your project runs directly. Install TypeScript and the Node.js type declarations, then run the check locally or in CI:
+
+```sh
+npm i -D typescript @types/node
+npx tsc --noEmit
+```
+
+Node.js does not read `tsconfig.json`; the check reports non-erasable syntax without rewriting it. To run directly in Node.js, replace that syntax with standard JavaScript and erasable types.
+
+#### String enums {#replace-string-enums}
+
+Replace `enum Status { Pending = 'pending', Done = 'done' }` with an `as const` object and derive a union of its values:
+
+```ts
+export const Status = {
+    Pending: 'pending',
+    Done: 'done'
+} as const;
+
+export type Status = (typeof Status)[keyof typeof Status];
+```
+
+`Status.Pending` is available at runtime, while the `Status` type is `'pending' | 'done'`.
+
+#### Constructor parameter properties {#replace-constructor-parameter-properties}
+
+Replace `constructor(public readonly name: string) {}` with a field declaration and an explicit assignment:
+
+```ts
+export class User {
+    readonly name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+```
+
+#### Namespaces with runtime code {#replace-runtime-namespaces}
+
+Prefer named exports in a separate module. To keep calls such as `MathUtils.double(2)`, replace `namespace MathUtils { export function double(...) { ... } }` with a plain object:
+
+```ts
+export const MathUtils = {
+    double(value: number): number {
+        return value * 2;
+    }
+};
+```
+
 ## Node.js requirements {#nodejs-requirements}
 
 MCR requires **Node.js 22.18.0 or later**. Check the version that launches MCR with `node --version`.
@@ -156,7 +229,7 @@ See the [Node.js TypeScript documentation](https://nodejs.org/api/typescript.htm
 - **No type checking.** Run `tsc --noEmit` separately if needed. TypeScript itself is optional for native execution and coverage.
 - **No `tsconfig.json` execution settings.** Node does not apply `paths`, convert module systems or downlevel JS according to `target`.
 - **No JSX/TSX or decorator transformation.** Use a suitable loader or build tool.
-- **No transform mode.** Node 26 removed `--experimental-transform-types`. On older Node versions that accept the flag, MCR does not capture native TS source in transform mode. The existing coverage import still runs and can use any sourcemaps Node supplies; JavaScript reporting is unchanged. For enums, constructor parameter properties and runtime namespaces, use a loader or build tool that emits JavaScript and sourcemaps.
+- **No transform mode.** Node 26 removed `--experimental-transform-types`. On older Node versions that accept the flag, MCR does not capture native TS source in transform mode. The existing coverage import still runs and can use any sourcemaps Node supplies; JavaScript reporting is unchanged. See [Check for non-erasable syntax](#check-erasable-syntax) for checks and alternatives to enums, constructor parameter properties and runtime namespaces. If you need to keep that syntax, use a loader or build tool that emits JavaScript and sourcemaps.
 - **No new native analysis for unexecuted TS.** `all` retains its existing behavior. Use `all.transformer` with JS and a sourcemap for accurate AST metrics of unexecuted TS; see [Untested files](/reference/untested-files#transform-source-code).
 - **No native TS distribution shortcut.** Node normally refuses to strip TS under `node_modules`; libraries should generally distribute compiled JS.
 

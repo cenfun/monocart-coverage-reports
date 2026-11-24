@@ -1,3 +1,7 @@
+---
+outline: [2, 4]
+---
+
 # TypeScript 支持 {#typescript-support}
 
 ::: warning 仅适用于 Node.js
@@ -135,6 +139,75 @@ Node 的可擦除 TS 语法包括类型标注、接口、类型别名、类型�
 
 相对导入要写实际扩展名，例如 `import './math.ts'`。仅用于类型的导入应使用 `import type`。本功能不会在 `.js` 文件中启用类型标注。
 
+### 检查不可擦除的语法 {#check-erasable-syntax}
+
+Node.js 只擦除类型，不会为 `enum`、构造函数参数属性或包含运行时代码的 namespace 生成 JavaScript。要在运行前发现这类语法，可以在项目的 `tsconfig.json` 中启用 `erasableSyntaxOnly`（需要 TypeScript **5.8 或更高版本**）：
+
+```json
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "erasableSyntaxOnly": true,
+        "types": ["node"]
+    },
+    "include": ["src", "test", "mcr.config.ts"]
+}
+```
+
+按项目结构调整 `include`，确保它覆盖由 Node.js 直接执行的 TypeScript 文件。安装 TypeScript 和 Node.js 类型声明后，即可在本地或 CI 中运行检查：
+
+```sh
+npm i -D typescript @types/node
+npx tsc --noEmit
+```
+
+Node.js 不读取 `tsconfig.json`；此检查只报告不可擦除的语法，不会自动改写代码。要让代码在 Node.js 中直接运行，可以改用标准 JavaScript 和可擦除的类型写法。
+
+#### 字符串枚举 {#replace-string-enums}
+
+将 `enum Status { Pending = 'pending', Done = 'done' }` 改为 `as const` 对象，并从对象的值推导联合类型：
+
+```ts
+export const Status = {
+    Pending: 'pending',
+    Done: 'done'
+} as const;
+
+export type Status = (typeof Status)[keyof typeof Status];
+```
+
+运行时仍可使用 `Status.Pending`，而 `Status` 类型是 `'pending' | 'done'`。
+
+#### 构造函数参数属性 {#replace-constructor-parameter-properties}
+
+将 `constructor(public readonly name: string) {}` 改为显式声明字段，再在构造函数中赋值：
+
+```ts
+export class User {
+    readonly name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+```
+
+#### 包含运行时代码的命名空间 {#replace-runtime-namespaces}
+
+优先使用独立模块的具名导出。如果要保留 `MathUtils.double(2)` 这样的调用方式，可以将 `namespace MathUtils { export function double(...) { ... } }` 改为普通对象：
+
+```ts
+export const MathUtils = {
+    double(value: number): number {
+        return value * 2;
+    }
+};
+```
+
 ## Node.js 要求 {#nodejs-requirements}
 
 MCR 要求 **Node.js 22.18.0 或更高版本**。通过 `node --version` 检查启动 MCR 的版本。
@@ -156,7 +229,7 @@ MCR 使用 Node 内置的 `module.stripTypeScriptTypes()`，并采用 strip 模�
 - **不做类型检查。** 如有需要，单独运行 `tsc --noEmit`。原生执行与覆盖率采集本身不要求安装 TypeScript。
 - **不应用 `tsconfig.json` 执行设置。** Node 不解析 `paths`，不转换模块系统，也不按 `target` 降级 JS。
 - **不转换 JSX/TSX 或装饰器。** 使用适当的 loader 或构建工具。
-- **不支持转换模式。** Node 26 已移除 `--experimental-transform-types`。在仍接受此参数的旧版 Node 上，MCR 不会捕获转换模式下的原生 TS 源码。覆盖率仍按原有流程导入，可使用 Node 提供的 sourcemap；JavaScript 报告不受影响。枚举、构造函数参数属性和包含运行时代码的 namespace 请使用能输出 JavaScript 和 sourcemap 的加载器或构建工具。
+- **不支持转换模式。** Node 26 已移除 `--experimental-transform-types`。在仍接受此参数的旧版 Node 上，MCR 不会捕获转换模式下的原生 TS 源码。覆盖率仍按原有流程导入，可使用 Node 提供的 sourcemap；JavaScript 报告不受影响。枚举、构造函数参数属性和包含运行时代码的命名空间的检查方法和替代写法，参见[检查不可擦除的语法](#check-erasable-syntax)。如果需要保留这些语法，请使用能输出 JavaScript 和 sourcemap 的加载器或构建工具。
 - **不新增未执行 TS 的原生分析能力。** `all` 保留原有行为。未执行 TS 如需准确的 AST 指标，应通过 `all.transformer` 提供 JS 与 sourcemap；参见[未测试文件](/zh/reference/untested-files#transform-source-code)。
 - **不是直接发布 TS 依赖的捷径。** Node 通常拒绝擦除 `node_modules` 下的 TS，库一般仍应发布编译后的 JS。
 
