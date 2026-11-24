@@ -253,12 +253,6 @@ npx mcr --import tsx test "./test/**/*.test.ts"
 npx mcr tsx ./src/example.ts
 ```
 
-如果测试是为 Mocha 编写的，请先安装 `mocha`（如尚未安装），再预加载 `tsx`：
-
-```sh
-npx mcr --import tsx mocha "./test/**/*.ts"
-```
-
 ### [ts-node](https://github.com/TypeStrong/ts-node) {#ts-node}
 
 如果现有 ESM 项目（`"type": "module"`）使用 `ts-node`，可参考以下示例，它使用 `ts-node` 10.9.2 和 TypeScript 5.9.3。该版本的 `ts-node` 无法与 TypeScript 7.0.2 搭配使用，且其 [ESM 加载器仍属实验性](https://typestrong.org/ts-node/docs/imports/#native-ecmascript-modules)。
@@ -268,7 +262,7 @@ npm i -D ts-node@10.9.2 typescript@5.9.3 @types/node cross-env
 npx cross-env NODE_OPTIONS="--loader ts-node/esm" mcr node ./src/example.ts
 ```
 
-如果之前启用了 `erasableSyntaxOnly`，运行不可擦除的语法时，请在 `ts-node` 使用的 TypeScript 配置中关闭该选项。Mocha 项目请使用上面的 [`tsx` 示例](#tsx)。
+如果之前启用了 `erasableSyntaxOnly`，运行不可擦除的语法时，请在 `ts-node` 使用的 TypeScript 配置中关闭该选项。
 
 ## 仓库示例 {#repository-examples}
 

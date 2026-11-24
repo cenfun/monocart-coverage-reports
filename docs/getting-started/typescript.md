@@ -253,12 +253,6 @@ If you run the script with the `tsx` CLI instead, no preload is needed:
 npx mcr tsx ./src/example.ts
 ```
 
-For tests written for Mocha, install `mocha` if needed and preload `tsx`:
-
-```sh
-npx mcr --import tsx mocha "./test/**/*.ts"
-```
-
 ### [ts-node](https://github.com/TypeStrong/ts-node) {#ts-node}
 
 For an existing ESM project (`"type": "module"`) that uses `ts-node`, the following example uses `ts-node` 10.9.2 with TypeScript 5.9.3. That `ts-node` version does not work with TypeScript 7.0.2, and its [ESM loader is experimental](https://typestrong.org/ts-node/docs/imports/#native-ecmascript-modules).
@@ -268,7 +262,7 @@ npm i -D ts-node@10.9.2 typescript@5.9.3 @types/node cross-env
 npx cross-env NODE_OPTIONS="--loader ts-node/esm" mcr node ./src/example.ts
 ```
 
-If you enabled `erasableSyntaxOnly` earlier, turn it off in the TypeScript config used by `ts-node` when you need to run non-erasable syntax. For Mocha, use the [`tsx` example](#tsx) instead.
+If you enabled `erasableSyntaxOnly` earlier, turn it off in the TypeScript config used by `ts-node` when you need to run non-erasable syntax.
 
 ## Repository examples {#repository-examples}
 
