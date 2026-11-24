@@ -156,7 +156,7 @@ See the [Node.js TypeScript documentation](https://nodejs.org/api/typescript.htm
 - **No type checking.** Run `tsc --noEmit` separately if needed. TypeScript itself is optional for native execution and coverage.
 - **No `tsconfig.json` execution settings.** Node does not apply `paths`, convert module systems or downlevel JS according to `target`.
 - **No JSX/TSX or decorator transformation.** Use a suitable loader or build tool.
-- **No non-erasable transformation.** Enums, constructor parameter properties and runtime namespaces need another toolchain. This native path does not support `--experimental-transform-types`.
+- **No transform mode.** Node 26 removed `--experimental-transform-types`. On older Node versions that accept the flag, MCR does not capture native TS source in transform mode. The existing coverage import still runs and can use any sourcemaps Node supplies; JavaScript reporting is unchanged. For enums, constructor parameter properties and runtime namespaces, use a loader or build tool that emits JavaScript and sourcemaps.
 - **No new native analysis for unexecuted TS.** `all` retains its existing behavior. Use `all.transformer` with JS and a sourcemap for accurate AST metrics of unexecuted TS; see [Untested files](/reference/untested-files#transform-source-code).
 - **No native TS distribution shortcut.** Node normally refuses to strip TS under `node_modules`; libraries should generally distribute compiled JS.
 

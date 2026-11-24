@@ -226,6 +226,34 @@ describe('native TypeScript coverage', {
         assert.equal(file.source, source);
     });
 
+    it('does not capture native TS in transform mode and still reports JavaScript', {
+        skip: !process.allowedNodeEnvironmentFlags.has('--experimental-transform-types')
+    }, () => {
+        const js = 'export function choose(value) { return value ? 1 : 0; }\nchoose(1);\n';
+        write('subject.js', js);
+        write('subject.mts', 'enum Choice { No, Yes }\nif (Choice.Yes !== 1) throw new Error();\n');
+        write('subject-erasable.mts', 'export const value: number = 1;\n');
+        const entry = write('entry.mjs', "import './subject.js';\nimport './subject.mts';\nimport './subject-erasable.mts';\n");
+        write('mcr.config.cjs', `module.exports = {
+            baseDir: __dirname, outputDir: './report', reports: ['v8-json'], logging: 'debug',
+            entryFilter: (entry) => entry.url.includes('/subject')
+        };`);
+        const child = run([cli, 'node', entry], {
+            NODE_OPTIONS: '--experimental-transform-types'
+        });
+        assert.equal(child.status, 0, child.stdout + child.stderr);
+        const report = JSON.parse(fs.readFileSync(path.join(root, 'report/coverage-report.json'), 'utf8'));
+        const files = fs.readdirSync(path.join(root, 'report/.v8-coverage'));
+        assert.ok(files.some((name) => name.startsWith('coverage-')));
+        assert.ok(!files.some((name) => name.startsWith('source-')));
+        assert.ok(report.files.every((file) => !file.nativeTypeScript));
+        const plain = report.files.find((file) => file.sourcePath === 'subject.js');
+        assert.ok(plain);
+        assert.equal(plain.source, js);
+        assert.equal(plain.summary.branches.covered, 1);
+        assert.equal(plain.summary.branches.total, 2);
+    });
+
     ['node', 'test'].forEach((command) => {
         it(`keeps a failing ${command} command nonzero while generating a TS report`, () => {
             write('subject.ts', 'export function choose(value: number) { return value ? 1 : 0; }\n');

@@ -156,7 +156,7 @@ MCR 使用 Node 内置的 `module.stripTypeScriptTypes()`，并采用 strip 模�
 - **不做类型检查。** 如有需要，单独运行 `tsc --noEmit`。原生执行与覆盖率采集本身不要求安装 TypeScript。
 - **不应用 `tsconfig.json` 执行设置。** Node 不解析 `paths`，不转换模块系统，也不按 `target` 降级 JS。
 - **不转换 JSX/TSX 或装饰器。** 使用适当的 loader 或构建工具。
-- **不转换非可擦除语法。** 枚举、构造函数参数属性和包含运行时代码的 namespace 需要其他工具链。此原生路径不支持 `--experimental-transform-types`。
+- **不支持转换模式。** Node 26 已移除 `--experimental-transform-types`。在仍接受此参数的旧版 Node 上，MCR 不会捕获转换模式下的原生 TS 源码。覆盖率仍按原有流程导入，可使用 Node 提供的 sourcemap；JavaScript 报告不受影响。枚举、构造函数参数属性和包含运行时代码的 namespace 请使用能输出 JavaScript 和 sourcemap 的加载器或构建工具。
 - **不新增未执行 TS 的原生分析能力。** `all` 保留原有行为。未执行 TS 如需准确的 AST 指标，应通过 `all.transformer` 提供 JS 与 sourcemap；参见[未测试文件](/zh/reference/untested-files#transform-source-code)。
 - **不是直接发布 TS 依赖的捷径。** Node 通常拒绝擦除 `node_modules` 下的 TS，库一般仍应发布编译后的 JS。
 
