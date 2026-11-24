@@ -1,13 +1,13 @@
 # 接入现有测试框架 {#integrate-with-your-framework}
 
-MCR 可以通过 CLI 或 API 与现有测试框架集成，无需替换测试运行器或改变测试编写方式。可根据现有流程选择合适的接入方式。
+无需替换现有测试运行器。Node.js 命令可通过 CLI 采集；浏览器测试或已采集数据的运行器可通过 API 导入。对于已经使用 `node:test` 的项目，可直接用 [`mcr test`](/zh/getting-started/node-test-runner#quick-start)。先查找[适用于你的框架的集成](/zh/integrations/frameworks-and-tools)，没有现成方案时再按下面的方法接入。
 
 ## CLI {#cli}
 
 对于 Node.js 测试命令，在原有命令前添加 `mcr`，即可采集 V8 覆盖率并生成报告：
 
 ```sh
-mcr your-cli --your-arguments
+npx mcr -- your-test-runner --your-arguments
 ```
 
 可用选项参见 [命令行](/zh/reference/cli#command-line)。浏览器测试则需通过框架的覆盖率采集 API 获取数据，再按下述 API 方式交给 MCR。

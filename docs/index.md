@@ -34,10 +34,6 @@ workflow:
     - text: CI integration
       link: /integrations/coverage-services
 features:
-  - title: AI Agent Skill
-    details: Give coding agents a reusable workflow for testing, coverage collection, sourcemap debugging and CI thresholds. Ships with npm and works offline.
-    link: /getting-started/ai-agent-skill
-    linkText: Equip your agent
   - title: Native V8 coverage
     details: Collect coverage without instrumentation from Node.js or Chromium, with native byte-level metrics and interactive reports.
     link: /coverage-collection/v8
@@ -58,4 +54,8 @@ features:
     details: Track coverage in your CI service and enforce thresholds with hooks that keep failures visible.
     link: /reference/hooks
     linkText: Set coverage thresholds
+  - title: AI Agent Skill
+    details: Give coding agents a reusable workflow for testing, coverage collection, sourcemap debugging and CI thresholds. Ships with npm and works offline.
+    link: /getting-started/ai-agent-skill
+    linkText: Equip your agent
 ---

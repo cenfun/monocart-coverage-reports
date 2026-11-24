@@ -1,5 +1,6 @@
 # 多进程 {#multiple-processes}
-> 多进程支持可以很好的解决异步并行的情况。所有的覆盖率数据会保存到`[outputDir]/.cache`，在报告生成之后，这些缓存数据会被清除。除非开启了[调试模式](/zh/troubleshooting/sourcemaps#sourcemaps-and-debugging)，或者使用了`raw`报告
+
+本页适用于能共享同一 `outputDir/.cache` 的进程。不能共享缓存的 CI 分片、容器或机器，应各自导出 [raw 报告并合并](/zh/reference/merging#manual-merging)。非调试模式下，成功生成报告后会清理缓存；生成 `raw` 报告时，缓存会移到 raw 输出位置。
 
 ## 流程概览 {#workflow}
 
@@ -38,7 +39,7 @@ mcr.cleanCache();
 
 ## 第二步：子进程并行采集覆盖率 {#collect-in-subprocesses}
 
-各子进程可以并行执行，下面两个示例没有先后顺序。使用相同的 `outputDir` 共享缓存；采集期间不要清理缓存或生成报告。
+各子进程可以并行执行。使用同一个 `outputDir`（若工作目录不同，请使用同一个绝对路径），并保持 [`cleanCache: false`](/zh/reference/options#cleancache)。采集期间不要清理缓存或生成报告。
 
 ### 子进程 1 {#subprocess-1}
 

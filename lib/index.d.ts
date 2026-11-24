@@ -30,6 +30,9 @@ declare namespace MCR {
         /** fake source */
         fake?: boolean;
 
+        /** Collected from Node native TypeScript; ingestion supplies stripped JS and a map to the original TS. */
+        nativeTypeScript?: boolean;
+
         [key: string]: any;
     }
 
@@ -249,13 +252,12 @@ declare namespace MCR {
                  */
                 [key: string]: number | string;
             };
+            /**
+             * V8 lines excluded from line coverage, keyed by 1-based line number.
+             * `b` = blank, `c` = comment-only, `i` = excluded by an ignore directive.
+             * Blank and comment-only lines keep their classification inside ignored ranges.
+             */
             extras?: {
-                /** 
-                 * key: line number;
-                 * b: blank;
-                 * c: comment;
-                 * i: ignored;
-                 */
                 [key: string]: "b" | "c" | "i";
             }
         }
@@ -497,7 +499,7 @@ declare namespace MCR {
          * Node handles parsing and discovery relative to cwd; null is not passed to Node.
          * Positional CLI targets override this option.
          * Defaults to null (skip tests unless CLI targets are supplied).
-         * Requires Node.js >= 22.15.0. Ignored by other commands and the API.
+         * Ignored by other commands and the API.
          */
         test?: string | string[] | null;
 
@@ -537,6 +539,9 @@ declare namespace MCR {
 
         /**
          * add V8 coverage from a dir
+         * Uses a single captured source directly, or matches multiple versions to Node processes and worker threads.
+         * Always selects one source for an existing URL; unresolved ties use the first candidate (best effort).
+         * Preserve the original Node coverage filenames and captured execution metadata when copying inputs.
          * @param dir node v8 coverage dir
          */
         addFromDir: (dir: string) => Promise<void>;
@@ -591,6 +596,11 @@ declare namespace MCR {
                 functions: string;
                 lines: string;
                 uncoveredLines: string;
+                /**
+                 * Comma-separated 1-based line numbers with their `CoverageFile.data.extras` codes.
+                 * For example, `2b,12c,16i` means line 2 is blank, line 12 is comment-only,
+                 * and line 16 is ignored. Empty when there are no entries (including Istanbul).
+                 */
                 extras: string;
             }
         }
@@ -599,7 +609,7 @@ declare namespace MCR {
     /** get snapshot from coverage report data */
     export function getSnapshot(coverageResults: CoverageResults): CoverageSnapshot;
 
-    /** diff two snapshots  */
+    /** Diff two snapshots, including per-file uncovered lines and line classifications (`extras`). */
     export function diffSnapshot(oldData: CoverageSnapshot, newData: CoverageSnapshot, diffOptions: {
         skipEqual?: boolean;
         showSummary?: boolean;

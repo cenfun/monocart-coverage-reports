@@ -1,5 +1,6 @@
 import { execa } from 'execa';
 import { Util } from '../lib/utils/util.js';
+import { cleanSite } from '../scripts/clean-site.js';
 
 
 const executeNpmRun = async (item) => {
@@ -11,6 +12,9 @@ const executeNpmRun = async (item) => {
 };
 
 const test = async (type) => {
+
+    // Remove obsolete report redirects without erasing the documentation.
+    await cleanSite();
 
     // remove assets
     Util.rmSync('./.temp/site/reports/assets');
@@ -24,7 +28,9 @@ const test = async (type) => {
             'test-node-cdp',
             'test-node-fgc',
             'test-node-vm',
-            'test-node-koa'
+            'test-node-koa',
+            'test-node-ts',
+            'test-mcr-test-ts'
         ],
 
         '--browser': [

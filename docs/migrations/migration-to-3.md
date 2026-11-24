@@ -4,7 +4,7 @@ MCR 3.x keeps the core coverage APIs and report options, but introduces breaking
 
 ## 1. Upgrade Node.js first
 
-All MCR APIs and CLI commands, including ordinary commands, `merge` and `test`, require **Node.js >= 22.15.0**. Node.js 18, 20 and versions of 22 earlier than 22.15.0 are no longer supported.
+All MCR APIs and CLI commands, including ordinary commands, `merge` and `test`, require **Node.js >= 22.18.0**. Node.js 18, 20 and versions of 22 earlier than 22.18.0 are no longer supported.
 
 Check local development, CI jobs, Docker images and Node.js child processes that inherit MCR's preload through `NODE_OPTIONS`.
 
@@ -46,7 +46,9 @@ async function main() {
         outputDir: './coverage-reports'
     });
     await report.addFromDir('./coverage-data');
-    await report.generate();
+    if (!await report.generate()) {
+        throw new Error('No coverage report was generated');
+    }
 }
 
 main().catch((error) => {

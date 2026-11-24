@@ -1,44 +1,129 @@
 # 常见问题 {#common-issues}
-> 常见问题
-## Unexpected coverage {#unexpected-coverage}
-覆盖率看起来不正确，多数情况是因为sourcemap转换的问题导致的. 可以先尝试设置构建工具的 `minify=false` 也就是不要压缩代码来解决。下面来看看sourcemap存在问题的具体原因：
-```text
-const a = tf ? 'true' : 'false';
-               ^     ^  ^
-              m1     p  m2
-```
-上面是经过构建工具编译过的代码，通过AST分析，位置`p`对应的原始位置是我们要找的，而从sourcemap里仅能找到离`p`最近的位置映射`m1`和`m2`，也就是位置`p`并没有精确的映射保存到sourcemap里，从而无法直接获取精确的原始位置，但我们能知道`p`的原始位置应该在`m1`和`m2`之间。
-- 参见 [Sourcemap 与调试](/zh/troubleshooting/sourcemaps#sourcemaps-and-debugging)
 
-`MCR`如何解决这个问题:
-- 1, 首先会尝试使用[`diff-sequences`](https://github.com/jestjs/jest/tree/main/packages/diff-sequences)工具来比较`m1`和`m2`之间的生成代码和原始代码，找到`p`对应的字符位置，可以解决绝大多数问题。但是如果代码是非JS格式的，比如Vue模板是HTML，或JSX这些，不管怎么比较也是很难精确找到对应位置的，甚至此时的sourcemap本身都比较乱。
-- 2, 然后就是通过分析[AST](https://github.com/acornjs/acorn)，找到所有的functions, statements 和 branches，因为V8覆盖率本身不提供这些指标的覆盖率. (对于分支覆盖暂不支持`AssignmentPattern`类型，因为即使分析AST也无法从V8覆盖率找到它的数据)。
+## 覆盖率与预期不符 {#unexpected-coverage}
 
+- **完全没有报告：** 先确认测试确实执行了被测代码，采集阶段有数据，并检查命令的退出状态。按 [V8](/zh/coverage-collection/v8#generate) 或 [Istanbul](/zh/coverage-collection/istanbul#generate) 的方式导入数据。
+- **报告缺少文件：** 对照[过滤流程](/zh/reference/filtering#filtering-pipeline)，依次核对入口 URL、解包后的源码路径和最终报告路径。如果文件既不在采集数据中，也未通过 sourcemap 出现，可[用 `all` 将其纳入报告](/zh/reference/untested-files)。
+- **命中行或分支不对：** 先确认生成代码、sourcemap 和源码来自同一轮构建，再检查[覆盖率区间的端点是否落在两个映射点之间](#between-mapping-points)。
 
-## Unparsable source {#unparsable-source}
-源码无法解析问题。由上面我们知道`MCR`通过分析源码的AST获取更多指标的覆盖率信息，但源码如果不是标准的 ECMAScript，比如`ts`, `jsx`这些，那么分析的时候就会报错，此时我们可以手动来编译这些文件（可行但不推荐）.
+### 两个映射点之间 {#between-mapping-points}
+
+这个例子用 esbuild 压缩空白。生成代码的行为不变，但字符偏移量变了。
+
+**生成代码：**
+
+<!-- eslint-skip -->
 ```js
-import * as fs from 'fs';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
-import * as TsNode from 'ts-node';
+const a=tf?"true":"false";
+```
+
+**原始源码：**
+
+<!-- eslint-skip -->
+```js
+const a = tf ? "true" : "false";
+```
+
+```mermaid
+---
+config:
+    htmlLabels: true
+    block:
+        padding: 0
+---
+block
+    columns 44
+    %% Each character and index spans two columns; center each marker on a character boundary.
+    space:8 gi10["10"]:2 gi11["11"]:2 gi12["12"]:2 gi13["13"]:2 gi14["14"]:2 gi15["15"]:2 gi16["16"]:2
+    gi17["17"]:2 gi18["18"]:2 gi19["19"]:2 gi20["20"]:2 gi21["21"]:2 gi22["22"]:2 gi23["23"]:2 gi24["24"]:2
+    gi25["25"]:2 space:4
+    generated["生成代码"]:6 space:2 g10["?"]:2 g11["&quot;"]:2 g12["t"]:2 g13["r"]:2 g14["u"]:2 g15["e"]:2
+    g16["&quot;"]:2 g17[":"]:2 g18["&quot;"]:2 g19["f"]:2 g20["a"]:2 g21["l"]:2 g22["s"]:2 g23["e"]:2
+    g24["&quot;"]:2 g25[";"]:2 space:4
+    space:9 m1["↑<br/>m1"]:2 space:10 p["↑<br/>p"]:2 m2["↑<br/>m2"]:2 space:19
+    space:44
+    space:9 mo1["mo1<br/>↓"]:2 space:10 po["po<br/>↓"]:2 space:4 mo2["mo2<br/>↓"]:2 space:15
+    original["原始源码"]:6 o13["?"]:2 o14["␠"]:2 o15["&quot;"]:2 o16["t"]:2 o17["r"]:2 o18["u"]:2 o19["e"]:2
+    o20["&quot;"]:2 o21["␠"]:2 o22[":"]:2 o23["␠"]:2 o24["&quot;"]:2 o25["f"]:2 o26["a"]:2 o27["l"]:2
+    o28["s"]:2 o29["e"]:2 o30["&quot;"]:2 o31[";"]:2
+    space:6 oi13["13"]:2 oi14["14"]:2 oi15["15"]:2 oi16["16"]:2 oi17["17"]:2 oi18["18"]:2 oi19["19"]:2
+    oi20["20"]:2 oi21["21"]:2 oi22["22"]:2 oi23["23"]:2 oi24["24"]:2 oi25["25"]:2 oi26["26"]:2 oi27["27"]:2
+    oi28["28"]:2 oi29["29"]:2 oi30["30"]:2 oi31["31"]:2
+    m1 --> mo1
+    m2 --> mo2
+    p -.-> po
+    classDef index fill:none,stroke:none,font-size:11px
+    class gi10,gi11,gi12,gi13,gi14,gi15,gi16,gi17,gi18,gi19,gi20,gi21,gi22,gi23,gi24,gi25 index
+    class oi13,oi14,oi15,oi16,oi17,oi18,oi19,oi20,oi21,oi22 index
+    class oi23,oi24,oi25,oi26,oi27,oi28,oi29,oi30,oi31 index
+    classDef plain fill:none,stroke:none
+    class generated,original,m1,p,m2,mo1,po,mo2 plain
+```
+
+**怎么看图。** 图中截取了两行代码的相关部分。数字是相对于各自完整代码行、从 0 开始的偏移量，`␠` 表示空格。标记旁的箭头指向字符前的边界。实线连接 sourcemap 记录的映射，虚线表示 MCR 推断的位置。
+
+- `p`（17）是生成代码中的一个 V8 覆盖率终点，位于 `"true"` 的闭引号和冒号之间。例如，`tf` 为 false 时，V8 会记录一个在此结束的未覆盖区间。
+- `p` 前后最近的两个 sourcemap 条目分别把 `m1`（11）映射到 `mo1`（15），把 `m2`（18）映射到 `mo2`（24）。它们分别位于两段代码中 `"true"` 和 `"false"` 的开引号前，是映射点，不是覆盖率端点。
+
+**要找什么。** `po` 是 `p` 在原始源码中的对应位置。生成代码中的覆盖率起点对应源码区间的起点，终点对应源码区间的终点。V8 区间是左闭右开的：`[startOffset, endOffset)`。
+
+**为什么不能直接查到。** 这份 sourcemap 没有 `p` 的映射条目。常规查找可能按规则返回前一个映射的 `mo1` 或后一个映射的 `mo2`。但这两个位置都在开引号前，不是 `"true"` 的结束位置。
+
+**MCR 如何推断。** 当 `mo1` 和 `mo2` 位于源码的同一行且顺序一致时，MCR 会比较生成代码中 `m1` 到 `m2` 的片段与源码中 `mo1` 到 `mo2` 的片段。本例比较的是 `"true":` 和 `"true"␠:␠`，找出的 `po` 是偏移量 21，正好位于原始代码的闭引号之后。必要时，MCR 会用 `diff-sequences` 对齐相同的文本。结果不一定总是精确：例如 JSX 或 Vue 模板编译可能改变代码结构，使生成代码中的端点在源码里没有精确对应的位置。此时，MCR 只能依赖构建工具生成的 sourcemap；报告中的位置是否可靠，取决于 sourcemap 能否准确反映这次转换。
+
+如果压缩让映射难以核对，可以关闭压缩后重新构建、重新采集覆盖率，再[检查 sourcemap 和调试数据](/zh/troubleshooting/sourcemaps)。
+
+V8 提供运行时区间和计数，不提供源码级的语句或分支计数。MCR 结合抽象语法树（AST）分析和 V8 区间，推导函数、语句、分支和行覆盖率。对于编译后的代码，MCR 分析实际执行的 JavaScript，再通过 sourcemap 把覆盖率映射回原始源码。某些计数无法单独推断：例如默认参数 `x = 1`（`AssignmentPattern`）使用的是所在区间的计数，不代表实际使用默认值的次数。这也是 [V8 与 Istanbul 报告](/zh/coverage-collection/compare-reports)可能不同的原因之一。
+
+## 无法解析源码 {#unparsable-source}
+
+JavaScript 转换或源码解析可能遇到 JSX、Vue 模板等语法。先确定出错的是实际执行的生成文件、sourcemap 中的原始文件，还是通过 `all` 纳入的未测试文件：
+
+- **被测代码：** 使用实际执行的 JavaScript 与对应的 sourcemap，不要在采集后替换为另一次编译的代码。V8 区间偏移量对应的是实际执行的源码。
+- **sourcemap 中的原始源码：** 如果报告中的源码或位置不对，先[检查 sourcemap](/zh/troubleshooting/sourcemaps#inspect-sourcemaps)，确认它和原始源码都对应实际执行的构建。
+- **原生 TypeScript：** 检查 [Node.js 版本和支持的语法](/zh/getting-started/typescript#supported-syntax)；对于无法原生执行的语法，可以在运行测试前编译并生成 sourcemap，或在执行时使用[外部加载器](/zh/getting-started/typescript#external-loaders)。
+- **未测试文件：** 可在生成空覆盖率时使用 [`all.transformer`](/zh/reference/untested-files#transform-source-code)，并保留对应 sourcemap。
+
+例如，安装 `@swc/core` 后，可以在 MCR 解析前将 `src/` 下未执行的 `.ts` 文件转成 JavaScript。此示例不处理 JSX、TSX 或 Vue 文件，也不会改动测试中实际执行的代码。
+
+```js
+import { fileURLToPath } from 'node:url';
+import { transform } from '@swc/core';
+
 const coverageOptions = {
-    onEntry: (entry) => {
-        const filePath = fileURLToPath(entry.url);
-        const originalSource = fs.readFileSync(filePath).toString('utf-8');
-        const fileName = path.basename(filePath);
-        const tn = TsNode.create({});
-        const source = tn.compile(originalSource, fileName);
-        entry.fake = false;
-        entry.source = source;
+    all: {
+        dir: ['./src'],
+        filter: '**/*.ts',
+        transformer: async (entry) => {
+            const { code, map } = await transform(entry.source, {
+                filename: fileURLToPath(entry.url),
+                sourceMaps: true,
+                isModule: true,
+                jsc: {
+                    parser: {
+                        syntax: 'typescript'
+                    }
+                }
+            });
+            entry.source = code;
+            entry.sourceMap = JSON.parse(map);
+        }
     }
 };
 ```
 
-## JavaScript heap out of memory {#javascript-heap-out-of-memory}
-内存溢出问题可能出现在有太多的原生V8覆盖率文件要处理. 我们可以使用Node.js的一个选项来增加内存使用:
-```sh
-- run: npm run test:coverage
-    env:
-        NODE_OPTIONS: --max-old-space-size=8192
+## JavaScript 堆内存不足 {#javascript-heap-out-of-memory}
+
+即使逐个处理文件，单个大 JavaScript bundle 也可能撑满堆：源码、V8 覆盖率区间、AST 和 sourcemap 可能同时占用内存。
+
+1. **先查大文件。** [耗时日志](/zh/troubleshooting/sourcemaps#view-timing-logs)只记录已完成的阶段。如果中途崩溃，优先检查体积最大的 bundle。能拆包时，拆分后用新构建及对应的 sourcemap 重新采集。
+2. **回收临时数据。** 设置 [`gc: 1024`](/zh/reference/options#gc)，在处理检查点发现堆用量超过 1024 MB 时触发 GC。仍在使用的数据不能回收。
+3. **必要时提高堆上限。** 如果机器内存充足，为运行 MCR 的进程设置 `NODE_OPTIONS`。例如，在 GitHub Actions 中：
+
+```yaml
+- run: npx mcr merge --inputDir ./raw --outputDir ./coverage-reports/merged
+  env:
+    NODE_OPTIONS: --max-old-space-size=8192
 ```
+
+将命令替换为实际使用的采集或合并命令，并使用独立的报告输出目录。

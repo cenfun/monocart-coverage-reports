@@ -6,13 +6,13 @@ This file is the single, tool-neutral source of repository guidance. Read it bef
 
 Monocart Coverage Reports (MCR) 3.x collects JavaScript, TypeScript, and CSS coverage and generates native V8 or Istanbul reports.
 
-- Runtime: Node.js >= 22.15.0. Check `package.json` for the current version, engines, exports, and scripts.
+- Runtime: see `package.json` engines. Check it for the current version, exports, and scripts.
 - Package manager: npm with `package-lock.json`. Use `npm ci` when dependencies need installation. Do not change dependencies or runtimes without a task-related reason.
 - Runtime source: native ESM JavaScript in `lib/`. This directory is mostly **handwritten source**, not build output.
 - Report UI: Vue single-file components and JavaScript in `src/app/`.
 - Bundled dependency entry points: `src/vendor/`; build configuration: `vite.config.mjs`.
 - Documentation: bilingual VitePress Markdown and configuration in `docs/`; publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`.
-- Public declarations: `lib/index.d.ts`. TypeScript checks declarations and consumer tests; it does not compile the runtime source.
+- Public declarations: `lib/index.d.ts`. The separate TypeScript check validates declarations, consumer examples, and native TS fixtures without emitting JavaScript.
 
 For integrating MCR into another project, read [the reusable coverage skill](skills/monocart-coverage-reports/SKILL.md).
 Load only the references needed for the task. The skill ships in npm; this checkout guide does not.
@@ -42,7 +42,7 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | --- | --- |
 | `node --test test/unit/config.test.js` | Example focused test, without collecting coverage |
 | `npm run test-unit` | All `node:test` unit tests; no browser suite |
-| `npm run test-types` | Check the public ESM declarations and consumer examples |
+| `npm run test-types` | Check public declarations, consumer examples, and native TS fixtures with the local compiler; also runs as part of `npm test` |
 | `npm run test-runtime` | API, CLI, Node test runner, and raw merge smoke checks; uses a temporary directory |
 | `npm run test-unit-coverage` | Unit tests through `mcr test`; writes `.temp/coverage-unit/` |
 | `npm run lint:docs` | ESLint with automatic fixes for `docs/` configuration/theme source and JavaScript fences in documentation and `README.md`; use `-- --no-fix` to check only |
@@ -51,8 +51,8 @@ Run commands from the repository root. Start with the narrowest relevant check.
 | `npm run build` | Build UI and `lib/packages/`; npm then runs `postbuild` to build test fixtures |
 | `npm run build-test` | Build bundler test fixtures only |
 | `npm run docs:dev` | Preview the tracked VitePress source in `docs/` and serve existing `.temp/site/reports/` under `/reports/` |
-| `npm run docs:check` | Lint documentation without fixes, then build to `.temp/site/` without clearing reports; no documentation tests |
-| `npm run test-node` / `npm run test-browser` | Integration groups; write reports under `.temp/site/reports/` and remove only its shared `assets/` |
+| `npm run docs` | Lint documentation without fixes, then build to `.temp/site/`, clearing old site output except `reports/`; no documentation tests |
+| `npm run test-node` / `npm run test-browser` | Integration groups; clean marked legacy report redirects in the site root, write under `.temp/site/reports/`, and remove its shared `assets/` |
 | `npm test` | Unit + type + integration coverage; not a quick unit check |
 
 Important constraints:
@@ -74,9 +74,15 @@ Important constraints:
 - Keep replies concise and use the user's language. Explain non-obvious tradeoffs. Report changed paths, actual checks, and checks blocked by the environment.
 - Do not claim that a check passed unless you ran it and observed success.
 
+## Incidental issues and TODOs
+
+- When scanning or analyzing code reveals a pre-existing issue unrelated to the current task, record it temporarily in the root `TODO.md` (create the local, Git-ignored file if needed) instead of expanding the task to fix it. Defer the fix for later consideration unless explicitly requested.
+- Each entry must identify the affected code, describe expected versus actual behavior, and include reproducible steps or a concrete example. Include relevant commands, inputs, and environment details when needed; distinguish confirmed findings from suspected issues.
+- After fixing and validating an issue, remove its entry from `TODO.md` rather than keeping a completed checkbox or fix history. Keep regression coverage in the relevant tests.
+
 ## Documentation conventions
 
-- Do not add tests for documentation, including pages, examples, diagrams, navigation, or VitePress configuration/theme and documentation helpers. This includes unit, integration, snapshot, browser-automation, and standalone test scripts. Use existing lint/build commands (`npm run docs:check`) and manual preview/review as needed; test product behavior, not documentation.
+- Do not add tests for documentation, including pages, examples, diagrams, navigation, or VitePress configuration/theme and documentation helpers. This includes unit, integration, snapshot, browser-automation, and standalone test scripts. Use existing lint/build commands (`npm run docs`) and manual preview/review as needed; test product behavior, not documentation.
 - Keep content, headings, anchors, links, filenames, directories, and navigation consistent. When meaning or structure changes, update the affected names and all references together. English/Chinese counterparts should share semantic English anchors.
 - Keep headings short; move scope, qualifications, and detail into the accompanying description.
 - Prefer Mermaid for workflows, lifecycles, and other diagrams that clarify processes or relationships.
@@ -111,4 +117,5 @@ Edit `src/app/`, `src/vendor/`, `lib/default/template.html`, or build scripts in
 2. Add or update a focused regression test for product behavior changes. Do not add documentation tests.
 3. Run relevant unit tests for product changes; add type/runtime checks for API or packaging changes, and build/integration checks for report UI, vendor, or conversion changes. For documentation-only changes, use lint/build and manual preview/review instead.
 4. For AI skill changes, check relative links, exported skill resolution, and inclusion of the entire skill directory with `npm pack --dry-run`.
-5. Review `git diff --check` and the final diff. Include no unrelated generated files, secrets, or user changes.
+5. Record unrelated pre-existing findings in `TODO.md` with reproduction steps or examples, and remove entries for issues fixed and validated in this task.
+6. Review `git diff --check` and the final diff. Include no unrelated generated files, secrets, or user changes.

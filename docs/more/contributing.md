@@ -2,7 +2,7 @@
 
 ## Development environment and commands {#development}
 
-- Latest Node.js 24 LTS recommended for development; minimum package runtime is 22.15.0. Development tools may require a newer patch than the minimum runtime.
+- Latest Node.js 24 LTS recommended for development; see `package.json` engines for the minimum runtime. Development tools may require a newer patch.
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install
@@ -36,7 +36,7 @@ Keep migration guides versioned as `docs/migrations/migration-to-<major>.md` and
 ```sh
 npm ci
 npm run docs:dev
-npm run docs:check
+npm run docs
 npm run docs:preview
 ```
 
@@ -48,7 +48,7 @@ For intentionally nonstandard syntax demonstrations, keep `js` highlighting and 
 
 ```sh
 npm run lint:docs             # Check and automatically fix
-npm run lint:docs -- --no-fix # Check only (also used by docs:check)
+npm run lint:docs -- --no-fix # Check only (also used by docs)
 ```
 
 ## Generated output and reports {#generated-output}
@@ -59,4 +59,6 @@ All documentation output stays under `.temp/`: `.temp/site/` is the published si
 
 ## Cleanup and publishing {#cleanup-and-publishing}
 
-Documentation rebuilds preserve reports. For a completely fresh local site, clean only the dedicated `.temp/site/` output, then rebuild documentation and regenerate the required reports. Never clean or generate over `docs/`. CI builds documentation and reports separately, then downloads them into the same site directory for publishing.
+`npm run docs:build` (also used by `docs`) removes previous site output except `reports/` before building, so obsolete pages, legacy report redirects and hashed assets do not accumulate. Integration test groups (`test-node`, `test-browser`, `test-all`) remove marked legacy report redirect directories from the site root while preserving documentation and existing reports; each generated report cleans its own output directory. Reports and raw merge inputs under `reports/` are not globally cleared by either workflow.
+
+For a completely fresh local site, clean only the dedicated `.temp/site/` output, then rebuild documentation and regenerate the required reports. Never clean or generate over `docs/`. CI builds documentation and reports separately, then downloads them into the same site directory for publishing.

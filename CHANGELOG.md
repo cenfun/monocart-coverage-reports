@@ -1,5 +1,9 @@
 ## Changelog
 
+- 3.3.0
+  - run TypeScript directly with `mcr node` and `mcr test`, and report coverage against the original source. See [TypeScript support](docs/getting-started/typescript.md).
+  - **Node.js requirement:** all CLI commands and APIs now require Node.js 22.18.0 or later (previously 22.15.0). If you use Node.js 22.15–22.17, upgrade Node.js or stay on MCR 3.2.x.
+
 - 3.2.1
   - **Bug Fixes**
     - fix branch coverage counts in class field initializers, avoiding false coverage for uninstantiated classes and preserving initializer execution counts (#142)

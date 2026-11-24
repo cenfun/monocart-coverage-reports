@@ -1,6 +1,6 @@
 # CLI and configuration
 
-These recipes support MCR 3.x only (Node.js >= 22.15.0). Verify the installed major version and runtime before using them.
+These recipes support MCR 3.x only. Verify the installed major version and runtime before using them.
 
 ## Executable and argument boundaries
 

@@ -27,19 +27,6 @@ export default {
                     }
                 }
             }
-        }, {
-            test: /\.ts$/,
-            use: {
-                loader: 'swc-loader',
-                options: {
-                    jsc: {
-                        parser: {
-                            syntax: 'typescript'
-                        },
-                        target: 'es6'
-                    }
-                }
-            }
         }]
     }
 };

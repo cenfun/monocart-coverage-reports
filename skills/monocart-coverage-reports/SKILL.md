@@ -7,7 +7,7 @@ description: Collect, generate, merge, and debug JavaScript, TypeScript, and CSS
 
 ## Scope and environment — check first
 
-- This skill supports **MCR 3.x only**, with **Node.js >= 22.15.0** and the native ESM API. It does not provide workflows for other major versions. If the host uses another major version, stop applying these recipes and consult that version's documentation. Do not upgrade dependencies or the runtime without approval; for an approved upgrade, consult the package's `docs/migrations/migration-to-3.md`.
+- This skill supports **MCR 3.x only**, with the native ESM API. Check the installed package’s `engines.node` for the minimum Node.js version. It does not provide workflows for other major versions. If the host uses another major version, stop applying these recipes and consult that version's documentation. Do not upgrade dependencies or the runtime without approval; for an approved upgrade, consult the package's `docs/migrations/migration-to-3.md`.
 - Follow the user's language for replies and report labels. Reuse the host package manager, lockfile, test runner, build tools, and module conventions. MCR generates reports; it does not instrument Istanbul code automatically or require the entire host application to become ESM.
 - From the **host project root**, locate the installed package and skill:
 

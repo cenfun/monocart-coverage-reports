@@ -111,6 +111,8 @@ const coverageOptions = {
         });
         if (errors.length) {
             const errMsg = errors.join('\n');
+            // A strict threshold check can throw here to fail the run.
+            // This example only logs the failure and lets the run finish.
             console.log(EC.red(errMsg));
         }
 

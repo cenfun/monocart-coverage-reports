@@ -18,6 +18,20 @@
 
 可在 [`onEntry`](/zh/reference/hooks#onentry) 钩子中读取或修改条目。未测试文件的处理方式参见[未测试文件](/zh/reference/untested-files#untested-files)。
 
+## 行分类 {#line-classifications}
+
+V8 的 [`CoverageFile`](/zh/reference/types#coveragefile) 用 `data.extras` 记录不计入行覆盖率的源码行。键是从 1 开始的行号，值是分类标记，不是执行次数：
+
+| 标记 | 含义 |
+| :-- | :-- |
+| `b` | 空白行，包括只有空白字符的行。 |
+| `c` | 纯注释行。 |
+| `i` | 被[忽略指令](/zh/reference/ignoring-code#ignoring-code)排除的行。 |
+
+即使位于忽略区间内，空白行和纯注释行也分别标为 `b` 和 `c`。例如，只包含 `/* node:coverage enable */` 的一行标为 `c`。
+
+[`CoverageSnapshot`](/zh/reference/types#coveragesnapshot) 将同一份数据保存为逗号分隔的字符串：`{ "2": "b", "12": "c", "16": "i" }` 会变成 `"2b,12c,16i"`。没有分类条目时该字段为空字符串，Istanbul 快照也是如此。
+
 ## 原始 V8 数据格式 {#raw-v8-data}
 
 以下结构描述 V8/CDP 返回的原始 JavaScript 覆盖率数据；`integer` 和 `Runtime.ScriptId` 是协议中的类型记法。MCR 的 `V8CoverageEntry` 对这类条目添加源码和其他辅助字段。
@@ -85,7 +99,7 @@ export type V8CoverageData = ScriptCoverage[];
 
 | 运行时 | 引擎 | 调查使用率 | 原生 V8 采集（MCR） | MCR 说明 |
 | :-- | :-- | --: | :--: | :-- |
-| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率；MCR 要求 Node.js >= 22.15.0。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
+| Node.js | V8 | 90.32% | ✅ | 支持原生 V8 覆盖率。参见 [Node.js 采集](/zh/coverage-collection/v8#nodejs)。 |
 | Bun | JavaScriptCore | 20.83% | ❌ | 已部分实现 V8 兼容的覆盖率接口，但与 MCR 的兼容性仍未确认。进展参见 [issue #22128](https://github.com/oven-sh/bun/issues/22128)；[#30968](https://github.com/oven-sh/bun/issues/30968) 已作为重复 issue 关闭。 |
 | Deno | V8 | 11.17% | ❌ | 无法导出 MCR 所需的完整 raw V8 覆盖率数据，缺少匹配的转译后源码和 sourcemap。参见 [issue #23359](https://github.com/denoland/deno/issues/23359)。 |
 

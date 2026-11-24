@@ -5,7 +5,6 @@ const { ignore } = require('./ignore/ignore.js');
 
 const { branch } = require('./branch/branch.js');
 const { statement } = require('./statement.js');
-const typescript = require('./typescript.ts');
 
 const component = require('./component.js');
 
@@ -102,7 +101,6 @@ const onload = (something) => {
     console.log('on loaded');
 
     ignore();
-    typescript();
 
     branch();
     statement();

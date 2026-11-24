@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "noEmit": true,
+        "allowJs": true,
+        "strict": true,
+        "allowImportingTsExtensions": true,
+        "erasableSyntaxOnly": true,
+        "verbatimModuleSyntax": true,
+        "types": ["node"]
+    },
+    "include": ["./**/*", "../mcr.config.node-ts.ts", "../mcr.config.mcr-test-ts.ts"]
+}

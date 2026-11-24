@@ -1,5 +1,6 @@
 # Sourcemap 与调试 {#sourcemaps-and-debugging}
-> 当你觉得覆盖率存在问题的时候，`MCR`支持自行调试来核验覆盖率的准确性
+
+当报告中的行或分支与执行情况不符时，先确认覆盖率、生成代码、sourcemap 和原始源码来自同一轮构建，再开启调试。缺少文件或报告时，先看[常见问题](/zh/troubleshooting/common-issues#unexpected-coverage)。的准确性
 
 CSS 专项排障参见 [CSS 覆盖率问题](/zh/troubleshooting/css-coverage-issues)。
 
@@ -16,14 +17,15 @@ const coverageOptions = {
     ]
 };
 ```
-调试模式下，也就是`logging`为`debug`的时候, 原始的覆盖率数据将保留在`[outputDir]/.cache`缓存目录下，不会删除，如果使用了`raw`报告，那么位置变为`[outputDir]/raw`下，这样我们可以打开v8报告的html文件，通过下面新增的一些调试帮助信息来核对覆盖率
-![](/images/debug-coverage.png)
+调试模式会把原始覆盖率数据留在 `outputDir/.cache`。如果同时生成 [`raw` 报告](/zh/reference/reports#raw)，缓存会移到 raw 输出位置（默认为 `outputDir/raw`）。V8 报告也会保留生成文件视图，便于对照生成代码和源码上的覆盖率区间。
+
+![V8 报告中的生成代码与覆盖率区间](/images/debug-coverage.png)
 
 ## 检查 Sourcemap {#inspect-sourcemaps}
 
-调试 sourcemap 可以直接使用 [Source Map Visualization](https://evanw.github.io/source-map-visualization/)（esbuild 作者提供的 sourcemap 在线查看器）。
+选取一处异常区间，用 [Source Map Visualization](https://github.com/evanw/source-map-visualization) 对照生成代码的行列位置和对应的原始位置。如果源码显示正常但路径不对，请查看[源码路径改写](/zh/reference/source-path)。调试文件可能包含源码、路径和测试结果，分享前请[审查产物](/zh/reference/merging#raw-artifact-safety)。
 
-![](/images/debug-sourcemap.png)
+![生成位置与原始位置的 sourcemap 对照](/images/debug-sourcemap.png)
 
 ## 导出调试文件 {#export-debug-files}
 
@@ -41,5 +43,5 @@ const coverageOptions = {
 使用环境变量 `MCR_LOG_TIME` 显示耗时日志。
 
 ```js
-process.env.MCR_LOG_TIME = true;
+process.env.MCR_LOG_TIME = '1';
 ```

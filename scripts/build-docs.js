@@ -2,8 +2,14 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'vitepress';
+import { cleanSite } from './clean-site.js';
 
 const projectDir = fileURLToPath(new URL('../', import.meta.url));
+
+// Clear obsolete pages and hashed assets without touching report/merge inputs.
+await cleanSite({
+    documentation: true
+});
 
 // VitePress 1.x does not expose its SSR temp directory in the user config.
 // Keep that intermediate output outside the tracked documentation source too.

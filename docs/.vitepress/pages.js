@@ -1,15 +1,21 @@
-// Shared routes keep English and Chinese navigation aligned.
+// Shared reading order for both locales, including the previous/next links.
 export const pages = [
-    [
-        'migrations/migration-to-3',
-        'Migrating to 3.x',
-        '迁移到 3.x',
-        'migrations'
-    ],
     [
         'getting-started/get-started',
         'Get started',
         '开始使用',
+        'start'
+    ],
+    [
+        'getting-started/node-test-runner',
+        'Run tests with mcr test',
+        '使用 mcr test 运行测试',
+        'start'
+    ],
+    [
+        'getting-started/typescript',
+        'TypeScript support',
+        'TypeScript 支持',
         'start'
     ],
     [
@@ -19,21 +25,39 @@ export const pages = [
         'start'
     ],
     [
+        'getting-started/examples',
+        'Examples',
+        '示例',
+        'start'
+    ],
+    [
         'getting-started/ai-agent-skill',
         'AI Agent Skill',
         'AI Agent Skill',
         'start'
     ],
     [
-        'reference/options',
-        'Configuration options',
-        '配置选项',
-        'reference'
+        'coverage-collection/v8',
+        'V8 collection',
+        '采集 V8 覆盖率',
+        'collection'
     ],
     [
-        'reference/types',
-        'Type declarations',
-        '类型声明',
+        'coverage-collection/istanbul',
+        'Istanbul collection',
+        '采集 Istanbul 覆盖率',
+        'collection'
+    ],
+    [
+        'coverage-collection/compare-reports',
+        'V8 vs Istanbul',
+        'V8 与 Istanbul 对比',
+        'collection'
+    ],
+    [
+        'reference/cli',
+        'Command line',
+        '命令行',
         'reference'
     ],
     [
@@ -43,9 +67,9 @@ export const pages = [
         'reference'
     ],
     [
-        'reference/cli',
-        'Command line',
-        '命令行',
+        'reference/options',
+        'Configuration options',
+        '配置选项',
         'reference'
     ],
     [
@@ -61,6 +85,12 @@ export const pages = [
         'reference'
     ],
     [
+        'reference/source-path',
+        'Source paths',
+        '源码路径',
+        'reference'
+    ],
+    [
         'reference/untested-files',
         'Untested files',
         '未测试文件',
@@ -70,12 +100,6 @@ export const pages = [
         'reference/ignoring-code',
         'Ignoring code',
         '忽略代码',
-        'reference'
-    ],
-    [
-        'reference/source-path',
-        'Source paths',
-        '源码路径',
         'reference'
     ],
     [
@@ -109,28 +133,28 @@ export const pages = [
         'reference'
     ],
     [
-        'coverage-collection/v8',
-        'V8 collection',
-        '采集 V8 覆盖率',
-        'collection'
+        'reference/types',
+        'Type declarations',
+        '类型声明',
+        'reference'
     ],
     [
-        'coverage-collection/istanbul',
-        'Istanbul collection',
-        '采集 Istanbul 覆盖率',
-        'collection'
+        'integrations/integrate-with-your-framework',
+        'Integrate with your framework',
+        '接入现有测试框架',
+        'integrations'
     ],
     [
-        'coverage-collection/compare-reports',
-        'V8 vs Istanbul',
-        'V8 与 Istanbul 对比',
-        'collection'
+        'integrations/frameworks-and-tools',
+        'Frameworks and tools',
+        '框架与工具',
+        'integrations'
     ],
     [
-        'getting-started/node-test-runner',
-        'Run tests with mcr test',
-        '使用 mcr test 运行测试',
-        'start'
+        'integrations/coverage-services',
+        'Coverage services',
+        '覆盖率服务',
+        'integrations'
     ],
     [
         'troubleshooting/common-issues',
@@ -151,28 +175,10 @@ export const pages = [
         'troubleshooting'
     ],
     [
-        'integrations/frameworks-and-tools',
-        'Frameworks and tools',
-        '框架与工具',
-        'integrations'
-    ],
-    [
-        'integrations/coverage-services',
-        'Coverage services',
-        '覆盖率服务',
-        'integrations'
-    ],
-    [
-        'integrations/integrate-with-your-framework',
-        'Integrate with your framework',
-        '接入现有测试框架',
-        'integrations'
-    ],
-    [
-        'getting-started/examples',
-        'Examples',
-        '示例',
-        'start'
+        'migrations/migration-to-3',
+        'Migrating to 3.x',
+        '迁移到 3.x',
+        'migrations'
     ],
     [
         'more/contributing',

@@ -34,10 +34,6 @@ workflow:
     - text: CI 集成
       link: /zh/integrations/coverage-services
 features:
-  - title: AI Agent Skill
-    details: 为 AI 编程助手提供可复用的测试、覆盖率采集、Sourcemap 排障与 CI 阈值检查流程。随 npm 包发布，支持离线使用。
-    link: /zh/getting-started/ai-agent-skill
-    linkText: 为 Agent 配置 Skill
   - title: 原生 V8 覆盖率
     details: 无需插桩，从 Node.js 或 Chromium 采集覆盖率，提供原生字节级统计和可交互的报告。
     link: /zh/coverage-collection/v8
@@ -58,4 +54,8 @@ features:
     details: 在 CI 服务中跟踪覆盖率，通过 Hooks 检查阈值并保留失败状态，避免测试或报告错误被掩盖。
     link: /zh/reference/hooks
     linkText: 设置覆盖率阈值
+  - title: AI Agent Skill
+    details: 为 AI 编程助手提供可复用的测试、覆盖率采集、Sourcemap 排障与 CI 阈值检查流程。随 npm 包发布，支持离线使用。
+    link: /zh/getting-started/ai-agent-skill
+    linkText: 为 Agent 配置 Skill
 ---

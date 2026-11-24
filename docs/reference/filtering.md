@@ -1,31 +1,26 @@
 # Filtering {#filtering}
 
+V8 input can be filtered at three stages: collected entries, unpacked sources, and final report files. Use `entryFilter` and `sourceFilter` to avoid processing unwanted files; use `outputFilter` to match the paths shown in the report. See the [trade-offs](#filtering-approaches).
+
+## Filtering pipeline {#filtering-pipeline}
+
+```mermaid
+flowchart TD
+    accTitle: V8 coverage filtering pipeline
+    accDescr: Filter entry URLs, then sourcemap sources, and finally the resulting files by report path.
+    E["Entry URL: entryFilter"]
+    S["Resolve and rewrite source paths, then apply sourceFilter"]
+    P["Convert and merge coverage, include untested files"]
+    O["Final report path: outputFilter"]
+    R["V8 reports or converted Istanbul reports"]
+    E --> S --> P --> O --> R
+```
+
+The diagram omits raw data export; `outputFilter` does not affect [raw reports](/reference/reports#raw). See [source path rewrites](/reference/source-path) and [including untested files](/reference/untested-files).
+
 ## entryFilter + sourceFilter {#entryfilter-sourcefilter}
 
-Use `entryFilter` and `sourceFilter` to filter entry files and source files in V8 reports.
-
-The `entryFilter` callback receives an [`entry`](/reference/types#v8coverageentry) of type `V8CoverageEntry`; `sourceFilter` receives a source path string.
-
-When V8 coverage data collected, it actually contains the data of all entry files, for example:
-
-- *dist/main.js*
-- *dist/vendor.js*
-- *dist/something-else.js*
-
-We can use `entryFilter` to filter the entry files. For example, we should remove `vendor.js` and `something-else.js` if they are not in our coverage scope.
-
-- *dist/main.js*
-
-When inline or linked sourcemap exists to the entry file, the source files will be extracted from the sourcemap for the entry file, and the entry file will be removed if `logging` is not `debug`.
-
-- *src/index.js*
-- *src/components/app.js*
-- *node_modules/dependency/dist/dependency.js*
-
-We can use `sourceFilter` to filter the source files. For example, we should remove `dependency.js` if it is not in our coverage scope.
-
-- *src/index.js*
-- *src/components/app.js*
+`entryFilter` receives a [`V8CoverageEntry`](/reference/types#v8coverageentry). Keep the entry URLs you need, such as `dist/main.js`, and exclude separate entries such as `dist/vendor.js`. If dependencies and application code share a bundle, keep the bundle and use `sourceFilter` to select normalized paths (after any `sourcePath` rewrites) under `src/` instead of `node_modules/`. After successful mapping, the generated entry is normally hidden unless [debug logging](/troubleshooting/sourcemaps#enable-debugging) is enabled.
 
 For example:
 ```js
@@ -57,7 +52,7 @@ const coverageOptions = {
 ```
 As CLI args (JSON-like string. Added in: v2.8):
 ```sh
-mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}"
+npx mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}" -- node demo.js
 ```
 Note, those patterns will be transformed to a function, and the order of the patterns will impact the results:
 ```js

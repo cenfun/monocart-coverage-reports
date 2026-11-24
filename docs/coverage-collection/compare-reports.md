@@ -1,10 +1,12 @@
 # V8 vs Istanbul {#v8-vs-istanbul}
-> If the V8 data format is used for Istanbul reports, it will be automatically converted from V8 to Istanbul.
+For Node.js or Chromium, prefer [V8 collection](/coverage-collection/v8): it does not modify the code under test. To collect JavaScript coverage in Firefox or WebKit, use [Istanbul instrumentation](/coverage-collection/istanbul).
 
-| | Istanbul | V8 | V8 to Istanbul |
+**Collection and reporting are separate choices.** If your tooling requires an Istanbul report, MCR can convert V8 input without instrumenting the code again. See [both report formats generated from the same data](/getting-started/examples#v8-and-istanbul).
+
+| Feature | Istanbul → Istanbul report | V8 → V8 report | V8 → Istanbul report |
 | :--------------| :------ | :------ | :----------------------  |
 | Coverage data | [Istanbul](https://github.com/gotwarlost/istanbul/blob/master/coverage.json.md) (Object) | [V8](/reference/coverage-data#v8-coverage-data) (Array) | [V8](/reference/coverage-data#v8-coverage-data) (Array) |
-| Output | [Istanbul reports](/reference/reports#reports) | [V8 reports](/reference/reports#reports)  | [Istanbul reports](/reference/reports#reports) |
+| Output | [Istanbul reports](/reference/reports#istanbul-reports) | [V8 reports](/reference/reports#v8-reports) | [Istanbul reports](/reference/reports#istanbul-reports) |
 | - Bytes | ❌ | ✅ | ❌ |
 | - Statements | ✅ | ✅ | ✅ |
 | - Branches | ✅ | ✅ | ✅ |
@@ -12,7 +14,8 @@
 | - Lines | ✅ | ✅ | ✅ |
 | - Execution counts | ✅ | ✅ | ✅ |
 | CSS coverage | ❌ | ✅ | ✅ |
-| Minified code | ❌ | ✅ | ❌ |
+
+For minified output, prefer V8's native coverage ranges. Mapping back to original sources still requires a matching, sufficiently precise sourcemap. If results look wrong, [compare against an unminified build](/troubleshooting/common-issues#unexpected-coverage).
 
 ## Choosing a collection method {#choosing-a-collection-method}
 

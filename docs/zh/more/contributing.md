@@ -2,7 +2,7 @@
 
 ## 开发环境与命令 {#development}
 
-- 推荐使用最新 Node.js 24 LTS 开发；包的最低运行版本为 22.15.0。开发工具可能要求高于最低运行版本的补丁版本。
+- 推荐使用最新 Node.js 24 LTS 开发；最低运行版本见 `package.json` 的 engines。开发工具可能要求更新的补丁版本。
 - VSCode (extensions: eslint/stylelint/vue)
 ```sh
 npm install
@@ -36,7 +36,7 @@ npm run dev
 ```sh
 npm ci
 npm run docs:dev
-npm run docs:check
+npm run docs
 npm run docs:preview
 ```
 
@@ -48,7 +48,7 @@ npm run docs:preview
 
 ```sh
 npm run lint:docs             # 检查并自动修复
-npm run lint:docs -- --no-fix # 仅检查（docs:check 也使用此模式）
+npm run lint:docs -- --no-fix # 仅检查（docs 也使用此模式）
 ```
 
 ## 生成产物与报告 {#generated-output}
@@ -59,4 +59,6 @@ npm run lint:docs -- --no-fix # 仅检查（docs:check 也使用此模式）
 
 ## 清理与发布 {#cleanup-and-publishing}
 
-文档重建保留已有报告。本地需要彻底清理时，只清理专用的 `.temp/site/` 输出目录，然后重新构建文档和运行所需的报告测试。不要清理或生成覆盖 `docs/`。CI 分别构建文档与测试报告，最终合并到同一站点目录发布。
+`npm run docs:build`（`docs` 也会调用）在构建前清理 `reports/` 以外的旧站点产物，避免已删除的页面、旧报告跳转页和带哈希的资源文件不断累积。集成测试组（`test-node`、`test-browser`、`test-all`）清理站点根目录中带标记的旧报告跳转目录，保留文档与已有报告；每份新报告生成时清理自己的输出目录。两种流程都不会整体清空 `reports/` 中的报告或 raw 合并输入。
+
+本地需要彻底清理时，只清理专用的 `.temp/site/` 输出目录，然后重新构建文档和运行所需的报告测试。不要清理或生成覆盖 `docs/`。CI 分别构建文档与测试报告，最终合并到同一站点目录发布。

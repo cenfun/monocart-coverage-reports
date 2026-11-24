@@ -1,6 +1,6 @@
 # Run tests with mcr test {#run-tests-with-mcr-test}
 
-**New in MCR 3.x:** Run tests with the built-in [Node.js test runner](https://nodejs.org/docs/latest/api/test.html) and automatically generate coverage reports with one command. Requires **Node.js >= 22.15.0**.
+**New in MCR 3.x:** Run tests with the built-in [Node.js test runner](https://nodejs.org/docs/latest/api/test.html) and automatically generate coverage reports with one command.
 
 ## Quick start {#quick-start}
 
@@ -69,7 +69,7 @@ To inspect or modify structured test results after the test runner exits, config
 - Node handles discovery, matching, interpretation and errors.
 - Relative paths use the current working directory, not the config file directory.
 - A bare directory is not promised to trigger recursive discovery; use a glob such as `"../tests/**/*.test.js"` for recursive matching, following the installed Node version's native behavior.
-- TypeScript execution depends on your Node version or a loader such as `--import tsx`.
+- Native TypeScript tests can run without a loader: `mcr test "./test/**/*.test.ts"`. Reports display original TS through a generated sourcemap; see [TypeScript support](/getting-started/typescript#run-ts-tests) for supported syntax and limitations.
 
 ## Reports and exit status {#reports-and-exit-status}
 
@@ -90,3 +90,19 @@ For new Node.js projects, `mcr test` offers a lightweight, forward-looking testi
 It is based on the built-in [Node.js `node:test` runner](https://nodejs.org/docs/latest/api/test.html), so no separate test runner installation is needed; MCR still needs to be installed as shown in [Quick start](#quick-start). Assertions can also use the built-in [`node:assert/strict`](https://nodejs.org/docs/latest/api/assert.html#strict-assertion-mode) module.
 
 For conventional Node.js unit and integration tests, this setup can replace the testing roles served by tools such as [Mocha](/integrations/frameworks-and-tools#mocha), [AVA](/integrations/frameworks-and-tools#ava) and [Tape](https://github.com/tape-testing/tape). It is not a drop-in compatibility layer: migrating requires adapting test APIs, assertions and lifecycle hooks, and evaluating plugin, snapshot and other feature requirements.
+
+## How it works {#how-it-works}
+
+```mermaid
+flowchart TD
+    accTitle: mcr test workflow
+    accDescr: MCR starts the Node.js test runner. After it exits, MCR handles test results, invokes the optional onTestEnd hook, and generates reports from V8 coverage files.
+    MCR["mcr test"] -->|"Sets NODE_V8_COVERAGE"| Runner["node --test"]
+    Runner --> Results["Test results"]
+    Runner --> Raw["V8 JSON"]
+    Results --> Hook["Finalize results<br/>onTestEnd (optional)"]
+    Hook --> Reports["Coverage reports"]
+    Raw --> Reports
+```
+
+MCR's test reporter collects test events while Node.js writes V8 coverage to the `NODE_V8_COVERAGE` directory. After the runner exits, MCR finalizes the test results and calls [`onTestEnd`](#ontestend) if configured, then reads the V8 files to generate reports. The hook receives test results, not coverage. If tests fail, MCR still attempts to generate coverage and preserves the non-zero exit status.

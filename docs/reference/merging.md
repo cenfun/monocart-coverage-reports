@@ -2,10 +2,19 @@
 
 ## When to merge reports {#use-cases}
 
-The following usage scenarios may require merging coverage reports:
-- When the code is executed in different environments, like Node.js `server side` and browser `client side` (`Next.js` for instance). Each environment may generate its own coverage report. Merging them can give a more comprehensive view of the test coverage.
-- When the code is subjected to different kinds of testing. For example, `unit tests` with `Jest` might cover certain parts of the code, while `end-to-end tests` with `Playwright` might cover other parts. Merging these different coverage reports can provide a holistic view of what code has been tested.
-- When tests are run on different machines or containers, each might produce its own coverage report. Merging these can give a complete picture of the test coverage across all machines or shards.
+Merge coverage when no single run or environment captures everything you want to see in one report:
+
+- **Server and browser:** A Next.js app can produce separate coverage data for code that runs on the Node.js server and code that runs in the browser. Merge them to see what the tests covered on both sides. See the [Next.js and Playwright example](#merge-during-generation).
+- **Unit and end-to-end tests:** Jest unit tests and Playwright end-to-end tests may exercise different parts of the same application. Merge their coverage to see what the two suites cover together. See the [manual merge example](#manual-merging).
+- **CI shards:** Each shard runs only part of the test suite. Merge coverage from all shards to see what the full suite covered.
+
+Choose the merge method based on how the data was collected:
+
+- **One report instance or a shared cache:** Call [`generate()` once](#merge-during-generation) after all collection finishes.
+- **Independent runs or separate machines:** [Export `raw` reports and import them together](#manual-merging).
+- **Only need a summary in your coverage service:** [Upload reports separately](#coverage-services) if the service can merge them.
+
+For local merges with MCR, use one input format (V8 or Istanbul) across runs. For path normalization and the `sourcePath` option, see [Source paths](/reference/source-path).
 
 ## Automatic merging {#automatic-merging}
 
@@ -20,7 +29,7 @@ Codecov supports automatic merging on its service. Configure the `codecov` repor
 
 ## Manual merging {#manual-merging}
 
-To combine coverage from separate test runs or machines, export a `raw` report from each run. After collecting all raw directories, pass them through `inputDir` to generate one merged report.
+To combine coverage from separate test runs or machines, export a `raw` report from each run. After collecting all raw directories, pass them through `inputDir` to generate one merged report. The example below assumes both test runs collect V8 coverage.
 
 ### Review raw artifacts before sharing {#raw-artifact-safety}
 
@@ -51,7 +60,7 @@ const coverageOptions = {
 
 ### Export end-to-end coverage {#e2e-coverage}
 
-Export end-to-end coverage to `./coverage-reports/e2e/raw`. Examples:
+Reuse the [`raw` report configuration above](#unit-test-coverage) for the Playwright run, but set the top-level `outputDir` to `./coverage-reports/e2e` and keep the `raw` report's `outputDir` as `raw`. This exports coverage to `./coverage-reports/e2e/raw`. Examples:
 
 - `Playwright` + [monocart-reporter](https://github.com/cenfun/monocart-reporter) with the coverage API
 - `Playwright` + `MCR`: [playwright-coverage](https://github.com/cenfun/playwright-coverage)
@@ -59,60 +68,27 @@ Export end-to-end coverage to `./coverage-reports/e2e/raw`. Examples:
 
 ### Create the merge script {#merge-script}
 
-Create `merge-coverage.js` and use `inputDir` to load the raw coverage directories. Check the result of `generate()` so missing coverage cannot silently pass in CI.
+Create `merge-coverage.js` and list both raw coverage directories in `inputDir`.
 
 ```js
 // merge-coverage.js
-import fs from 'fs';
 import { CoverageReport } from 'monocart-coverage-reports';
-const inputDir = [
-    './coverage-reports/unit/raw',
-    './coverage-reports/e2e/raw'
-];
-const coverageOptions = {
-    name: 'My Merged Coverage Report',
-    inputDir,
-    outputDir: './coverage-reports/merged',
 
-    // filter for both unit and e2e
-    entryFilter: {
-        '**/node_modules/**': false,
-        '**/*': true
-    },
-    sourceFilter: {
-        '**/node_modules/**': false,
-        '**/src/**': true
-    },
-
-    sourcePath: (filePath, info) => {
-        // Unify the file path for the same files
-        // For example, the file index.js has different paths:
-        // unit: unit-dist/src/index.js
-        // e2e: e2e-dist/src/index.js
-        // return filePath.replace("unit-dist/", "").replace("e2e-dist/", "")
-        return filePath;
-    },
-
-    reports: [
-        ['v8'],
-        ['console-details']
+const coverageResults = await new CoverageReport({
+    inputDir: [
+        './coverage-reports/unit/raw',
+        './coverage-reports/e2e/raw'
     ],
+    outputDir: './coverage-reports/merged',
+    reports: ['v8', 'console-details']
+}).generate();
 
-    onEnd: () => {
-        // remove the raw files if no longer needed
-        // inputDir.forEach((p) => {
-        //     fs.rmSync(p, {
-        //         recursive: true,
-        //         force: true
-        //     });
-        // });
-    }
-};
-const coverageResults = await new CoverageReport(coverageOptions).generate();
 if (!coverageResults) {
     throw new Error('No coverage report was generated');
 }
 ```
+
+In CI, make sure both runs produced raw coverage before merging. MCR skips missing input directories, so a report can be generated even if one run is missing.
 
 ### Run the merge after all tests {#run-merge}
 

@@ -1,5 +1,5 @@
 # Multiple processes {#multiple-processes}
-> The data will be added to `[outputDir]/.cache`, After the generation of the report, this data will be removed unless debugging has been enabled or a raw report has been used, see [Sourcemaps and debugging](/troubleshooting/sourcemaps#sourcemaps-and-debugging)
+Use this workflow for processes that can share one `outputDir/.cache`. For CI shards, containers, or machines without a shared cache, [export and merge raw reports](/reference/merging#manual-merging) instead. Successful generation removes the cache unless debug logging is enabled; exporting a `raw` report moves the cache to the raw output location.
 
 ## Workflow {#workflow}
 
@@ -38,7 +38,7 @@ mcr.cleanCache();
 
 ## Step 2: Collect coverage in parallel {#collect-in-subprocesses}
 
-Subprocesses can run concurrently; the two examples below have no required order. Use the same `outputDir` to share the cache, and do not clear it or generate reports while collection is still running.
+Subprocesses can run concurrently. Use the same `outputDir` (an absolute path if working directories differ) and leave [`cleanCache: false`](/reference/options#cleancache). Do not clear the cache or generate reports while collection is running.
 
 ### Subprocess 1 {#subprocess-1}
 

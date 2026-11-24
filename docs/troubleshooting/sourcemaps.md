@@ -1,5 +1,6 @@
 # Sourcemaps and debugging {#sourcemaps-and-debugging}
-> Sometimes, the coverage is not what we expect. The next step is to figure out why, and we can easily find out the answer step by step through debugging.
+
+If covered lines or branches do not match what ran, check that the coverage data, generated code, sourcemap, and original source come from the same build before enabling debug logging. For missing files or reports, start with [common issues](/troubleshooting/common-issues#unexpected-coverage).
 
 For CSS-specific troubleshooting, see [CSS coverage issues](/troubleshooting/css-coverage-issues).
 
@@ -16,14 +17,15 @@ const coverageOptions = {
     ]
 };
 ```
-When `logging` is `debug`, the raw report data is preserved in `[outputDir]/.cache` (or `[outputDir]/raw` if the `raw` report is used). The dist file is also kept in the V8 list, so you can open the browser's devtools and visually verify the coverage data.
-![](/images/debug-coverage.png)
+Debug mode keeps raw coverage in `outputDir/.cache`. If you also generate a [`raw` report](/reference/reports#raw), the cache moves to the raw output location (`outputDir/raw` by default). The V8 report also keeps the generated file so you can compare coverage ranges in the generated and original code.
+
+![Generated code and coverage ranges in the V8 report](/images/debug-coverage.png)
 
 ## Inspect sourcemaps {#inspect-sourcemaps}
 
-Check sourcemaps with [Source Map Visualization](https://evanw.github.io/source-map-visualization/).
+Pick an unexpected range and use [Source Map Visualization](https://github.com/evanw/source-map-visualization) to compare the generated line and column with the mapped original position. If the source content is correct but the path looks wrong, see [source path rewrites](/reference/source-path). Debug files can contain source code, paths, and test results; [review them before sharing](/reference/merging#raw-artifact-safety).
 
-![](/images/debug-sourcemap.png)
+![Sourcemap visualization comparing generated and original positions](/images/debug-sourcemap.png)
 
 ## Export debug files {#export-debug-files}
 
@@ -41,5 +43,5 @@ const coverageOptions = {
 Show timing logs with the environment variable `MCR_LOG_TIME`.
 
 ```js
-process.env.MCR_LOG_TIME = true;
+process.env.MCR_LOG_TIME = '1';
 ```
