@@ -8,6 +8,10 @@ outline: [2, 4]
 本页介绍的原生 TypeScript 执行能力仅适用于 Node.js。浏览器应用仍需先将 TS 编译为 JavaScript，采集实际执行的 JS 覆盖率，再通过 sourcemap 还原原始源码。
 :::
 
+::: tip MCR 3.3 新功能
+原生 TypeScript 覆盖率支持需要 MCR 3.3 或更高版本。
+:::
+
 MCR 支持 Node.js 通过默认的**类型擦除**直接执行 TypeScript。对于可擦除的 TS 语法，不需要构建步骤、外部 loader 或额外的 TS 解析器：
 
 ```sh

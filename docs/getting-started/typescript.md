@@ -8,6 +8,10 @@ outline: [2, 4]
 The native TypeScript execution described here applies only to Node.js. Browser applications still need to compile TS to JavaScript, collect coverage from the executed JS, and use sourcemaps to recover the original sources.
 :::
 
+::: tip New in MCR 3.3
+Native TypeScript coverage requires MCR 3.3 or later.
+:::
+
 MCR supports TypeScript executed directly by Node.js using its default **type stripping**. For erasable TS syntax, no build step, external loader or additional TS parser is required:
 
 ```sh
