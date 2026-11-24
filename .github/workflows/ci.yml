@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Build documentation, test the project, publish coverage, and deploy GitHub Pages.
 name: CI
 
 on:
@@ -12,11 +12,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
 
@@ -79,24 +76,31 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
 
-  deploy:
+  coverage-summary:
+    name: Coverage summary
     if: github.ref == 'refs/heads/main'
-    needs: [test, documentation]
-    
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-22
+          path: ./.temp/site/reports
 
+      - name: Write coverage summary
+        run: |
+          cat .temp/site/reports/mcr/coverage-summary.md >> "$GITHUB_STEP_SUMMARY"
+          cat .temp/site/reports/mcr/coverage-details.md >> "$GITHUB_STEP_SUMMARY"
+
+  codecov:
+    name: Codecov
+    if: github.ref == 'refs/heads/main'
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Download documentation
-        uses: actions/download-artifact@v4
-        with:
-          name: documentation
-          path: ./.temp/site
 
       - name: Download reports
         uses: actions/download-artifact@v4
@@ -104,14 +108,35 @@ jobs:
           name: artifact-22
           path: ./.temp/site/reports
 
-      - name: Generate list using Markdown
-        run: |
-          cat .temp/site/reports/mcr/coverage-summary.md >> $GITHUB_STEP_SUMMARY
-          cat .temp/site/reports/mcr/coverage-details.md >> $GITHUB_STEP_SUMMARY
-        
-      - name: Analyze with SonarCloud
-        uses: SonarSource/sonarqube-scan-action@master
-        env: 
+      - name: Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          disable_search: true
+          fail_ci_if_error: true
+          files: ${{ github.workspace }}/.temp/site/reports/mcr/codecov.json
+
+  sonarcloud:
+    name: SonarQube Cloud
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-22
+          path: ./.temp/site/reports
+
+      - name: Analyze with SonarQube Cloud
+        uses: SonarSource/sonarqube-scan-action@v8
+        env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: ./
@@ -125,24 +150,72 @@ jobs:
             -Dsonar.exclusions=test/**,dist/**,docs/**,.temp/**,node_modules/**,lib/packages/**,scripts/og-image/**,scripts/test-runtime.js
             -Dsonar.test.exclusions=test/**
 
+  coveralls:
+    name: Coveralls
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-22
+          path: ./.temp/site/reports
+
       - name: Coveralls
         uses: coverallsapp/github-action@v2
         with:
-          files: ./.temp/site/reports/mcr/lcov.info
-      
+          file: ./.temp/site/reports/mcr/lcov.info
+          format: lcov
+
+  codacy:
+    name: Codacy
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-22
+          path: ./.temp/site/reports
+
       - name: Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: ./.temp/site/reports/mcr/lcov.info
       
-      - name: Codecov
-        uses: codecov/codecov-action@v4
+  deploy:
+    name: GitHub Pages
+    if: github.ref == 'refs/heads/main'
+    needs: [test, documentation]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download documentation
+        uses: actions/download-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-          disable_search: true
-          files: ${{ github.workspace }}/.temp/site/reports/mcr/codecov.json
+          name: documentation
+          path: ./.temp/site
+
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-22
+          path: ./.temp/site/reports
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -151,7 +224,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './.temp/site'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

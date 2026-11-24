@@ -14,13 +14,13 @@ Before collecting Istanbul coverage, instrument your source code with Istanbul c
 
 Run your tests against the instrumented code, then retrieve the coverage data using one of the following approaches.
 
-### 1. Browser {#browser}
-
-Read coverage data from `window.__coverage__`; see [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js).
-
-### 2. Node.js {#nodejs}
+### 1. Node.js {#nodejs}
 
 Read coverage data from `global.__coverage__`.
+
+### 2. Browser {#browser}
+
+Read coverage data from `window.__coverage__`; see [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js).
 
 ### 3. General-purpose CDP {#cdp}
 

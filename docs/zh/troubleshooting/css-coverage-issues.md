@@ -17,4 +17,4 @@ CSS 压缩可能产生不准确的 sourcemap，导致报告回退到生成的 CS
 
 ## V8 会将整个 block 视为已覆盖 {#v8-covered-the-whole-block}
 
-Chromium 可能将整个 media query 或嵌套 CSS block 标记为已覆盖。可考虑使用 [postcss-atomic-selectors](https://www.npmjs.com/package/postcss-atomic-selectors) 作为临时解决方案。
+Chromium 可能将整个 media query 或嵌套 CSS block 标记为已覆盖。可考虑使用 [postcss-atomic-selectors](https://github.com/stephan-dum/postcss-atomic-selectors) 作为临时解决方案。

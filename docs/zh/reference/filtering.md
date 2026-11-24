@@ -1,31 +1,26 @@
 # 过滤覆盖率 {#filtering}
 
+V8 输入可以在采集入口、解包后的源码或最终报告文件三个阶段过滤。先选对阶段：想减少处理成本，优先使用 `entryFilter` 和 `sourceFilter`；只想按报告里显示的路径筛选，使用 `outputFilter`。参见[方案对比](#filtering-approaches)。
+
+## 过滤流程 {#filtering-pipeline}
+
+```mermaid
+flowchart TD
+    accTitle: V8 覆盖率过滤流程
+    accDescr: 先按入口 URL 过滤，再筛选 sourcemap 源码，最后按报告路径过滤处理后的文件。
+    E["入口 URL：entryFilter"]
+    S["解析并改写源码路径，再应用 sourceFilter"]
+    P["转换并合并覆盖率、纳入未测试文件"]
+    O["最终报告路径：outputFilter"]
+    R["V8 报告或转换后的 Istanbul 报告"]
+    E --> S --> P --> O --> R
+```
+
+图中省略了原始数据导出；`outputFilter` 不影响 [raw 报告](/zh/reference/reports#raw)。另见[源码路径改写](/zh/reference/source-path)和[纳入未测试文件](/zh/reference/untested-files)。
+
 ## entryFilter + sourceFilter {#entryfilter-sourcefilter}
 
-使用 `entryFilter` 和 `sourceFilter` 过滤 V8 报告中的入口文件与源文件。
-
-`entryFilter` 回调的参数 [`entry`](/zh/reference/types#v8coverageentry) 类型为 `V8CoverageEntry`；`sourceFilter` 接收源码路径字符串。
-
-当收集到V8的覆盖数据时，它实际上包含了所有的入口文件的覆盖率数据, 比如有以下3个文件:
-
-- *dist/main.js*
-- *dist/vendor.js*
-- *dist/something-else.js*
-
-这个时候可以使用`entryFilter`来过滤这些入口文件. 比如我们不需要看到`vendor.js`和`something-else.js`的覆盖率，就可以过滤掉，只剩下1个文件
-
-- *dist/main.js*
-
-如果一个入口文件存在行内或者链接的sourcemap文件，那么我们会尝试读取并解析sourcemap，以获取入口文件包含的所有源文件，并添加到列表。此时如果`logging`没有设置成`debug`，那么这个入口文件在成功解出源文件后会被移除
-
-- *src/index.js*
-- *src/components/app.js*
-- *node_modules/dependency/dist/dependency.js*
-
-这个时候可以使用`sourceFilter`来过滤这些源文件。比如我们不需要看到源文件`dependency.js`的覆盖率，就可以过滤掉，最后只剩下如下文件
-
-- *src/index.js*
-- *src/components/app.js*
+`entryFilter` 接收 [`V8CoverageEntry`](/zh/reference/types#v8coverageentry)，通常按 URL 保留需要处理的入口，例如 `dist/main.js`，并排除独立的 `dist/vendor.js`。如果依赖和业务代码打在同一个 bundle 中，不要丢掉整个入口；保留 bundle，再用 `sourceFilter` 按标准化并经 `sourcePath` 改写后的路径保留 `src/`，排除 `node_modules/`。成功映射回源码后，生成的入口通常不显示，除非启用了[调试模式](/zh/troubleshooting/sourcemaps#enable-debugging)。
 
 过滤可以使用函数:
 ```js
@@ -57,7 +52,7 @@ const coverageOptions = {
 ```
 作为CLI参数（JSON字符串，Added in: v2.8）:
 ```sh
-mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}"
+npx mcr --sourceFilter "{'**/node_modules/**':false,'**/**':true}" -- node demo.js
 ```
 注意，这些匹配实际上会转换成一个过滤函数（如下），所以如果一个匹配成功则会直接返回，后面的将不再继续匹配。请注意先后顺序，如果存在包含关系的，可以调整上下顺序，最后如果都未匹配，则默认返回false
 ```js

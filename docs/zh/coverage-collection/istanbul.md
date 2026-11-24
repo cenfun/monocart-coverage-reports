@@ -14,13 +14,13 @@
 
 使用插桩后的代码运行测试，再通过以下方式之一读取覆盖率数据。
 
-### 1. 浏览器 {#browser}
-
-从全局的 `window.__coverage__` 读取覆盖率数据，参见 [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)。
-
-### 2. Node.js {#nodejs}
+### 1. Node.js {#nodejs}
 
 从全局的 `global.__coverage__` 读取覆盖率数据。
+
+### 2. 浏览器 {#browser}
+
+从全局的 `window.__coverage__` 读取覆盖率数据，参见 [test-istanbul.js](https://github.com/cenfun/monocart-coverage-reports/blob/main/test/test-istanbul.js)。
 
 ### 3. 通用 CDP 方案 {#cdp}
 

@@ -46,7 +46,9 @@ async function main() {
         outputDir: './coverage-reports'
     });
     await report.addFromDir('./coverage-data');
-    await report.generate();
+    if (!await report.generate()) {
+        throw new Error('No coverage report was generated');
+    }
 }
 
 main().catch((error) => {

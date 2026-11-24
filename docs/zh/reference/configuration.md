@@ -49,19 +49,16 @@ MCR 3.x 中，显式指定的配置不存在，或找到的配置加载失败（
 
 ## 加载优先级 {#loading-priority}
 
-根据以下优先级加载配置文件
-- 自定义配置文件（如果没有指定则加载后面的默认配置文件）:
-    - CLI: `mcr --config <my-config-file-path>`
-    - API: `await mcr.loadConfig("my-config-file-path")`
-- `mcr.config.js`
-- `mcr.config.cjs`
-- `mcr.config.mjs`
-- `mcr.config.json` - json format
-- `mcr.config.ts` - 可擦除语法可原生加载，参见 [TypeScript 支持](/zh/getting-started/typescript#configure-coverage)。
+可通过 `--config ./mcr.config.mjs` 或 `await mcr.loadConfig('./mcr.config.mjs')` 指定文件。未指定时，MCR 从当前工作目录逐级向上查找，使用**最近的、包含配置文件的目录**。同一目录下按以下顺序选取第一个存在的文件：
 
-需要外部运行时处理的配置语法仍可使用 `tsx` 等 loader：
+1. `mcr.config.js`
+2. `mcr.config.cjs`
+3. `mcr.config.mjs`
+4. `mcr.config.json`
+5. `mcr.config.ts`（可擦除语法可[原生加载](/zh/getting-started/typescript#configure-coverage)）
+
+如果配置包含 Node.js 无法原生运行的 TypeScript 语法，可通过 CLI 预加载 `tsx` 等 loader：
+
 ```sh
-mcr --import tsx -c mcr.config.ts node ./test.js
+npx mcr --import tsx -c mcr.config.ts -- node ./test.js
 ```
-
-> 未指定自定义路径时，MCR 会从当前工作目录向上查找默认配置文件（通过 [`find-up`](https://github.com/sindresorhus/find-up)）。不在搜索路径内的文件会被忽略

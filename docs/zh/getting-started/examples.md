@@ -1,5 +1,5 @@
 ---
-description: 浏览浏览器、Node.js、CSS 和打包源码的原生 V8 与 Istanbul 覆盖率报告。
+description: 查看浏览器、Node.js、CSS 和打包代码的 V8 与 Istanbul 覆盖率报告。
 ---
 
 <script setup>
@@ -10,7 +10,9 @@ import { withBase } from 'vitepress';
 
 以下报告由本仓库的测试套件生成。打开报告即可体验文件树、覆盖率指标与源码详情。
 
-## V8 与 Istanbul
+<span id="v8-与-istanbul"></span>
+
+## V8 与 Istanbul {#v8-and-istanbul}
 
 | 报告 | 说明 |
 | --- | --- |
@@ -19,7 +21,9 @@ import { withBase } from 'vitepress';
 | <a :href="withBase('/reports/v8-and-istanbul/v8/index.html')" target="_blank" rel="noopener noreferrer">V8 + Istanbul：V8 报告</a> | 同一份覆盖率数据的原生 V8 视图。 |
 | <a :href="withBase('/reports/v8-and-istanbul/istanbul/index.html')" target="_blank" rel="noopener noreferrer">V8 + Istanbul：Istanbul 报告</a> | 将同一份 V8 数据转换为 Istanbul HTML 报告。 |
 
-## 浏览器与 CSS
+<span id="浏览器与-css"></span>
+
+## 浏览器与 CSS {#browser-and-css}
 
 | 报告 | 说明 |
 | --- | --- |
@@ -42,7 +46,9 @@ import { withBase } from 'vitepress';
 | <a :href="withBase('/reports/node-ts/index.html')" target="_blank" rel="noopener noreferrer">原生 TypeScript</a> | `npm run test-node-ts`：使用 Node 执行 TS，报告展示原始 TS；参见 [TypeScript 支持](/zh/getting-started/typescript#repository-examples)。 |
 | <a :href="withBase('/reports/mcr-test-ts/index.html')" target="_blank" rel="noopener noreferrer">TypeScript 测试</a> | `npm run test-mcr-test-ts`：使用 `mcr test` 运行原生 TS 测试。 |
 
-## 打包工具与源码映射
+<span id="打包工具与源码映射"></span>
+
+## 打包工具与源码映射 {#bundlers-and-source-maps}
 
 | 报告 | 说明 |
 | --- | --- |
@@ -52,7 +58,9 @@ import { withBase } from 'vitepress';
 | <a :href="withBase('/reports/minify/index.html')" target="_blank" rel="noopener noreferrer">压缩 JavaScript</a> | 将压缩后的 JavaScript 覆盖率映射回原始源码。 |
 | <a :href="withBase('/reports/sections/index.html')" target="_blank" rel="noopener noreferrer">分段源码映射</a> | 包含 sections 的索引式 source map 覆盖率。 |
 
-## CLI、合并与项目覆盖率
+<span id="cli、合并与项目覆盖率"></span>
+
+## CLI、合并与项目覆盖率 {#cli-merging-and-project-coverage}
 
 | 报告 | 说明 |
 | --- | --- |

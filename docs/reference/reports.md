@@ -2,6 +2,10 @@
 outline: [2, 4]
 ---
 
+<script setup>
+import { withBase } from 'vitepress';
+</script>
+
 # Reports {#reports}
 
 Use the report names below in the [API `reports` option](/getting-started/get-started#api) or a [config file](/reference/configuration#minimal-config); the CLI option is [`-r, --reports`](/reference/options#configuration-options). Supported input formats are listed by category below; for service-specific choices, see [Coverage services](/integrations/coverage-services).
@@ -16,20 +20,13 @@ Supports V8 coverage data only.
 
 #### `v8` <span role="img" aria-label="Recommended" title="Recommended">⭐</span> {#v8}
 
-- Features:
-    - A Brand-New V8 Coverage Report User Interface
-    - Support for Native Byte Statistics
-    - Support processing big data with high performance
-    - Coverage for Any Runtime Code
-    - CSS Coverage Support
-    - Better Support for Sourcemap Conversion
-- Demos: [V8](https://cenfun.github.io/monocart-coverage-reports/reports/v8) and [more](/getting-started/examples)
+Generate an interactive HTML report with JavaScript and CSS coverage and native byte metrics. When matching source maps are available, the report maps coverage from generated code back to the original sources. See the [V8 report examples](/getting-started/examples#v8-and-istanbul).
 
-![](/images/v8.gif)
+![File tree and source coverage in the V8 report](/images/v8.gif)
 
 #### `v8-json` {#v8-json}
 
-- Save [`CoverageResults`](/reference/types#coverageresults) to a json file (defaults to [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json)).
+- Save [`CoverageResults`](/reference/types#coverageresults) to a json file (defaults to [`coverage-report.json`](/reports/v8-and-istanbul/coverage-report.json)).
 - For `data.extras` codes and examples, see [Line classifications](/reference/coverage-data#line-classifications).
 - Shows native V8 code coverage with VSCode extension: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
@@ -49,8 +46,7 @@ Generate a Cobertura XML coverage report.
 
 #### `html` {#html}
 
-- [Istanbul html](https://cenfun.github.io/monocart-coverage-reports/reports/istanbul/)
-- [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/istanbul)
+- Preview: [Istanbul HTML reports from instrumented and converted V8 data](/getting-started/examples#v8-and-istanbul).
 
 #### `html-spa` {#html-spa}
 
@@ -70,8 +66,7 @@ Generate LCOV coverage data and an HTML report.
 
 #### `lcovonly` {#lcovonly}
 
-- [V8 lcov.info](https://cenfun.github.io/monocart-coverage-reports/reports/v8/lcov.info)
-- [Istanbul lcov.info](https://cenfun.github.io/monocart-coverage-reports/reports/istanbul/lcov.info)
+Generate LCOV data without HTML. Examples: <a :href="withBase('/reports/v8/lcov.info')" target="_blank" rel="noopener noreferrer">V8 lcov.info</a> and <a :href="withBase('/reports/istanbul/lcov.info')" target="_blank" rel="noopener noreferrer">Istanbul lcov.info</a>.
 
 #### `none` {#none}
 

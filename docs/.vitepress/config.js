@@ -13,7 +13,7 @@ const socialImageAlt = 'Monocart Coverage Reports v3.x — rich native V8 covera
 const favicon = `data:image/svg+xml;base64,${readFileSync(new URL('../../src/app/images/icons/monocart.svg', import.meta.url)).toString('base64')}`;
 const groups = [
     ['start', 'Getting started', '入门'],
-    ['collection', 'Coverage Collection', '覆盖率采集'],
+    ['collection', 'Coverage collection', '覆盖率采集'],
     ['reference', 'Reference', '参考'],
     ['integrations', 'Integrations', '集成'],
     ['troubleshooting', 'Troubleshooting', '排障'],
@@ -29,20 +29,10 @@ const theme = (zh) => {
         link: `${prefix}${route}`
     }));
     return {
-        nav: [
-            {
-                text: label('Getting started', '入门'), items: groupItems('start')
-            },
-            {
-                text: label('Coverage Collection', '覆盖率采集'), items: groupItems('collection')
-            },
-            {
-                text: label('Reference', '参考'), items: groupItems('reference')
-            },
-            {
-                text: label('Integrations', '集成'), items: groupItems('integrations')
-            }
-        ],
+        nav: groups.slice(0, 4).map(([group, en, cn]) => ({
+            text: label(en, cn),
+            items: groupItems(group)
+        })),
         sidebar: groups.map(([group, en, cn]) => ({
             text: zh ? cn : en,
             collapsed: false,

@@ -2,6 +2,10 @@
 outline: [2, 4]
 ---
 
+<script setup>
+import { withBase } from 'vitepress';
+</script>
+
 # 报告 {#reports}
 
 将本页的报告名称填入 [API 的 `reports` 选项](/zh/getting-started/get-started#api)或[配置文件](/zh/reference/configuration#minimal-config)，CLI 对应参数为 [`-r, --reports`](/zh/reference/options#configuration-options)。各报告支持的输入格式见下面的分类；覆盖率服务的格式选择参见[覆盖率服务](/zh/integrations/coverage-services)。
@@ -16,20 +20,13 @@ outline: [2, 4]
 
 #### `v8` <span role="img" aria-label="推荐优先使用" title="推荐优先使用">⭐</span> {#v8}
 
-- 推荐使用:
-    - 全新的原生V8覆盖率报告界面，更好的用户体验
-    - 支持原生的Bytes覆盖率指标
-    - 支持高性能处理大数据
-    - 支持任何运行时代码的覆盖率（压缩后的）
-    - 支持CSS代码覆盖率（用于分析CSS的冗余代码）
-    - 对Sourcemap转换有更好的支持
-- 预览: [V8](https://cenfun.github.io/monocart-coverage-reports/reports/v8) and [更多](/zh/getting-started/examples)
+生成交互式 HTML 报告，展示 JavaScript 和 CSS 覆盖率以及原生 Bytes 指标。如果构建提供了配套的 source map，报告可将生成代码的覆盖率映射回原始源码。参见 [V8 报告示例](/zh/getting-started/examples#v8-and-istanbul)。
 
-![](/images/v8.gif)
+![V8 报告中的文件树和源码覆盖率](/images/v8.gif)
 
 #### `v8-json` {#v8-json}
 
-- 保存 [`CoverageResults`](/zh/reference/types#coverageresults) 到一个json文件 (默认是 [`coverage-report.json`](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/coverage-report.json))
+- 保存 [`CoverageResults`](/zh/reference/types#coverageresults) 到一个json文件 (默认是 [`coverage-report.json`](/reports/v8-and-istanbul/coverage-report.json))
 - `data.extras` 的标记和示例参见[行分类](/zh/reference/coverage-data#line-classifications)。
 - 用于VSCode扩展来显示原生V8代码覆盖率: [Monocart Coverage for VSCode](https://github.com/cenfun/monocart-coverage-vscode)
 
@@ -49,8 +46,7 @@ outline: [2, 4]
 
 #### `html` {#html}
 
-- [Istanbul html](https://cenfun.github.io/monocart-coverage-reports/reports/istanbul/)
-- [V8 to Istanbul](https://cenfun.github.io/monocart-coverage-reports/reports/v8-and-istanbul/istanbul)
+- 预览：[Istanbul 插桩和 V8 转换生成的报告](/zh/getting-started/examples#v8-and-istanbul)。
 
 #### `html-spa` {#html-spa}
 
@@ -70,8 +66,7 @@ outline: [2, 4]
 
 #### `lcovonly` {#lcovonly}
 
-- [V8 lcov.info](https://cenfun.github.io/monocart-coverage-reports/reports/v8/lcov.info)
-- [Istanbul lcov.info](https://cenfun.github.io/monocart-coverage-reports/reports/istanbul/lcov.info)
+只生成 LCOV 数据，不生成 HTML。示例：<a :href="withBase('/reports/v8/lcov.info')" target="_blank" rel="noopener noreferrer">V8 的 lcov.info</a>、<a :href="withBase('/reports/istanbul/lcov.info')" target="_blank" rel="noopener noreferrer">Istanbul 的 lcov.info</a>。
 
 #### `none` {#none}
 

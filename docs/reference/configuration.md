@@ -49,19 +49,16 @@ Configuration types: [`CoverageReportOptions`](/reference/types#coveragereportop
 
 ## Loading priority {#loading-priority}
 
-Loading config file by priority:
-- Custom config file:
-    - CLI: `mcr --config <my-config-file-path>`
-    - API: `await mcr.loadConfig("my-config-file-path")`
-- `mcr.config.js`
-- `mcr.config.cjs`
-- `mcr.config.mjs`
-- `mcr.config.json` - json format
-- `mcr.config.ts` - erasable syntax loads natively; see [TypeScript support](/getting-started/typescript#configure-coverage).
+Use `--config ./mcr.config.mjs` or `await mcr.loadConfig('./mcr.config.mjs')` to select a file explicitly. Otherwise, MCR searches upward from the current working directory and stops at the **nearest directory with a config file**. Within that directory, it uses the first existing file in this order:
 
-Configuration syntax requiring an external runtime can still use a loader such as `tsx`:
+1. `mcr.config.js`
+2. `mcr.config.cjs`
+3. `mcr.config.mjs`
+4. `mcr.config.json`
+5. `mcr.config.ts` ([native loading](/getting-started/typescript#configure-coverage) for erasable syntax)
+
+For configuration syntax Node.js cannot run natively, preload a loader such as `tsx` with the CLI:
+
 ```sh
-mcr --import tsx -c mcr.config.ts node ./test.js
+npx mcr --import tsx -c mcr.config.ts -- node ./test.js
 ```
-
-> If no custom path is given, MCR walks up from the current working directory to find the default config file (via [`find-up`](https://github.com/sindresorhus/find-up)). Files outside the search path will be ignored.

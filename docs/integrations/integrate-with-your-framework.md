@@ -1,13 +1,13 @@
 # Integrate with your framework {#integrate-with-your-framework}
 
-MCR can integrate with your existing testing framework through the CLI or API, without replacing your test runner or changing how you write tests. Choose the approach that fits your workflow.
+You can keep your existing test runner. Use the CLI to collect coverage from a Node.js command, or the API to import data from browser tests or a runner that already collects coverage. If you already use `node:test`, use [`mcr test`](/getting-started/node-test-runner#quick-start). Check [framework-specific integrations](/integrations/frameworks-and-tools) before wiring it up yourself.
 
 ## CLI {#cli}
 
 For Node.js test commands, prefix your existing command with `mcr` to collect V8 coverage and generate reports:
 
 ```sh
-mcr your-cli --your-arguments
+npx mcr -- your-test-runner --your-arguments
 ```
 
 See [Command line](/reference/cli#command-line) for options. For browser tests, use the framework's coverage collection API and pass the collected data to MCR as described below.

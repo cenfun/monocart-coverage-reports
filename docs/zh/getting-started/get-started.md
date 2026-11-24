@@ -12,36 +12,6 @@ npm i monocart-coverage-reports -D
 
 **自 v3 起，MCR 为 ESM-only。** CommonJS 项目可以通过 `import()` 异步导入，接入方式及 2.x 升级说明参见[迁移指南](/zh/migrations/migration-to-3)。
 
-## API {#api}
-
-已有采集数据时，接上以下代码生成报告：
-
-```js
-import { MCR } from 'monocart-coverage-reports';
-
-const mcr = MCR({
-    outputDir: './coverage-reports',
-    reports: ['v8', 'console-summary'],
-    cleanCache: true
-});
-await mcr.add(coverageData);
-const coverageResults = await mcr.generate();
-if (!coverageResults) {
-    throw new Error('No coverage report was generated');
-}
-console.log(coverageResults.reportPath);
-```
-
-### 数据与结果 {#coverage-data}
-
-`coverageData` 是采集得到的 V8 覆盖率数据，获取方式参见 [V8 采集](/zh/coverage-collection/v8)。
-
-`coverageResults` 是 `generate()` 返回的输出结果，字段说明参见 [`CoverageResults`](/zh/reference/types#coverageresults)。
-
-### 配置 {#load-config}
-
-参见[配置文件](/zh/reference/configuration#minimal-config)、[API 加载配置](/zh/reference/configuration#api)和[配置选项](/zh/reference/options)。
-
 ## CLI {#cli}
 
 对于使用 Node.js 内置测试运行器的项目，建议从[使用 mcr test 运行测试](/zh/getting-started/node-test-runner#quick-start)开始：一条命令完成测试执行、覆盖率采集和报告生成，无需配置文件。
@@ -64,4 +34,38 @@ npx mcr node demo.js -r v8,console-summary -o ./coverage-reports
 
 将 `node demo.js` 替换为自己的 Node.js 命令即可。更多用法参见 [CLI 参数](/zh/reference/cli)。
 
-更多内容：[报告格式](/zh/reference/reports)、[框架集成](/zh/integrations/frameworks-and-tools)和[报告示例](/zh/getting-started/examples)。
+## API {#api}
+
+如果浏览器 fixture 或测试框架已经采集了覆盖率，可将数据传给 MCR。以下示例接在 [V8 采集](/zh/coverage-collection/v8#generate)之后：
+
+```js
+import { MCR } from 'monocart-coverage-reports';
+
+const mcr = MCR({
+    outputDir: './coverage-reports',
+    reports: ['v8', 'console-summary'],
+    cleanCache: true
+});
+await mcr.add(coverageData);
+const coverageResults = await mcr.generate();
+if (!coverageResults) {
+    throw new Error('No coverage report was generated');
+}
+console.log(coverageResults.reportPath);
+```
+
+### 数据与结果 {#coverage-data}
+
+上例的 `coverageData` 是 [V8 覆盖率条目](/zh/reference/coverage-data#coverage-entries)数组。如果输入是 [Istanbul 覆盖率对象](/zh/coverage-collection/istanbul#generate)，请改用 `reports: ['html', 'console-summary']`。
+
+`coverageResults` 是 `generate()` 返回的输出结果，字段说明参见 [`CoverageResults`](/zh/reference/types#coverageresults)。
+
+### 配置 {#load-config}
+
+参见[配置文件](/zh/reference/configuration#minimal-config)、[API 加载配置](/zh/reference/configuration#api)和[配置选项](/zh/reference/options)。
+
+## 接下来 {#next-steps}
+
+- 已有测试框架？查看[接入现有测试框架](/zh/integrations/integrate-with-your-framework)。
+- 还没选采集方式？先看 [V8 与 Istanbul 对比](/zh/coverage-collection/compare-reports)。
+- 想先看看报告效果？浏览[报告示例](/zh/getting-started/examples)或选择[报告格式](/zh/reference/reports)。

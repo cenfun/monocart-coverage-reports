@@ -17,4 +17,4 @@ CSS minification can produce imprecise sourcemaps and trigger fallback to genera
 
 ## V8 covered the whole block {#v8-covered-the-whole-block}
 
-Chromium may mark an entire media query or nested CSS block as covered. Consider [postcss-atomic-selectors](https://www.npmjs.com/package/postcss-atomic-selectors) as a potential workaround.
+Chromium may mark an entire media query or nested CSS block as covered. Consider [postcss-atomic-selectors](https://github.com/stephan-dum/postcss-atomic-selectors) as a potential workaround.
