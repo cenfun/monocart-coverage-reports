@@ -50,7 +50,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 ## 预加载模块 {#preload-modules}
 
-`--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。在需要外部 TypeScript/JSX 运行时（`tsx`、`ts-node` 等）时使用，也适用于配置文件中超出原生擦除能力的语法。仅使用可擦除类型语法的 `mcr.config.ts` 不需要 loader。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
+`--import <module>` / `--require <module>`: 通过 `NODE_OPTIONS` 把一个预加载模块传给子进程。用于预加载 `tsx` 等运行时，也适用于配置文件中超出原生擦除能力的语法。使用 `ts-node` 运行 ESM 的方法参见[外部加载器](/zh/getting-started/typescript#ts-node)。仅使用可擦除类型语法的 `mcr.config.ts` 不需要 loader。在所有受支持的 Node.js 版本中均可用。本地路径以当前工作目录为基准，必须明确指定文件扩展名，支持包含空格的路径。包名由原生 ESM 按 MCR 模块位置解析。两个选项都使用 `import()`，并向 Node 传递 `--import`；`--require` 仅为已弃用别名，不提供 CommonJS 加载逻辑。CJS 模块仅通过 Node 内置的 import 互操作支持。
 ```sh
 mcr --import tsx node ./test.ts
 ```

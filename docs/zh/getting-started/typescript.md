@@ -229,11 +229,17 @@ MCR 使用 Node 内置的 `module.stripTypeScriptTypes()`，并采用 strip 模�
 - **不做类型检查。** 如有需要，单独运行 `tsc --noEmit`。原生执行与覆盖率采集本身不要求安装 TypeScript。
 - **不应用 `tsconfig.json` 执行设置。** Node 不解析 `paths`，不转换模块系统，也不按 `target` 降级 JS。
 - **不转换 JSX/TSX 或装饰器。** 使用适当的 loader 或构建工具。
-- **不支持转换模式。** Node 26 已移除 `--experimental-transform-types`。在仍接受此参数的旧版 Node 上，MCR 不会捕获转换模式下的原生 TS 源码。覆盖率仍按原有流程导入，可使用 Node 提供的 sourcemap；JavaScript 报告不受影响。枚举、构造函数参数属性和包含运行时代码的命名空间的检查方法和替代写法，参见[检查不可擦除的语法](#check-erasable-syntax)。如果需要保留这些语法，请使用能输出 JavaScript 和 sourcemap 的加载器或构建工具。
+- **不支持转换模式。** Node 26 已移除 `--experimental-transform-types`。在仍接受此参数的旧版 Node 上，MCR 不会捕获转换模式下的原生 TS 源码。覆盖率仍按原有流程导入，可使用 Node 提供的 sourcemap；JavaScript 报告不受影响。枚举、构造函数参数属性和包含运行时代码的命名空间的检查方法和替代写法，参见[检查不可擦除的语法](#check-erasable-syntax)。如果需要保留这些语法，请使用[外部加载器](#external-loaders)，或使用能生成 JavaScript 和 sourcemap 的构建工具。
 - **不新增未执行 TS 的原生分析能力。** `all` 保留原有行为。未执行 TS 如需准确的 AST 指标，应通过 `all.transformer` 提供 JS 与 sourcemap；参见[未测试文件](/zh/reference/untested-files#transform-source-code)。
 - **不是直接发布 TS 依赖的捷径。** Node 通常拒绝擦除 `node_modules` 下的 TS，库一般仍应发布编译后的 JS。
 
-项目超出这些限制时，可以继续使用 `tsx` 等外部运行时：
+## 外部加载器 {#external-loaders}
+
+如果项目使用了 Node.js 无法仅靠类型擦除执行的 TypeScript 语法，可以使用外部加载器，或先编译再运行。外部加载器和预编译 JavaScript 沿用原有的覆盖率处理流程。
+
+### [tsx](https://github.com/privatenumber/tsx) {#tsx}
+
+安装 `tsx`，然后在运行脚本或 Node.js 内置测试运行器时预加载它：
 
 ```sh
 npm i -D tsx
@@ -241,7 +247,28 @@ npx mcr --import tsx node ./src/example.ts
 npx mcr --import tsx test "./test/**/*.test.ts"
 ```
 
-外部 loader 和预编译 JS 保留已有覆盖率路径。参见[外部 loader 示例](/zh/integrations/frameworks-and-tools#external-loaders)。
+如果改用 `tsx` 命令行工具运行脚本，则无需预加载：
+
+```sh
+npx mcr tsx ./src/example.ts
+```
+
+如果测试是为 Mocha 编写的，请先安装 `mocha`（如尚未安装），再预加载 `tsx`：
+
+```sh
+npx mcr --import tsx mocha "./test/**/*.ts"
+```
+
+### [ts-node](https://github.com/TypeStrong/ts-node) {#ts-node}
+
+如果现有 ESM 项目（`"type": "module"`）使用 `ts-node`，可参考以下示例，它使用 `ts-node` 10.9.2 和 TypeScript 5.9.3。该版本的 `ts-node` 无法与 TypeScript 7.0.2 搭配使用，且其 [ESM 加载器仍属实验性](https://typestrong.org/ts-node/docs/imports/#native-ecmascript-modules)。
+
+```sh
+npm i -D ts-node@10.9.2 typescript@5.9.3 @types/node cross-env
+npx cross-env NODE_OPTIONS="--loader ts-node/esm" mcr node ./src/example.ts
+```
+
+如果之前启用了 `erasableSyntaxOnly`，运行不可擦除的语法时，请在 `ts-node` 使用的 TypeScript 配置中关闭该选项。Mocha 项目请使用上面的 [`tsx` 示例](#tsx)。
 
 ## 仓库示例 {#repository-examples}
 

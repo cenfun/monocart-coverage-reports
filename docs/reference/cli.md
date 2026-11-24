@@ -50,7 +50,7 @@ mcr -c mcr.config.js -- sub-cli -c sub-cli.config.js
 
 ## Preload modules {#preload-modules}
 
-`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this when an external TypeScript/JSX runtime (`tsx`, `ts-node`, etc.) is needed, including for configuration syntax beyond native stripping. Erasable `mcr.config.ts` files do not need a loader. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
+`--import <module>` / `--require <module>`: forward a preload module to the child process via `NODE_OPTIONS`. Use this to preload a runtime such as `tsx`, including for configuration syntax beyond native stripping. For `ts-node` with ESM, see [External loaders](/getting-started/typescript#ts-node). Erasable `mcr.config.ts` files do not need a loader. Available on all supported Node.js versions. Local paths are relative to the current working directory and must include the file extension; paths containing spaces are supported. Package names use native ESM resolution from MCR's module location. Both flags use `import()` and forward `--import` to Node; `--require` is a deprecated alias, not a CommonJS loader. CJS modules work only through Node's built-in import interoperability.
 ```sh
 mcr --import tsx node ./test.ts
 ```

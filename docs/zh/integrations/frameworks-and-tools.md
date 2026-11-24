@@ -62,27 +62,7 @@ npx mcr node ./src/example.ts
 npx mcr test "./test/**/*.test.ts"
 ```
 
-配置、覆盖率行为以及仍需构建或外部 loader 的场景，参见 [TypeScript 支持](/zh/getting-started/typescript#typescript-support)。
-
-### 外部 loader {#external-loaders}
-
-以下示例适用于仍使用外部 loader 的现有项目。
-
-**[tsx](https://github.com/privatenumber/tsx)**
-
-```sh
-cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
-cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-mcr --import tsx tsx ./src/example.ts
-mcr --import tsx mocha ./test/**/*.ts
-```
-
-**[ts-node](https://github.com/TypeStrong/ts-node)**
-
-```sh
-cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr ts-node ./src/example.ts
-cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test/**/*.ts
-```
+配置和覆盖率行为参见 [TypeScript 支持](/zh/getting-started/typescript#typescript-support)。`tsx` 和 `ts-node` 示例参见[外部加载器](/zh/getting-started/typescript#external-loaders)。
 
 ## [c8](https://github.com/bcoe/c8) {#c8}
 - c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)

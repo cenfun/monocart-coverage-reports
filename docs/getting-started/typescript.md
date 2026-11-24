@@ -229,11 +229,17 @@ See the [Node.js TypeScript documentation](https://nodejs.org/api/typescript.htm
 - **No type checking.** Run `tsc --noEmit` separately if needed. TypeScript itself is optional for native execution and coverage.
 - **No `tsconfig.json` execution settings.** Node does not apply `paths`, convert module systems or downlevel JS according to `target`.
 - **No JSX/TSX or decorator transformation.** Use a suitable loader or build tool.
-- **No transform mode.** Node 26 removed `--experimental-transform-types`. On older Node versions that accept the flag, MCR does not capture native TS source in transform mode. The existing coverage import still runs and can use any sourcemaps Node supplies; JavaScript reporting is unchanged. See [Check for non-erasable syntax](#check-erasable-syntax) for checks and alternatives to enums, constructor parameter properties and runtime namespaces. If you need to keep that syntax, use a loader or build tool that emits JavaScript and sourcemaps.
+- **No transform mode.** Node 26 removed `--experimental-transform-types`. On older Node versions that accept the flag, MCR does not capture native TS source in transform mode. The existing coverage import still runs and can use any sourcemaps Node supplies; JavaScript reporting is unchanged. See [Check for non-erasable syntax](#check-erasable-syntax) for checks and alternatives to enums, constructor parameter properties and runtime namespaces. If you need to keep that syntax, use an [external loader](#external-loaders) or a build tool that emits JavaScript and sourcemaps.
 - **No new native analysis for unexecuted TS.** `all` retains its existing behavior. Use `all.transformer` with JS and a sourcemap for accurate AST metrics of unexecuted TS; see [Untested files](/reference/untested-files#transform-source-code).
 - **No native TS distribution shortcut.** Node normally refuses to strip TS under `node_modules`; libraries should generally distribute compiled JS.
 
-For projects outside these restrictions, retain an external runtime such as `tsx`:
+## External loaders {#external-loaders}
+
+If your project needs TypeScript syntax that Node.js cannot run with type stripping, use an external loader or compile TypeScript before running it. External loaders and precompiled JavaScript keep their existing coverage paths.
+
+### [tsx](https://github.com/privatenumber/tsx) {#tsx}
+
+Install `tsx` and preload it when running a script or the built-in Node.js test runner:
 
 ```sh
 npm i -D tsx
@@ -241,7 +247,28 @@ npx mcr --import tsx node ./src/example.ts
 npx mcr --import tsx test "./test/**/*.test.ts"
 ```
 
-External loaders and precompiled JS keep their existing coverage paths. See [external loader examples](/integrations/frameworks-and-tools#external-loaders).
+If you run the script with the `tsx` CLI instead, no preload is needed:
+
+```sh
+npx mcr tsx ./src/example.ts
+```
+
+For tests written for Mocha, install `mocha` if needed and preload `tsx`:
+
+```sh
+npx mcr --import tsx mocha "./test/**/*.ts"
+```
+
+### [ts-node](https://github.com/TypeStrong/ts-node) {#ts-node}
+
+For an existing ESM project (`"type": "module"`) that uses `ts-node`, the following example uses `ts-node` 10.9.2 with TypeScript 5.9.3. That `ts-node` version does not work with TypeScript 7.0.2, and its [ESM loader is experimental](https://typestrong.org/ts-node/docs/imports/#native-ecmascript-modules).
+
+```sh
+npm i -D ts-node@10.9.2 typescript@5.9.3 @types/node cross-env
+npx cross-env NODE_OPTIONS="--loader ts-node/esm" mcr node ./src/example.ts
+```
+
+If you enabled `erasableSyntaxOnly` earlier, turn it off in the TypeScript config used by `ts-node` when you need to run non-erasable syntax. For Mocha, use the [`tsx` example](#tsx) instead.
 
 ## Repository examples {#repository-examples}
 

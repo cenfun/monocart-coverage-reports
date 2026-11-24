@@ -62,27 +62,7 @@ npx mcr node ./src/example.ts
 npx mcr test "./test/**/*.test.ts"
 ```
 
-See [TypeScript support](/getting-started/typescript#typescript-support) for setup, coverage behavior, and when a build step or external loader is still needed.
-
-### External loaders {#external-loaders}
-
-These examples are for existing projects that still use an external loader.
-
-**[tsx](https://github.com/privatenumber/tsx)**
-
-```sh
-cross-env NODE_OPTIONS="--import tsx" npx mcr tsx ./src/example.ts
-cross-env NODE_OPTIONS="--import tsx" npx mcr mocha ./test/**/*.ts
-mcr --import tsx tsx ./src/example.ts
-mcr --import tsx mocha ./test/**/*.ts
-```
-
-**[ts-node](https://github.com/TypeStrong/ts-node)**
-
-```sh
-cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr ts-node ./src/example.ts
-cross-env NODE_OPTIONS="--loader ts-node/esm --no-warnings" npx mcr mocha ./test/**/*.ts
-```
+For setup and coverage behavior, see [TypeScript support](/getting-started/typescript#typescript-support). For `tsx` and `ts-node` examples, see [External loaders](/getting-started/typescript#external-loaders).
 
 ## [c8](https://github.com/bcoe/c8) {#c8}
 - c8 has integrated `MCR` as an experimental feature since [v10.1.0](https://github.com/bcoe/c8/releases/tag/v10.1.0)
