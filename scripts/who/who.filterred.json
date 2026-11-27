@@ -1,0 +1,194 @@
+[
+    {
+        "repo": "n8n-io/n8n",
+        "name": "n8n",
+        "stars": 212209,
+        "link": "https://github.com/n8n-io/n8n",
+        "evidenceLink": "https://github.com/n8n-io/n8n/blob/HEAD/packages/quality/testing/playwright/fixtures/v8-coverage.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/45487711?s=96&v=4"
+    },
+    {
+        "repo": "Significant-Gravitas/AutoGPT",
+        "name": "AutoGPT",
+        "stars": 188200,
+        "link": "https://github.com/Significant-Gravitas/AutoGPT",
+        "evidenceLink": "https://github.com/Significant-Gravitas/AutoGPT/blob/HEAD/autogpt_platform/frontend/playwright.config.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/130738209?s=96&v=4"
+    },
+    {
+        "repo": "louislam/uptime-kuma",
+        "name": "Uptime Kuma",
+        "stars": 94916,
+        "link": "https://github.com/louislam/uptime-kuma",
+        "evidenceLink": "https://github.com/louislam/uptime-kuma/blob/HEAD/extra/coverage-report.mjs",
+        "avatar": "https://avatars.githubusercontent.com/u/1336778?s=96&v=4"
+    },
+    {
+        "repo": "mermaid-js/mermaid",
+        "name": "Mermaid",
+        "stars": 91264,
+        "link": "https://github.com/mermaid-js/mermaid",
+        "evidenceLink": "https://github.com/mermaid-js/mermaid/blob/HEAD/e2e/global-teardown.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/57169982?s=96&v=4"
+    },
+    {
+        "repo": "grafana/grafana",
+        "name": "Grafana",
+        "stars": 78199,
+        "link": "https://github.com/grafana/grafana",
+        "evidenceLink": "https://github.com/grafana/grafana/blob/HEAD/jest.config.codeowner.js",
+        "avatar": "https://avatars.githubusercontent.com/u/7195757?s=96&v=4"
+    },
+    {
+        "repo": "Kong/insomnia",
+        "name": "Insomnia",
+        "stars": 40193,
+        "link": "https://github.com/Kong/insomnia",
+        "evidenceLink": "https://github.com/Kong/insomnia/blob/HEAD/packages/insomnia-test/misc/coverage.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/962416?s=96&v=4"
+    },
+    {
+        "repo": "jhipster/generator-jhipster",
+        "name": "JHipster",
+        "stars": 22466,
+        "link": "https://github.com/jhipster/generator-jhipster",
+        "evidenceLink": "https://github.com/jhipster/generator-jhipster/blob/HEAD/generators/cypress/templates/src/test/javascript/cypress/plugins/coverage.ts.ejs",
+        "avatar": "https://avatars.githubusercontent.com/u/6059488?s=96&v=4"
+    },
+    {
+        "repo": "maplibre/maplibre-gl-js",
+        "name": "MapLibre GL JS",
+        "stars": 12184,
+        "link": "https://github.com/maplibre/maplibre-gl-js",
+        "evidenceLink": "https://github.com/maplibre/maplibre-gl-js/blob/HEAD/test/integration/lib/puppeteer_config.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/75709127?s=96&v=4"
+    },
+    {
+        "repo": "OpenCTI-Platform/opencti",
+        "name": "OpenCTI",
+        "stars": 10447,
+        "link": "https://github.com/OpenCTI-Platform/opencti",
+        "evidenceLink": "https://github.com/OpenCTI-Platform/opencti/blob/HEAD/opencti-platform/opencti-front/playwright.config.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/51881218?s=96&v=4"
+    },
+    {
+        "repo": "jely2002/youtube-dl-gui",
+        "name": "youtube-dl-gui",
+        "stars": 9780,
+        "link": "https://github.com/jely2002/youtube-dl-gui",
+        "evidenceLink": "https://github.com/jely2002/youtube-dl-gui/blob/HEAD/tests/e2e/utils/teardown.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/20154900?s=96&v=4"
+    },
+    {
+        "repo": "phoenixframework/phoenix_live_view",
+        "name": "Phoenix LiveView",
+        "stars": 6840,
+        "link": "https://github.com/phoenixframework/phoenix_live_view",
+        "evidenceLink": "https://github.com/phoenixframework/phoenix_live_view/blob/HEAD/test/e2e/merge-coverage.js",
+        "avatar": "https://avatars.githubusercontent.com/u/6510388?s=96&v=4"
+    },
+    {
+        "repo": "wikimedia/mediawiki",
+        "name": "MediaWiki",
+        "stars": 5235,
+        "link": "https://github.com/wikimedia/mediawiki",
+        "evidenceLink": "https://github.com/wikimedia/mediawiki/blob/HEAD/tests/qunit/coverage-runner.js",
+        "avatar": "https://avatars.githubusercontent.com/u/56668?s=96&v=4"
+    },
+    {
+        "repo": "bitpay/bitcore",
+        "name": "Bitcore",
+        "stars": 4979,
+        "link": "https://github.com/bitpay/bitcore",
+        "evidenceLink": "https://github.com/bitpay/bitcore/blob/HEAD/packages/bitcore-build/index.js",
+        "avatar": "https://avatars.githubusercontent.com/u/2554930?s=96&v=4"
+    },
+    {
+        "repo": "agent-of-empires/agent-of-empires",
+        "name": "agent-of-empires",
+        "stars": 4925,
+        "link": "https://github.com/agent-of-empires/agent-of-empires",
+        "evidenceLink": "https://github.com/agent-of-empires/agent-of-empires/blob/HEAD/web/package.json",
+        "avatar": "https://avatars.githubusercontent.com/u/286672960?s=96&v=4"
+    },
+    {
+        "repo": "pipeshub-ai/pipeshub-ai",
+        "name": "PipesHub",
+        "stars": 4160,
+        "link": "https://github.com/pipeshub-ai/pipeshub-ai",
+        "evidenceLink": "https://github.com/pipeshub-ai/pipeshub-ai/blob/HEAD/frontend/playwright.config.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/201571456?s=96&v=4"
+    },
+    {
+        "repo": "Comfy-Org/ComfyUI_frontend",
+        "name": "ComfyUI Frontend",
+        "stars": 2140,
+        "link": "https://github.com/Comfy-Org/ComfyUI_frontend",
+        "evidenceLink": "https://github.com/Comfy-Org/ComfyUI_frontend/blob/HEAD/browser_tests/fixtures/ComfyPage.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/166579949?s=96&v=4"
+    },
+    {
+        "repo": "rustrak/rustrak",
+        "name": "rustrak",
+        "stars": 1945,
+        "link": "https://github.com/rustrak/rustrak",
+        "evidenceLink": "https://github.com/rustrak/rustrak/blob/HEAD/apps/dashboard/package.json",
+        "avatar": "https://avatars.githubusercontent.com/u/287629352?s=96&v=4"
+    },
+    {
+        "repo": "OpenAEV-Platform/openaev",
+        "name": "openaev",
+        "stars": 1864,
+        "link": "https://github.com/OpenAEV-Platform/openaev",
+        "evidenceLink": "https://github.com/OpenAEV-Platform/openaev/blob/HEAD/openaev-front/package.json",
+        "avatar": "https://avatars.githubusercontent.com/u/51962216?s=96&v=4"
+    },
+    {
+        "repo": "thkruz/keeptrack.space",
+        "name": "KeepTrack.Space",
+        "stars": 1644,
+        "link": "https://github.com/thkruz/keeptrack.space",
+        "evidenceLink": "https://github.com/thkruz/keeptrack.space/blob/HEAD/test/e2e/coverage.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/23319161?s=96&v=4"
+    },
+    {
+        "repo": "guardian/grid",
+        "name": "grid",
+        "stars": 1460,
+        "link": "https://github.com/guardian/grid",
+        "evidenceLink": "https://github.com/guardian/grid/blob/HEAD/e2e-tests/package.json",
+        "avatar": "https://avatars.githubusercontent.com/u/164318?s=96&v=4"
+    },
+    {
+        "repo": "mantoni/eslint_d.js",
+        "name": "eslint_d",
+        "stars": 1225,
+        "link": "https://github.com/mantoni/eslint_d.js",
+        "evidenceLink": "https://github.com/mantoni/eslint_d.js/blob/HEAD/package.json",
+        "avatar": "https://avatars.githubusercontent.com/u/332271?s=96&v=4"
+    },
+    {
+        "repo": "wellwelwel/poku",
+        "name": "Poku",
+        "stars": 1182,
+        "link": "https://github.com/wellwelwel/poku",
+        "evidenceLink": "https://github.com/wellwelwel/poku/blob/HEAD/src/bin/index.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/46850407?s=96&v=4"
+    },
+    {
+        "repo": "desplega-ai/agent-swarm",
+        "name": "agent-swarm",
+        "stars": 1127,
+        "link": "https://github.com/desplega-ai/agent-swarm",
+        "evidenceLink": "https://github.com/desplega-ai/agent-swarm/blob/HEAD/packages/ui-e2e/package.json",
+        "avatar": "https://avatars.githubusercontent.com/u/224128078?s=96&v=4"
+    },
+    {
+        "repo": "mutoe/vue3-realworld-example-app",
+        "name": "Vue 3 RealWorld",
+        "stars": 1083,
+        "link": "https://github.com/mutoe/vue3-realworld-example-app",
+        "evidenceLink": "https://github.com/mutoe/vue3-realworld-example-app/blob/HEAD/scripts/merge-coverage.ts",
+        "avatar": "https://avatars.githubusercontent.com/u/9391981?s=96&v=4"
+    }
+]

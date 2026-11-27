@@ -8,11 +8,8 @@ import { chromium } from 'playwright';
 const main = async () => {
     const templateDir = import.meta.dirname;
     const template = await fs.readFile(path.resolve(templateDir, 'og-image.html'), 'utf8');
-    const logo = await fs.readFile(path.resolve(templateDir, '../../src/app/images/icons/monocart.svg'));
-    const linkIcon = await fs.readFile(path.resolve(templateDir, '../../src/app/images/icons/link.svg'), 'utf8');
-    const html = template
-        .replace('{placeholder_logo}', `data:image/svg+xml;base64,${logo.toString('base64')}`)
-        .replace('{placeholder_link_icon}', linkIcon);
+    const heroArt = await fs.readFile(path.resolve(templateDir, '../../assets/hero-art.svg'));
+    const html = template.replace('{placeholder_hero_art}', `data:image/svg+xml;base64,${heroArt.toString('base64')}#static`);
     const outputPath = path.resolve(templateDir, '../../assets/og-image.png');
 
     const browser = await chromium.launch();

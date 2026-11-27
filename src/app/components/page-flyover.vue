@@ -10,6 +10,7 @@ const state = inject('state');
 // remove tag till flyover animation end
 const onFlyoverEnd = () => {
     if (!state.flyoverVisible) {
+        state.flyoverData = null;
         hash.remove('page');
         state.globalError = false;
     }

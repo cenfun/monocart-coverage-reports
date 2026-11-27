@@ -110,4 +110,4 @@ main().catch((error) => {
 });
 ```
 
-Use ESM-aware TypeScript module settings and verify emitted JavaScript. Secondary `/util` and `/converter` entries provide **named exports**, not defaults. These recipes do not cover other major versions; approved upgrades should follow the package's `docs/migrations/migration-to-3.md`.
+Use ESM-aware TypeScript module settings and verify emitted JavaScript. Secondary `/util` and `/converter` entries provide **named exports**, not defaults. These recipes do not cover other major versions; for approved upgrades, use the migration guide bundled with the target release. See [the skill's offline instructions](../SKILL.md) for the current and older package paths.

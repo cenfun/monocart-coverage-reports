@@ -1,195 +1,196 @@
 // Shared reading order for both locales, including the previous/next links.
+// Each page starts with its filename stem; the public route is pages/<stem>.
 export const pages = [
     [
-        'getting-started/get-started',
+        'get-started',
         'Get started',
         '开始使用',
         'start'
     ],
     [
-        'getting-started/node-test-runner',
+        'node-test-runner',
         'Run tests with mcr test',
         '使用 mcr test 运行测试',
         'start'
     ],
     [
-        'getting-started/typescript',
+        'typescript',
         'TypeScript support',
         'TypeScript 支持',
         'start'
     ],
     [
-        'getting-started/best-practices',
+        'best-practices',
         'Best practices',
         '最佳实践',
         'start'
     ],
     [
-        'getting-started/examples',
+        'examples',
         'Examples',
         '示例',
         'start'
     ],
     [
-        'getting-started/ai-agent-skill',
+        'ai-agent-skill',
         'AI Agent Skill',
         'AI Agent Skill',
         'start'
     ],
     [
-        'coverage-collection/v8',
+        'v8',
         'V8 collection',
         '采集 V8 覆盖率',
         'collection'
     ],
     [
-        'coverage-collection/istanbul',
+        'istanbul',
         'Istanbul collection',
         '采集 Istanbul 覆盖率',
         'collection'
     ],
     [
-        'coverage-collection/compare-reports',
+        'compare-reports',
         'V8 vs Istanbul',
         'V8 与 Istanbul 对比',
         'collection'
     ],
     [
-        'reference/cli',
+        'cli',
         'Command line',
         '命令行',
-        'reference'
+        'cli-api-reference'
     ],
     [
-        'reference/configuration',
+        'configuration',
         'Configuration files',
         '配置文件',
-        'reference'
+        'cli-api-reference'
     ],
     [
-        'reference/options',
+        'options',
         'Configuration options',
         '配置选项',
-        'reference'
+        'cli-api-reference'
     ],
     [
-        'reference/reports',
-        'Reports',
-        '报告',
-        'reference'
-    ],
-    [
-        'reference/filtering',
-        'Filtering',
-        '过滤覆盖率',
-        'reference'
-    ],
-    [
-        'reference/source-path',
-        'Source paths',
-        '源码路径',
-        'reference'
-    ],
-    [
-        'reference/untested-files',
-        'Untested files',
-        '未测试文件',
-        'reference'
-    ],
-    [
-        'reference/ignoring-code',
-        'Ignoring code',
-        '忽略代码',
-        'reference'
-    ],
-    [
-        'reference/merging',
-        'Merging reports',
-        '合并报告',
-        'reference'
-    ],
-    [
-        'reference/multiprocessing',
-        'Multiple processes',
-        '多进程',
-        'reference'
-    ],
-    [
-        'reference/hooks',
+        'hooks',
         'Hooks',
         'Hooks',
-        'reference'
+        'cli-api-reference'
     ],
     [
-        'reference/coverage-data',
+        'cdp-client',
+        'CDPClient',
+        'CDPClient',
+        'cli-api-reference'
+    ],
+    [
+        'coverage-data',
         'V8 coverage data',
         'V8 覆盖率数据',
-        'reference'
+        'cli-api-reference'
     ],
     [
-        'reference/cdp-client',
-        'CDPClient',
-        'CDPClient',
-        'reference'
-    ],
-    [
-        'reference/types',
+        'types',
         'Type declarations',
         '类型声明',
-        'reference'
+        'cli-api-reference'
     ],
     [
-        'integrations/integrate-with-your-framework',
+        'filtering',
+        'Filtering',
+        '过滤覆盖率',
+        'coverage-workflows'
+    ],
+    [
+        'source-path',
+        'Source paths',
+        '源码路径',
+        'coverage-workflows'
+    ],
+    [
+        'untested-files',
+        'Untested files',
+        '未测试文件',
+        'coverage-workflows'
+    ],
+    [
+        'ignoring-code',
+        'Ignoring code',
+        '忽略代码',
+        'coverage-workflows'
+    ],
+    [
+        'reports',
+        'Reports',
+        '报告',
+        'coverage-workflows'
+    ],
+    [
+        'merging',
+        'Merging reports',
+        '合并报告',
+        'coverage-workflows'
+    ],
+    [
+        'multiprocessing',
+        'Multiple processes',
+        '多进程',
+        'coverage-workflows'
+    ],
+    [
+        'integrate-with-your-framework',
         'Integrate with your framework',
         '接入现有测试框架',
         'integrations'
     ],
     [
-        'integrations/frameworks-and-tools',
+        'frameworks-and-tools',
         'Frameworks and tools',
         '框架与工具',
         'integrations'
     ],
     [
-        'integrations/coverage-services',
+        'coverage-services',
         'Coverage services',
         '覆盖率服务',
         'integrations'
     ],
     [
-        'troubleshooting/common-issues',
+        'common-issues',
         'Common issues',
         '常见问题',
         'troubleshooting'
     ],
     [
-        'troubleshooting/sourcemaps',
+        'sourcemaps',
         'Sourcemaps and debugging',
         'Sourcemap 与调试',
         'troubleshooting'
     ],
     [
-        'troubleshooting/css-coverage-issues',
+        'css-coverage-issues',
         'CSS coverage issues',
         'CSS 覆盖率问题',
         'troubleshooting'
     ],
     [
-        'migrations/migration-to-3',
+        'migration-to-3',
         'Migrating to 3.x',
         '迁移到 3.x',
         'migrations'
     ],
     [
-        'more/contributing',
+        'contributing',
         'Contributing',
         '贡献指南',
-        'other'
+        'community'
     ],
     [
-        'more/thanks',
+        'thanks',
         'Thanks',
         '致谢',
-        'other'
+        'community'
     ]
 ];

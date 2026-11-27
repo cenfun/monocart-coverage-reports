@@ -8,33 +8,45 @@ import { typeDeclarations, typeDeclarationsReload } from './type-declarations.js
 const repository = 'https://github.com/cenfun/monocart-coverage-reports';
 const siteOrigin = 'https://cenfun.github.io';
 const socialImage = `${siteOrigin}/monocart-coverage-reports/og-image.png`;
-const socialImageAlt = 'Monocart Coverage Reports v3.x — rich native V8 coverage reports for JavaScript and CSS, 15+ built-in reports, AI Agent Skills, and mcr test with the built-in Node.js test runner';
+const socialImageAlt = 'Monocart Coverage Reports v3.x — rich native V8 coverage reports for JavaScript, TypeScript, and CSS, 15+ built-in reports, and mcr test with the built-in Node.js test runner';
 // Reuse the report UI icon; embedding it also works for nested routes and SSR.
 const favicon = `data:image/svg+xml;base64,${readFileSync(new URL('../../src/app/images/icons/monocart.svg', import.meta.url)).toString('base64')}`;
 const groups = [
     ['start', 'Getting started', '入门'],
     ['collection', 'Coverage collection', '覆盖率采集'],
-    ['reference', 'Reference', '参考'],
+    ['reference', 'Reference', '参考', [
+        ['cli-api-reference', 'CLI & API Reference', '命令行与 API 参考'],
+        ['coverage-workflows', 'Coverage Workflows', '覆盖率工作流']
+    ]],
     ['integrations', 'Integrations', '集成'],
     ['troubleshooting', 'Troubleshooting', '排障'],
-    ['migrations', 'Migration and upgrades', '迁移升级'],
-    ['other', 'More', '其他']
+    ['migrations', 'Migrations', '迁移升级'],
+    ['community', 'Community', '社区']
 ];
 
 const theme = (zh) => {
     const label = (en, cn) => (zh ? cn : en);
     const prefix = label('/', '/zh/');
-    const groupItems = (group) => pages.filter((page) => page[3] === group).map(([route, title, translation]) => ({
+    const groupItems = (group) => pages.filter((page) => page[3] === group).map(([slug, title, translation]) => ({
         text: label(title, translation),
-        link: `${prefix}${route}`
+        link: `${prefix}pages/${slug}`
     }));
-    return {
-        nav: groups.slice(0, 4).map(([group, en, cn]) => ({
+    const navItems = (group, subgroups) => {
+        if (!subgroups) {
+            return groupItems(group);
+        }
+        return subgroups.map(([subgroup, en, cn]) => ({
             text: label(en, cn),
-            items: groupItems(group)
+            items: groupItems(subgroup)
+        }));
+    };
+    return {
+        nav: groups.slice(0, 4).map(([group, en, cn, subgroups]) => ({
+            text: label(en, cn),
+            items: navItems(group, subgroups)
         })),
-        sidebar: groups.map(([group, en, cn]) => ({
-            text: zh ? cn : en,
+        sidebar: groups.flatMap((group) => group[3] ?? [group]).map(([group, en, cn]) => ({
+            text: label(en, cn),
             collapsed: false,
             items: groupItems(group)
         })),
@@ -53,6 +65,24 @@ const theme = (zh) => {
         darkModeSwitchLabel: label('Appearance', '外观'),
         langMenuLabel: label('Change language', '切换语言')
     };
+};
+
+const addLegacyDocsRedirect = (page, base, head) => {
+    if (page !== '404.md') {
+        return;
+    }
+    // The v3.3.0 README linked to these sections before they moved to pages/.
+    // GitHub Pages serves the 404 page for those old URLs.
+    head.push(['script', {}, `(() => {
+    const base = ${JSON.stringify(base)};
+    if (!location.pathname.startsWith(base)) return;
+    const path = location.pathname.slice(base.length);
+    const match = /^(zh\\/)?(?:getting-started|coverage-collection|reference|integrations|troubleshooting|migrations|more)(?:\\/|$)/.exec(path);
+    if (!match) return;
+    const locale = match[1] || '';
+    const page = path.slice(match[0].length) || 'get-started.html';
+    location.replace(base + locale + 'pages/' + page + location.search + location.hash);
+})();`]);
 };
 
 export default defineConfig({
@@ -174,6 +204,7 @@ export default defineConfig({
                 head.splice(i, 1);
             }
         }
+        addLegacyDocsRedirect(page, siteData.base, head);
         const route = page.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '.html');
         const url = new URL(`${siteData.base}${route}`, siteOrigin).href;
         return [
@@ -198,10 +229,6 @@ export default defineConfig({
         ];
     },
     vite: {
-        // Mermaid loads these CommonJS modules from lazy diagram chunks in dev.
-        optimizeDeps: {
-            include: ['fastdom', 'fastdom/extensions/fastdom-promised.js']
-        },
         plugins: [reportServer(), typeDeclarationsReload()],
         build: {
             // build-docs.js cleans obsolete docs first, preserving the reports directory.

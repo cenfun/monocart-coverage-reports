@@ -1,0 +1,134 @@
+.mcr-dark {
+    --mcr-dark-text: #e6edf3;
+    --mcr-dark-bg: #1e1e1e;
+    --mcr-dark-raised: #2b3038;
+    --mcr-dark-border: #535b66;
+    --mcr-dark-positive: #8ddc8d;
+    --mcr-dark-negative: #ff9a9a;
+    --mcr-dark-low: #512e36;
+    --mcr-dark-medium: #483b22;
+    --mcr-dark-high: #2a432b;
+
+    color-scheme: dark;
+
+    body {
+        color: var(--mcr-dark-text);
+        background-color: var(--mcr-dark-bg);
+    }
+
+    a:link,
+    a:visited {
+        color: #8cbeff;
+    }
+
+    .mcr-filter,
+    .mcr-watermarks,
+    .mcr-report-values,
+    .mcr-report-values > div:not(:last-child),
+    .tg-turbogrid .tg-pane.tg-frozen-line-v,
+    .tg-turbogrid .mcr-column-separator {
+        border-color: var(--mcr-dark-border);
+    }
+
+    .mcr-low {
+        background-color: var(--mcr-dark-low);
+    }
+
+    .mcr-medium {
+        background-color: var(--mcr-dark-medium);
+    }
+
+    .mcr-high {
+        background-color: var(--mcr-dark-high);
+    }
+
+    .mcr-watermarks .mcr-watermarks-value,
+    .tg-turbogrid .mcr-row-summary {
+        background-color: var(--mcr-dark-raised);
+    }
+
+    .mcr-source,
+    .mcr-covered {
+        color: var(--mcr-dark-positive);
+    }
+
+    .mcr-uncovered,
+    .mcr-locate-uncovered,
+    .mcr-icon-error {
+        color: var(--mcr-dark-negative);
+    }
+
+    .mcr-report-bc {
+        color: #b6bec7;
+    }
+
+    .mcr-search input,
+    .vui-select-popup {
+        color: var(--mcr-dark-text);
+        border-color: var(--mcr-dark-border);
+        background-color: var(--mcr-dark-raised);
+    }
+
+    .vui-select-item {
+        color: inherit;
+
+        &:not(:last-child) {
+            border-bottom-color: var(--mcr-dark-border);
+        }
+
+        &.vui-select-selected {
+            color: #8cbeff;
+        }
+
+        &.vui-select-active,
+        &:hover {
+            background-color: #3a424e;
+        }
+    }
+
+    .vui-flyover {
+        background-color: var(--mcr-dark-bg);
+    }
+
+    .mcr-flyover-header {
+        background-color: #00467f;
+    }
+
+    .mcr-report-head,
+    .mcr-report-foot {
+        border-color: var(--mcr-dark-border);
+        background-color: var(--mcr-dark-raised);
+    }
+
+    .mcr-top-item .mcr-top-count {
+        border-color: var(--mcr-dark-positive);
+        background-color: var(--mcr-dark-high);
+    }
+
+    .mcr-locate-switch span {
+        color: inherit;
+    }
+
+    // Vine UI renders these backgrounds as light SVGs.
+    .vui-popover,
+    .vui-tooltip {
+        color-scheme: light;
+        color: #333;
+    }
+
+    .vui-popover a,
+    .vui-tooltip a {
+        color: #0a58ca;
+    }
+
+    .mcr-header .mcr-title a {
+        color: #fff;
+    }
+
+    // The code viewer only exposes a light palette. Recolor the whole editor,
+    // including syntax, coverage decorations, and the selection, without rebuilding it.
+    .mcr-report-code .cm-editor {
+        color-scheme: light;
+        filter: invert(0.9) hue-rotate(180deg);
+    }
+}

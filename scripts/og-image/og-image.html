@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Monocart Coverage Reports v3.x — social preview</title>
+    <title>Monocart Coverage Reports — social preview</title>
     <style>
         * {
             box-sizing: border-box;
         }
 
         body {
+            --accent: #a54e12;
+            --accent-soft: rgb(165 78 18 / 8%);
+            --accent-divider: rgb(165 78 18 / 24%);
+            --muted: #57606a;
+            --mono: Consolas, "Liberation Mono", monospace;
             display: flex;
             flex-direction: column;
             width: 1200px;
@@ -16,199 +21,171 @@
             margin: 0;
             color: #24292e;
             font-family: Arial, Helvetica, sans-serif;
-            border-top: 8px solid #d2691e;
-            background: #fff;
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: 230px 1fr;
-            gap: 36px;
-            align-items: center;
-            min-height: 260px;
-            margin-bottom: 28px;
-        }
-
-        header {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            height: 46px;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            width: 230px;
-            height: 230px;
-        }
-
-        .brand {
-            font-weight: bold;
-            font-size: 38px;
-            letter-spacing: -0.5px;
-        }
-
-        .version {
-            margin-left: auto;
-            padding: 9px 18px;
-            color: #a54e12;
-            font-weight: bold;
-            font-size: 23px;
-            border: 1px solid #edc8ab;
-            border-radius: 24px;
-            background: #fff5eb;
+            border-top: 8px solid var(--accent);
+            background: radial-gradient(ellipse at 82% 18%, var(--accent-soft), transparent 58%), #fff;
         }
 
         main {
             margin: 32px 64px 0;
         }
 
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 256px;
+            gap: 48px;
+            align-items: center;
+            min-height: 238px;
+            margin-bottom: 24px;
+        }
+
+        .hero img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .version {
+            display: inline-block;
+            padding: 5px 13px;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 15px;
+            border: 1px solid var(--accent-divider);
+            border-radius: 24px;
+            background: var(--accent-soft);
+        }
+
+        .brand {
+            margin: 12px 0 6px;
+            font-weight: bold;
+            font-size: 27px;
+        }
+
         h1 {
             margin: 0;
-            font-size: 44px;
-            line-height: 54px;
-            letter-spacing: -1.2px;
+            font-size: 56px;
+            line-height: 1.04;
+            letter-spacing: -2px;
         }
 
         h1 span {
-            color: #a54e12;
-        }
-
-        .compatibility {
-            margin: 12px 0 0;
-            color: #57606a;
-            font-size: 23px;
-            line-height: 32px;
+            display: block;
+            color: var(--accent);
         }
 
         .tagline {
-            margin: 18px 0 0;
-            color: #57606a;
+            max-width: 700px;
+            margin: 14px 0 0;
+            color: var(--muted);
             font-size: 23px;
-            line-height: 32px;
+            line-height: 1.45;
+            text-wrap: balance;
         }
 
-        .command {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 126px;
-            padding: 24px 32px;
+        .reports {
+            padding: 22px 28px 26px;
             color: #f6f8fa;
-            border: 1px solid #303b48;
             border-radius: 16px;
             background: #18212b;
         }
 
-        .command-label {
-            margin-bottom: 10px;
+        .reports h2 {
+            margin: 0 0 18px;
             color: #f5bd8f;
-            font-weight: bold;
-            font-size: 16px;
-            letter-spacing: 1.6px;
+            font-size: 30px;
         }
 
-        code {
-            font-weight: bold;
-            font-size: 36px;
-            font-family: Consolas, "Liberation Mono", monospace;
+        .reports dl {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 0;
         }
 
-        .prompt {
-            color: #7ee787;
-        }
-
-        .workflow {
-            padding-left: 32px;
-            font-size: 23px;
-            line-height: 32px;
+        .reports dl > div + div {
+            padding-left: 24px;
             border-left: 1px solid #44505d;
         }
 
-        .workflow strong {
-            color: #7ee787;
+        .reports dt {
+            font-size: 23px;
+            font-weight: bold;
         }
 
-        .features {
+        .reports dd {
+            margin: 6px 0 0;
+            color: #c9d1da;
+            font-size: 18px;
+            line-height: 1.35;
+        }
+
+        .example {
             display: flex;
-            gap: 14px;
-            margin-top: 23px;
-            color: #57606a;
-            font-size: 21px;
-            line-height: 28px;
+            align-items: baseline;
+            gap: 18px;
+            margin: 20px 0 0;
         }
 
-        .features span {
-            padding: 7px 18px;
+        .example strong {
+            color: var(--accent);
+            font-size: 19px;
+        }
+
+        .example code {
+            font: 20px/1.4 var(--mono);
             white-space: nowrap;
-            border: 1px solid #d0d7de;
-            border-radius: 22px;
-            background: #f6f8fa;
         }
 
-        footer {
+        .capabilities {
             display: flex;
-            flex-shrink: 0;
             justify-content: space-between;
-            align-items: center;
-            height: 76px;
-            margin-top: auto;
-            padding: 0 64px;
-            color: #57606a;
-            font-size: 24px;
-            border-top: 1px solid #e5e9ed;
-            background: #f6f8fa;
-        }
-
-        .footer-link {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .link-icon,
-        .link-icon svg {
-            display: block;
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
+            margin: 18px 0 0;
+            padding: 17px 0 0;
+            color: var(--muted);
+            font-size: 21px;
+            font-weight: bold;
+            border-top: 1px solid var(--accent-divider);
+            list-style: none;
         }
     </style>
 </head>
 <body>
     <main>
         <section class="hero" aria-label="Monocart Coverage Reports">
-            <img class="logo" src="{placeholder_logo}" alt="Monocart" width="230" height="230">
             <div>
-                <header>
-                    <div class="brand">Monocart Coverage Reports</div>
-                    <div class="version">v3.x</div>
-                </header>
-                <h1>Rich native <span>V8 coverage reports.</span></h1>
-                <p class="compatibility">15+ built-in reports · Istanbul reports · Custom reports</p>
-                <p class="tagline">JavaScript &amp; CSS coverage. Native byte-level metrics.</p>
+                <span class="version">MCR 3.x</span>
+                <p class="brand">Monocart Coverage Reports</p>
+                <h1>See coverage <span>down to the byte.</span></h1>
+                <p class="tagline">Native coverage for JavaScript, TypeScript, and CSS. Collect from Node.js and Chromium without instrumentation.</p>
             </div>
+            <img src="{placeholder_hero_art}" alt="" width="272" height="272">
         </section>
-        <section class="command" aria-label="Test command">
-            <div>
-                <div class="command-label">SINCE v3.0.0</div>
-                <code><span class="prompt">$</span> mcr test "*.test.js"</code>
-            </div>
-            <div class="workflow">Built-in Node.js test runner · <strong>node --test</strong><br>Automatic V8 coverage reports</div>
+        <section class="reports" aria-labelledby="reports-title">
+            <h2 id="reports-title">15+ built-in report formats</h2>
+            <dl>
+                <div>
+                    <dt>HTML reports</dt>
+                    <dd>Interactive V8 and Istanbul views</dd>
+                </div>
+                <div>
+                    <dt>Terminal output</dt>
+                    <dd>Coverage summaries and file details</dd>
+                </div>
+                <div>
+                    <dt>Markdown reports</dt>
+                    <dd>Coverage in CI job summaries</dd>
+                </div>
+            </dl>
         </section>
-        <div class="features">
-            <span>AI Agent Skills</span>
-            <span>Browser &amp; Node.js</span>
-            <span>Source maps</span>
-            <span>Merge Coverage</span>
-            <span>CI integration</span>
-        </div>
+        <p class="example">
+            <strong>Node.js example</strong>
+            <code>npx --package=monocart-coverage-reports mcr test "./test/**/*.test.js"</code>
+        </p>
+        <ul class="capabilities" aria-label="More coverage features">
+            <li>Source maps</li>
+            <li>Cross-run merging</li>
+            <li>Coverage filtering</li>
+            <li>CI thresholds</li>
+        </ul>
     </main>
-    <footer>
-        <div class="footer-link">
-            <span class="link-icon" aria-hidden="true">{placeholder_link_icon}</span>
-            <span>github.com/cenfun/monocart-coverage-reports</span>
-        </div>
-    </footer>
 </body>
 </html>

@@ -20,6 +20,8 @@ export const renderDiagram = (graph, dark) => {
             themeCSS: 'foreignObject p { line-height: inherit; }',
             flowchart: {
                 htmlLabels: false,
+                // Preserve the Mermaid 11 label width; Mermaid 12 defaults to 120.
+                wrappingWidth: 200,
                 useMaxWidth: true
             }
         });

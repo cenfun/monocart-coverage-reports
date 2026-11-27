@@ -9,6 +9,8 @@
     --vp-button-brand-active-bg: #71350d;
     --vp-nav-logo-height: 28px;
     --mcr-brand-divider: rgb(165 78 18 / 24%);
+    --mcr-radius-card: 16px;
+    --mcr-radius-control: 8px;
 }
 
 .dark {
@@ -70,161 +72,32 @@
     outline-offset: 3px;
 }
 
-.VPHome .VPHero {
-    padding-bottom: 36px;
-}
-
-.VPHome .VPHero .container {
-    align-items: center;
-    gap: 28px;
-}
-
-.VPHome .VPHero .image {
-    margin: 0;
-}
-
-.VPHome .VPHero .image-container {
-    width: auto;
-    height: auto;
-    transform: none;
-}
-
-.mcr-logo {
-    width: clamp(120px, 18vw, 230px);
-    height: auto;
-}
-
-.mcr-version {
-    display: inline-block;
-    margin-bottom: 18px;
-    padding: 5px 14px;
-    color: #a54e12;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid #edc8ab;
-    border-radius: 24px;
-    background: #fff5eb;
-}
-
-.dark .mcr-version {
-    color: #f5bd8f;
-    border-color: #704323;
-    background: #35281e;
-}
-
-.VPHome .VPHero .name {
-    margin-bottom: 12px;
-    color: var(--vp-c-text-1);
-    font-size: clamp(22px, 2.5vw, 32px);
-    line-height: 1.3;
-    -webkit-text-fill-color: currentcolor;
-}
-
-.VPHome .VPHero .text {
-    font-size: clamp(32px, 4vw, 48px);
-    line-height: 1.2;
-    letter-spacing: -1px;
-}
-
 .VPNavBarMenuGroup:hover > .button > .text {
     color: var(--vp-c-brand-1);
 }
 
-.mcr-accent {
-    color: var(--vp-c-brand-1);
+/* Upstream clips this list when closed, but clipping alone leaves links focusable. */
+.VPNavScreenTranslations:not(.open) > .list {
+    visibility: hidden;
 }
 
-.VPHome .VPHero .tagline {
-    font-size: 18px;
-    line-height: 1.7;
+/* Keep rule and prompt copy buttons visible without requiring hover. */
+.ai-agent-skill-page .vp-doc .language-md > button.copy {
+    opacity: 1;
 }
 
-.mcr-workflow {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px 40px;
+.ai-agent-skill-page .vp-doc .language-md > span.lang {
+    display: none;
 }
 
-.mcr-command {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 24px;
-    color: #f6f8fa;
-    border: 1px solid #303b48;
-    border-top: 4px solid #d2691e;
-    border-radius: 16px;
-    background: #18212b;
-    transition: border-color 0.2s;
+.ai-agent-skill-page .vp-doc .language-md pre {
+    padding-top: 56px;
 }
 
-.mcr-command:hover {
-    border-color: #d2691e;
-}
-
-.mcr-command-main {
-    min-width: 0;
-}
-
-.mcr-command-label {
-    display: block;
-    margin-bottom: 10px;
-    color: #f5bd8f;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-}
-
-.mcr-command code {
-    font-family: var(--vp-font-family-mono);
-    font-size: clamp(16px, 2.6vw, 30px);
-    font-weight: 600;
+.ai-agent-skill-page .vp-doc .language-md code {
+    width: 100%;
     overflow-wrap: anywhere;
-}
-
-.mcr-prompt,
-.mcr-command-description strong {
-    color: #7ee787;
-}
-
-.mcr-command-description {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding-top: 20px;
-    font-size: 15px;
-    line-height: 1.7;
-    border-top: 1px solid #44505d;
-}
-
-.mcr-capabilities {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0 0;
-    padding: 0;
-    list-style: none;
-}
-
-.mcr-capabilities a {
-    display: block;
-    padding: 5px 14px;
-    color: var(--vp-c-text-2);
-    font-size: 14px;
-    border: 1px solid var(--vp-c-divider);
-    border-radius: 24px;
-    background: var(--vp-c-bg-soft);
-}
-
-.mcr-capabilities a:hover {
-    color: var(--vp-c-brand-1);
-    border-color: var(--vp-c-brand-1);
-}
-
-.mcr-workflow a:focus-visible {
-    outline: 3px solid var(--vp-c-brand-1);
-    outline-offset: 4px;
+    white-space: pre-wrap;
 }
 
 /* Keep the prominent Skill link and search usable on tablets. */
@@ -245,53 +118,5 @@
 
     .DocSearch-Button .DocSearch-Search-Icon {
         margin-right: 0;
-    }
-}
-
-@media (min-width: 640px) {
-    .mcr-workflow {
-        padding-right: 48px;
-        padding-left: 48px;
-    }
-
-    .mcr-command {
-        padding: 28px 32px;
-    }
-}
-
-@media (min-width: 960px) {
-    .VPHome .VPHero .image {
-        order: 1;
-        flex: 0 0 230px;
-    }
-
-    .VPHome .VPHero .main {
-        order: 2;
-        flex: 1;
-        width: auto;
-        max-width: none;
-    }
-
-    .VPHome .VPHero .name,
-    .VPHome .VPHero .text,
-    .VPHome .VPHero .tagline {
-        max-width: none;
-    }
-
-    .mcr-workflow {
-        padding-right: 64px;
-        padding-left: 64px;
-    }
-
-    .mcr-command {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .mcr-command-description {
-        padding: 0 0 0 28px;
-        border-top: 0;
-        border-left: 1px solid #44505d;
     }
 }

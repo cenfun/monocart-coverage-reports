@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="static" width="272" height="272" viewBox="0 0 272 272">
+    <style>
+        /* The #static fragment also lets image consumers explicitly opt out. */
+        @media (prefers-reduced-motion: no-preference) {
+            :root:not(:target) .static-art { display: none; }
+            :root:not(:target) .moving-art { display: inline; }
+        }
+    </style>
+    <defs>
+        <clipPath id="card">
+            <rect width="256" height="256" rx="31"/>
+        </clipPath>
+        <linearGradient id="surface" x2="0" y2="100%">
+            <stop stop-color="#392b26"/>
+            <stop offset=".75" stop-color="#2a211d"/>
+        </linearGradient>
+        <radialGradient id="mark-glow" cx=".5" cy=".29" r=".55" gradientTransform="translate(0 .075) scale(1 .74)">
+            <stop stop-color="#794323"/>
+            <stop offset="1" stop-color="#794323" stop-opacity="0"/>
+        </radialGradient>
+        <!-- The wheel is lit from about 70° above the rightward horizontal. -->
+        <linearGradient id="wheel-wood" x1="67%" y1="3%" x2="33%" y2="97%">
+            <stop stop-color="#d7a173"/>
+            <stop offset=".38" stop-color="#bd875e"/>
+            <stop offset=".66" stop-color="#9e6d4a"/>
+            <stop offset="1" stop-color="#805439"/>
+        </linearGradient>
+        <linearGradient id="wheel-bevel" href="#wheel-wood">
+            <stop stop-color="#ffdaaa" stop-opacity=".43"/>
+            <stop offset=".48" stop-color="#efbd89" stop-opacity=".22"/>
+            <stop offset="1" stop-color="#492b20" stop-opacity=".43"/>
+        </linearGradient>
+        <linearGradient id="wheel-inset" href="#wheel-wood">
+            <stop stop-color="#423026"/>
+            <stop offset="1" stop-color="#2f211b"/>
+        </linearGradient>
+        <clipPath id="wheel-interior">
+            <circle cx="128" cy="86" r="65"/>
+        </clipPath>
+        <g id="wheel-details" fill="none">
+            <path d="M128 19v39m0 56v39M61 86h39m56 0h39M81 39l27 27m40 40 27 27m0-94-27 27m-40 40-27 27" stroke="#805437" stroke-width="7" clip-path="url(#wheel-interior)"/>
+            <!-- The rim's wood grain and joints rotate; the lighting does not. -->
+            <circle cx="128" cy="86" r="72" stroke="#603d29" stroke-opacity=".6" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="49 9 23 14"/>
+            <circle cx="128" cy="86" r="68.5" stroke="#603d29" stroke-opacity=".48" stroke-width="1" stroke-linecap="round" stroke-dasharray="36 13 54 7"/>
+            <path d="M75 33l7 7m92 92 7 7m0-106-7 7m-92 92-7 7" stroke="#603d29" stroke-width="2"/>
+        </g>
+        <clipPath id="plank-window">
+            <rect x="16" y="162" width="224" height="21"/>
+        </clipPath>
+        <rect id="plank" y="162" width="18" height="21" rx="3"/>
+        <g id="plank-row">
+            <g fill="#c4855e">
+                <use href="#plank" x="19"/>
+                <use href="#plank" x="44"/>
+                <use href="#plank" x="69"/>
+                <use href="#plank" x="94"/>
+                <use href="#plank" x="119"/>
+            </g>
+            <!-- Only the plank approaching the wheel inherits the animated fill. -->
+            <use href="#plank" x="144"/>
+            <g fill="#62463b">
+                <use href="#plank" x="169"/>
+                <use href="#plank" x="194"/>
+                <use href="#plank" x="219"/>
+                <use href="#plank" x="244"/>
+            </g>
+        </g>
+        <path id="coverage-track" d="M0 0h16m5 0h16m5 0h16"/>
+        <filter id="card-shadow" x="-.1" y="-.1" width="1.2" height="1.2">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#221611" flood-opacity=".22"/>
+        </filter>
+        <filter id="wheel-shadow" x="-.15" y="-.15" width="1.3" height="1.3">
+            <feDropShadow dx="-2" dy="6" stdDeviation="3.75" flood-color="#140902" flood-opacity=".48"/>
+        </filter>
+        <filter id="mark-shadow" x="-.3" y="-.3" width="1.6" height="1.6">
+            <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#140902" flood-opacity=".42"/>
+        </filter>
+    </defs>
+
+    <g transform="translate(8 4)">
+        <rect width="256" height="256" rx="31" fill="#2a211d" filter="url(#card-shadow)"/>
+        <g clip-path="url(#card)">
+            <path d="M0 0h256v210H0z" fill="url(#surface)"/>
+            <path d="M0 0h256v210H0z" fill="url(#mark-glow)"/>
+            <g transform="translate(0 6)">
+                <!-- Keep the rim lighting fixed while the wheel details turn. -->
+                <circle cx="128" cy="86" r="70" fill="url(#wheel-inset)" stroke="url(#wheel-wood)" stroke-width="10" filter="url(#wheel-shadow)"/>
+                <circle cx="128" cy="86" r="74.5" fill="none" stroke="url(#wheel-bevel)"/>
+                <circle cx="128" cy="86" r="65.5" fill="none" stroke="#553621" stroke-opacity=".42"/>
+                <use class="static-art" href="#wheel-details"/>
+                <g class="moving-art" display="none">
+                    <animateTransform attributeName="transform" type="rotate" from="0 128 86" to="360 128 86" dur="12s" repeatCount="indefinite"/>
+                    <use href="#wheel-details"/>
+                </g>
+
+                <path d="M13 191h230" fill="none" stroke="#81543d" stroke-width="2.5" stroke-linecap="round"/>
+                <g clip-path="url(#plank-window)" fill="#62463b">
+                    <use class="static-art" href="#plank-row"/>
+                    <g class="moving-art" display="none">
+                        <animateTransform attributeName="transform" type="translate" from="0 0" to="-25 0" dur="0.639s" repeatCount="indefinite"/>
+                        <!-- At 16/25 of the loop, the leading edge moves from x=144 to x=128. -->
+                        <animate attributeName="fill" calcMode="discrete" values="#62463b;#c4855e" keyTimes="0;.64" dur="0.639s" repeatCount="indefinite"/>
+                        <use href="#plank-row"/>
+                    </g>
+                </g>
+
+                <!-- Embed the Monocart mark so the artwork renders without external SVG references. -->
+                <g filter="url(#mark-shadow)">
+                    <path transform="translate(78 36) scale(.0625)" fill="chocolate" fill-rule="evenodd" d="M300,0L257,302l192,98H600l50-49,150-50,150,50,50,49h149l195-98L1300,0l300,400L1300,601l201,99L1248,800l2,101-150,300,50,199-150,200H600L450,1400l51-199L350,901V800L101,700l200-99L0,400ZM500,550H600L800,650l200-100h100V850H1000V650L800,750,600,650V850H500V550Z"/>
+                </g>
+            </g>
+
+            <rect x="12" y="205" width="232" height="39" rx="8" fill="#2b211d"/>
+            <g fill="#f7e7db" font-family="ui-monospace, Consolas, monospace" font-size="12" font-weight="700">
+                <text x="24" y="223">JS</text>
+                <text x="99" y="223">TS</text>
+                <text x="174" y="223">CSS</text>
+            </g>
+            <!-- Illustrative coverage bands with the default [50, 80] watermarks. -->
+            <g fill="none" stroke-width="4">
+                <use href="#coverage-track" x="24" y="232" stroke="#87cc9a"/>
+                <use href="#coverage-track" x="99" y="232" stroke="#59443a"/>
+                <path d="M99 232h16" stroke="#ef877f"/>
+                <use href="#coverage-track" x="174" y="232" stroke="#59443a"/>
+                <path d="M174 232h16m5 0h16" stroke="#f0c963"/>
+            </g>
+        </g>
+        <rect x=".5" y=".5" width="255" height="255" rx="30.5" fill="none" stroke="#6c4a36"/>
+    </g>
+</svg>

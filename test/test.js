@@ -36,6 +36,7 @@ const test = async (type) => {
         '--browser': [
             'test-istanbul',
             'test-v8',
+            'test-v8-app',
             'test-puppeteer',
             'test-css',
             'test-css-min',

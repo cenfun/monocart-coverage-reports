@@ -31,20 +31,29 @@ const hash = {
     },
 
     remove: function(key) {
-        if (!key) {
-            location.hash = '';
+        if (!location.hash) {
             return;
         }
-        let list = key;
-        if (!Array.isArray(key)) {
-            list = [key];
+
+        if (key) {
+            const keys = Array.isArray(key) ? key : [key];
+            const params = new URLSearchParams(location.hash.slice(1));
+            if (!keys.some((item) => params.has(item))) {
+                return;
+            }
+            keys.forEach((item) => params.delete(item));
+            const fragment = params.toString();
+            if (fragment) {
+                location.hash = fragment;
+                return;
+            }
         }
-        const data = hash.get();
-        list.forEach((k) => {
-            delete data[k];
-        });
-        const usp = new URLSearchParams(data);
-        location.hash = usp.toString();
+
+        // Navigating to an empty fragment can scroll an iframe and its parent
+        // to reveal the report's top. Keep the history entry without navigating.
+        const url = new URL(location.href);
+        url.hash = '';
+        history.pushState(history.state, '', url);
     }
 };
 

@@ -11,7 +11,7 @@ node -p "require.resolve('monocart-coverage-reports/package.json')"
 node -p "require.resolve('monocart-coverage-reports')"
 ```
 
-Resolve the manifest's `types` relative to its package directory (current path: `lib/index.d.ts`). Read the installed declarations and `lib/default/options.js` before inventing an API. `README.md` and `docs/migrations/migration-to-3.md` describe integration/version behavior. File inspection inside `lib/` does not make those files public package exports. Do not import arbitrary internals into a host application.
+Resolve the manifest's `types` relative to its package directory (current path: `lib/index.d.ts`). Read the installed declarations and `lib/default/options.js` before inventing an API. `README.md` and the bundled migration guide describe integration/version behavior. See [the skill's offline instructions](../SKILL.md) for the guide path in current and older packages. File inspection inside `lib/` does not make those files public package exports. Do not import arbitrary internals into a host application.
 
 Current exports: main API, `/register` source-capture preload, `/converter` and `/util` named exports, `/package.json`, and `/skills/*` file resolution. Use the high-level API unless a task explicitly requires lower-level conversion.
 
@@ -34,11 +34,11 @@ Paths below are relative to the repository root and are generally **not shipped 
 | Native V8/Istanbul generation | `lib/v8/v8.js`, `lib/istanbul/istanbul.js`, `lib/reports/` | `test/test-v8-and-istanbul.js`, custom reporter examples under `test/` |
 | Snapshots | `lib/utils/snapshot.js` | `test/check-snapshot.js`, `test/snapshot/` |
 | HTML assets and report UI | `lib/assets.js`, `lib/default/template.html`, `src/app/`, `src/vendor/`, `vite.config.mjs` | `npm run dev`, `npm run build`, `npm run test-runtime` |
-| Runtime compatibility / upgrade | `docs/migrations/migration-to-3.md`, `scripts/test-runtime.js` | `test/unit/node-version.test.js` |
+| Runtime compatibility / upgrade | `docs/pages/migration-to-3.md`, `scripts/test-runtime.js` | `test/unit/node-version.test.js` |
 
 ## Documentation and published demos
 
-Tracked bilingual VitePress source lives in `docs/`. Use `npm run docs:dev` for development and `npm run docs` for check-only lint and a production build, without documentation unit tests. Generated documentation and reports share `.temp/site/`, with reports under `.temp/site/reports/`. Pages publishes that site directory; public report URLs start with `/monocart-coverage-reports/reports/`. Documentation rebuilds preserve reports. The report example lists are ordinary VitePress pages maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`, not generated indexes. All report HTML, data and assets use the new `/reports/` URLs; old URLs are not supported. The npm skill remains self-contained and does not require the website.
+Tracked bilingual VitePress source lives in `docs/`. Use `npm run docs:dev` for development and `npm run docs` for check-only lint and a production build, without documentation unit tests. Generated documentation and reports share `.temp/site/`, with reports under `.temp/site/reports/`. Pages publishes that site directory; public report URLs start with `/monocart-coverage-reports/reports/`. Documentation rebuilds preserve reports. The report example lists are ordinary VitePress pages maintained in `docs/pages/examples.md` and `docs/zh/pages/examples.md`, not generated indexes. All report HTML, data and assets use the new `/reports/` URLs; old URLs are not supported. The npm skill remains self-contained and does not require the website.
 
 ## Development validation
 

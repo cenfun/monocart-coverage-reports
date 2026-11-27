@@ -1,7 +1,12 @@
 ## Changelog
 
+- 3.3.1
+    - add light and dark modes to the V8 HTML report
+    - fix an unexpected page scroll when closing the source view in an embedded V8 HTML report
+    - update docs
+
 - 3.3.0
-  - run TypeScript directly with `mcr node` and `mcr test`, and report coverage against the original source. See [TypeScript support](docs/getting-started/typescript.md).
+  - run TypeScript directly with `mcr node` and `mcr test`, and report coverage against the original source. See [TypeScript support](docs/pages/typescript.md).
   - **Node.js requirement:** all CLI commands and APIs now require Node.js 22.18.0 or later (previously 22.15.0). If you use Node.js 22.15–22.17, upgrade Node.js or stay on MCR 3.2.x.
 
 - 3.2.1
@@ -25,7 +30,7 @@
     - tolerate foreign or malformed file URLs and partially missing sourcemap sources without aborting reports (#139, #140)
 
 - 3.0.0
-  - [Migration guide: upgrading from 2.x to 3.x](docs/migrations/migration-to-3.md)
+  - [Migration guide: upgrading from 2.x to 3.x](docs/pages/migration-to-3.md)
   - **Breaking Changes**
     - require Node.js >= 22.15.0
     - migrate to ESM only; replace the callable `require('monocart-coverage-reports')` entry with default/named imports, or dynamic `import()` from CommonJS

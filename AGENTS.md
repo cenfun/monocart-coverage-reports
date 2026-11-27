@@ -11,7 +11,7 @@ Monocart Coverage Reports (MCR) 3.x collects JavaScript, TypeScript, and CSS cov
 - Runtime source: native ESM JavaScript in `lib/`. This directory is mostly **handwritten source**, not build output.
 - Report UI: Vue single-file components and JavaScript in `src/app/`.
 - Bundled dependency entry points: `src/vendor/`; build configuration: `vite.config.mjs`.
-- Documentation: bilingual VitePress Markdown and configuration in `docs/`; publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/getting-started/examples.md` and `docs/zh/getting-started/examples.md`.
+- Documentation: bilingual VitePress Markdown and configuration in `docs/`. Store inner pages in `docs/pages/` and `docs/zh/pages/`; register their navigation groups in `docs/.vitepress/pages.js`. Public URLs follow the source paths. Publish `.temp/site/` with generated reports under `.temp/site/reports/`. Report example lists are maintained in `docs/pages/examples.md` and `docs/zh/pages/examples.md`.
 - Public declarations: `lib/index.d.ts`. The separate TypeScript check validates declarations, consumer examples, and native TS fixtures without emitting JavaScript.
 
 For integrating MCR into another project, read [the reusable coverage skill](skills/monocart-coverage-reports/SKILL.md).
@@ -30,7 +30,7 @@ Do not run repository development commands inside an installed dependency.
 | Filtering and paths | `lib/utils/source-path.js`, `lib/utils/util.js`, `lib/generate.js` | `test/unit/source-path.test.js`, `test/unit/output-filter.test.js` |
 | Report generation and merging | `lib/generate.js`, `lib/v8/`, `lib/istanbul/`, `lib/reports/` | Relevant unit tests and `test/test-merge*.js` |
 | HTML assets and report UI | `lib/assets.js`, `lib/default/template.html`, `src/app/` | Build, runtime smoke test, visual inspection |
-| Package compatibility | `package.json`, `lib/index.d.ts`, `docs/migrations/migration-to-3.md` | Type tests, runtime smoke test |
+| Package compatibility | `package.json`, `lib/index.d.ts`, `docs/pages/migration-to-3.md` | Type tests, runtime smoke test |
 
 See [the detailed repository map](skills/monocart-coverage-reports/references/repository-map.md) for more routes.
 
@@ -70,7 +70,7 @@ Important constraints:
 - Prefer Node built-ins for helper scripts. Put temporary scripts and artifacts in `.temp/`. Do not add dependencies for simple automation.
 - Preserve UTF-8 and LF line endings. `.gitattributes` requires LF because coverage range checks depend on source offsets.
 - Keep changes focused. Preserve user edits. Do not reformat unrelated code or regenerate unrelated artifacts.
-- For product behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese documentation and `README.md` examples, and focused tests. Update `docs/migrations/migration-to-3.md` when migration behavior changes.
+- For product behavior changes, align implementation, `lib/index.d.ts`, defaults, English/Chinese documentation and `README.md` examples, and focused tests. Update `docs/pages/migration-to-3.md` when migration behavior changes.
 - Keep replies concise and use the user's language. Explain non-obvious tradeoffs. Report changed paths, actual checks, and checks blocked by the environment.
 - Do not claim that a check passed unless you ran it and observed success.
 

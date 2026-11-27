@@ -1,9 +1,10 @@
 <script setup>
 import {
-    shallowReactive, onMounted, reactive, provide, watch, watchEffect
+    shallowReactive, onMounted, onUnmounted, reactive, provide, watch, watchEffect
 } from 'vue';
 import {
     VuiFlex,
+    VuiIcon,
     VuiInput,
     VuiSwitch,
     VuiSelect,
@@ -25,6 +26,7 @@ import PageFlyover from './components/page-flyover.vue';
 import PageReport from './components/page-report.vue';
 
 import faviconIcon from './images/icons/monocart.svg';
+import './dark.scss';
 
 
 const allMetrics = [{
@@ -60,9 +62,14 @@ const allMetrics = [{
 }];
 
 // =================================================================================
+const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+const systemTheme = () => (darkQuery.matches ? 'dark' : 'light');
+const savedTheme = store.get('theme');
+
 // do not use reactive for grid data
 const state = shallowReactive({
     title: 'Coverage Report',
+    theme: savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : systemTheme(),
     metrics: [],
     summary: {},
 
@@ -721,13 +728,18 @@ const initData = () => {
 
 };
 
+let gridOptions;
+
+const gridTheme = () => (state.theme === 'dark' ? 'dark' : 'default');
+
 const initGrid = () => {
     const grid = new Grid('.mcr-coverage-grid');
     state.grid = grid;
     bindGridEvents(grid);
 
     let rowNumber = 1;
-    const options = {
+    gridOptions = {
+        theme: gridTheme(),
         bindWindowResize: true,
         scrollbarRound: true,
         textSelectable: false,
@@ -752,7 +764,7 @@ const initGrid = () => {
 
     // no frozen in mini size
     if (state.windowWidth < 800) {
-        options.frozenColumn = -1;
+        gridOptions.frozenColumn = -1;
     }
 
 
@@ -827,7 +839,7 @@ const initGrid = () => {
         },
         url: Util.formatUrl
     });
-    grid.setOption(options);
+    grid.setOption(gridOptions);
     grid.setData(getGridData());
     grid.render();
 };
@@ -943,8 +955,35 @@ const init = async () => {
 };
 
 
+const onSystemThemeChange = () => {
+    state.theme = systemTheme();
+    store.remove('theme');
+};
+
+const onThemeClick = () => {
+    state.theme = state.theme === 'light' ? 'dark' : 'light';
+    store.set('theme', state.theme);
+};
+
+watch(() => state.theme, (theme) => {
+    document.documentElement.classList.toggle('mcr-dark', theme === 'dark');
+    if (state.grid) {
+        // Keep the option for future renders, but switch the current grid in place.
+        gridOptions.theme = gridTheme();
+        document.querySelector('.mcr-coverage-grid .tg-turbogrid')?.classList.toggle('tg-dark', theme === 'dark');
+    }
+}, {
+    immediate: true
+});
+
 onMounted(() => {
+    darkQuery.addEventListener('change', onSystemThemeChange);
     init();
+});
+
+onUnmounted(() => {
+    darkQuery.removeEventListener('change', onSystemThemeChange);
+    document.documentElement.classList.remove('mcr-dark');
 });
 
 watch(() => state.group, (v) => {
@@ -1031,6 +1070,20 @@ window.addEventListener('unhandledrejection', function(e) {
       </VuiFlex>
 
       <div class="vui-flex-auto" />
+      <button
+        type="button"
+        class="mcr-theme"
+        aria-label="Dark mode"
+        :aria-pressed="state.theme === 'dark'"
+        :title="state.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        @click="onThemeClick"
+      >
+        <VuiIcon
+          :icon="`${state.theme}-mode`"
+          size="24px"
+          aria-hidden="true"
+        />
+      </button>
     </VuiFlex>
 
     <VuiFlex
@@ -1229,6 +1282,20 @@ icon
             color: #fff;
             text-decoration: none;
         }
+    }
+}
+
+.mcr-theme {
+    flex: none;
+    padding: 0;
+    color: inherit;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(255 255 255 / 15%);
     }
 }
 
