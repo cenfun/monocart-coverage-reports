@@ -85,7 +85,7 @@ jobs:
       - name: Download reports
         uses: actions/download-artifact@v8
         with:
-          name: artifact-22
+          name: artifact-24
           path: ./.temp/site/reports
 
       - name: Write coverage summary
@@ -105,7 +105,7 @@ jobs:
       - name: Download reports
         uses: actions/download-artifact@v8
         with:
-          name: artifact-22
+          name: artifact-24
           path: ./.temp/site/reports
 
       - name: Codecov
@@ -131,7 +131,7 @@ jobs:
       - name: Download reports
         uses: actions/download-artifact@v8
         with:
-          name: artifact-22
+          name: artifact-24
           path: ./.temp/site/reports
 
       - name: Analyze with SonarQube Cloud
@@ -162,7 +162,7 @@ jobs:
       - name: Download reports
         uses: actions/download-artifact@v8
         with:
-          name: artifact-22
+          name: artifact-24
           path: ./.temp/site/reports
 
       - name: Coveralls
@@ -183,7 +183,7 @@ jobs:
       - name: Download reports
         uses: actions/download-artifact@v8
         with:
-          name: artifact-22
+          name: artifact-24
           path: ./.temp/site/reports
 
       - name: Codacy Coverage Reporter
