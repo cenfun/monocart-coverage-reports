@@ -62,9 +62,10 @@ const localLink = (path) => {
 };
 const integrationCards = (cards) => cards.map((card) => ({
     ... card,
-    guide: {
-        href: localLink(card.docsPath),
-        label: `${copy.value.integrationGuideLabel}: ${card.name}`
+    link: localLink(card.docsPath),
+    external: {
+        href: card.link,
+        label: `${copy.value.integrationExternalLabel}: ${card.name}`
     }
 }));
 // Pointer clicks on desktop group buttons open the first page. Keep keyboard

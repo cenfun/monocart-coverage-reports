@@ -227,13 +227,13 @@
     text-align: start;
 }
 
-.mcr-repo-primary:has(+ .mcr-repo-guide) {
+.mcr-repo-primary:has(+ .mcr-repo-external) {
     padding-inline: 8px 4px;
     border-start-end-radius: 0;
     border-end-end-radius: 0;
 }
 
-.mcr-repo-guide {
+.mcr-repo-external {
     display: grid;
     flex: none;
     width: 36px;
@@ -249,17 +249,9 @@
     color: var(--vp-c-brand-1);
 }
 
-.mcr-repo-guide:hover,
-.mcr-repo-guide:focus-visible {
+.mcr-repo-external:hover,
+.mcr-repo-external:focus-visible {
     background: var(--vp-c-brand-soft);
-}
-
-/* VuiIcon inserts the SVG after mounting. Keep the link visible before then. */
-.mcr-repo-guide .vui-icon:empty::before {
-    display: block;
-    line-height: 16px;
-    text-align: center;
-    content: '→';
 }
 
 .mcr-repo-avatar {

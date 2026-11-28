@@ -67,6 +67,7 @@ Important constraints:
 ## Code and documentation conventions
 
 - Match nearby code: four-space indentation, semicolons, single-quoted JavaScript strings, and explicit `.js` extensions on relative ESM imports.
+- Store SVG UI icons as standalone files in `docs/.vitepress/icons/` for the docs theme or `src/app/images/icons/` for the report UI. Use the existing icon registration and render with `VuiIcon` from `vine-ui`, using the SVG filename without `.svg` as the `icon` prop. Do not inline SVG markup for icons in Vue templates.
 - Prefer Node built-ins for helper scripts. Put temporary scripts and artifacts in `.temp/`. Do not add dependencies for simple automation.
 - Preserve UTF-8 and LF line endings. `.gitattributes` requires LF because coverage range checks depend on source offsets.
 - Keep changes focused. Preserve user edits. Do not reformat unrelated code or regenerate unrelated artifacts.
